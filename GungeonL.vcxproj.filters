@@ -90,6 +90,7 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectManager.h" />
+    <ClInclude Include="CollisionManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -140,6 +141,7 @@
       <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="GameObjectManager.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">

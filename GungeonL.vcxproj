@@ -173,6 +173,7 @@
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="DebugFont.h" />
     <ClInclude Include="DeviceResources.h" />
@@ -199,6 +200,7 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="DebugFont.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
