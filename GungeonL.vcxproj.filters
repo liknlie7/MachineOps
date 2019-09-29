@@ -86,11 +86,9 @@
     <ClInclude Include="Collision.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="GameObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -142,6 +140,7 @@
     </ClCompile>
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="GameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
