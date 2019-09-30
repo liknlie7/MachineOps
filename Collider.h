@@ -3,8 +3,6 @@
 
 #include <SimpleMath.h>
 
-#include "GameObject.h"
-#include "Collider.h"
 
 class GameObject;
 class SphereCollider;
@@ -20,33 +18,19 @@ public: // 基本
 	// デストラクタ
 	virtual ~Collider() = default;
 
-public: // アクセサ
-
-	// 座標取得
-	const DirectX::SimpleMath::Vector3 Collider::GetPosition() const
-	{
-		return m_owner->GetPosition() + m_offset;
-	}
-
-	// 補正値の取得
-	const DirectX::SimpleMath::Vector3 Collider::GetOffset() const
-	{
-		return m_offset;
-	}
-
-	// 補正値の設定
-	void Collider::SetOffset(const DirectX::SimpleMath::Vector3 & offset)
-	{
-		m_offset = offset;
-	}
-
 public: // 関数
 
 	virtual bool IsCollided(const Collider*       collider) const = 0;
 	virtual bool IsCollided(const SphereCollider* collider) const;
 	virtual bool IsCollided(const BoxCollider*    collider) const;
 
+
 	void OnCollision(const Collider* object) const;
+
+	const DirectX::SimpleMath::Vector3 GetPosition() const;
+	const DirectX::SimpleMath::Vector3 GetOffset() const;
+
+	void  SetOffset(const DirectX::SimpleMath::Vector3& offset);
 
 protected: // 変数
 
@@ -54,5 +38,4 @@ protected: // 変数
 	GameObject*                  m_owner;
 	// 補正値
 	DirectX::SimpleMath::Vector3 m_offset;
-
 };
