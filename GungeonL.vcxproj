@@ -193,6 +193,7 @@
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="TitleState.h" />
     <ClInclude Include="Utilities.h" />
@@ -223,6 +224,7 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="TitleState.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
