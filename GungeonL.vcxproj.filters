@@ -20,6 +20,9 @@
     <Filter Include="GameState">
       <UniqueIdentifier>{a829e195-26f0-4e75-880d-b6d636750ceb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Collider">
+      <UniqueIdentifier>{0a2d0f0c-e066-499c-97b2-f5eb1b7202e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
