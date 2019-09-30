@@ -3,10 +3,12 @@
 #include "Collider.h"
 #include "GameObject.h"
 
+using namespace DirectX;
+using namespace DirectX::SimpleMath;
 
 Collider::Collider(GameObject* owner)
 	: m_owner(owner)
-	, m_offset(DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f))
+	, m_offset(Vector3(0.0f, 0.0f, 0.0f))
 {
 }
 
@@ -33,19 +35,19 @@ void Collider::OnCollision(const Collider* object) const
 }
 
 
-const DirectX::SimpleMath::Vector3 Collider::GetPosition() const
+const Vector3 Collider::GetPosition() const
 {
 	return m_owner->GetPosition() + m_offset;
 }
 
 
-const DirectX::SimpleMath::Vector3 Collider::GetOffset() const
+const Vector3 Collider::GetOffset() const
 {
 	return m_offset;
 }
 
 
-void Collider::SetOffset(const DirectX::SimpleMath::Vector3 & offset)
+void Collider::SetOffset(const Vector3 & offset)
 {
 	m_offset = offset;
 }
