@@ -9,11 +9,10 @@ using namespace DirectX::SimpleMath;
 using namespace std;
 
 Weapon::Weapon()
-	:m_pos(Vector3(0.0f, 0.0f, 0.5f))
-	, bulletHitFlag(false)
+	: bulletHitFlag(false)
 	, bulletNumber(0)
 {
-
+	m_pos = Vector3(0.0f, 0.0f, 0.5f);
 }
 
 // èâä˙âª
@@ -30,7 +29,7 @@ void Weapon::Initialize()
 // çXêV
 void Weapon::Update()
 {
-	m_matrix = Matrix::CreateTranslation(m_pos) * Matrix::CreateRotationY(m_angle) *
+	m_mat = Matrix::CreateTranslation(m_pos) * Matrix::CreateRotationY(m_angle) *
 		Matrix::CreateTranslation(m_playerPos);
 
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
@@ -55,7 +54,7 @@ void Weapon::Update()
 }
 
 // ï`âÊ
-void Weapon::Render(Matrix _view)
+void Weapon::Render(const Matrix& _view)
 {
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{

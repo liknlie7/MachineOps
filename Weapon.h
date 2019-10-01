@@ -9,11 +9,12 @@
 #include "StepTimer.h"
 #include "Projection.h"
 #include "GameContext.h"
+#include "GameObject.h"
 #include "Bullet.h"
 
 class Bullet;
 
-class Weapon
+class Weapon : public GameObject
 {
 public: // 基本
 
@@ -67,9 +68,9 @@ public: // 関数
 	// 初期化
 	void Initialize();
 	// 更新
-	void Update();
+	void Update() override;
 	// 描画
-	void Render(DirectX::SimpleMath::Matrix _view);
+	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// 後始末
 	void Finalize();
 
@@ -85,11 +86,8 @@ private: // 変数
 	std::unique_ptr<DirectX::GeometricPrimitive> m_pBulletGeometric;
 	std::vector<std::unique_ptr<Bullet>>		 m_pBullets;
 
-	// 位置
-	DirectX::SimpleMath::Vector3				 m_pos;
+	// プレイヤーの位置
 	DirectX::SimpleMath::Vector3				 m_playerPos;
-	// 行列
-	DirectX::SimpleMath::Matrix					 m_matrix;
 
 	// 角度
 	float										 m_angle;

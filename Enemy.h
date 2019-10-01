@@ -70,7 +70,7 @@ public: // ŠÖ”
 
 private: // •Ï”
 
-	// “G
+	// ƒ‚ƒfƒ‹
 	std::unique_ptr<DirectX::Model>	m_pEnemy;
 
 	//“–‚½‚è”»’è—p
