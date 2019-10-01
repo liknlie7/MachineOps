@@ -17,12 +17,14 @@ class Weapon
 {
 public: // 基本
 
+	// コンストラクタ
 	Weapon();
+	// デストラクタ
 	~Weapon() {}
 
 public: // アクセサ
 
-	// 武器の座標設定
+	// 座標設定
 	void SetWeaponPos(DirectX::SimpleMath::Vector3 _pos)
 	{
 		m_pos = _pos;
@@ -39,7 +41,18 @@ public: // アクセサ
 		return bulletsPos;
 	}
 
-	
+	// プレイヤーの座標設定
+	void SetPlayerPos(DirectX::SimpleMath::Vector3 _playerPos)
+	{
+		m_playerPos = _playerPos;
+	}
+
+	// 角度の設定
+	void SetAngle(float _angle)
+	{
+		m_angle = _angle;
+	}
+
 	void SetBulletHitFlag(bool _bulletHitFlag)
 	{
 		bulletHitFlag = _bulletHitFlag;
@@ -51,13 +64,18 @@ public: // アクセサ
 
 public: // 関数
 
+	// 初期化
 	void Initialize();
-	void Update(DirectX::SimpleMath::Vector3 _playerPos, float _angle);
-	void Render(DirectX::SimpleMath::Matrix _view, DirectX::SimpleMath::Vector4 _color);
+	// 更新
+	void Update();
+	// 描画
+	void Render(DirectX::SimpleMath::Matrix _view);
+	// 後始末
 	void Finalize();
 
+
 	// 弾の生成
-	void CreateBullet(float _angle);
+	void CreateBullet();
 
 private: // 変数
 
@@ -73,7 +91,10 @@ private: // 変数
 	// 行列
 	DirectX::SimpleMath::Matrix					 m_matrix;
 
-	bool bulletHitFlag;
-	int bulletNumber;
+	// 角度
+	float										 m_angle;
+
+	bool										 bulletHitFlag;
+	int											 bulletNumber;
 
 };

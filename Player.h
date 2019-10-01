@@ -79,7 +79,7 @@ public: // 関数
 	// 更新
 	void Update();
 	// 描画
-	void Render(DirectX::SimpleMath::Matrix _view, DirectX::SimpleMath::Vector4 _color);
+	void Render(DirectX::SimpleMath::Matrix _view);
 	// 後始末
 	void Finalize();
 
@@ -116,11 +116,13 @@ private:
 	DirectX::SimpleMath::Vector3				 m_mousePos;
 
 	// 重力
-	float m_gravity;
+	float										 m_gravity;
+	// 角度
+	float										 m_angle;
 	// インターバル
-	float m_shotInterval;
+	float										 m_shotInterval;
 	// ヒットフラグ
-	bool m_hitFlag;
+	bool										 m_hitFlag;
 	// 点滅時間
-	int m_blinkTime;
+	int											 m_blinkTime;
 };

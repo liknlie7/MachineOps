@@ -224,7 +224,7 @@ void PlayState::Render()
 	debugFont->draw();
 
 	// プレイヤー表示
-	m_pPlayer->Render(m_pFollowCamera->getViewMatrix(),  m_color);
+	m_pPlayer->Render(m_pFollowCamera->getViewMatrix());
 
 	// 敵表示
 	for (int i = 0; i < 2; i++)

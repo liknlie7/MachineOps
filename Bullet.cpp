@@ -28,7 +28,7 @@ void Bullet::Initialize(GeometricPrimitive* _type)
 }
 
 // XV
-void Bullet::Update(float _angle)
+void Bullet::Update()
 {
 	// ˆÚ“®‚·‚é
 	m_pos += m_vel;

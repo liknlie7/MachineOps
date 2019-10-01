@@ -15,6 +15,9 @@ Player::Player()
 	, m_shotInterval(15.0f)
 	, m_hitFlag(false)
 	, m_blinkTime(50)
+	, m_angle(0.0f)
+	
+	
 {
 	m_pWeapon = make_unique<Weapon>();
 	m_decisionAreaPos = Vector3(0.0f, 1.0f, 0.0f);
@@ -96,9 +99,9 @@ void Player::Update()
 	m_dir = m_mousePos - m_pos;
 	m_dir.Normalize();
 
-	float angle = atan2(m_dir.x, m_dir.z);
+	m_angle = atan2(m_dir.x, m_dir.z);
 	Matrix trans = Matrix::CreateTranslation(Vector3(m_pos));
-	Matrix rotate = Matrix::CreateRotationY(angle);
+	Matrix rotate = Matrix::CreateRotationY(m_angle);
 
 	m_mat = rotate * trans;
 	Matrix trans1 = Matrix::CreateTranslation(Vector3(m_decisionAreaPos));
@@ -112,17 +115,19 @@ void Player::Update()
 		if (mouseState.leftButton)
 		{
 			// ’e‚Ì¶¬
-			m_pWeapon->CreateBullet(angle);
+			m_pWeapon->CreateBullet();
 			m_shotInterval = 0;
 		}
 	}
 
 	// •Ší‚ÌXV
-	m_pWeapon->Update(m_pos, angle);
+	m_pWeapon->SetAngle(m_angle);
+	m_pWeapon->SetPlayerPos(m_pos);
+	m_pWeapon->Update();
 }
 
 // •`‰æ
-void Player::Render(Matrix _view, Vector4 _color)
+void Player::Render(Matrix _view)
 {
 	Projection* proj = GameContext<Projection>().Get();
 	CommonStates* state = GameContext<CommonStates>().Get();
@@ -135,7 +140,7 @@ void Player::Render(Matrix _view, Vector4 _color)
 	//m_pDecisionArea->Draw(m_decisionAreaMat, _view, _proj, _color, nullptr, true);
 
 	// •Ší‚Ì•`‰æ
-	m_pWeapon->Render(_view, static_cast<Vector4>(Colors::Yellow));
+	m_pWeapon->Render(_view);
 }
 
 // ŒãŽn––

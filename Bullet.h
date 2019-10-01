@@ -45,7 +45,7 @@ public: // ŠÖ”
 	// ‰Šú‰»
 	void Initialize(DirectX::GeometricPrimitive* _type);
 	// XV‚·‚é
-	void Update(float _angle);
+	void Update();
 	// •`‰æ‚·‚é
 	void Render(DirectX::SimpleMath::Matrix _view);
 	// Œãˆ—
