@@ -6,9 +6,10 @@
 #include "StepTimer.h"
 #include "Projection.h"
 #include "GameContext.h"
+#include "GameObject.h"
 
 // 弾
-class Bullet
+class Bullet :public GameObject
 {
 public: // 基本
 
@@ -19,13 +20,13 @@ public: // 基本
 
 public: // アクセサ
 
-	// 座標を取得する
+	// 座標取得
 	DirectX::SimpleMath::Vector3 GetPos()
 	{
 		return m_pos;
 	}
 
-	// 座標を設定する
+	// 座標設定
 	void SetPos(const DirectX::SimpleMath::Vector3& _pos)
 	{
 		m_pos = _pos;
@@ -44,10 +45,10 @@ public: // 関数
 
 	// 初期化
 	void Initialize(DirectX::GeometricPrimitive* _type);
-	// 更新する
-	void Update();
-	// 描画する
-	void Render(DirectX::SimpleMath::Matrix _view);
+	// 更新
+	void Update() override;
+	// 描画
+	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// 後処理
 	void Finalize();
 
@@ -58,14 +59,8 @@ public: // 定数
 
 private: // 変数
 
-	// 弾
+	// 弾の形状
 	DirectX::GeometricPrimitive*	m_bullet;
-	// 位置
-	DirectX::SimpleMath::Vector3	m_pos;
-	// 行列
-	DirectX::SimpleMath::Matrix		m_matrix;
-	// 速度
-	DirectX::SimpleMath::Vector3	m_vel;
 
 	// フラグ
 	bool m_hitFlag;

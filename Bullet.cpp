@@ -12,13 +12,12 @@ const Vector3 Bullet::SPEED(0.0f, 0.0f, 0.3f);
 
 // コンストラクタ
 Bullet::Bullet(Vector3 _pos, float _angle)
-	:m_vel(SPEED)
-	, m_pos(_pos)
-	, m_hitFlag(false)
+	: m_hitFlag(false)
 {
+	m_pos = _pos;
+	m_vel = SPEED;
 	Matrix rotate = Matrix::CreateRotationY(_angle);
 	m_vel = Vector3::Transform(m_vel, rotate);
-
 }
 
 // 初期化
@@ -33,14 +32,14 @@ void Bullet::Update()
 	// 移動する
 	m_pos += m_vel;
 
-	m_matrix = Matrix::CreateTranslation(Vector3(m_pos));
+	m_mat = Matrix::CreateTranslation(Vector3(m_pos));
 }
 
 // 描画
-void Bullet::Render(Matrix _view)
+void Bullet::Render(const Matrix& _view)
 {
 	Projection* proj = GameContext<Projection>().Get();
-	m_bullet->Draw(m_matrix, _view, proj->GetMatrix(), Colors::Yellow);
+	m_bullet->Draw(m_mat, _view, proj->GetMatrix(), Colors::Yellow);
 }
 
 // 後処理
