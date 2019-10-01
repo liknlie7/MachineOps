@@ -127,7 +127,7 @@ void Player::Update()
 }
 
 // •`‰æ
-void Player::Render(Matrix _view)
+void Player::Render(const Matrix& _view)
 {
 	Projection* proj = GameContext<Projection>().Get();
 	CommonStates* state = GameContext<CommonStates>().Get();

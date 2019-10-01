@@ -73,6 +73,11 @@ void Enemy::InitializeShield(DirectX::SimpleMath::Vector3 _pos)
 }
 
 // çXêV
+void Enemy::Update()
+{
+
+}
+
 void Enemy::UpdateNormal(Vector3 _playerPos)
 {
 	ChasePlayer(_playerPos);
@@ -110,7 +115,7 @@ void Enemy::UpdateShield(Vector3 _playerPos)
 }
 
 // ï`âÊ
-void Enemy::Render(Matrix _view, Vector4 _color)
+void Enemy::Render(const Matrix& _view)
 {
 	DX::DeviceResources* deviceResources = GameContext<DX::DeviceResources>().Get();
 	CommonStates* state = GameContext<CommonStates>().Get();

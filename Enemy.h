@@ -55,10 +55,11 @@ public: // ä÷êî
 	void InitializeNormal(DirectX::SimpleMath::Vector3 _pos = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
 	void InitializeShield(DirectX::SimpleMath::Vector3 _pos = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
 	// çXêV
+	void Update() override;
 	void UpdateNormal(DirectX::SimpleMath::Vector3 _playerPos);
 	void UpdateShield(DirectX::SimpleMath::Vector3 _playerPos);
 	// ï`âÊ
-	void Render(DirectX::SimpleMath::Matrix _view, DirectX::SimpleMath::Vector4 _color);
+	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// å„énññ
 	void Finalize();
 

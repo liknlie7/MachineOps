@@ -77,9 +77,9 @@ public: // ŠÖ”
 	// ‰Šú‰»
 	void Initialize();
 	// XV
-	void Update();
+	void Update() override;
 	// •`‰æ
-	void Render(DirectX::SimpleMath::Matrix _view);
+	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// Œãn––
 	void Finalize();
 

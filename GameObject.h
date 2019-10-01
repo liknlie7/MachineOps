@@ -31,8 +31,8 @@ public:
 
 
 public:
-	//virtual void Update() = 0;
-	//virtual void Render(const DirectX::SimpleMath::Matrix& _view) = 0;
+	virtual void Update() = 0;
+	virtual void Render(const DirectX::SimpleMath::Matrix& _view) = 0;
 
 	virtual void OnCollision(GameObject* object);
 

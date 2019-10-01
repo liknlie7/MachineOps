@@ -229,8 +229,8 @@ void PlayState::Render()
 	// “G•\¦
 	for (int i = 0; i < 2; i++)
 	{
-		m_pEnemy1[i]->Render(m_pFollowCamera->getViewMatrix(), static_cast<Vector4>(Colors::Blue));
-		m_pEnemy2[i]->Render(m_pFollowCamera->getViewMatrix(), static_cast<Vector4>(Colors::Blue));
+		m_pEnemy1[i]->Render(m_pFollowCamera->getViewMatrix());
+		m_pEnemy2[i]->Render(m_pFollowCamera->getViewMatrix());
 	}
 
 	// °‚Ì•\¦
