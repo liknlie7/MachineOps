@@ -7,7 +7,7 @@ using namespace DirectX::SimpleMath;
 
 using namespace std;
 
-// 弾スピードを定義する
+// 弾スピードを定義
 const Vector3 Bullet::SPEED(0.0f, 0.0f, 0.3f);
 
 // コンストラクタ
@@ -29,7 +29,7 @@ void Bullet::Initialize(GeometricPrimitive* _type)
 // 更新
 void Bullet::Update()
 {
-	// 移動する
+	// 移動
 	m_pos += m_vel;
 
 	m_mat = Matrix::CreateTranslation(Vector3(m_pos));
