@@ -92,9 +92,10 @@
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Collider.h" />
     <ClInclude Include="SphereCollider.h" />
-    <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="Collider.h">
+      <Filter>Collider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -147,9 +148,10 @@
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
-    <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="Collider.cpp">
+      <Filter>Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
