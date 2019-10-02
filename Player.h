@@ -83,6 +83,9 @@ public: // ä÷êî
 	// å„énññ
 	void Finalize();
 
+	// è’ìÀÇµÇΩéû
+	void OnCollision(GameObject* object) override;
+
 	// ì_ñ≈
 	void Blink();
 

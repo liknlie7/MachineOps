@@ -73,8 +73,7 @@ public: // ŠÖ”
 	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// Œãn––
 	void Finalize();
-
-
+	
 	// ’e‚Ì¶¬
 	void CreateBullet();
 

@@ -12,7 +12,8 @@ const Vector3 Bullet::SPEED(0.0f, 0.0f, 0.3f);
 
 // コンストラクタ
 Bullet::Bullet(Vector3 _pos, float _angle)
-	: m_hitFlag(false)
+	: GameObject("Bullet")
+	, m_hitFlag(false)
 {
 	m_pos = _pos;
 	m_vel = SPEED;
@@ -45,4 +46,10 @@ void Bullet::Render(const Matrix& _view)
 // 後処理
 void Bullet::Finalize()
 {
+}
+
+// 衝突した時
+void Bullet::OnCollision(GameObject* object)
+{
+	Destroy(this);
 }
