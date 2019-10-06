@@ -52,9 +52,6 @@ public: // 関数
 	// 後処理
 	void Finalize();
 
-	// 衝突した時
-	void OnCollision(GameObject* object) override;
-
 public: // 定数
 
 	// 弾スピード

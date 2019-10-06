@@ -20,9 +20,6 @@
     <Filter Include="GameState">
       <UniqueIdentifier>{a829e195-26f0-4e75-880d-b6d636750ceb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Collider">
-      <UniqueIdentifier>{0a2d0f0c-e066-499c-97b2-f5eb1b7202e5}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -89,13 +86,7 @@
     <ClInclude Include="Collision.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjectManager.h" />
-    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="SphereCollider.h" />
-    <ClInclude Include="Collider.h">
-      <Filter>Collider</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -145,13 +136,7 @@
     <ClCompile Include="Collision.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjectManager.cpp" />
-    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="SphereCollider.cpp" />
-    <ClCompile Include="Collider.cpp">
-      <Filter>Collider</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">

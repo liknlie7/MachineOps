@@ -5,19 +5,24 @@
 #include <SpriteBatch.h>
 #include <SimpleMath.h>
 #include <Effects.h>
+#include <Keyboard.h>
 
 #include "DeviceResources.h"
+#include "GameContext.h"
 #include "GameState.h"
 #include "Projection.h"
 #include "StepTimer.h"
 #include "Keyboard.h"
+#include "GameStateManager.h"
 
-class DebugCamera;
-class FollowCamera;
-class GridFloor;
-class Floor;
-class Player;
-class Enemy;
+#include "DebugFont.h"
+#include "DebugCamera.h"
+#include "GridFloor.h"
+#include "FollowCamera.h"
+#include "Floor.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Collision.h"
 
 class PlayState : public GameState
 {
@@ -71,6 +76,4 @@ private:
 
 	// êF
 	DirectX::SimpleMath::Color							m_color;
-
-
 };

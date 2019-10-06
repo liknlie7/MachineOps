@@ -10,8 +10,7 @@ using namespace std;
 
 // コンストラクタ
 Player::Player()
-	: GameObject("Player")
-	, m_gravity(0.03f)
+	: m_gravity(0.03f)
 	, m_mousePos(0.0f, 0.0f, 0.0f)
 	, m_shotInterval(15.0f)
 	, m_hitFlag(false)
@@ -148,12 +147,6 @@ void Player::Render(const Matrix& _view)
 void Player::Finalize()
 {
 
-}
-
-// 衝突した時
-void Player::OnCollision(GameObject* object)
-{
-	Destroy(this);
 }
 
 // 点滅

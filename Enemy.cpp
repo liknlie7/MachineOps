@@ -6,8 +6,7 @@ using namespace DirectX::SimpleMath;
 
 // コンストラクタ
 Enemy::Enemy()
-	: GameObject("Enemy")
-	, m_decisionAreaPos(5.0f, 1.0f, 0.0f)
+	: m_decisionAreaPos(5.0f, 1.0f, 0.0f)
 	, m_blinkTime(50)
 	, m_hitFlag(false)
 {
@@ -135,12 +134,6 @@ void Enemy::Render(const Matrix& _view)
 void Enemy::Finalize()
 {
 
-}
-
-// 衝突した時
-void Enemy::OnCollision(GameObject* object)
-{
-	Destroy(this);
 }
 
 // プレイヤーを追いかける

@@ -63,8 +63,6 @@ public: // 関数
 	// 後始末
 	void Finalize();
 
-	// 衝突した時
-	void OnCollision(GameObject* object) override;
 	// プレイヤーを追いかける
 	void ChasePlayer(DirectX::SimpleMath::Vector3 _playerPos);
 	// 点滅

@@ -2,23 +2,6 @@
 
 #include "PlayState.h"
 
-#include <Keyboard.h>
-
-#include "DebugFont.h"
-#include "DeviceResources.h"
-#include "GameContext.h"
-#include "GameStateManager.h"
-#include "Projection.h"
-
-#include "DebugCamera.h"
-#include "GridFloor.h"
-#include "FollowCamera.h"
-#include "Floor.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "Collision.h"
-
-
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
@@ -46,6 +29,7 @@ void PlayState::Initialize()
 	m_pDeviceContext = m_pDeviceResources->GetD3DDeviceContext();
 	m_pProjection = GameContext<Projection>().Get();
 	RECT size = m_pDeviceResources->GetOutputSize();
+
 	//float aspectRatio = float(size.right) / float(size.bottom);
 
 	// ‰æŠp‚ğİ’è
