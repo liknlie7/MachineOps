@@ -11,6 +11,7 @@
 #include "DeviceResources.h"
 #include "Projection.h"
 #include "StepTimer.h"
+#include "Collision.h"
 #include "GameContext.h"
 #include "Weapon.h"
 #include "GameObject.h"
@@ -34,10 +35,6 @@ public: // アクセサ
 	DirectX::SimpleMath::Vector3 Player::GetPos()
 	{
 		return m_pos;
-	}
-	DirectX::SimpleMath::Vector3 Player::GetDecisionAreaPos()
-	{
-		return m_decisionAreaPos;
 	}
 
 	// マウス座標の設定
@@ -72,6 +69,11 @@ public: // アクセサ
 		m_pWeapon->SetBulletNumber(_bulletNumber);
 	}
 
+	Collision::Sphere Player::GetCollider()
+	{
+		return m_collider;
+	}
+
 public: // 関数
 
 	// 初期化
@@ -101,17 +103,14 @@ private:
 
 	// プレイヤー
 	std::unique_ptr<DirectX::Model>				 m_pPlayer;
+	Collision::Sphere							 m_collider;
+
 	// 銃
 	std::unique_ptr<Weapon>						 m_pWeapon;
 
 	// 向き
 	DirectX::SimpleMath::Vector3				 m_dir;
 	
-	//当たり判定用
-	std::unique_ptr<DirectX::GeometricPrimitive> m_pDecisionArea;
-	DirectX::SimpleMath::Vector3				 m_decisionAreaPos;
-	DirectX::SimpleMath::Matrix					 m_decisionAreaMat;
-
 	// マウス座標
 	DirectX::SimpleMath::Vector3				 m_mousePos;
 

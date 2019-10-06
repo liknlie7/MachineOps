@@ -20,7 +20,6 @@ Player::Player()
 	
 {
 	m_pWeapon = make_unique<Weapon>();
-	m_decisionAreaPos = Vector3(0.0f, 1.0f, 0.0f);
 }
 
 
@@ -50,10 +49,11 @@ void Player::Initialize()
 	);
 	delete factory;
 
-	// “–‚½‚è”»’è—p
-	m_pDecisionArea = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 2.0f);
 	// e‚Ìì¬
 	m_pWeapon->Initialize();
+
+	m_collider.radius = 2.0f;
+	m_collider.center = m_pos;
 }
 
 // XV
@@ -94,7 +94,6 @@ void Player::Update()
 
 	// ‘¬“x‘ã“ü
 	m_pos += m_vel;
-	m_decisionAreaPos += m_vel;
 
 	m_dir = m_mousePos - m_pos;
 	m_dir.Normalize();
@@ -104,8 +103,6 @@ void Player::Update()
 	Matrix rotate = Matrix::CreateRotationY(m_angle);
 
 	m_mat = rotate * trans;
-	Matrix trans1 = Matrix::CreateTranslation(Vector3(m_decisionAreaPos));
-	m_decisionAreaMat = rotate * trans1;
 
 	// ’e‚ð”­ŽË‚·‚é
 	m_shotInterval++;
@@ -124,6 +121,9 @@ void Player::Update()
 	m_pWeapon->SetAngle(m_angle);
 	m_pWeapon->SetPlayerPos(m_pos);
 	m_pWeapon->Update();
+
+	m_collider.center = m_pos;
+
 }
 
 // •`‰æ
@@ -135,9 +135,6 @@ void Player::Render(const Matrix& _view)
 	// ƒvƒŒƒCƒ„[•`‰æ
 	if (m_blinkTime % 5 == 0)
 		m_pPlayer->Draw(m_context, *state, m_mat, _view, proj->GetMatrix());
-
-	// ”»’è”ÍˆÍ‚Ì•`‰æ
-	//m_pDecisionArea->Draw(m_decisionAreaMat, _view, _proj, _color, nullptr, true);
 
 	// •Ší‚Ì•`‰æ
 	m_pWeapon->Render(_view);

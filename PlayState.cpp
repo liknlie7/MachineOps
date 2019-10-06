@@ -142,9 +142,9 @@ void PlayState::Update()
 		m_pPlayer->SetMousePos(hitPos);
 	}
 
-	// ƒvƒŒƒCƒ„[A“GA’e‚Ì’†S‚Æ”¼Œa‚ğİ’è
-	Collision::Sphere player, enemy1[2], enemy2[2];
-	player.center = m_pPlayer->GetDecisionAreaPos();	player.radius = 1.0f;
+	// “GA’e‚Ì’†S‚Æ”¼Œa‚ğİ’è
+	Collision::Sphere enemy1[2], enemy2[2];
+
 	for (int i = 0; i < 2; i++)
 	{
 		enemy1[i].center = m_pEnemy1[i]->GetPos();					enemy1[i].radius = 1.0f;
@@ -189,11 +189,11 @@ void PlayState::Update()
 	for (int i = 0; i < 2; i++)
 	{
 		if (!m_pPlayer->GetHitFlag())
-			if (Collision::HitCheckSphereToSphere(player, enemy1[i]))
+			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemy1[i]))
 				m_pPlayer->SetHitFlag(true);
 
 		if (!m_pPlayer->GetHitFlag())
-			if (Collision::HitCheckSphereToSphere(player, enemy2[i]))
+			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemy2[i]))
 				m_pPlayer->SetHitFlag(true);
 	}
 }
