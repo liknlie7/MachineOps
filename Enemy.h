@@ -12,11 +12,6 @@
 #include "GameObject.h"
 #include "GameContext.h"
 
-enum Type
-{
-	Normal = 1,
-	Shield,
-};
 
 // 敵
 class Enemy : public GameObject
@@ -24,9 +19,17 @@ class Enemy : public GameObject
 public: // 基本
 
 	// コンストラクタ
-	Enemy();
+	Enemy(int _type);
 	// デストラクタ
 	~Enemy();
+
+public:
+
+	enum Type
+	{
+		Normal = 1,
+		Shield,
+	};
 
 public: // アクセサ
 
@@ -64,6 +67,7 @@ public: // アクセサ
 public: // 関数
 
 	// 初期化
+	void Initialize();
 	void InitializeNormal(DirectX::SimpleMath::Vector3 _pos = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
 	void InitializeShield(DirectX::SimpleMath::Vector3 _pos = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
 	// 更新
@@ -92,6 +96,8 @@ private: // 変数
 	//DirectX::SimpleMath::Vector3				 m_decisionAreaPos;
 	//DirectX::SimpleMath::Matrix					 m_decisionAreaMat;
 
+	// タイプ
+	int												m_type;
 	// 速さ
 	float											m_speed;
 	// 体力

@@ -71,8 +71,9 @@ private:
 	std::unique_ptr<Player>								m_pPlayer;
 
 	// ìG
-	std::unique_ptr<Enemy>								m_pEnemy1[2];
-	std::unique_ptr<Enemy>								m_pEnemy2[2];
+	//std::unique_ptr<Enemy>								m_pEnemy1[2];
+	//std::unique_ptr<Enemy>								m_pEnemy2[2];
+	std::unique_ptr<Enemy>								m_pEnemy;
 
 	// êF
 	DirectX::SimpleMath::Color							m_color;

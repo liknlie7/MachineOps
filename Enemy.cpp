@@ -5,16 +5,22 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 // コンストラクタ
-Enemy::Enemy()
+Enemy::Enemy(int _type)
 	: /*m_decisionAreaPos(5.0f, 1.0f, 0.0f)*/
 	 m_blinkTime(50)
 	, m_hitFlag(false)
 {
+	m_type = _type;
 }
 
 // デストラクタ
 Enemy::~Enemy()
 {
+}
+
+void Enemy::Initialize()
+{
+
 }
 
 // ノーマル型初期化

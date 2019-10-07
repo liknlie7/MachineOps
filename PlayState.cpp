@@ -51,24 +51,25 @@ void PlayState::Initialize()
 	m_pFollowCamera = make_unique<FollowCamera>();
 	m_pFollowCamera->Initialize();
 
-	// フロア初期化
+	// フロア作成
 	m_pFloor = make_unique<Floor>();
 	m_pFloor->Initialize();
 
-	// プレイヤー初期化
+	// プレイヤー作成
 	m_pPlayer = make_unique<Player>();
 	m_pPlayer->Initialize();
 
-	// 敵初期化
-	for (int i = 0; i < 2; i++)
-		m_pEnemy1[i] = make_unique<Enemy>();
-	m_pEnemy1[0]->InitializeNormal(Vector3(+5.0f, 1.0f, 0.0f));
-	m_pEnemy1[1]->InitializeNormal(Vector3(-5.0f, 1.0f, 0.0f));
+	// 敵作成
+	//for (int i = 0; i < 2; i++)
+	//	m_pEnemy1[i] = make_unique<Enemy>();
+	//m_pEnemy1[0]->InitializeNormal(Vector3(+5.0f, 1.0f, 0.0f));
+	//m_pEnemy1[1]->InitializeNormal(Vector3(-5.0f, 1.0f, 0.0f));
 
-	for (int i = 0; i < 2; i++)
-		m_pEnemy2[i] = make_unique<Enemy>();
-	m_pEnemy2[0]->InitializeShield(Vector3(+5.0f, 1.0f, -5.0f));
-	m_pEnemy2[1]->InitializeShield(Vector3(-5.0f, 1.0f, -5.0f));
+	//for (int i = 0; i < 2; i++)
+	//	m_pEnemy2[i] = make_unique<Enemy>();
+	//m_pEnemy2[0]->InitializeShield(Vector3(+5.0f, 1.0f, -5.0f));
+	//m_pEnemy2[1]->InitializeShield(Vector3(-5.0f, 1.0f, -5.0f));
+	m_pEnemy = make_unique<Enemy>(m_pEnemy->Normal);
 
 	m_color = Colors::Red;
 
@@ -95,11 +96,12 @@ void PlayState::Update()
 	m_pPlayer->Update();
 
 	// 敵更新
-	for (int i = 0; i < 2; i++)
-	{
-		m_pEnemy1[i]->UpdateNormal(m_pPlayer->GetPos());
-		m_pEnemy2[i]->UpdateShield(m_pPlayer->GetPos());
-	}
+	//for (int i = 0; i < 2; i++)
+	//{
+	//	m_pEnemy1[i]->UpdateNormal(m_pPlayer->GetPos());
+	//	m_pEnemy2[i]->UpdateShield(m_pPlayer->GetPos());
+	//}
+	m_pEnemy->UpdateNormal(m_pPlayer->GetPos());
 
 	// デバッグカメラ更新
 	m_pDebugCamera->update();
@@ -160,42 +162,42 @@ void PlayState::Update()
 		colBullet[i].center = bullets[i];
 		colBullet[i].radius = 0.15f;
 	}
-	for (int i = 0; i < colBullet.size(); i++)
-	{
-		if (Collision::HitCheckSphereToSphere(m_pEnemy1[0]->GetCollider(), colBullet[i]))
-		{
-			m_pEnemy1[0]->SetHitFlag(true);
-			m_pEnemy1[0]->DownLife(-1);
-		}
-		if (Collision::HitCheckSphereToSphere(m_pEnemy1[1]->GetCollider(), colBullet[i]))
-		{
-			m_pEnemy1[1]->SetHitFlag(true);
-			m_pEnemy1[1]->DownLife(-1);
-		}
-		if (Collision::HitCheckSphereToSphere(m_pEnemy2[0]->GetCollider(), colBullet[i]))
-		{
-			m_pEnemy2[0]->SetHitFlag(true);
-			m_pEnemy2[0]->DownLife(-1);
-		}
-		if (Collision::HitCheckSphereToSphere(m_pEnemy2[1]->GetCollider(), colBullet[i]))
-		{
-			m_pEnemy2[1]->SetHitFlag(true);
-			m_pEnemy2[1]->DownLife(-1);
-		}
+	//for (int i = 0; i < colBullet.size(); i++)
+	//{
+	//	if (Collision::HitCheckSphereToSphere(m_pEnemy1[0]->GetCollider(), colBullet[i]))
+	//	{
+	//		m_pEnemy1[0]->SetHitFlag(true);
+	//		m_pEnemy1[0]->DownLife(-1);
+	//	}
+	//	if (Collision::HitCheckSphereToSphere(m_pEnemy1[1]->GetCollider(), colBullet[i]))
+	//	{
+	//		m_pEnemy1[1]->SetHitFlag(true);
+	//		m_pEnemy1[1]->DownLife(-1);
+	//	}
+	//	if (Collision::HitCheckSphereToSphere(m_pEnemy2[0]->GetCollider(), colBullet[i]))
+	//	{
+	//		m_pEnemy2[0]->SetHitFlag(true);
+	//		m_pEnemy2[0]->DownLife(-1);
+	//	}
+	//	if (Collision::HitCheckSphereToSphere(m_pEnemy2[1]->GetCollider(), colBullet[i]))
+	//	{
+	//		m_pEnemy2[1]->SetHitFlag(true);
+	//		m_pEnemy2[1]->DownLife(-1);
+	//	}
 
-	}
+	//}
 
 	// プレイヤーと敵との接触判定
-	for (int i = 0; i < 2; i++)
-	{
-		if (!m_pPlayer->GetHitFlag())
-			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy1[i]->GetCollider()))
-				m_pPlayer->SetHitFlag(true);
+	//for (int i = 0; i < 2; i++)
+	//{
+	//	if (!m_pPlayer->GetHitFlag())
+	//		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy1[i]->GetCollider()))
+	//			m_pPlayer->SetHitFlag(true);
 
-		if (!m_pPlayer->GetHitFlag())
-			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy2[i]->GetCollider()))
-				m_pPlayer->SetHitFlag(true);
-	}
+	//	if (!m_pPlayer->GetHitFlag())
+	//		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy2[i]->GetCollider()))
+	//			m_pPlayer->SetHitFlag(true);
+	//}
 }
 
 
@@ -211,11 +213,12 @@ void PlayState::Render()
 	m_pPlayer->Render(m_pFollowCamera->getViewMatrix());
 
 	// 敵表示
-	for (int i = 0; i < 2; i++)
-	{
-		m_pEnemy1[i]->Render(m_pFollowCamera->getViewMatrix());
-		m_pEnemy2[i]->Render(m_pFollowCamera->getViewMatrix());
-	}
+	//for (int i = 0; i < 2; i++)
+	//{
+	//	m_pEnemy1[i]->Render(m_pFollowCamera->getViewMatrix());
+	//	m_pEnemy2[i]->Render(m_pFollowCamera->getViewMatrix());
+	//}
+	m_pEnemy->Render(m_pFollowCamera->getViewMatrix());
 
 	// 床の表示
 	m_pFloor->Render(m_pFollowCamera->getViewMatrix());
