@@ -6,8 +6,8 @@ using namespace DirectX::SimpleMath;
 
 // コンストラクタ
 Enemy::Enemy()
-	: m_decisionAreaPos(5.0f, 1.0f, 0.0f)
-	, m_blinkTime(50)
+	: /*m_decisionAreaPos(5.0f, 1.0f, 0.0f)*/
+	 m_blinkTime(50)
 	, m_hitFlag(false)
 {
 }
@@ -23,7 +23,7 @@ void Enemy::InitializeNormal(DirectX::SimpleMath::Vector3 _pos)
 	DX::DeviceResources* deviceResources = GameContext<DX::DeviceResources>().Get();
 
 	// 当たり判定用
-	m_pDecisionArea = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 2.0f);
+	//m_pDecisionArea = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 2.0f);
 
 	// エフェクトファクトリの作成 
 	EffectFactory* factory = new EffectFactory(deviceResources->GetD3DDevice());
@@ -43,6 +43,10 @@ void Enemy::InitializeNormal(DirectX::SimpleMath::Vector3 _pos)
 
 	m_life = 3;
 
+	m_collider.radius = 2.0f;
+	m_collider.center = m_pos;
+	//m_decisionAreaPos = m_pos;
+
 }
 
 // 盾持ち初期化
@@ -51,7 +55,7 @@ void Enemy::InitializeShield(DirectX::SimpleMath::Vector3 _pos)
 	DX::DeviceResources* deviceResources = GameContext<DX::DeviceResources>().Get();
 
 	// 当たり判定用
-	m_pDecisionArea = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 2.0f);
+	//m_pDecisionArea = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 2.0f);
 
 	// エフェクトファクトリの作成 
 	EffectFactory* factory = new EffectFactory(deviceResources->GetD3DDevice());
@@ -70,6 +74,12 @@ void Enemy::InitializeShield(DirectX::SimpleMath::Vector3 _pos)
 	m_speed = 0.05f;
 
 	m_life = 5;
+
+	m_collider.radius = 2.0f;
+	m_collider.center = m_pos;
+	//m_decisionAreaPos = m_pos;
+
+
 }
 
 // 更新
@@ -95,6 +105,8 @@ void Enemy::UpdateNormal(Vector3 _playerPos)
 	Matrix rotate = Matrix::CreateRotationY(angle);
 	Matrix scale = Matrix::CreateScale(1.5f);
 	m_mat = scale * rotate * Matrix::CreateTranslation(Vector3(m_pos.x, 1.0f, m_pos.z));
+	m_collider.center = m_pos;
+
 }
 
 void Enemy::UpdateShield(Vector3 _playerPos)
@@ -111,6 +123,7 @@ void Enemy::UpdateShield(Vector3 _playerPos)
 	Matrix scale = Matrix::CreateScale(1.5f);
 	m_mat = scale * rotate * Matrix::CreateTranslation(Vector3(m_pos.x, 1.0f, m_pos.z));
 
+	m_collider.center = m_pos;
 
 }
 
@@ -127,7 +140,7 @@ void Enemy::Render(const Matrix& _view)
 			m_pEnemy->Draw(deviceResources->GetD3DDeviceContext(), *state, m_mat, _view, proj->GetMatrix());
 
 	// 判定用
-	//m_pDecisionArea->Draw(m_mat, _view, _proj, _color, nullptr, true);
+	//m_pDecisionArea->Draw(m_mat, _view, proj->GetMatrix(), Colors::Red, nullptr, true);
 }
 
 // 後始末

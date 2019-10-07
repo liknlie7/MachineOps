@@ -8,8 +8,15 @@
 
 #include "DeviceResources.h"
 #include "Projection.h"
+#include "Collision.h"
 #include "GameObject.h"
 #include "GameContext.h"
+
+enum Type
+{
+	Normal = 1,
+	Shield,
+};
 
 // 敵
 class Enemy : public GameObject
@@ -48,6 +55,11 @@ public: // アクセサ
 		m_life -= _damege;
 	}
 
+	Collision::Sphere GetCollider()
+	{
+		return m_collider;
+	}
+
 
 public: // 関数
 
@@ -73,11 +85,12 @@ private: // 変数
 
 	// モデル
 	std::unique_ptr<DirectX::Model>	m_pEnemy;
+	Collision::Sphere m_collider;
 
 	//当たり判定用
-	std::unique_ptr<DirectX::GeometricPrimitive> m_pDecisionArea;
-	DirectX::SimpleMath::Vector3				 m_decisionAreaPos;
-	DirectX::SimpleMath::Matrix					 m_decisionAreaMat;
+	//std::unique_ptr<DirectX::GeometricPrimitive> m_pDecisionArea;
+	//DirectX::SimpleMath::Vector3				 m_decisionAreaPos;
+	//DirectX::SimpleMath::Matrix					 m_decisionAreaMat;
 
 	// 速さ
 	float											m_speed;

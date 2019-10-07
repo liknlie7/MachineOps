@@ -52,8 +52,14 @@ void Player::Initialize()
 	// 銃の作成
 	m_pWeapon->Initialize();
 
-	m_collider.radius = 2.0f;
+	m_collider.radius = 1.0f;
 	m_collider.center = m_pos;
+	
+	// 当たり判定用
+	//m_pDecisionArea = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 2.0f);
+
+	//m_decisionAreaPos = m_pos;
+
 }
 
 // 更新
@@ -138,6 +144,10 @@ void Player::Render(const Matrix& _view)
 
 	// 武器の描画
 	m_pWeapon->Render(_view);
+
+	// 判定用
+	//m_pDecisionArea->Draw(m_mat, _view, proj->GetMatrix(), Colors::Red, nullptr, true);
+
 }
 
 // 後始末

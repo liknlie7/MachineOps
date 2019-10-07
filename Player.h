@@ -105,6 +105,12 @@ private:
 	std::unique_ptr<DirectX::Model>				 m_pPlayer;
 	Collision::Sphere							 m_collider;
 
+
+	//ìñÇΩÇËîªíËóp
+	//std::unique_ptr<DirectX::GeometricPrimitive> m_pDecisionArea;
+	//DirectX::SimpleMath::Vector3				 m_decisionAreaPos;
+	//DirectX::SimpleMath::Matrix					 m_decisionAreaMat;
+
 	// èe
 	std::unique_ptr<Weapon>						 m_pWeapon;
 

@@ -143,13 +143,13 @@ void PlayState::Update()
 	}
 
 	// “GA’e‚Ì’†S‚Æ”¼Œa‚ğİ’è
-	Collision::Sphere enemy1[2], enemy2[2];
+	//Collision::Sphere enemy1[2], enemy2[2];
 
-	for (int i = 0; i < 2; i++)
-	{
-		enemy1[i].center = m_pEnemy1[i]->GetPos();					enemy1[i].radius = 1.0f;
-		enemy2[i].center = m_pEnemy2[i]->GetPos();					enemy2[i].radius = 1.0f;
-	}
+	//for (int i = 0; i < 2; i++)
+	//{
+	//	enemy1[i].center = m_pEnemy1[i]->GetPos();					enemy1[i].radius = 1.0f;
+	//	enemy2[i].center = m_pEnemy2[i]->GetPos();					enemy2[i].radius = 1.0f;
+	//}
 	vector<Vector3> bullets = m_pPlayer->GetBulletPos();
 
 	vector<Collision::Sphere> colBullet;
@@ -162,22 +162,22 @@ void PlayState::Update()
 	}
 	for (int i = 0; i < colBullet.size(); i++)
 	{
-		if (Collision::HitCheckSphereToSphere(enemy1[0], colBullet[i]))
+		if (Collision::HitCheckSphereToSphere(m_pEnemy1[0]->GetCollider(), colBullet[i]))
 		{
 			m_pEnemy1[0]->SetHitFlag(true);
 			m_pEnemy1[0]->DownLife(-1);
 		}
-		if (Collision::HitCheckSphereToSphere(enemy1[1], colBullet[i]))
+		if (Collision::HitCheckSphereToSphere(m_pEnemy1[1]->GetCollider(), colBullet[i]))
 		{
 			m_pEnemy1[1]->SetHitFlag(true);
 			m_pEnemy1[1]->DownLife(-1);
 		}
-		if (Collision::HitCheckSphereToSphere(enemy2[0], colBullet[i]))
+		if (Collision::HitCheckSphereToSphere(m_pEnemy2[0]->GetCollider(), colBullet[i]))
 		{
 			m_pEnemy2[0]->SetHitFlag(true);
 			m_pEnemy2[0]->DownLife(-1);
 		}
-		if (Collision::HitCheckSphereToSphere(enemy2[1], colBullet[i]))
+		if (Collision::HitCheckSphereToSphere(m_pEnemy2[1]->GetCollider(), colBullet[i]))
 		{
 			m_pEnemy2[1]->SetHitFlag(true);
 			m_pEnemy2[1]->DownLife(-1);
@@ -189,11 +189,11 @@ void PlayState::Update()
 	for (int i = 0; i < 2; i++)
 	{
 		if (!m_pPlayer->GetHitFlag())
-			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemy1[i]))
+			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy1[i]->GetCollider()))
 				m_pPlayer->SetHitFlag(true);
 
 		if (!m_pPlayer->GetHitFlag())
-			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemy2[i]))
+			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy2[i]->GetCollider()))
 				m_pPlayer->SetHitFlag(true);
 	}
 }
