@@ -71,8 +71,6 @@ private:
 	std::unique_ptr<Player>								m_pPlayer;
 
 	// “G
-	//std::unique_ptr<Enemy>								m_pEnemy1[2];
-	//std::unique_ptr<Enemy>								m_pEnemy2[2];
 	std::unique_ptr<Enemy>								m_pEnemy;
 
 	// F

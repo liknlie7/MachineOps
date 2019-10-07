@@ -6,9 +6,9 @@ using namespace DirectX::SimpleMath;
 
 // コンストラクタ
 Enemy::Enemy(int _type)
-	: /*m_decisionAreaPos(5.0f, 1.0f, 0.0f)*/
-	 m_blinkTime(50)
+	: m_blinkTime(50)
 	, m_hitFlag(false)
+	, m_playerPos(0.0f, 0.0f, 0.0f)
 {
 	m_type = _type;
 }
@@ -18,111 +18,83 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Initialize()
-{
-
-}
-
-// ノーマル型初期化
-void Enemy::InitializeNormal(DirectX::SimpleMath::Vector3 _pos)
+void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 {
 	DX::DeviceResources* deviceResources = GameContext<DX::DeviceResources>().Get();
-
-	// 当たり判定用
-	//m_pDecisionArea = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 2.0f);
 
 	// エフェクトファクトリの作成 
 	EffectFactory* factory = new EffectFactory(deviceResources->GetD3DDevice());
 	// テクスチャの読み込みパス指定 
 	factory->SetDirectory(L"Resources/Models");
-	// ファイルを指定してモデルデータ読み込み 
-	m_pEnemy = Model::CreateFromCMO(
-		deviceResources->GetD3DDevice(),
-		L"Resources/Models/Enemy1.cmo",
-		*factory
-	);
-	delete factory;
 
-	m_pos = _pos;
-	// 速さの初期化
-	m_speed = 0.08f;
+	switch (m_type)
+	{
+	// ノーマルタイプ
+	case Normal:
 
-	m_life = 3;
+		// モデルデータ読み込み 
+		m_pEnemy = Model::CreateFromCMO(
+			deviceResources->GetD3DDevice(),
+			L"Resources/Models/Enemy1.cmo",
+			*factory
+		);
+		delete factory;
 
-	m_collider.radius = 2.0f;
-	m_collider.center = m_pos;
-	//m_decisionAreaPos = m_pos;
+		m_pos = _pos;
+		// 速さの初期化
+		m_speed = 0.08f;
 
-}
+		m_life = 3;
 
-// 盾持ち初期化
-void Enemy::InitializeShield(DirectX::SimpleMath::Vector3 _pos)
-{
-	DX::DeviceResources* deviceResources = GameContext<DX::DeviceResources>().Get();
+		m_collider.radius = 2.0f;
+		m_collider.center = m_pos;
+		//m_decisionAreaPos = m_pos;
 
-	// 当たり判定用
-	//m_pDecisionArea = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 2.0f);
 
-	// エフェクトファクトリの作成 
-	EffectFactory* factory = new EffectFactory(deviceResources->GetD3DDevice());
-	// テクスチャの読み込みパス指定 
-	factory->SetDirectory(L"Resources/Models");
-	// ファイルを指定してモデルデータ読み込み 
-	m_pEnemy = Model::CreateFromCMO(
-		deviceResources->GetD3DDevice(),
-		L"Resources/Models/Enemy2.cmo",
-		*factory
-	);
-	delete factory;
+		break;
 
-	m_pos = _pos;
-	// 速さの初期化
-	m_speed = 0.05f;
+	// 盾持ち
+	case Shield:
 
-	m_life = 5;
+		// モデルデータ読み込み 
+		m_pEnemy = Model::CreateFromCMO(
+			deviceResources->GetD3DDevice(),
+			L"Resources/Models/Enemy2.cmo",
+			*factory
+		);
+		delete factory;
 
-	m_collider.radius = 2.0f;
-	m_collider.center = m_pos;
-	//m_decisionAreaPos = m_pos;
+		m_pos = _pos;
+		// 速さの初期化
+		m_speed = 0.05f;
 
+		m_life = 5;
+
+		m_collider.radius = 2.0f;
+		m_collider.center = m_pos;
+		//m_decisionAreaPos = m_pos;
+
+		break;
+	}
 
 }
 
 // 更新
 void Enemy::Update()
 {
-
-}
-
-void Enemy::UpdateNormal(Vector3 _playerPos)
-{
-	ChasePlayer(_playerPos);
-	if (m_hitFlag)
+	switch (m_type)
 	{
-		Blink();
+	case Normal:
+		ChasePlayer(m_playerPos);
+		// 速度代入
+		m_pos += m_vel;
+		break;
+	case Shield:
+		break;
 	}
-	// 速度代入
-	m_pos += m_vel;
 
 	Vector3 m_dir;
-	m_dir = _playerPos - m_pos;
-	m_dir.Normalize();
-	float angle = atan2(m_dir.x, m_dir.z);
-	Matrix rotate = Matrix::CreateRotationY(angle);
-	Matrix scale = Matrix::CreateScale(1.5f);
-	m_mat = scale * rotate * Matrix::CreateTranslation(Vector3(m_pos.x, 1.0f, m_pos.z));
-	m_collider.center = m_pos;
-
-}
-
-void Enemy::UpdateShield(Vector3 _playerPos)
-{
-	if (m_hitFlag)
-	{
-		Blink();
-	}
-	Vector3 m_dir;
-	m_dir = _playerPos - m_pos;
+	m_dir = m_playerPos - m_pos;
 	m_dir.Normalize();
 	float angle = atan2(m_dir.x, m_dir.z);
 	Matrix rotate = Matrix::CreateRotationY(angle);
@@ -132,6 +104,7 @@ void Enemy::UpdateShield(Vector3 _playerPos)
 	m_collider.center = m_pos;
 
 }
+
 
 // 描画
 void Enemy::Render(const Matrix& _view)
@@ -144,9 +117,6 @@ void Enemy::Render(const Matrix& _view)
 	if (m_life > 0)
 		if (m_blinkTime % 5 == 0)
 			m_pEnemy->Draw(deviceResources->GetD3DDeviceContext(), *state, m_mat, _view, proj->GetMatrix());
-
-	// 判定用
-	//m_pDecisionArea->Draw(m_mat, _view, proj->GetMatrix(), Colors::Red, nullptr, true);
 }
 
 // 後始末

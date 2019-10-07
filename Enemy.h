@@ -33,14 +33,10 @@ public:
 
 public: // アクセサ
 
+	// 座標取得
 	DirectX::SimpleMath::Vector3 Enemy::GetPos()
 	{
 		return m_pos;
-	}
-
-	DirectX::SimpleMath::Matrix Enemy::GetMat()
-	{
-		return m_mat;
 	}
 
 	// 接触判定フラグの取得
@@ -48,11 +44,13 @@ public: // アクセサ
 	{
 		return m_hitFlag;
 	}
+
 	// 接触判定フラグの設定
 	void SetHitFlag(bool _hitFlag)
 	{
 		m_hitFlag = _hitFlag;
 	}
+
 	void DownLife(int _damege)
 	{
 		m_life -= _damege;
@@ -63,17 +61,17 @@ public: // アクセサ
 		return m_collider;
 	}
 
+	void SetPlayerPos(DirectX::SimpleMath::Vector3 _playerPos)
+	{
+		m_playerPos = _playerPos;
+	}
 
 public: // 関数
 
 	// 初期化
-	void Initialize();
-	void InitializeNormal(DirectX::SimpleMath::Vector3 _pos = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
-	void InitializeShield(DirectX::SimpleMath::Vector3 _pos = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
+	void Initialize(DirectX::SimpleMath::Vector3 _pos);
 	// 更新
 	void Update() override;
-	void UpdateNormal(DirectX::SimpleMath::Vector3 _playerPos);
-	void UpdateShield(DirectX::SimpleMath::Vector3 _playerPos);
 	// 描画
 	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// 後始末
@@ -91,10 +89,8 @@ private: // 変数
 	std::unique_ptr<DirectX::Model>	m_pEnemy;
 	Collision::Sphere m_collider;
 
-	//当たり判定用
-	//std::unique_ptr<DirectX::GeometricPrimitive> m_pDecisionArea;
-	//DirectX::SimpleMath::Vector3				 m_decisionAreaPos;
-	//DirectX::SimpleMath::Matrix					 m_decisionAreaMat;
+	// プレイヤーの位置
+	DirectX::SimpleMath::Vector3 m_playerPos;
 
 	// タイプ
 	int												m_type;

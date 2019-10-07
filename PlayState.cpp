@@ -30,14 +30,6 @@ void PlayState::Initialize()
 	m_pProjection = GameContext<Projection>().Get();
 	RECT size = m_pDeviceResources->GetOutputSize();
 
-	//float aspectRatio = float(size.right) / float(size.bottom);
-
-	// 画角を設定
-	//float fovAngleY = XMConvertToRadians(45.0f);
-
-	//// 射影行列を作成する
-	//m_pProjection->SetPerspectiveFieldOfView(fovAngleY, aspectRatio, 0.01f, 1000.f);
-
 	// デバッグカメラの作成
 	m_pDebugCamera = make_unique<DebugCamera>();
 
@@ -60,19 +52,10 @@ void PlayState::Initialize()
 	m_pPlayer->Initialize();
 
 	// 敵作成
-	//for (int i = 0; i < 2; i++)
-	//	m_pEnemy1[i] = make_unique<Enemy>();
-	//m_pEnemy1[0]->InitializeNormal(Vector3(+5.0f, 1.0f, 0.0f));
-	//m_pEnemy1[1]->InitializeNormal(Vector3(-5.0f, 1.0f, 0.0f));
-
-	//for (int i = 0; i < 2; i++)
-	//	m_pEnemy2[i] = make_unique<Enemy>();
-	//m_pEnemy2[0]->InitializeShield(Vector3(+5.0f, 1.0f, -5.0f));
-	//m_pEnemy2[1]->InitializeShield(Vector3(-5.0f, 1.0f, -5.0f));
 	m_pEnemy = make_unique<Enemy>(m_pEnemy->Normal);
+	m_pEnemy->Initialize(Vector3(-5.0f, 1.0f, 0.0f));
 
 	m_color = Colors::Red;
-
 
 	m_viewPort =
 		Matrix::CreateScale(Vector3(.5f, -.5f, 1.f)) *
@@ -96,12 +79,8 @@ void PlayState::Update()
 	m_pPlayer->Update();
 
 	// 敵更新
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	m_pEnemy1[i]->UpdateNormal(m_pPlayer->GetPos());
-	//	m_pEnemy2[i]->UpdateShield(m_pPlayer->GetPos());
-	//}
-	m_pEnemy->UpdateNormal(m_pPlayer->GetPos());
+	m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
+	m_pEnemy->Update();
 
 	// デバッグカメラ更新
 	m_pDebugCamera->update();
@@ -145,13 +124,6 @@ void PlayState::Update()
 	}
 
 	// 敵、弾の中心と半径を設定
-	//Collision::Sphere enemy1[2], enemy2[2];
-
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	enemy1[i].center = m_pEnemy1[i]->GetPos();					enemy1[i].radius = 1.0f;
-	//	enemy2[i].center = m_pEnemy2[i]->GetPos();					enemy2[i].radius = 1.0f;
-	//}
 	vector<Vector3> bullets = m_pPlayer->GetBulletPos();
 
 	vector<Collision::Sphere> colBullet;
@@ -188,16 +160,10 @@ void PlayState::Update()
 	//}
 
 	// プレイヤーと敵との接触判定
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	if (!m_pPlayer->GetHitFlag())
-	//		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy1[i]->GetCollider()))
-	//			m_pPlayer->SetHitFlag(true);
+	if (!m_pPlayer->GetHitFlag())
+		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
+			m_pPlayer->SetHitFlag(true);
 
-	//	if (!m_pPlayer->GetHitFlag())
-	//		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy2[i]->GetCollider()))
-	//			m_pPlayer->SetHitFlag(true);
-	//}
 }
 
 
@@ -213,11 +179,6 @@ void PlayState::Render()
 	m_pPlayer->Render(m_pFollowCamera->getViewMatrix());
 
 	// 敵表示
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	m_pEnemy1[i]->Render(m_pFollowCamera->getViewMatrix());
-	//	m_pEnemy2[i]->Render(m_pFollowCamera->getViewMatrix());
-	//}
 	m_pEnemy->Render(m_pFollowCamera->getViewMatrix());
 
 	// 床の表示
