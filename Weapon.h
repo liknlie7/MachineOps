@@ -77,6 +77,8 @@ public: // ŠÖ”
 	// ’e‚Ì¶¬
 	void CreateBullet();
 
+	void BulletOnCollision(int _number);
+
 private: // •Ï”
 
 	// •Ší

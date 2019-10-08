@@ -46,3 +46,9 @@ void Bullet::Render(const Matrix& _view)
 void Bullet::Finalize()
 {
 }
+
+// è’ìÀÇµÇΩéû
+void Bullet::OnCollision()
+{
+	
+}

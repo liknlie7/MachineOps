@@ -123,41 +123,26 @@ void PlayState::Update()
 		m_pPlayer->SetMousePos(hitPos);
 	}
 
-	// “GA’e‚Ì’†S‚Æ”¼Œa‚ğİ’è
+	// ’e‚Ì’†S‚Æ”¼Œa‚ğİ’è
 	vector<Vector3> bullets = m_pPlayer->GetBulletPos();
 
 	vector<Collision::Sphere> colBullet;
 	colBullet.resize(bullets.size());
-
+	
 	for (int i = 0; i < bullets.size(); i++)
 	{
 		colBullet[i].center = bullets[i];
 		colBullet[i].radius = 0.15f;
 	}
-	//for (int i = 0; i < colBullet.size(); i++)
-	//{
-	//	if (Collision::HitCheckSphereToSphere(m_pEnemy1[0]->GetCollider(), colBullet[i]))
-	//	{
-	//		m_pEnemy1[0]->SetHitFlag(true);
-	//		m_pEnemy1[0]->DownLife(-1);
-	//	}
-	//	if (Collision::HitCheckSphereToSphere(m_pEnemy1[1]->GetCollider(), colBullet[i]))
-	//	{
-	//		m_pEnemy1[1]->SetHitFlag(true);
-	//		m_pEnemy1[1]->DownLife(-1);
-	//	}
-	//	if (Collision::HitCheckSphereToSphere(m_pEnemy2[0]->GetCollider(), colBullet[i]))
-	//	{
-	//		m_pEnemy2[0]->SetHitFlag(true);
-	//		m_pEnemy2[0]->DownLife(-1);
-	//	}
-	//	if (Collision::HitCheckSphereToSphere(m_pEnemy2[1]->GetCollider(), colBullet[i]))
-	//	{
-	//		m_pEnemy2[1]->SetHitFlag(true);
-	//		m_pEnemy2[1]->DownLife(-1);
-	//	}
-
-	//}
+	for (int i = 0; i < colBullet.size(); i++)
+	{
+		if (Collision::HitCheckSphereToSphere(m_pEnemy->GetCollider(), colBullet[i]))
+		{
+			m_pEnemy->SetHitFlag(true);
+			m_pEnemy->DownLife(-1);
+			m_pPlayer->m_pWeapon->BulletOnCollision(i);
+		}
+	}
 
 	// ƒvƒŒƒCƒ„[‚Æ“G‚Æ‚ÌÚG”»’è
 	if (!m_pPlayer->GetHitFlag())

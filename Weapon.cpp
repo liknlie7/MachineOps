@@ -37,20 +37,20 @@ void Weapon::Update()
 		(*itr)->Update();
 	}
 
-	int i = 0;
-	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-	{
-		if (i == bulletNumber)
-		{
-			m_pBullets[bulletNumber]->SetHitFlag(bulletHitFlag);
-		}
-		if ((*itr)->GetHitFlag())
-		{
-			m_pBullets.erase(itr);
-			(*itr)->SetHitFlag(false);
-		}
-		i++;
-	}
+	//int i = 0;
+	//for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	//{
+	//	if (i == bulletNumber)
+	//	{
+	//		m_pBullets[bulletNumber]->SetHitFlag(bulletHitFlag);
+	//	}
+	//	if ((*itr)->GetHitFlag())
+	//	{
+	//		m_pBullets.erase(itr);
+	//		(*itr)->SetHitFlag(false);
+	//	}
+	//	i++;
+	//}
 }
 
 // •`‰æ
@@ -76,5 +76,19 @@ void Weapon::CreateBullet()
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{
 		(*itr)->Initialize(m_pBulletGeometric.get());
+	}
+}
+
+void Weapon::BulletOnCollision(int _number)
+{
+	m_pBullets[_number]->SetHitFlag(true);
+
+	vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
+	while (itr != m_pBullets.end())
+	{
+		if ((*itr)->GetHitFlag())
+			itr = m_pBullets.erase(itr);
+		else
+			++itr;
 	}
 }

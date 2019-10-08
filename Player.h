@@ -105,18 +105,14 @@ private:
 	std::unique_ptr<DirectX::Model>				 m_pPlayer;
 	Collision::Sphere							 m_collider;
 
-
 	//当たり判定用
 	//std::unique_ptr<DirectX::GeometricPrimitive> m_pDecisionArea;
 	//DirectX::SimpleMath::Vector3				 m_decisionAreaPos;
 	//DirectX::SimpleMath::Matrix					 m_decisionAreaMat;
 
-	// 銃
-	std::unique_ptr<Weapon>						 m_pWeapon;
-
 	// 向き
 	DirectX::SimpleMath::Vector3				 m_dir;
-	
+
 	// マウス座標
 	DirectX::SimpleMath::Vector3				 m_mousePos;
 
@@ -130,4 +126,9 @@ private:
 	bool										 m_hitFlag;
 	// 点滅時間
 	int											 m_blinkTime;
+
+public:
+	// 銃
+	std::unique_ptr<Weapon>						 m_pWeapon;
+
 };

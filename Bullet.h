@@ -36,9 +36,10 @@ public: // アクセサ
 	{
 		return m_hitFlag;
 	}
-	void SetHitFlag(bool _hitFlag)
+
+	void SetHitFlag(bool _flag)
 	{
-		m_hitFlag = _hitFlag;
+		m_hitFlag = _flag;
 	}
 
 public: // 関数
@@ -51,6 +52,9 @@ public: // 関数
 	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// 後処理
 	void Finalize();
+
+	// 衝突した時
+	void OnCollision();
 
 public: // 定数
 
