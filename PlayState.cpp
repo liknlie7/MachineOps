@@ -138,8 +138,7 @@ void PlayState::Update()
 	{
 		if (Collision::HitCheckSphereToSphere(m_pEnemy->GetCollider(), colBullet[i]))
 		{
-			m_pEnemy->SetHitFlag(true);
-			m_pEnemy->DownLife(-1);
+			m_pEnemy->OnCollision();
 			m_pPlayer->m_pWeapon->BulletOnCollision(i);
 		}
 	}
@@ -148,7 +147,6 @@ void PlayState::Update()
 	if (!m_pPlayer->GetHitFlag())
 		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
 			m_pPlayer->SetHitFlag(true);
-
 }
 
 

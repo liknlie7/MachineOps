@@ -51,11 +51,6 @@ public: // アクセサ
 		m_hitFlag = _hitFlag;
 	}
 
-	void DownLife(int _damege)
-	{
-		m_life -= _damege;
-	}
-
 	Collision::Sphere GetCollider()
 	{
 		return m_collider;
@@ -81,6 +76,9 @@ public: // 関数
 	void ChasePlayer(DirectX::SimpleMath::Vector3 _playerPos);
 	// 点滅
 	void Blink();
+
+	// 衝突した時
+	void OnCollision();
 
 
 private: // 変数

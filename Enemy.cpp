@@ -9,6 +9,7 @@ Enemy::Enemy(int _type)
 	: m_blinkTime(50)
 	, m_hitFlag(false)
 	, m_playerPos(0.0f, 0.0f, 0.0f)
+	, m_life(3)
 {
 	m_type = _type;
 }
@@ -146,4 +147,12 @@ void Enemy::Blink()
 		m_hitFlag = false;
 		m_blinkTime = 50;
 	}
+}
+
+// è’ìÀÇµÇΩéû
+void Enemy::OnCollision()
+{
+	m_life -= 1;
+
+	Blink();
 }
