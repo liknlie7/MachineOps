@@ -30,7 +30,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 
 	switch (m_type)
 	{
-	// ノーマルタイプ
+		// ノーマルタイプ
 	case Normal:
 
 		// モデルデータ読み込み 
@@ -54,7 +54,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 
 		break;
 
-	// 盾持ち
+		// 盾持ち
 	case Shield:
 
 		// モデルデータ読み込み 
@@ -115,9 +115,8 @@ void Enemy::Render(const Matrix& _view)
 	Projection* proj = GameContext<Projection>().Get();
 
 	// モデル描画
-	if (m_life > 0)
-		if (m_blinkTime % 5 == 0)
-			m_pEnemy->Draw(deviceResources->GetD3DDeviceContext(), *state, m_mat, _view, proj->GetMatrix());
+	if (m_blinkTime % 5 == 0)
+		m_pEnemy->Draw(deviceResources->GetD3DDeviceContext(), *state, m_mat, _view, proj->GetMatrix());
 }
 
 // 後始末
