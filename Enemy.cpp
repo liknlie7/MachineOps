@@ -4,6 +4,8 @@
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
+using namespace std;
+
 // コンストラクタ
 Enemy::Enemy(int _type)
 	: m_blinkTime(50)
@@ -25,6 +27,10 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 
 	// エフェクトファクトリの作成 
 	EffectFactory* factory = new EffectFactory(deviceResources->GetD3DDevice());
+	
+	// 弾の形状作成
+	m_pBulletGeometric = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 0.3f);
+
 	// テクスチャの読み込みパス指定 
 	factory->SetDirectory(L"Resources/Models");
 
@@ -87,8 +93,15 @@ void Enemy::Update()
 	{
 	case Normal:
 		ChasePlayer(m_playerPos);
+		CreateBullet();
+		for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+		{
+			(*itr)->Update();
+		}
+
 		// 速度代入
 		m_pos += m_vel;
+
 		break;
 	case Shield:
 		break;
@@ -97,8 +110,8 @@ void Enemy::Update()
 	Vector3 m_dir;
 	m_dir = m_playerPos - m_pos;
 	m_dir.Normalize();
-	float angle = atan2(m_dir.x, m_dir.z);
-	Matrix rotate = Matrix::CreateRotationY(angle);
+	m_angle = atan2(m_dir.x, m_dir.z);
+	Matrix rotate = Matrix::CreateRotationY(m_angle);
 	Matrix scale = Matrix::CreateScale(1.5f);
 	m_mat = scale * rotate * Matrix::CreateTranslation(Vector3(m_pos.x, 1.0f, m_pos.z));
 
@@ -115,8 +128,15 @@ void Enemy::Render(const Matrix& _view)
 	Projection* proj = GameContext<Projection>().Get();
 
 	// モデル描画
-	if (m_blinkTime % 5 == 0)
+	//if (m_blinkTime % 5 == 0)
 		m_pEnemy->Draw(deviceResources->GetD3DDeviceContext(), *state, m_mat, _view, proj->GetMatrix());
+
+	// 弾描画
+	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	{
+		(*itr)->Render(_view);
+	}
+
 }
 
 // 後始末
@@ -154,4 +174,15 @@ void Enemy::OnCollision()
 	m_life -= 1;
 
 	Blink();
+}
+
+// 弾の作成
+void Enemy::CreateBullet()
+{
+	m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), m_angle, Vector3(0.0f, 0.0f, 0.15f)));
+
+	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	{
+		(*itr)->Initialize(m_pBulletGeometric.get());
+	}
 }

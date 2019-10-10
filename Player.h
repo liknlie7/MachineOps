@@ -13,8 +13,8 @@
 #include "StepTimer.h"
 #include "Collision.h"
 #include "GameContext.h"
-#include "Weapon.h"
 #include "GameObject.h"
+#include "Weapon.h"
 
 
 class Bullet;

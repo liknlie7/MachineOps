@@ -11,7 +11,7 @@
 #include "Collision.h"
 #include "GameObject.h"
 #include "GameContext.h"
-
+#include "Bullet.h"
 
 // 敵
 class Enemy : public GameObject
@@ -76,6 +76,8 @@ public: // 関数
 	void ChasePlayer(DirectX::SimpleMath::Vector3 _playerPos);
 	// 点滅
 	void Blink();
+	// 弾の作成
+	void CreateBullet();
 
 	// 衝突した時
 	void OnCollision();
@@ -87,6 +89,10 @@ private: // 変数
 	std::unique_ptr<DirectX::Model>	m_pEnemy;
 	Collision::Sphere m_collider;
 
+	// 弾
+	std::unique_ptr<DirectX::GeometricPrimitive> m_pBulletGeometric;
+	std::vector<std::unique_ptr<Bullet>>		 m_pBullets;
+
 	// プレイヤーの位置
 	DirectX::SimpleMath::Vector3 m_playerPos;
 
@@ -94,6 +100,8 @@ private: // 変数
 	int												m_type;
 	// 速さ
 	float											m_speed;
+	// 角度
+	float											m_angle;
 	// 体力
 	int												m_life;
 	// ヒットフラグ
