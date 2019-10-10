@@ -7,15 +7,12 @@ using namespace DirectX::SimpleMath;
 
 using namespace std;
 
-// 弾スピードを定義
-const Vector3 Bullet::SPEED(0.0f, 0.0f, 0.3f);
-
 // コンストラクタ
-Bullet::Bullet(Vector3 _pos, float _angle)
+Bullet::Bullet(Vector3 _pos, float _angle, Vector3 _speed)
 	: m_hitFlag(false)
 {
 	m_pos = _pos;
-	m_vel = SPEED;
+	m_vel = _speed;
 	Matrix rotate = Matrix::CreateRotationY(_angle);
 	m_vel = Vector3::Transform(m_vel, rotate);
 }

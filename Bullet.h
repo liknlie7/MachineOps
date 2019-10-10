@@ -14,7 +14,7 @@ class Bullet :public GameObject
 public: // 基本
 
 	// コンストラクタ
-	Bullet(DirectX::SimpleMath::Vector3 _pos, float _angle);
+	Bullet(DirectX::SimpleMath::Vector3 _pos, float _angle, DirectX::SimpleMath::Vector3 _speed);
 	// デストラクタ
 	~Bullet() {}
 
@@ -55,11 +55,6 @@ public: // 関数
 
 	// 衝突した時
 	void OnCollision();
-
-public: // 定数
-
-	// 弾スピード
-	static const DirectX::SimpleMath::Vector3 SPEED;
 
 private: // 変数
 
