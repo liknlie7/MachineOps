@@ -7,6 +7,9 @@
 
 class GameObject
 {
+private:
+	bool m_isValid;
+
 protected:
 	DirectX::SimpleMath::Vector3 m_pos;
 	DirectX::SimpleMath::Vector3 m_rot;
@@ -24,6 +27,10 @@ public:
 	virtual void Render(const DirectX::SimpleMath::Matrix& _view) = 0;
 
 public:
+	void Invalidate();
+	bool IsValid() const;
+	bool IsInvalid() const;
+
 	const DirectX::SimpleMath::Vector3& GetPosition() const;
 	const DirectX::SimpleMath::Vector3& GetRotation() const;
 	const DirectX::SimpleMath::Vector3& GetScale() const;
@@ -31,7 +38,24 @@ public:
 	void SetPosition(const DirectX::SimpleMath::Vector3& position);
 	void SetRotation(const DirectX::SimpleMath::Vector3& rotation);
 	void SetScale(const DirectX::SimpleMath::Vector3& scale);
+
+public:
+	static void Destroy(GameObject* object);
+
 };
+
+
+inline bool GameObject::IsValid() const
+{
+	return m_isValid;
+}
+
+
+inline bool GameObject::IsInvalid() const
+{
+	return !m_isValid;
+}
+
 
 inline const DirectX::SimpleMath::Vector3& GameObject::GetPosition() const
 {
@@ -39,12 +63,10 @@ inline const DirectX::SimpleMath::Vector3& GameObject::GetPosition() const
 }
 
 
-
 inline const DirectX::SimpleMath::Vector3 & GameObject::GetRotation() const
 {
 	return m_rot;
 }
-
 
 
 inline const DirectX::SimpleMath::Vector3 & GameObject::GetScale() const
@@ -59,15 +81,19 @@ inline void GameObject::SetPosition(const DirectX::SimpleMath::Vector3& position
 }
 
 
-
 inline void GameObject::SetRotation(const DirectX::SimpleMath::Vector3& rotation)
 {
 	m_rot = rotation;
 }
 
 
-
 inline void GameObject::SetScale(const DirectX::SimpleMath::Vector3& scale)
 {
 	m_scale = scale;
+}
+
+
+inline void GameObject::Destroy(GameObject * object)
+{
+	object->Invalidate();
 }

@@ -16,3 +16,8 @@ GameObject::GameObject()
 GameObject::~GameObject()
 {
 }
+
+void GameObject::Invalidate()
+{
+	m_isValid = false;
+}

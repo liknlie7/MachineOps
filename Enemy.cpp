@@ -117,6 +117,10 @@ void Enemy::Update()
 
 	m_collider.center = m_pos;
 
+	if (m_life == 0)
+		Destroy(this);
+		
+
 }
 
 
@@ -129,6 +133,7 @@ void Enemy::Render(const Matrix& _view)
 
 	// ƒ‚ƒfƒ‹•`‰æ
 	//if (m_blinkTime % 5 == 0)
+	if(m_life != 0)
 		m_pEnemy->Draw(deviceResources->GetD3DDeviceContext(), *state, m_mat, _view, proj->GetMatrix());
 
 	// ’e•`‰æ
@@ -171,7 +176,7 @@ void Enemy::Blink()
 // Õ“Ë‚µ‚½
 void Enemy::OnCollision()
 {
-	m_life -= 1;
+	m_life--;
 
 	Blink();
 }
