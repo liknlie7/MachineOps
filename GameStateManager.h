@@ -38,7 +38,7 @@ public:
 
 	void SetStartState(const std::string& stateName);
 
-	void Update(float elapsedTime);
+	void Update();
 	void Render();
 
 	void RequestState(const std::string& stateName);

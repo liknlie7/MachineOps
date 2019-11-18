@@ -8,6 +8,7 @@
 #include <SpriteBatch.h>
 #include <SimpleMath.h>
 #include <unordered_map>
+
 #include "DeviceResources.h"
 #include "Projection.h"
 #include "StepTimer.h"
@@ -61,6 +62,7 @@ private:
 	void CreateDeviceDependentResources();
 	void CreateWindowSizeDependentResources();
 
+
 	// Device resources.
 	std::unique_ptr<DX::DeviceResources>    m_deviceResources;
 
@@ -84,4 +86,5 @@ private:
 
 	// コモンステート
 	std::unique_ptr<GameStateManager>       m_gameStateManager;
+
 };

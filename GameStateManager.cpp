@@ -26,7 +26,7 @@ void GameStateManager::SetStartState(const std::string& stateName)
 }
 
 
-void GameStateManager::Update(float elapsedTime)
+void GameStateManager::Update()
 {
 	if (!m_nextStateName.empty())
 	{

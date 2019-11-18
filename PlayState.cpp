@@ -63,9 +63,22 @@ void PlayState::Initialize()
 		Matrix::CreateScale(Vector3(float(size.right), float(size.bottom), 1.f));
 }
 
-
 void PlayState::Update()
 {
+
+	//std::thread th = std::thread(&AsyncLoad);
+
+	//th.join();
+
+	//if (!GetLockFlag())
+	//{
+	//	//ロード中
+	//}
+	//else
+	//{
+	//	//ロード完了
+	//}
+
 	Mouse::State mouseState = Mouse::Get().GetState();
 	Keyboard::State keyState = Keyboard::Get().GetState();
 
@@ -190,3 +203,12 @@ void PlayState::Finalize()
 	m_pDebugCamera.reset();
 	m_pGridFloor.reset();
 }
+
+// 非同期ロード
+//std::function<void(PlayState*)> AsyncLoad()
+//{
+//	auto sleepTime = std::chrono::seconds(10);
+//	std::this_thread::sleep_for(sleepTime);
+//
+//	SetLockFlag(true);
+//}
