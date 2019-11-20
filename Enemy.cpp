@@ -118,9 +118,7 @@ void Enemy::Update()
 	m_collider.center = m_pos;
 
 	if (m_life == 0)
-		Destroy(this);
-		
-
+		m_pEnemy = nullptr;
 }
 
 
