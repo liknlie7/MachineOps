@@ -61,6 +61,10 @@ void PlayState::Initialize()
 		Matrix::CreateScale(Vector3(.5f, -.5f, 1.f)) *
 		Matrix::CreateTranslation(Vector3(.5f, .5f, 0.f)) *
 		Matrix::CreateScale(Vector3(float(size.right), float(size.bottom), 1.f));
+
+	//デバッグ用
+	geo = GeometricPrimitive::CreateSphere(m_pDeviceResources->GetD3DDeviceContext(), 1.0f);
+
 }
 
 void PlayState::Update()
@@ -130,18 +134,22 @@ void PlayState::Update()
 	Collision::Triangle tri2(v0, v3, v2);
 
 	// マウスRayと三角形の当たり判定(交差点検出)
-	if (Collision::IntersectSegmentTriangle(rayNear, raySubtraction, tri1, &hitPos) ||
-		Collision::IntersectSegmentTriangle(rayNear, raySubtraction, tri2, &hitPos))
+	if (Collision::IntersectSegmentTriangle(rayNear, rayFar, tri1, &hitPos) ||
+		Collision::IntersectSegmentTriangle(rayNear, rayFar, tri2, &hitPos))
 	{
 		m_pPlayer->SetMousePos(hitPos);
+		geoVec = hitPos;
 	}
+
+	// 交差地点デバッグ
+	geoMat = Matrix::CreateTranslation(geoVec);
 
 	// 弾の中心と半径を設定
 	vector<Vector3> bullets = m_pPlayer->GetBulletPos();
 
 	vector<Collision::Sphere> colBullet;
 	colBullet.resize(bullets.size());
-	
+
 	for (int i = 0; i < bullets.size(); i++)
 	{
 		colBullet[i].center = bullets[i];
@@ -188,6 +196,11 @@ void PlayState::Render()
 	m_pFloor->Render(m_pFollowCamera->getViewMatrix());
 
 	//-----デバッグ用(これ以外すべて消す----------------------------------
+	Projection* proj = GameContext<Projection>().Get();
+	CommonStates* state = GameContext<CommonStates>().Get();
+
+	geo->Draw(geoMat, m_pFollowCamera->getViewMatrix(), proj->GetMatrix(), Colors::Red);
+
 	// デバッグ用床の表示
 	//m_pDebugFloor->Draw(context, debugCamera->getViewMatrix(), m_projection);
 

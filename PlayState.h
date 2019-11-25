@@ -103,5 +103,9 @@ private:
 	bool									isLoaded = false;
 	std::mutex								isLoadedMutex;
 	
+
+	std::unique_ptr<DirectX::GeometricPrimitive> geo;
+	DirectX::SimpleMath::Matrix geoMat;
+	DirectX::SimpleMath::Vector3 geoVec;
 };
 

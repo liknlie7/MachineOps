@@ -27,7 +27,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 
 	// エフェクトファクトリの作成 
 	EffectFactory* factory = new EffectFactory(deviceResources->GetD3DDevice());
-	
+
 	// 弾の形状作成
 	m_pBulletGeometric = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 0.3f);
 
@@ -130,7 +130,7 @@ void Enemy::Render(const Matrix& _view)
 
 	// モデル描画
 	//if (m_blinkTime % 5 == 0)
-	if(m_life != 0)
+	if (m_life != 0)
 		m_pEnemy->Draw(deviceResources->GetD3DDeviceContext(), *state, m_mat, _view, proj->GetMatrix());
 
 	// 弾描画
@@ -179,12 +179,12 @@ void Enemy::OnCollision()
 }
 
 // 弾の作成
-//void Enemy::CreateBullet()
-//{
-//	m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), m_angle, Vector3(0.0f, 0.0f, 0.15f)));
-//
-//	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-//	{
-//		(*itr)->Initialize(m_pBulletGeometric.get());
-//	}
-//}
+void Enemy::CreateBullet()
+{
+	m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), m_angle, Vector3(0.0f, 0.0f, 0.15f)));
+
+	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	{
+		(*itr)->Initialize(m_pBulletGeometric.get());
+	}
+}
