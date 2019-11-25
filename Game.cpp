@@ -13,7 +13,7 @@
 
 #include "TitleState.h"
 #include "PlayState.h"
-
+#include "ResultState.h"
 
 extern void ExitGame();
 
@@ -74,6 +74,7 @@ void Game::Initialize(HWND window, int width, int height)
 	m_gameStateManager = make_unique<GameStateManager>();
 	m_gameStateManager->RegisterState<TitleState>("Title");
 	m_gameStateManager->RegisterState<PlayState>("Play");
+	m_gameStateManager->RegisterState<ResultState>("Result");
 	m_gameStateManager->SetStartState("Play");
 	GameContext<GameStateManager>::Register(m_gameStateManager);
 }

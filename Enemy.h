@@ -33,8 +33,13 @@ public:
 
 public: // アクセサ
 
+	DirectX::Model* GetModel()
+	{
+		return m_pEnemy.get();
+	}
+
 	// 座標取得
-	DirectX::SimpleMath::Vector3 Enemy::GetPos()
+	DirectX::SimpleMath::Vector3 GetPos()
 	{
 		return m_pos;
 	}

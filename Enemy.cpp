@@ -38,7 +38,6 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 	{
 		// ノーマルタイプ
 	case Normal:
-
 		// モデルデータ読み込み 
 		m_pEnemy = Model::CreateFromCMO(
 			deviceResources->GetD3DDevice(),

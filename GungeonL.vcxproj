@@ -189,6 +189,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="Projection.h" />
+    <ClInclude Include="ResultState.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="TitleState.h" />
@@ -217,6 +218,7 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="ResultState.cpp" />
     <ClCompile Include="TitleState.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>

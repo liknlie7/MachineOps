@@ -160,6 +160,13 @@ void PlayState::Update()
 	if (!m_pPlayer->GetHitFlag())
 		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
 			m_pPlayer->SetHitFlag(true);
+
+	// リザルトシーンへ遷移
+	if (m_pEnemy->GetModel() == nullptr)
+	{
+		GameStateManager* gameStateManager = GameContext<GameStateManager>().Get();
+		gameStateManager->RequestState("Result");
+	}
 }
 
 
