@@ -116,8 +116,6 @@ private:
 	// マウス座標
 	DirectX::SimpleMath::Vector3				 m_mousePos;
 
-	// 重力
-	float										 m_gravity;
 	// 角度
 	float										 m_angle;
 	// インターバル
@@ -128,6 +126,7 @@ private:
 	int											 m_blinkTime;
 
 public:
+
 	// 銃
 	std::unique_ptr<Weapon>						 m_pWeapon;
 

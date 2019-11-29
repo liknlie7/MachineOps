@@ -53,9 +53,6 @@
     <ClInclude Include="PlayState.h">
       <Filter>GameState</Filter>
     </ClInclude>
-    <ClInclude Include="TitleState.h">
-      <Filter>GameState</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -88,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ResultState.h">
+      <Filter>GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleState.h">
       <Filter>GameState</Filter>
     </ClInclude>
   </ItemGroup>

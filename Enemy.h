@@ -113,4 +113,6 @@ private: // •Ï”
 	bool											m_hitFlag;
 	// “_–ÅŠÔ
 	int												m_blinkTime;
+
+
 };

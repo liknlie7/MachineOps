@@ -53,7 +53,7 @@ void PlayState::Initialize()
 
 	// “Gì¬
 	m_pEnemy = make_unique<Enemy>(m_pEnemy->Normal);
-	m_pEnemy->Initialize(Vector3(-5.0f, 1.0f, 0.0f));
+	m_pEnemy->Initialize(Vector3(0.0f, 1.0f, -15.0f));
 
 	m_color = Colors::Red;
 

@@ -10,14 +10,11 @@ using namespace std;
 
 // コンストラクタ
 Player::Player()
-	: m_gravity(0.03f)
-	, m_mousePos(0.0f, 0.0f, 0.0f)
+	: m_mousePos(0.0f, 0.0f, 0.0f)
 	, m_shotInterval(15.0f)
 	, m_hitFlag(false)
 	, m_blinkTime(50)
 	, m_angle(0.0f)
-	
-	
 {
 	m_pWeapon = make_unique<Weapon>();
 }
@@ -90,13 +87,6 @@ void Player::Update()
 	//if (keyState.Space && m_pos.y == 0.5f) { m_vel.y = 0.5f; }
 
 	if (m_hitFlag)  Blink();
-
-	//// 重力
-	//m_vel.y = -m_gravity;
-
-	//// 地面
-	//if (m_pos.y <= 0.5f) { m_pos.y = 0.5f; }
-
 
 	// 速度代入
 	m_pos += m_vel;

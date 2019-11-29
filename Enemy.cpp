@@ -91,7 +91,7 @@ void Enemy::Update()
 	switch (m_type)
 	{
 	case Normal:
-		ChasePlayer(m_playerPos);
+		//ChasePlayer(m_playerPos);
 		//CreateBullet();
 		//for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 		//{
@@ -109,6 +109,7 @@ void Enemy::Update()
 	Vector3 m_dir;
 	m_dir = m_playerPos - m_pos;
 	m_dir.Normalize();
+
 	m_angle = atan2(m_dir.x, m_dir.z);
 	Matrix rotate = Matrix::CreateRotationY(m_angle);
 	Matrix scale = Matrix::CreateScale(1.5f);
