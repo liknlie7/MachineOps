@@ -73,10 +73,10 @@ void Weapon::CreateBullet()
 	// íeÇÃçÏê¨
 	m_pBullets.push_back(make_unique<Bullet>(m_playerPos + Vector3(0.0f, 0.9f, 0.0f), m_angle, Vector3(0.0f, 0.0f, 0.3f)));
 
-	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-	{
-		(*itr)->Initialize(m_pBulletGeometric.get());
-	}
+	//for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	//{
+	//	(*itr)->Initialize(m_pBulletGeometric.get());
+	//}
 }
 
 void Weapon::BulletOnCollision(int _number)

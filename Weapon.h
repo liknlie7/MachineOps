@@ -37,7 +37,7 @@ public: // アクセサ
 		std::vector<DirectX::SimpleMath::Vector3> bulletsPos;
 		for (auto& numBullet : m_pBullets)
 		{
-			bulletsPos.push_back(numBullet->GetPos());
+			bulletsPos.push_back(numBullet->GetPosition());
 		}
 		return bulletsPos;
 	}

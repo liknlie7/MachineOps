@@ -172,6 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletFactory.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="DebugFont.h" />
@@ -185,6 +186,9 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="GridFloor.h" />
+    <ClInclude Include="IBullet.h" />
+    <ClInclude Include="Normal.h" />
+    <ClInclude Include="NWay.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
@@ -198,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletFactory.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="DebugFont.cpp" />
@@ -210,6 +215,8 @@
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="GridFloor.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Normal.cpp" />
+    <ClCompile Include="NWay.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

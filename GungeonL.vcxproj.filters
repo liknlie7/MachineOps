@@ -20,6 +20,12 @@
     <Filter Include="GameState">
       <UniqueIdentifier>{a829e195-26f0-4e75-880d-b6d636750ceb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Weapon">
+      <UniqueIdentifier>{58caec7b-e041-4ef7-bf18-0d6236909b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Weapon\Bullet">
+      <UniqueIdentifier>{87eaa084-d16b-46eb-9cd1-f22e0138b573}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -29,9 +35,6 @@
     <ClInclude Include="DeviceResources.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Object</Filter>
     </ClInclude>
@@ -39,9 +42,6 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Weapon.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="GameState.h">
@@ -90,15 +90,30 @@
     <ClInclude Include="TitleState.h">
       <Filter>GameState</Filter>
     </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Object\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="IBullet.h">
+      <Filter>Object\Weapon\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Object\Weapon\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletFactory.h">
+      <Filter>Object\Weapon\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="NWay.h">
+      <Filter>Object\Weapon\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Normal.h">
+      <Filter>Object\Weapon\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="DeviceResources.cpp">
       <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Object</Filter>
@@ -107,9 +122,6 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Weapon.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="GameStateManager.cpp">
@@ -142,6 +154,21 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="ResultState.cpp">
       <Filter>GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Object\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Object\Weapon\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletFactory.cpp">
+      <Filter>Object\Weapon\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="NWay.cpp">
+      <Filter>Object\Weapon\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Normal.cpp">
+      <Filter>Object\Weapon\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
