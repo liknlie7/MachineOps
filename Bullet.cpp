@@ -10,7 +10,6 @@ using namespace std;
 // コンストラクタ
 Bullet::Bullet(Vector3 _pos, float _angle, Vector3 _speed)
 	: m_hitFlag(false)
-	, m_used(false)
 {
 	m_pos = _pos;
 	m_vel = _speed;
@@ -19,9 +18,9 @@ Bullet::Bullet(Vector3 _pos, float _angle, Vector3 _speed)
 }
 
 // 初期化
-void Bullet::Initialize(BulletFactory* _bulletFactory)
+void Bullet::Initialize(GeometricPrimitive* _type)
 {
-	m_bullet = _bulletFactory->GetGeometric();
+	m_bullet = _type;
 }
 
 // 更新
