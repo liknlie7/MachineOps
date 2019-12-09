@@ -51,7 +51,7 @@ private:
 public:
 
 	void Initialize() override;
-	void Update() override;
+	void Update(DX::StepTimer const& timer) override;
 	void Render() override;
 	void Finalize() override;
 

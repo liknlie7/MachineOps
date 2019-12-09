@@ -5,6 +5,8 @@
 #include <string>
 #include <functional>
 
+#include "StepTimer.h"
+
 class GameObject
 {
 private:
@@ -23,10 +25,11 @@ public:
 
 
 public:
-	virtual void Update() = 0;
+	virtual void Update(DX::StepTimer const& timer) = 0;
 	virtual void Render(const DirectX::SimpleMath::Matrix& _view) = 0;
 
 public:
+
 	void Invalidate();
 	bool IsValid() const;
 	bool IsInvalid() const;

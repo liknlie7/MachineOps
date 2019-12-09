@@ -60,7 +60,7 @@ void Player::Initialize()
 }
 
 // 更新
-void Player::Update()
+void Player::Update(DX::StepTimer const& timer)
 {
 	// キーボードの状態を取得する
 	DirectX::Keyboard::State keyState = DirectX::Keyboard::Get().GetState();
@@ -116,9 +116,9 @@ void Player::Update()
 	// 武器の更新
 	m_pWeapon->SetAngle(m_angle);
 	m_pWeapon->SetPlayerPos(m_pos);
-	m_pWeapon->Update();
+	m_pWeapon->Update(timer);
 
-	m_collider.center = m_pos;
+	m_collider.center = m_pos;  
 
 }
 

@@ -27,14 +27,14 @@ void Weapon::Initialize()
 }
 
 // çXêV
-void Weapon::Update()
+void Weapon::Update(DX::StepTimer const& timer)
 {
 	m_mat = Matrix::CreateTranslation(m_pos) * Matrix::CreateRotationY(m_angle) *
 		Matrix::CreateTranslation(m_playerPos);
 
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{
-		(*itr)->Update();
+		(*itr)->Update(timer);
 	}
 
 	//int i = 0;

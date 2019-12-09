@@ -67,7 +67,7 @@ void PlayState::Initialize()
 
 }
 
-void PlayState::Update()
+void PlayState::Update(DX::StepTimer const& timer)
 {
 
 	//std::thread th = std::thread(&AsyncLoad);
@@ -93,11 +93,11 @@ void PlayState::Update()
 	}
 
 	// プレイヤー更新
-	m_pPlayer->Update();
+	m_pPlayer->Update(timer);
 
 	// 敵更新
 	m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
-	m_pEnemy->Update();
+	m_pEnemy->Update(timer);
 
 	// デバッグカメラ更新
 	m_pDebugCamera->update();

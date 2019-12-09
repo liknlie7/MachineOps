@@ -11,7 +11,10 @@ Enemy::Enemy(int _type)
 	: m_blinkTime(50)
 	, m_hitFlag(false)
 	, m_playerPos(0.0f, 0.0f, 0.0f)
-	, m_life(3)
+	, m_life(300)
+	, m_wayNum(5)
+	, m_changeAngle(30)
+	, m_bulletEndAngle(180)
 {
 	m_type = _type;
 }
@@ -50,7 +53,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		// ë¨Ç≥ÇÃèâä˙âª
 		m_speed = 0.08f;
 
-		m_life = 3;
+		m_life = 300;
 
 		m_collider.radius = 2.0f;
 		m_collider.center = m_pos;
@@ -86,17 +89,23 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 }
 
 // çXêV
-void Enemy::Update()
+void Enemy::Update(DX::StepTimer const& timer)
 {
 	switch (m_type)
 	{
 	case Normal:
 		//ChasePlayer(m_playerPos);
-		//CreateBullet();
-		//for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-		//{
-		//	(*itr)->Update();
-		//}
+
+		m_bulletEndAngle -= 180 + m_wayNum / 2 * m_changeAngle;
+
+		for (int i = 0; i < m_wayNum; i++)
+		{
+			CreateBullet();
+		}
+		for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+		{
+			(*itr)->Update(timer);
+		}
 
 		// ë¨ìxë„ì¸
 		m_pos += m_vel;
@@ -110,8 +119,8 @@ void Enemy::Update()
 	m_dir = m_playerPos - m_pos;
 	m_dir.Normalize();
 
-	m_angle = atan2(m_dir.x, m_dir.z);
-	Matrix rotate = Matrix::CreateRotationY(m_angle);
+	m_enemyAngle = atan2(m_dir.x, m_dir.z);
+	Matrix rotate = Matrix::CreateRotationY(m_enemyAngle);
 	Matrix scale = Matrix::CreateScale(1.5f);
 	m_mat = scale * rotate * Matrix::CreateTranslation(Vector3(m_pos.x, 1.0f, m_pos.z));
 
@@ -182,7 +191,7 @@ void Enemy::OnCollision()
 // íeÇÃçÏê¨
 void Enemy::CreateBullet()
 {
-	m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), m_angle, Vector3(0.0f, 0.0f, 0.15f)));
+	m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), m_enemyAngle + m_bulletEndAngle, Vector3(0.0f, 0.0f, 0.15f)));
 
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{

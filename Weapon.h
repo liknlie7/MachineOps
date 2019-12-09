@@ -68,7 +68,7 @@ public: // ŠÖ”
 	// ‰Šú‰»
 	void Initialize();
 	// XV
-	void Update() override;
+	void Update(DX::StepTimer const& timer) override;
 	// •`‰æ
 	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// Œãn––

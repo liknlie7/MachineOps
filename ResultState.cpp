@@ -27,7 +27,7 @@ void ResultState::Initialize()
 }
 
 
-void ResultState::Update()
+void ResultState::Update(DX::StepTimer const& timer)
 {
 	m_count++;
 

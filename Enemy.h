@@ -71,7 +71,7 @@ public: // 関数
 	// 初期化
 	void Initialize(DirectX::SimpleMath::Vector3 _pos);
 	// 更新
-	void Update() override;
+	void Update(DX::StepTimer const& timer) override;
 	// 描画
 	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// 後始末
@@ -91,22 +91,28 @@ public: // 関数
 private: // 変数
 
 	// モデル
-	std::unique_ptr<DirectX::Model>	m_pEnemy;
-	Collision::Sphere m_collider;
+	std::unique_ptr<DirectX::Model>					m_pEnemy;
+	Collision::Sphere								m_collider;
 
 	// 弾
-	std::unique_ptr<DirectX::GeometricPrimitive> m_pBulletGeometric;
-	std::vector<std::unique_ptr<Bullet>>		 m_pBullets;
+	std::unique_ptr<DirectX::GeometricPrimitive>	m_pBulletGeometric;
+	std::vector<std::unique_ptr<Bullet>>			m_pBullets;
 
 	// プレイヤーの位置
-	DirectX::SimpleMath::Vector3 m_playerPos;
+	DirectX::SimpleMath::Vector3					m_playerPos;
 
 	// タイプ
 	int												m_type;
 	// 速さ
 	float											m_speed;
-	// 角度
-	float											m_angle;
+	// 敵機の角度
+	float											m_enemyAngle;
+	// Way数
+	int												m_wayNum;
+	// 弾の端の角度
+	float											m_bulletEndAngle;
+	// 弾の角度の間隔
+	float											m_changeAngle;
 	// 体力
 	int												m_life;
 	// ヒットフラグ
