@@ -145,22 +145,40 @@ void PlayState::Update(DX::StepTimer const& timer)
 	geoMat = Matrix::CreateTranslation(geoVec);
 
 	// íeÇÃíÜêSÇ∆îºåaÇê›íË
-	vector<Vector3> bullets = m_pPlayer->GetBulletPos();
+	vector<Vector3> playerBullets = m_pPlayer->GetBulletPos();
+	vector<Vector3> enemyBullets = m_pEnemy->GetBulletPos();
 
-	vector<Collision::Sphere> colBullet;
-	colBullet.resize(bullets.size());
+	vector<Collision::Sphere> playerBullet;
+	vector<Collision::Sphere> enemyBullet;
 
-	for (int i = 0; i < bullets.size(); i++)
+	playerBullet.resize(playerBullets.size());
+	enemyBullet.resize(enemyBullets.size());
+
+	for (int i = 0; i < playerBullets.size(); i++)
 	{
-		colBullet[i].center = bullets[i];
-		colBullet[i].radius = 0.15f;
+		playerBullet[i].center = playerBullets[i];
+		playerBullet[i].radius = 0.15f;
 	}
-	for (int i = 0; i < colBullet.size(); i++)
+	for (int i = 0; i < enemyBullets.size(); i++)
 	{
-		if (Collision::HitCheckSphereToSphere(m_pEnemy->GetCollider(), colBullet[i]))
+		enemyBullet[i].center = enemyBullets[i];
+		enemyBullet[i].radius = 0.15f;
+	}
+
+	for (int i = 0; i < playerBullet.size(); i++)
+	{
+		if (Collision::HitCheckSphereToSphere(m_pEnemy->GetCollider(), playerBullet[i]))
 		{
 			m_pEnemy->OnCollision();
 			m_pPlayer->m_pWeapon->BulletOnCollision(i);
+		}
+	}
+	for (int i = 0; i < enemyBullet.size(); i++)
+	{
+		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
+		{
+			//m_pPlayer->OnCollision();
+			m_pEnemy->BulletOnCollision(i);
 		}
 	}
 

@@ -54,9 +54,9 @@ public: // アクセサ
 		m_angle = _angle;
 	}
 
-	void SetBulletHitFlag(bool _bulletHitFlag)
+	void SetBulletHitFlag(bool _isHitFlag)
 	{
-		bulletHitFlag = _bulletHitFlag;
+		bulletHitFlag = _isHitFlag;
 	}
 	void SetBulletNumber(int _bulletNumber)
 	{

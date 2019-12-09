@@ -9,7 +9,7 @@ using namespace std;
 
 // コンストラクタ
 Bullet::Bullet(Vector3 _pos, float _angle, Vector3 _speed)
-	: m_hitFlag(false)
+	: m_isValid(true)
 {
 	m_pos = _pos;
 	m_vel = _speed;

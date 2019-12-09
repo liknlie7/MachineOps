@@ -32,14 +32,14 @@ public: // アクセサ
 		m_pos = _pos;
 	}
 
-	bool GetHitFlag()
+	bool GetIsValid()
 	{
-		return m_hitFlag;
+		return m_isValid;
 	}
 
-	void SetHitFlag(bool _flag)
+	void SetIsValid(bool _flag)
 	{
-		m_hitFlag = _flag;
+		m_isValid = _flag;
 	}
 
 public: // 関数
@@ -62,6 +62,6 @@ private: // 変数
 	DirectX::GeometricPrimitive*	m_bullet;
 
 	// フラグ
-	bool m_hitFlag;
+	bool m_isValid;
 
 };

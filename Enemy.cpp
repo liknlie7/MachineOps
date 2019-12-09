@@ -9,12 +9,12 @@ using namespace std;
 // コンストラクタ
 Enemy::Enemy(int _type)
 	: m_blinkTime(50)
-	, m_hitFlag(false)
+	, m_isValid(false)
 	, m_playerPos(0.0f, 0.0f, 0.0f)
 	, m_life(300)
-	, m_wayNum(5)
+	, m_wayNum(3)
 	, m_changeAngle(30)
-	, m_bulletEndAngle(180)
+	, m_bulletEndAngle(0)
 {
 	m_type = _type;
 }
@@ -91,9 +91,12 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 // 更新
 void Enemy::Update(DX::StepTimer const& timer)
 {
+	float elapsedTime = float(timer.GetElapsedSeconds());
+
 	switch (m_type)
 	{
 	case Normal:
+
 		//ChasePlayer(m_playerPos);
 
 		m_bulletEndAngle -= 180 + m_wayNum / 2 * m_changeAngle;
@@ -102,6 +105,7 @@ void Enemy::Update(DX::StepTimer const& timer)
 		{
 			CreateBullet();
 		}
+
 		for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 		{
 			(*itr)->Update(timer);
@@ -112,6 +116,7 @@ void Enemy::Update(DX::StepTimer const& timer)
 
 		break;
 	case Shield:
+
 		break;
 	}
 
@@ -128,6 +133,19 @@ void Enemy::Update(DX::StepTimer const& timer)
 
 	if (m_life == 0)
 		m_pEnemy = nullptr;
+
+	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	{
+		if ((*itr)->GetPos().x >= 5 || (*itr)->GetPos().x <= -5 || 
+			(*itr)->GetPos().y >= 5 || (*itr)->GetPos().y <= -5)
+		{
+			(*itr)->SetIsValid(false);
+		}
+	}
+
+	OutRangeBullet();
+
+
 }
 
 
@@ -175,7 +193,7 @@ void Enemy::Blink()
 
 	if (m_blinkTime < 0)
 	{
-		m_hitFlag = false;
+		m_isValid = false;
 		m_blinkTime = 50;
 	}
 }
@@ -196,5 +214,32 @@ void Enemy::CreateBullet()
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{
 		(*itr)->Initialize(m_pBulletGeometric.get());
+	}
+}
+
+void Enemy::BulletOnCollision(int _number)
+{
+	m_pBullets[_number]->SetIsValid(false);
+
+	vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
+	while (itr != m_pBullets.end())
+	{
+		if (!(*itr)->GetIsValid())
+			itr = m_pBullets.erase(itr);
+		else
+			++itr;
+	}
+}
+
+void Enemy::OutRangeBullet()
+{
+	vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
+
+	while (itr != m_pBullets.end())
+	{
+		if (!(*itr)->GetIsValid())
+			itr = m_pBullets.erase(itr);
+		else
+			++itr;
 	}
 }

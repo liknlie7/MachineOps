@@ -118,7 +118,7 @@ void Player::Update(DX::StepTimer const& timer)
 	m_pWeapon->SetPlayerPos(m_pos);
 	m_pWeapon->Update(timer);
 
-	m_collider.center = m_pos;  
+	m_collider.center = m_pos;
 
 }
 

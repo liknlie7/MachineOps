@@ -60,9 +60,9 @@ public: // アクセサ
 		m_hitFlag = _hitFlag;
 	}
 
-	void Player::SetBulletHitFlag(bool _bulletHitFlag)
+	void Player::SetBulletHitFlag(bool _isHitFlag)
 	{
-		m_pWeapon->SetBulletHitFlag(_bulletHitFlag);
+		m_pWeapon->SetBulletHitFlag(_isHitFlag);
 	}
 	void Player::SetBulletNumber(int _bulletNumber)
 	{

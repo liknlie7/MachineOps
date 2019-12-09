@@ -42,12 +42,12 @@ void Weapon::Update(DX::StepTimer const& timer)
 	//{
 	//	if (i == bulletNumber)
 	//	{
-	//		m_pBullets[bulletNumber]->SetHitFlag(bulletHitFlag);
+	//		m_pBullets[bulletNumber]->SetIsValid(bulletHitFlag);
 	//	}
-	//	if ((*itr)->GetHitFlag())
+	//	if ((*itr)->GetIsValid())
 	//	{
 	//		m_pBullets.erase(itr);
-	//		(*itr)->SetHitFlag(false);
+	//		(*itr)->SetIsValid(false);
 	//	}
 	//	i++;
 	//}
@@ -81,12 +81,13 @@ void Weapon::CreateBullet()
 
 void Weapon::BulletOnCollision(int _number)
 {
-	m_pBullets[_number]->SetHitFlag(true);
+	m_pBullets[_number]->SetIsValid(false);
 
 	vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
+
 	while (itr != m_pBullets.end())
 	{
-		if ((*itr)->GetHitFlag())
+		if (!(*itr)->GetIsValid())
 			itr = m_pBullets.erase(itr);
 		else
 			++itr;

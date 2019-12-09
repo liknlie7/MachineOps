@@ -44,16 +44,27 @@ public: // アクセサ
 		return m_pos;
 	}
 
-	// 接触判定フラグの取得
-	bool GetHitFlag()
+	// 弾の座標取得
+	std::vector<DirectX::SimpleMath::Vector3> GetBulletPos()
 	{
-		return m_hitFlag;
+		std::vector<DirectX::SimpleMath::Vector3> bulletsPos;
+		for (auto& numBullet : m_pBullets)
+		{
+			bulletsPos.push_back(numBullet->GetPos());
+		}
+		return bulletsPos;
+	}
+
+	// 接触判定フラグの取得
+	bool GetIsValid()
+	{
+		return m_isValid;
 	}
 
 	// 接触判定フラグの設定
-	void SetHitFlag(bool _hitFlag)
+	void SetIsValid(bool _hitFlag)
 	{
-		m_hitFlag = _hitFlag;
+		m_isValid = _hitFlag;
 	}
 
 	Collision::Sphere GetCollider()
@@ -86,6 +97,10 @@ public: // 関数
 
 	// 衝突した時
 	void OnCollision();
+	// 弾が衝突した時
+	void BulletOnCollision(int _number);
+	// 弾が画面外に出たら
+	void OutRangeBullet();
 
 
 private: // 変数
@@ -116,7 +131,7 @@ private: // 変数
 	// 体力
 	int												m_life;
 	// ヒットフラグ
-	bool											m_hitFlag;
+	bool											m_isValid;
 	// 点滅時間
 	int												m_blinkTime;
 
