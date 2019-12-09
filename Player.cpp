@@ -28,7 +28,7 @@ Player::~Player()
 // 初期化
 void Player::Initialize()
 {
-	DX::DeviceResources* deviceResources = GameContext<DX::DeviceResources>::Get();
+	DX::DeviceResources* deviceResources = GameContext::Get<DX::DeviceResources>();
 	m_context = deviceResources->GetD3DDeviceContext();
 
 	// KeyboardStateTrackerオブジェクトを生成する 
@@ -39,19 +39,14 @@ void Player::Initialize()
 	// テクスチャの読み込みパス指定 
 	factory->SetDirectory(L"Resources/Models");
 	// ファイルを指定してモデルデータ読み込み 
-	m_pPlayer = Model::CreateFromCMO(
-		deviceResources->GetD3DDevice(),
-		L"Resources/Models/tank.cmo",
-		*factory
-	);
-	delete factory;
+	m_pPlayer = Model::CreateFromCMO(deviceResources->GetD3DDevice(), L"Resources/Models/tank.cmo", *factory);
 
 	// 銃の作成
 	m_pWeapon->Initialize();
 
 	m_collider.radius = 1.0f;
 	m_collider.center = m_pos;
-	
+
 	// 当たり判定用
 	//m_pDecisionArea = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 2.0f);
 
@@ -125,8 +120,8 @@ void Player::Update(DX::StepTimer const& timer)
 // 描画
 void Player::Render(const Matrix& _view)
 {
-	Projection* proj = GameContext<Projection>().Get();
-	CommonStates* state = GameContext<CommonStates>().Get();
+	Projection* proj = GameContext::Get<Projection>();
+	CommonStates* state = GameContext::Get<CommonStates>();
 
 	// プレイヤー描画
 	if (m_blinkTime % 5 == 0)

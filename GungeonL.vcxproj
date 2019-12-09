@@ -190,6 +190,7 @@
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="ResultState.h" />
+    <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="TitleState.h" />

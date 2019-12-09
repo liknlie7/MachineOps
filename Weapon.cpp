@@ -18,7 +18,7 @@ Weapon::Weapon()
 // èâä˙âª
 void Weapon::Initialize()
 {
-	DX::DeviceResources* deviceResources = GameContext<DX::DeviceResources>().Get();
+	DX::DeviceResources* deviceResources = GameContext::Get<DX::DeviceResources>();
 
 	// ïêäÌÇÃçÏê¨
 	m_pWeapon = GeometricPrimitive::CreateBox(deviceResources->GetD3DDeviceContext(), Vector3(0.1f, 0.1f, 0.5f));

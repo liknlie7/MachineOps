@@ -7,7 +7,7 @@ using namespace DirectX::SimpleMath;
 
 void Floor::Initialize()
 {
-	DX::DeviceResources* deviceResources = GameContext<DX::DeviceResources>().Get();
+	DX::DeviceResources* deviceResources = GameContext::Get<DX::DeviceResources>();
 
 	// エフェクトファクトリの作成
 	EffectFactory* factory = new EffectFactory(deviceResources->GetD3DDevice());
@@ -23,9 +23,9 @@ void Floor::Initialize()
 
 void Floor::Render(DirectX::SimpleMath::Matrix _view)
 {
-	DX::DeviceResources* deviceResources = GameContext<DX::DeviceResources>().Get();
-	Projection* proj = GameContext<Projection>().Get();
-	CommonStates* state = GameContext<CommonStates>().Get();
+	DX::DeviceResources* deviceResources = GameContext::Get<DX::DeviceResources>();
+	Projection* proj = GameContext::Get<Projection>();
+	CommonStates* state = GameContext::Get<CommonStates>();
 
 	Matrix world = Matrix::Identity;
 

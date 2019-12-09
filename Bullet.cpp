@@ -35,7 +35,7 @@ void Bullet::Update(DX::StepTimer const& timer)
 // •`‰æ
 void Bullet::Render(const Matrix& _view)
 {
-	Projection* proj = GameContext<Projection>().Get();
+	Projection* proj = GameContext::Get<Projection>();
 	m_bullet->Draw(m_mat, _view, proj->GetMatrix(), Colors::Yellow);
 }
 

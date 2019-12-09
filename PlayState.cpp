@@ -24,10 +24,10 @@ PlayState::~PlayState()
 void PlayState::Initialize()
 {
 
-	m_pDeviceResources = GameContext<DX::DeviceResources>::Get();
+	m_pDeviceResources = GameContext::Get<DX::DeviceResources>();
 	m_pDevice = m_pDeviceResources->GetD3DDevice();
 	m_pDeviceContext = m_pDeviceResources->GetD3DDeviceContext();
-	m_pProjection = GameContext<Projection>().Get();
+	m_pProjection = GameContext::Get<Projection>();
 	RECT size = m_pDeviceResources->GetOutputSize();
 
 	// デバッグカメラの作成
@@ -37,7 +37,7 @@ void PlayState::Initialize()
 	m_pGridFloor = make_unique<GridFloor>(10.0f, 10);
 
 	// コモンステートの作成
-	m_pState = GameContext<CommonStates>().Get();
+	m_pState = GameContext::Get<CommonStates>();
 
 	// 追尾カメラの作成
 	m_pFollowCamera = make_unique<FollowCamera>();
@@ -88,7 +88,7 @@ void PlayState::Update(DX::StepTimer const& timer)
 
 	if (keyState.IsKeyDown(Keyboard::Space))
 	{
-		GameStateManager* gameStateManager = GameContext<GameStateManager>().Get();
+		GameStateManager* gameStateManager = GameContext::Get<GameStateManager>();
 		gameStateManager->RequestState("Title");
 	}
 
@@ -190,7 +190,7 @@ void PlayState::Update(DX::StepTimer const& timer)
 	// リザルトシーンへ遷移
 	if (m_pEnemy->GetModel() == nullptr)
 	{
-		GameStateManager* gameStateManager = GameContext<GameStateManager>().Get();
+		GameStateManager* gameStateManager = GameContext::Get<GameStateManager>();
 		gameStateManager->RequestState("Result");
 	}
 }
@@ -214,8 +214,8 @@ void PlayState::Render()
 	m_pFloor->Render(m_pFollowCamera->getViewMatrix());
 
 	//-----デバッグ用(これ以外すべて消す----------------------------------
-	Projection* proj = GameContext<Projection>().Get();
-	CommonStates* state = GameContext<CommonStates>().Get();
+	Projection* proj = GameContext::Get<Projection>();
+	CommonStates* state = GameContext::Get<CommonStates>();
 
 	geo->Draw(geoMat, m_pFollowCamera->getViewMatrix(), proj->GetMatrix(), Colors::Red);
 

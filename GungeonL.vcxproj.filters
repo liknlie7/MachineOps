@@ -90,6 +90,9 @@
     <ClInclude Include="TitleState.h">
       <Filter>GameState</Filter>
     </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />

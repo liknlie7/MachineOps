@@ -28,7 +28,7 @@ Game::Game() noexcept(false)
 {
 	m_deviceResources = make_unique<DX::DeviceResources>();
 	m_deviceResources->RegisterDeviceNotify(this);
-	GameContext<DX::DeviceResources>::Register(m_deviceResources);
+	GameContext::Register<DX::DeviceResources>(m_deviceResources);
 }
 
 Game::~Game()
@@ -54,7 +54,7 @@ void Game::Initialize(HWND window, int width, int height)
 
 	// コモンステート作成
 	m_state = make_unique<CommonStates>(m_deviceResources->GetD3DDevice());
-	GameContext<CommonStates>::Register(m_state);
+	GameContext::Register<CommonStates>(m_state);
 
 	m_deviceResources->CreateWindowSizeDependentResources();
 	CreateWindowSizeDependentResources();
@@ -76,7 +76,7 @@ void Game::Initialize(HWND window, int width, int height)
 	m_gameStateManager->RegisterState<PlayState>("Play");
 	m_gameStateManager->RegisterState<ResultState>("Result");
 	m_gameStateManager->SetStartState("Play");
-	GameContext<GameStateManager>::Register(m_gameStateManager);
+	GameContext::Register<GameStateManager>(m_gameStateManager);
 }
 
 
@@ -229,7 +229,7 @@ void Game::CreateWindowSizeDependentResources()
 		0.01f,
 		100.0f
 	);
-	GameContext<Projection>::Register(m_projection);
+	GameContext::Register<Projection>(m_projection);
 }
 
 void Game::OnDeviceLost()

@@ -31,7 +31,7 @@ void TitleState::Update(DX::StepTimer const& timer)
 
 	if (m_count > 120)
 	{
-		GameStateManager* gameStateManager = GameContext<GameStateManager>().Get();
+		GameStateManager* gameStateManager = GameContext::Get<GameStateManager>();
 		gameStateManager->RequestState("Play");
 		m_count = 0;
 	}

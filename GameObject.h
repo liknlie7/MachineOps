@@ -10,9 +10,11 @@
 class GameObject
 {
 private:
+
 	bool m_isValid;
 
 protected:
+
 	DirectX::SimpleMath::Vector3 m_pos;
 	DirectX::SimpleMath::Vector3 m_rot;
 	DirectX::SimpleMath::Vector3 m_scale;
@@ -20,11 +22,13 @@ protected:
 	DirectX::SimpleMath::Matrix m_mat;
 
 public:
+
 	GameObject();
 	virtual ~GameObject();
 
 
 public:
+
 	virtual void Update(DX::StepTimer const& timer) = 0;
 	virtual void Render(const DirectX::SimpleMath::Matrix& _view) = 0;
 

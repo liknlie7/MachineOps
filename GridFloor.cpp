@@ -14,8 +14,8 @@ GridFloor::GridFloor(float size, int divs)
 	, m_divs(divs)
 {
 
-	m_pDeviceResources = GameContext<DX::DeviceResources>::Get();
-	m_pState = GameContext<CommonStates>::Get();
+	m_pDeviceResources = GameContext::Get<DX::DeviceResources>();
+	m_pState = GameContext::Get<CommonStates>();
 
 	// エフェクトの生成
 	m_pBasicEffect = make_unique<BasicEffect>(m_pDeviceResources->GetD3DDevice());

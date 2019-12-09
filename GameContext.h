@@ -1,30 +1,41 @@
 #pragma once
 
-#include <cassert>
-#include <memory>
+#include "ServiceLocator.h"
 
-template<typename Context>
 class GameContext final
 {
-private:
-
-	static Context* s_context;
-
 public:
-
-	static void Register(const std::unique_ptr<Context>& context)
+	template<typename Context, typename ConcreteContext>
+	static void Register(ConcreteContext* context)
 	{
-		s_context = context.get();
+		ServiceLocator<Context>::Register(context);
 	}
 
 
+	template<typename Context, typename ConcreteContext>
+	static void Register(std::unique_ptr<ConcreteContext>& context)
+	{
+		ServiceLocator<Context>::Register(context);
+	}
+
+
+	template<typename Context, typename ConcreteContext>
+	static void Register(std::unique_ptr<ConcreteContext>&& context)
+	{
+		ServiceLocator<Context>::Register(std::move(context));
+	}
+
+
+	template<typename Context>
 	static Context* Get()
 	{
-		assert(s_context && "The context has not been registered.");
+		return ServiceLocator<Context>::Get();
+	}
 
-		return s_context;
+
+	template<typename Context>
+	static void Reset()
+	{
+		ServiceLocator<Context>::Reset();
 	}
 };
-
-template<typename Context>
-Context* GameContext<Context>::s_context = nullptr;

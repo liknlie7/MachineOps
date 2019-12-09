@@ -26,7 +26,7 @@ Enemy::~Enemy()
 
 void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 {
-	DX::DeviceResources* deviceResources = GameContext<DX::DeviceResources>().Get();
+	DX::DeviceResources* deviceResources = GameContext::Get<DX::DeviceResources>();
 
 	// エフェクトファクトリの作成 
 	EffectFactory* factory = new EffectFactory(deviceResources->GetD3DDevice());
@@ -152,9 +152,9 @@ void Enemy::Update(DX::StepTimer const& timer)
 // 描画
 void Enemy::Render(const Matrix& _view)
 {
-	DX::DeviceResources* deviceResources = GameContext<DX::DeviceResources>().Get();
-	CommonStates* state = GameContext<CommonStates>().Get();
-	Projection* proj = GameContext<Projection>().Get();
+	DX::DeviceResources* deviceResources = GameContext::Get<DX::DeviceResources>();
+	CommonStates* state = GameContext::Get<CommonStates>();
+	Projection* proj = GameContext::Get<Projection>();
 
 	// モデル描画
 	//if (m_blinkTime % 5 == 0)
