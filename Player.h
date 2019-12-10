@@ -119,6 +119,8 @@ private:
 	bool										 m_hitFlag;
 	// 点滅時間
 	int											 m_blinkTime;
+	// Shiftボタンフラグ
+	bool										 m_isShiftDown;
 
 public:
 

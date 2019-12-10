@@ -15,6 +15,7 @@ Player::Player()
 	, m_hitFlag(false)
 	, m_blinkTime(50)
 	, m_angle(0.0f)
+	, m_isShiftDown(false)
 {
 	m_pWeapon = make_unique<Weapon>();
 }
@@ -31,7 +32,7 @@ void Player::Initialize()
 	// KeyboardStateTrackerオブジェクトを生成する 
 	m_keyboardTracker = std::make_unique<Keyboard::KeyboardStateTracker>();
 
-	// エフェクトファクトリの作成 
+	// モデル作成 
 	EffectFactory* factory = new EffectFactory(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
 	factory->SetDirectory(L"Resources/Models");
 	m_pPlayer = Model::CreateFromCMO(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources/Models/tank.cmo", *factory);
@@ -43,7 +44,6 @@ void Player::Initialize()
 
 	// 銃の作成
 	m_pWeapon->Initialize();
-
 }
 
 // 更新
@@ -62,15 +62,32 @@ void Player::Update(float timer)
 	// 速度初期化
 	m_vel = Vector3(0.0f, 0.0f, 0.0f);
 
-	// Wを押下
-	if (keyState.W) m_vel.z = -0.2f;
-	// Aを押下
-	if (keyState.A) m_vel.x = -0.2f;
-	// Sを押下
-	if (keyState.S) m_vel.z = +0.2f;
-	// Dを押下
-	if (keyState.D) m_vel.x = +0.2f;
+	if (keyState.IsKeyUp(DirectX::Keyboard::Keys::LeftShift)) m_isShiftDown = false;
+	if (keyState.IsKeyDown(DirectX::Keyboard::Keys::LeftShift)) m_isShiftDown = true;
 
+	if (!m_isShiftDown)
+	{
+		// Wを押下
+		if (keyState.W) m_vel.z = -0.2f;
+		// Aを押下
+		if (keyState.A) m_vel.x = -0.2f;
+		// Sを押下
+		if (keyState.S) m_vel.z = +0.2f;
+		// Dを押下
+		if (keyState.D) m_vel.x = +0.2f;
+	}
+	else
+	{
+		// Wを押下
+		if (keyState.W) m_vel.z = -0.1f;
+		// Aを押下
+		if (keyState.A) m_vel.x = -0.1f;
+		// Sを押下
+		if (keyState.S) m_vel.z = +0.1f;
+		// Dを押下
+		if (keyState.D) m_vel.x = +0.1f;
+
+	}
 
 	if (m_hitFlag)  Blink();
 
@@ -113,7 +130,7 @@ void Player::Render(const Matrix& _view)
 {
 	// プレイヤー描画
 	if (m_blinkTime % 5 == 0)
-		m_pPlayer->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 
+		m_pPlayer->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(),
 			*GameContext::Get<CommonStates>(), m_mat, _view, GameContext::Get<Projection>()->GetMatrix());
 
 	// 武器の描画
