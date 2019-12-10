@@ -25,7 +25,7 @@ void TitleState::Initialize()
 }
 
 
-void TitleState::Update(DX::StepTimer const& timer)
+void TitleState::Update(float timer)
 {
 	m_count++;
 

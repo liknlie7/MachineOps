@@ -27,7 +27,7 @@ void Weapon::Initialize()
 }
 
 // çXêV
-void Weapon::Update(DX::StepTimer const& timer)
+void Weapon::Update(float timer)
 {
 	m_mat = Matrix::CreateTranslation(m_pos) * Matrix::CreateRotationY(m_angle) *
 		Matrix::CreateTranslation(m_playerPos);

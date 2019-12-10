@@ -89,10 +89,8 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 }
 
 // çXêV
-void Enemy::Update(DX::StepTimer const& timer)
+void Enemy::Update(float timer)
 {
-	float elapsedTime = float(timer.GetElapsedSeconds());
-
 	switch (m_type)
 	{
 	case Normal:

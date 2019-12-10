@@ -47,7 +47,7 @@ public: // ŠÖ”
 	// ‰Šú‰»
 	void Initialize(DirectX::GeometricPrimitive* _type);
 	// XV
-	void Update(DX::StepTimer const& timer) override;
+	void Update(float timer) override;
 	// •`‰æ
 	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// Œãˆ—

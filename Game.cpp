@@ -99,7 +99,7 @@ void Game::Update(DX::StepTimer const& timer)
 
 	// TODO: Add your game logic here.
 	elapsedTime;
-	m_gameStateManager->Update(timer);
+	m_gameStateManager->Update(elapsedTime);
 }
 #pragma endregion
 

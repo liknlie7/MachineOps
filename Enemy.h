@@ -82,7 +82,7 @@ public: // ŠÖ”
 	// ‰Šú‰»
 	void Initialize(DirectX::SimpleMath::Vector3 _pos);
 	// XV
-	void Update(DX::StepTimer const& timer) override;
+	void Update(float timer) override;
 	// •`‰æ
 	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// Œãn––

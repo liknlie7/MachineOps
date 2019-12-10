@@ -40,7 +40,7 @@ public:
 
 	void SetStartState(const std::string& stateName);
 
-	void Update(DX::StepTimer const& timer);
+	void Update(float timer);
 	void Render();
 
 	void RequestState(const std::string& stateName);

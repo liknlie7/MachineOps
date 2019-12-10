@@ -67,7 +67,7 @@ void PlayState::Initialize()
 
 }
 
-void PlayState::Update(DX::StepTimer const& timer)
+void PlayState::Update(float timer)
 {
 
 	//std::thread th = std::thread(&AsyncLoad);

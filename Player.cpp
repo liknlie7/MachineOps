@@ -28,34 +28,26 @@ Player::~Player()
 // 初期化
 void Player::Initialize()
 {
-	DX::DeviceResources* deviceResources = GameContext::Get<DX::DeviceResources>();
-	m_context = deviceResources->GetD3DDeviceContext();
-
 	// KeyboardStateTrackerオブジェクトを生成する 
 	m_keyboardTracker = std::make_unique<Keyboard::KeyboardStateTracker>();
 
 	// エフェクトファクトリの作成 
-	EffectFactory* factory = new EffectFactory(deviceResources->GetD3DDevice());
-	// テクスチャの読み込みパス指定 
+	EffectFactory* factory = new EffectFactory(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
 	factory->SetDirectory(L"Resources/Models");
-	// ファイルを指定してモデルデータ読み込み 
-	m_pPlayer = Model::CreateFromCMO(deviceResources->GetD3DDevice(), L"Resources/Models/tank.cmo", *factory);
+	m_pPlayer = Model::CreateFromCMO(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources/Models/tank.cmo", *factory);
+	delete factory;
+
+	// コライダー
+	m_collider.radius = 1.0f;
+	m_collider.center = m_pos;
 
 	// 銃の作成
 	m_pWeapon->Initialize();
 
-	m_collider.radius = 1.0f;
-	m_collider.center = m_pos;
-
-	// 当たり判定用
-	//m_pDecisionArea = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 2.0f);
-
-	//m_decisionAreaPos = m_pos;
-
 }
 
 // 更新
-void Player::Update(DX::StepTimer const& timer)
+void Player::Update(float timer)
 {
 	// キーボードの状態を取得する
 	DirectX::Keyboard::State keyState = DirectX::Keyboard::Get().GetState();
@@ -78,8 +70,7 @@ void Player::Update(DX::StepTimer const& timer)
 	if (keyState.S) m_vel.z = +0.2f;
 	// Dを押下
 	if (keyState.D) m_vel.x = +0.2f;
-	// Spaceを押下
-	//if (keyState.Space && m_pos.y == 0.5f) { m_vel.y = 0.5f; }
+
 
 	if (m_hitFlag)  Blink();
 
@@ -120,19 +111,13 @@ void Player::Update(DX::StepTimer const& timer)
 // 描画
 void Player::Render(const Matrix& _view)
 {
-	Projection* proj = GameContext::Get<Projection>();
-	CommonStates* state = GameContext::Get<CommonStates>();
-
 	// プレイヤー描画
 	if (m_blinkTime % 5 == 0)
-		m_pPlayer->Draw(m_context, *state, m_mat, _view, proj->GetMatrix());
+		m_pPlayer->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 
+			*GameContext::Get<CommonStates>(), m_mat, _view, GameContext::Get<Projection>()->GetMatrix());
 
 	// 武器の描画
 	m_pWeapon->Render(_view);
-
-	// 判定用
-	//m_pDecisionArea->Draw(m_mat, _view, proj->GetMatrix(), Colors::Red, nullptr, true);
-
 }
 
 // 後始末

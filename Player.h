@@ -79,7 +79,7 @@ public: // 関数
 	// 初期化
 	void Initialize();
 	// 更新
-	void Update(DX::StepTimer const& timer) override;
+	void Update(float timer) override;
 	// 描画
 	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// 後始末
@@ -104,11 +104,6 @@ private:
 	// プレイヤー
 	std::unique_ptr<DirectX::Model>				 m_pPlayer;
 	Collision::Sphere							 m_collider;
-
-	//当たり判定用
-	//std::unique_ptr<DirectX::GeometricPrimitive> m_pDecisionArea;
-	//DirectX::SimpleMath::Vector3				 m_decisionAreaPos;
-	//DirectX::SimpleMath::Matrix					 m_decisionAreaMat;
 
 	// 向き
 	DirectX::SimpleMath::Vector3				 m_dir;

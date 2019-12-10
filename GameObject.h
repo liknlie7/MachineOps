@@ -29,7 +29,7 @@ public:
 
 public:
 
-	virtual void Update(DX::StepTimer const& timer) = 0;
+	virtual void Update(float timer) = 0;
 	virtual void Render(const DirectX::SimpleMath::Matrix& _view) = 0;
 
 public:

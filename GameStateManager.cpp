@@ -26,7 +26,7 @@ void GameStateManager::SetStartState(const std::string& stateName)
 }
 
 
-void GameStateManager::Update(DX::StepTimer const& timer)
+void GameStateManager::Update(float timer)
 {
 	if (!m_nextStateName.empty())
 	{
