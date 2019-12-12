@@ -94,7 +94,7 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="MemoryLeakDetector.h">
-      <Filter>GameState</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
