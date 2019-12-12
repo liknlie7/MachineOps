@@ -15,8 +15,9 @@ Enemy::Enemy(int _type)
 	, m_wayNum(3)
 	, m_changeAngle(30)
 	, m_bulletEndAngle(0)
+	, m_shotInterval(10.0f)
 {
-	m_type = _type;
+	m_enemyType = _type;
 }
 
 // デストラクタ
@@ -37,10 +38,11 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 	// テクスチャの読み込みパス指定 
 	factory->SetDirectory(L"Resources/Models");
 
-	switch (m_type)
+	switch (m_enemyType)
 	{
-		// ノーマルタイプ
-	case Normal:
+		
+	case NORMAL_TYPE: // ノーマルタイプ
+
 		// モデルデータ読み込み 
 		m_pEnemy = Model::CreateFromCMO(
 			deviceResources->GetD3DDevice(),
@@ -59,11 +61,10 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		m_collider.center = m_pos;
 		//m_decisionAreaPos = m_pos;
 
-
 		break;
 
 		// 盾持ち
-	case Shield:
+	case SHIELD_TYPE:
 
 		// モデルデータ読み込み 
 		m_pEnemy = Model::CreateFromCMO(
@@ -84,6 +85,27 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		//m_decisionAreaPos = m_pos;
 
 		break;
+
+	case BOSS_TYPE:
+		// モデルデータ読み込み 
+		m_pEnemy = Model::CreateFromCMO(
+			deviceResources->GetD3DDevice(),
+			L"Resources/Models/Enemy1.cmo",
+			*factory
+		);
+		delete factory;
+
+		m_pos = _pos;
+		// 速さの初期化
+		m_speed = 0.08f;
+
+		m_life = 30;
+		m_shotType = ALL_DIRECTION_SHOT;
+		m_collider.radius = 2.0f;
+		m_collider.center = m_pos;
+		//m_decisionAreaPos = m_pos;
+
+		break;
 	}
 
 }
@@ -91,36 +113,66 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 // 更新
 void Enemy::Update()
 {
-	switch (m_type)
+	Vector3 m_dir;
+	m_dir = m_playerPos - m_pos;
+	m_dir.Normalize();
+
+	switch (m_enemyType)
 	{
-	case Normal:
+	case NORMAL_TYPE:
 
 		//ChasePlayer(m_playerPos);
 
 		m_bulletEndAngle -= 180 + m_wayNum / 2 * m_changeAngle;
 
-		for (int i = 0; i < m_wayNum; i++)
-		{
-			CreateBullet();
-		}
-
-		for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-		{
-			(*itr)->Update();
-		}
-
-		// 速度代入
-		m_pos += m_vel;
+		//for (int i = 0; i < m_wayNum; i++)
+		//{
+		//	CreateBullet();
+		//}
 
 		break;
-	case Shield:
+	case SHIELD_TYPE:
+
+		break;
+	case BOSS_TYPE:
+		
+		
+
+		m_playerPos.Normalize();
+		Vector3 baseDir = m_playerPos;
+
 
 		break;
 	}
+	
+	m_shotInterval++;
 
-	Vector3 m_dir;
-	m_dir = m_playerPos - m_pos;
-	m_dir.Normalize();
+	switch (m_shotType)
+	{
+	case NORMAL_SHOT:
+		break;
+	case ALL_DIRECTION_SHOT:
+		
+		if (m_shotInterval > 15.0f)
+		{
+			for (int rad = 0; rad < 130; rad += 6)
+			{
+				m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), (float)rad, Vector3(0.0f, 0.0f, 0.15f)));
+				CreateBullet();
+				m_shotInterval = 0;
+			}
+		}
+		break;
+	}
+
+	// 速度代入
+	m_pos += m_vel;
+
+	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	{
+		(*itr)->Update();
+	}
+
 
 	m_enemyAngle = atan2(m_dir.x, m_dir.z);
 	Matrix rotate = Matrix::CreateRotationY(m_enemyAngle);
@@ -131,15 +183,6 @@ void Enemy::Update()
 
 	if (m_life == 0)
 		m_pEnemy = nullptr;
-
-	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-	{
-		if ((*itr)->GetPos().x >= 5 || (*itr)->GetPos().x <= -5 || 
-			(*itr)->GetPos().y >= 5 || (*itr)->GetPos().y <= -5)
-		{
-			(*itr)->SetIsValid(false);
-		}
-	}
 
 	OutRangeBullet();
 
@@ -207,8 +250,6 @@ void Enemy::OnCollision()
 // 弾の作成
 void Enemy::CreateBullet()
 {
-	m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), m_enemyAngle + m_bulletEndAngle, Vector3(0.0f, 0.0f, 0.15f)));
-
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{
 		(*itr)->Initialize(m_pBulletGeometric.get());
@@ -235,7 +276,7 @@ void Enemy::OutRangeBullet()
 
 	while (itr != m_pBullets.end())
 	{
-		if (!(*itr)->GetIsValid())
+		if (!(*itr)->GetLife() < 0.0f)
 			itr = m_pBullets.erase(itr);
 		else
 			++itr;

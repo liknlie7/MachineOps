@@ -24,21 +24,26 @@ public: // アクセサ
 	{
 		return m_pos;
 	}
-
 	// 座標設定
 	void SetPos(const DirectX::SimpleMath::Vector3& _pos)
 	{
 		m_pos = _pos;
 	}
 
+	// フラグ取得
 	bool GetIsValid()
 	{
 		return m_isValid;
 	}
-
+	// フラグ設定
 	void SetIsValid(bool _flag)
 	{
 		m_isValid = _flag;
+	}
+
+	float GetLife()
+	{
+		return m_life;
 	}
 
 public: // 関数
@@ -62,5 +67,6 @@ private: // 変数
 
 	// フラグ
 	bool m_isValid;
-
+	// 飛行距離
+	float m_life;
 };

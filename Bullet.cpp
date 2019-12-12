@@ -10,6 +10,7 @@ using namespace std;
 // コンストラクタ
 Bullet::Bullet(Vector3 _pos, float _angle, Vector3 _speed)
 	: m_isValid(true)
+	, m_life(10.0f)
 {
 	m_pos = _pos;
 	m_vel = _speed;
@@ -29,14 +30,15 @@ void Bullet::Update()
 	// 移動
 	m_pos += m_vel;
 
+	m_life--;
+
 	m_mat = Matrix::CreateTranslation(Vector3(m_pos));
 }
 
 // 描画
 void Bullet::Render(const Matrix& _view)
 {
-	Projection* proj = GameContext::Get<Projection>();
-	m_bullet->Draw(m_mat, _view, proj->GetMatrix(), Colors::Yellow);
+	m_bullet->Draw(m_mat, _view, GameContext::Get<Projection>()->GetMatrix(), Colors::Yellow);
 }
 
 // 後処理

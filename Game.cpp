@@ -97,12 +97,6 @@ void Game::Tick()
 // Updates the world.
 void Game::Update(DX::StepTimer const& timer)
 {
-#if defined(_DEBUG)
-	// メモリーリーク検出機構のセットアップ
-	SetUpMemoryLeakDetector();
-#endif
-
-
 	float elapsedTime = float(timer.GetElapsedSeconds());
 
 	// TODO: Add your game logic here.

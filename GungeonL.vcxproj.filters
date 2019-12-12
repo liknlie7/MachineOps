@@ -20,6 +20,9 @@
     <Filter Include="GameState">
       <UniqueIdentifier>{a829e195-26f0-4e75-880d-b6d636750ceb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Enemy">
+      <UniqueIdentifier>{8568d1ac-01fb-464e-8509-26783509192a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -30,9 +33,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Floor.h">
@@ -96,6 +96,9 @@
     <ClInclude Include="MemoryLeakDetector.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -104,9 +107,6 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Floor.cpp">
@@ -148,6 +148,9 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="ResultState.cpp">
       <Filter>GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

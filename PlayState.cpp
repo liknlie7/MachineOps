@@ -52,7 +52,7 @@ void PlayState::Initialize()
 	m_pPlayer->Initialize();
 
 	// 敵作成
-	m_pEnemy = make_unique<Enemy>(m_pEnemy->Normal);
+	m_pEnemy = make_unique<Enemy>(m_pEnemy->BOSS_TYPE);
 	m_pEnemy->Initialize(Vector3(0.0f, 1.0f, -15.0f));
 
 	m_color = Colors::Red;
@@ -69,20 +69,6 @@ void PlayState::Initialize()
 
 void PlayState::Update()
 {
-
-	//std::thread th = std::thread(&AsyncLoad);
-
-	//th.join();
-
-	//if (!GetLockFlag())
-	//{
-	//	//ロード中
-	//}
-	//else
-	//{
-	//	//ロード完了
-	//}
-
 	Mouse::State mouseState = Mouse::Get().GetState();
 	Keyboard::State keyState = Keyboard::Get().GetState();
 
@@ -240,12 +226,3 @@ void PlayState::Finalize()
 	m_pDebugCamera.reset();
 	m_pGridFloor.reset();
 }
-
-// 非同期ロード
-//std::function<void(PlayState*)> AsyncLoad()
-//{
-//	auto sleepTime = std::chrono::seconds(10);
-//	std::this_thread::sleep_for(sleepTime);
-//
-//	SetLockFlag(true);
-//}

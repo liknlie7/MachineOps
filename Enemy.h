@@ -25,10 +25,21 @@ public: // 基本
 
 public:
 
-	enum Type
+	// 敵の種類
+	enum EnemyType
 	{
-		Normal = 1,
-		Shield,
+		NORMAL_TYPE= 1,
+		SHIELD_TYPE,
+		BOSS_TYPE,
+	};
+
+	// 射撃の種類
+	enum ShotType
+	{
+		NORMAL_SHOT,			// 通常
+		ALL_DIRECTION_SHOT,		// 全方位
+		WINDER_SHOT,			// ワインダー
+		WHORL_SHOT,				// うずまき
 	};
 
 public: // アクセサ
@@ -117,7 +128,11 @@ private: // 変数
 	DirectX::SimpleMath::Vector3					m_playerPos;
 
 	// タイプ
-	int												m_type;
+	int												m_enemyType;
+	// 射撃タイプ
+	int												m_shotType;
+	// 射撃インターバル
+	float											m_shotInterval;
 	// 速さ
 	float											m_speed;
 	// 敵機の角度
