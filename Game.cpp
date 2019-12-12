@@ -4,6 +4,7 @@
 
 #include "pch.h"
 #include "Game.h"
+#include "MemoryLeakDetector.h"
 
 #include <random>
 
@@ -16,6 +17,7 @@
 #include "ResultState.h"
 
 extern void ExitGame();
+
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -95,6 +97,12 @@ void Game::Tick()
 // Updates the world.
 void Game::Update(DX::StepTimer const& timer)
 {
+#if defined(_DEBUG)
+	// メモリーリーク検出機構のセットアップ
+	SetUpMemoryLeakDetector();
+#endif
+
+
 	float elapsedTime = float(timer.GetElapsedSeconds());
 
 	// TODO: Add your game logic here.

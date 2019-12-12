@@ -18,6 +18,8 @@
 
 class GameStateManager;
 
+class Player;
+
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -86,5 +88,7 @@ private:
 
 	// コモンステート
 	std::unique_ptr<GameStateManager>       m_gameStateManager;
+
+	Player* player;
 
 };
