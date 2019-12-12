@@ -89,7 +89,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 }
 
 // XV
-void Enemy::Update(float timer)
+void Enemy::Update()
 {
 	switch (m_type)
 	{
@@ -106,7 +106,7 @@ void Enemy::Update(float timer)
 
 		for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 		{
-			(*itr)->Update(timer);
+			(*itr)->Update();
 		}
 
 		// ‘¬“x‘ã“ü

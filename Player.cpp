@@ -47,7 +47,7 @@ void Player::Initialize()
 }
 
 // 更新
-void Player::Update(float timer)
+void Player::Update()
 {
 	// キーボードの状態を取得する
 	DirectX::Keyboard::State keyState = DirectX::Keyboard::Get().GetState();
@@ -105,6 +105,7 @@ void Player::Update(float timer)
 
 	// 弾を発射する
 	m_shotInterval++;
+	
 	if (m_shotInterval > 15.0f)
 	{
 		// 左クリック
@@ -119,7 +120,7 @@ void Player::Update(float timer)
 	// 武器の更新
 	m_pWeapon->SetAngle(m_angle);
 	m_pWeapon->SetPlayerPos(m_pos);
-	m_pWeapon->Update(timer);
+	m_pWeapon->Update();
 
 	m_collider.center = m_pos;
 

@@ -6,16 +6,11 @@
 #include <SimpleMath.h>
 #include <Effects.h>
 #include <Keyboard.h>
-#include <mutex>
-#include <thread>
-#include <chrono>
-
 
 #include "DeviceResources.h"
 #include "GameContext.h"
 #include "GameState.h"
 #include "Projection.h"
-#include "StepTimer.h"
 #include "Keyboard.h"
 #include "GameStateManager.h"
 
@@ -35,33 +30,13 @@ public:
 	PlayState();
 	virtual ~PlayState();
 
-private:
-
-	void SetLockFlag(bool _)
-	{
-		std::lock_guard<std::mutex>  lock(isLoadedMutex);
-		isLoaded = _;
-	}
-	bool GetLockFlag()
-	{
-		std::lock_guard<std::mutex>  lock(isLoadedMutex);
-		return isLoaded;
-	}
-
 public:
 
 	void Initialize() override;
-	void Update(float timer) override;
+	void Update() override;
 	void Render() override;
 	void Finalize() override;
 
-	// 非同期ロード
-	//void AsyncLoad();
-	//std::function<void(PlayState*)> AsyncLoad;
-	//void (PlayState::*fpFunc)() = PlayState::AsyncLoad;
-	//std::function<void(Foo*)> Func2;
-	//class CTest { public: void Func(); };
-	//void (CTest::*fpFunc)() = CTest::Func;
 private:
 
 	// デバッグ用カメラ、床
@@ -99,9 +74,6 @@ private:
 
 	// 色
 	DirectX::SimpleMath::Color							m_color;
-
-	bool									isLoaded = false;
-	std::mutex								isLoadedMutex;
 	
 
 	std::unique_ptr<DirectX::GeometricPrimitive> geo;

@@ -1,11 +1,8 @@
 #pragma once
 
-
 #include <SimpleMath.h>
 #include <string>
 #include <functional>
-
-#include "StepTimer.h"
 
 class GameObject
 {
@@ -29,7 +26,7 @@ public:
 
 public:
 
-	virtual void Update(float timer) = 0;
+	virtual void Update() = 0;
 	virtual void Render(const DirectX::SimpleMath::Matrix& _view) = 0;
 
 public:

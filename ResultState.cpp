@@ -27,7 +27,7 @@ void ResultState::Initialize()
 }
 
 
-void ResultState::Update(float timer)
+void ResultState::Update()
 {
 	m_count++;
 

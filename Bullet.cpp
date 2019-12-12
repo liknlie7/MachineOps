@@ -24,7 +24,7 @@ void Bullet::Initialize(GeometricPrimitive* _type)
 }
 
 // XV
-void Bullet::Update(float timer)
+void Bullet::Update()
 {
 	// ˆÚ“®
 	m_pos += m_vel;

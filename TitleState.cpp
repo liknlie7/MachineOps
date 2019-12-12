@@ -25,7 +25,7 @@ void TitleState::Initialize()
 }
 
 
-void TitleState::Update(float timer)
+void TitleState::Update()
 {
 	m_count++;
 

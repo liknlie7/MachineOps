@@ -3,7 +3,6 @@
 #include <SimpleMath.h>
 #include <GeometricPrimitive.h>
 
-#include "StepTimer.h"
 #include "Projection.h"
 #include "GameContext.h"
 #include "GameObject.h"
@@ -47,7 +46,7 @@ public: // ŠÖ”
 	// ‰Šú‰»
 	void Initialize(DirectX::GeometricPrimitive* _type);
 	// XV
-	void Update(float timer) override;
+	void Update() override;
 	// •`‰æ
 	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// Œãˆ—

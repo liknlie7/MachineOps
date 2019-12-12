@@ -1,9 +1,8 @@
 #include "pch.h"
 
-#include "GameStateManager.h"
-
 #include <cassert>
 
+#include "GameStateManager.h"
 #include "GameState.h"
 
 
@@ -26,7 +25,7 @@ void GameStateManager::SetStartState(const std::string& stateName)
 }
 
 
-void GameStateManager::Update(float timer)
+void GameStateManager::Update()
 {
 	if (!m_nextStateName.empty())
 	{
@@ -34,7 +33,7 @@ void GameStateManager::Update(float timer)
 	}
 
 	assert(m_activeState && "There is no active state.");
-	m_activeState->Update(timer);
+	m_activeState->Update();
 }
 
 

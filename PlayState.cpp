@@ -67,7 +67,7 @@ void PlayState::Initialize()
 
 }
 
-void PlayState::Update(float timer)
+void PlayState::Update()
 {
 
 	//std::thread th = std::thread(&AsyncLoad);
@@ -93,11 +93,11 @@ void PlayState::Update(float timer)
 	}
 
 	// プレイヤー更新
-	m_pPlayer->Update(timer);
+	m_pPlayer->Update();
 
 	// 敵更新
 	m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
-	m_pEnemy->Update(timer);
+	m_pEnemy->Update();
 
 	// デバッグカメラ更新
 	m_pDebugCamera->update();
@@ -109,7 +109,7 @@ void PlayState::Update(float timer)
 
 	// マウス座標をワールド座標へ変換
 	// マウスRayの作成
-	Vector3 mousePos = Vector3::Transform(Vector3(mouseState.x, mouseState.y, 0), m_viewPort.Invert());
+	Vector3 mousePos = Vector3::Transform(Vector3((float)mouseState.x, (float)mouseState.y, 0), m_viewPort.Invert());
 	Vector3 pointNear = Vector3(mousePos.x, mousePos.y, 0.0f);
 	Vector3 pointFar = Vector3(mousePos.x, mousePos.y, 1.0f);
 	Matrix inverseviewproj = (m_pFollowCamera->getViewMatrix() *  m_pProjection->GetMatrix()).Invert();
@@ -154,18 +154,18 @@ void PlayState::Update(float timer)
 	playerBullet.resize(playerBullets.size());
 	enemyBullet.resize(enemyBullets.size());
 
-	for (int i = 0; i < playerBullets.size(); i++)
+	for (unsigned int i = 0; i < playerBullets.size(); i++)
 	{
 		playerBullet[i].center = playerBullets[i];
 		playerBullet[i].radius = 0.15f;
 	}
-	for (int i = 0; i < enemyBullets.size(); i++)
+	for (unsigned int i = 0; i < enemyBullets.size(); i++)
 	{
 		enemyBullet[i].center = enemyBullets[i];
 		enemyBullet[i].radius = 0.15f;
 	}
 
-	for (int i = 0; i < playerBullet.size(); i++)
+	for (unsigned int i = 0; i < playerBullet.size(); i++)
 	{
 		if (Collision::HitCheckSphereToSphere(m_pEnemy->GetCollider(), playerBullet[i]))
 		{
@@ -173,7 +173,7 @@ void PlayState::Update(float timer)
 			m_pPlayer->m_pWeapon->BulletOnCollision(i);
 		}
 	}
-	for (int i = 0; i < enemyBullet.size(); i++)
+	for (unsigned int i = 0; i < enemyBullet.size(); i++)
 	{
 		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
 		{
@@ -215,7 +215,6 @@ void PlayState::Render()
 
 	//-----デバッグ用(これ以外すべて消す----------------------------------
 	Projection* proj = GameContext::Get<Projection>();
-	CommonStates* state = GameContext::Get<CommonStates>();
 
 	geo->Draw(geoMat, m_pFollowCamera->getViewMatrix(), proj->GetMatrix(), Colors::Red);
 

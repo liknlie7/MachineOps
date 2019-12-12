@@ -6,7 +6,6 @@
 #include <Mouse.h>
 
 #include "DeviceResources.h"
-#include "StepTimer.h"
 #include "Projection.h"
 #include "GameContext.h"
 #include "GameObject.h"
@@ -68,7 +67,7 @@ public: // ŠÖ”
 	// ‰Šú‰»
 	void Initialize();
 	// XV
-	void Update(float timer) override;
+	void Update() override;
 	// •`‰æ
 	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// Œãn––
