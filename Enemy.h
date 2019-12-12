@@ -44,6 +44,7 @@ public:
 
 public: // アクセサ
 
+	// モデルの情報の取得
 	DirectX::Model* GetModel()
 	{
 		return m_pEnemy.get();
@@ -78,11 +79,13 @@ public: // アクセサ
 		m_isValid = _hitFlag;
 	}
 
+	// コライダーの取得
 	Collision::Sphere GetCollider()
 	{
 		return m_collider;
 	}
 
+	// プレイヤーの位置の設定
 	void SetPlayerPos(DirectX::SimpleMath::Vector3 _playerPos)
 	{
 		m_playerPos = _playerPos;

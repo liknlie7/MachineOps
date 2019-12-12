@@ -27,13 +27,12 @@ Enemy::~Enemy()
 
 void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 {
-	DX::DeviceResources* deviceResources = GameContext::Get<DX::DeviceResources>();
 
 	// エフェクトファクトリの作成 
-	EffectFactory* factory = new EffectFactory(deviceResources->GetD3DDevice());
+	EffectFactory* factory = new EffectFactory(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
 
 	// 弾の形状作成
-	m_pBulletGeometric = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 0.3f);
+	m_pBulletGeometric = GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);
 
 	// テクスチャの読み込みパス指定 
 	factory->SetDirectory(L"Resources/Models");
@@ -45,7 +44,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 
 		// モデルデータ読み込み 
 		m_pEnemy = Model::CreateFromCMO(
-			deviceResources->GetD3DDevice(),
+			GameContext::Get<DX::DeviceResources>()->GetD3DDevice(),
 			L"Resources/Models/Enemy1.cmo",
 			*factory
 		);
@@ -68,7 +67,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 
 		// モデルデータ読み込み 
 		m_pEnemy = Model::CreateFromCMO(
-			deviceResources->GetD3DDevice(),
+			GameContext::Get<DX::DeviceResources>()->GetD3DDevice(),
 			L"Resources/Models/Enemy2.cmo",
 			*factory
 		);
@@ -89,7 +88,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 	case BOSS_TYPE:
 		// モデルデータ読み込み 
 		m_pEnemy = Model::CreateFromCMO(
-			deviceResources->GetD3DDevice(),
+			GameContext::Get<DX::DeviceResources>()->GetD3DDevice(),
 			L"Resources/Models/Enemy1.cmo",
 			*factory
 		);
@@ -193,14 +192,10 @@ void Enemy::Update()
 // 描画
 void Enemy::Render(const Matrix& _view)
 {
-	DX::DeviceResources* deviceResources = GameContext::Get<DX::DeviceResources>();
-	CommonStates* state = GameContext::Get<CommonStates>();
-	Projection* proj = GameContext::Get<Projection>();
-
 	// モデル描画
 	//if (m_blinkTime % 5 == 0)
 	if (m_life != 0)
-		m_pEnemy->Draw(deviceResources->GetD3DDeviceContext(), *state, m_mat, _view, proj->GetMatrix());
+		m_pEnemy->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<CommonStates>(), m_mat, _view, GameContext::Get<Projection>()->GetMatrix());
 
 	// 弾描画
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)

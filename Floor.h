@@ -9,16 +9,19 @@
 #include "Projection.h"
 #include "GameContext.h"
 
+// °
 class Floor
 {
-public:
+public: // Šî–{
 
 	Floor() {}
 	~Floor() {}
 
-public:
+public: // ŠÖ”
 
+	// ‰Šú‰»
 	void Initialize();
+	// •`‰æ
 	void Render(DirectX::SimpleMath::Matrix _view);
 
 private:

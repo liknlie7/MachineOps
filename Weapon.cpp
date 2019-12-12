@@ -18,12 +18,10 @@ Weapon::Weapon()
 // èâä˙âª
 void Weapon::Initialize()
 {
-	DX::DeviceResources* deviceResources = GameContext::Get<DX::DeviceResources>();
-
 	// ïêäÌÇÃçÏê¨
-	m_pWeapon = GeometricPrimitive::CreateBox(deviceResources->GetD3DDeviceContext(), Vector3(0.1f, 0.1f, 0.5f));
+	m_pWeapon = GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), Vector3(0.1f, 0.1f, 0.5f));
 	// íeÇÃçÏê¨
-	m_pBulletGeometric = GeometricPrimitive::CreateSphere(deviceResources->GetD3DDeviceContext(), 0.3f);
+	m_pBulletGeometric = GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);
 }
 
 // çXêV

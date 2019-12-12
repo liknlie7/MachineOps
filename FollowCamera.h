@@ -33,7 +33,7 @@ public: // アクセサ
 
 public: // 関数
 
-		// 初期化
+	// 初期化
 	void Initialize();
 	// 更新
 	void Update(DirectX::SimpleMath::Vector3 _eye, DirectX::SimpleMath::Vector3 _target);

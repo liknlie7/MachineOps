@@ -7,38 +7,21 @@ using namespace DirectX::SimpleMath;
 
 using namespace std;
 
+// コンストラクタ
 PlayState::PlayState()
 	: GameState()
-	, m_pDebugCamera()
-	, m_pGridFloor()
 {
 
 }
 
-
+// デストラクタ
 PlayState::~PlayState()
 {
 }
 
-
+// 初期化
 void PlayState::Initialize()
 {
-
-	m_pDeviceResources = GameContext::Get<DX::DeviceResources>();
-	m_pDevice = m_pDeviceResources->GetD3DDevice();
-	m_pDeviceContext = m_pDeviceResources->GetD3DDeviceContext();
-	m_pProjection = GameContext::Get<Projection>();
-	RECT size = m_pDeviceResources->GetOutputSize();
-
-	// デバッグカメラの作成
-	m_pDebugCamera = make_unique<DebugCamera>();
-
-	// デバッグフロアの作成
-	m_pGridFloor = make_unique<GridFloor>(10.0f, 10);
-
-	// コモンステートの作成
-	m_pState = GameContext::Get<CommonStates>();
-
 	// 追尾カメラの作成
 	m_pFollowCamera = make_unique<FollowCamera>();
 	m_pFollowCamera->Initialize();
@@ -57,16 +40,15 @@ void PlayState::Initialize()
 
 	m_color = Colors::Red;
 
+	// ビューポートの作成
+	RECT size = GameContext::Get<DX::DeviceResources>()->GetOutputSize();
 	m_viewPort =
 		Matrix::CreateScale(Vector3(.5f, -.5f, 1.f)) *
 		Matrix::CreateTranslation(Vector3(.5f, .5f, 0.f)) *
 		Matrix::CreateScale(Vector3(float(size.right), float(size.bottom), 1.f));
-
-	//デバッグ用
-	geo = GeometricPrimitive::CreateSphere(m_pDeviceResources->GetD3DDeviceContext(), 1.0f);
-
 }
 
+// 更新
 void PlayState::Update()
 {
 	Mouse::State mouseState = Mouse::Get().GetState();
@@ -85,9 +67,6 @@ void PlayState::Update()
 	m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
 	m_pEnemy->Update();
 
-	// デバッグカメラ更新
-	m_pDebugCamera->update();
-
 	// 追尾カメラ更新
 	m_pFollowCamera->Update(m_pPlayer->GetPos() + FollowCamera::EYE_VEC, m_pPlayer->GetPos());
 
@@ -98,7 +77,7 @@ void PlayState::Update()
 	Vector3 mousePos = Vector3::Transform(Vector3((float)mouseState.x, (float)mouseState.y, 0), m_viewPort.Invert());
 	Vector3 pointNear = Vector3(mousePos.x, mousePos.y, 0.0f);
 	Vector3 pointFar = Vector3(mousePos.x, mousePos.y, 1.0f);
-	Matrix inverseviewproj = (m_pFollowCamera->getViewMatrix() *  m_pProjection->GetMatrix()).Invert();
+	Matrix inverseviewproj = (m_pFollowCamera->getViewMatrix() *  GameContext::Get<Projection>()->GetMatrix()).Invert();
 	Vector3 rayNear = Vector3::Transform(pointNear, inverseviewproj);
 	Vector3 rayFar = Vector3::Transform(pointFar, inverseviewproj);
 	Vector3 raySubtraction = rayFar - rayNear;
@@ -181,7 +160,7 @@ void PlayState::Update()
 	}
 }
 
-
+// 描画
 void PlayState::Render()
 {
 	DebugFont* debugFont = DebugFont::GetInstance();
@@ -198,31 +177,9 @@ void PlayState::Render()
 
 	// 床の表示
 	m_pFloor->Render(m_pFollowCamera->getViewMatrix());
-
-	//-----デバッグ用(これ以外すべて消す----------------------------------
-	Projection* proj = GameContext::Get<Projection>();
-
-	geo->Draw(geoMat, m_pFollowCamera->getViewMatrix(), proj->GetMatrix(), Colors::Red);
-
-	// デバッグ用床の表示
-	//m_pDebugFloor->Draw(context, debugCamera->getViewMatrix(), m_projection);
-
-	//// プレイヤー表示
-	////m_pPlayer->Render(*m_pState.get(), debugCamera->getViewMatrix(), m_projection, m_color);
-
-	//// 敵表示
-	////m_pEnemy->Render(deviceResources->GetD3DDeviceContext(), *m_pState.get(), m_pFollowCamera->getViewMatrix(), m_projection, static_cast<Vector4>(Colors::Blue));
-
-	//// 床の表示
-	////m_pFloor->Render(deviceResources->GetD3DDeviceContext(), *m_pState.get(), m_pDebugCamera->getViewMatrix(), m_projection);
-
-	//----------------------------------------------------------------
-
 }
 
-
+// 後始末
 void PlayState::Finalize()
 {
-	m_pDebugCamera.reset();
-	m_pGridFloor.reset();
 }

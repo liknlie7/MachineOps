@@ -39,23 +39,8 @@ public:
 
 private:
 
-	// デバッグ用カメラ、床
-	std::unique_ptr<DebugCamera>						m_pDebugCamera;
-	std::unique_ptr<GridFloor>							m_pGridFloor;
-
-	// Device Resources
-	DX::DeviceResources*								m_pDeviceResources;
-	ID3D11Device*										m_pDevice;
-	ID3D11DeviceContext*								m_pDeviceContext;
-
-	// コモンステート
-	DirectX::CommonStates*								m_pState;
-
 	// エフェクト
 	std::unique_ptr<DirectX::BasicEffect>				m_pBasicEffect;
-
-	// 射影行列
-	Projection*											m_pProjection;
 
 	// ViewPort
 	DirectX::SimpleMath::Matrix							m_viewPort;

@@ -7,28 +7,22 @@ using namespace DirectX::SimpleMath;
 
 void Floor::Initialize()
 {
-	DX::DeviceResources* deviceResources = GameContext::Get<DX::DeviceResources>();
-
 	// エフェクトファクトリの作成
-	EffectFactory* factory = new EffectFactory(deviceResources->GetD3DDevice());
+	EffectFactory* factory = new EffectFactory(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
 
 	// テクスチャの読み込みパス指定
 	factory->SetDirectory(L"Resources/Models");
 
 	// ファイルを指定してモデルデータ読み込み
-	m_pModel = Model::CreateFromCMO(deviceResources->GetD3DDevice(), L"Resources/Models/Floor.cmo", *factory);
+	m_pModel = Model::CreateFromCMO(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources/Models/Floor.cmo", *factory);
 
 	delete factory;
 }
 
 void Floor::Render(DirectX::SimpleMath::Matrix _view)
 {
-	DX::DeviceResources* deviceResources = GameContext::Get<DX::DeviceResources>();
-	Projection* proj = GameContext::Get<Projection>();
-	CommonStates* state = GameContext::Get<CommonStates>();
-
 	Matrix world = Matrix::Identity;
 
 	// モデル描画
-	m_pModel->Draw(deviceResources->GetD3DDeviceContext(), *state, world, _view, proj->GetMatrix());
+	m_pModel->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<CommonStates>(), world, _view, GameContext::Get<Projection>()->GetMatrix());
 }
