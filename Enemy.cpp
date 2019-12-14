@@ -271,7 +271,7 @@ void Enemy::OutRangeBullet()
 
 	while (itr != m_pBullets.end())
 	{
-		if (!(*itr)->GetLife() < 0.0f)
+		if ((*itr)->GetLife() < 0.0f)
 			itr = m_pBullets.erase(itr);
 		else
 			++itr;

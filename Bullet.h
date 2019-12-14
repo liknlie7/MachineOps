@@ -57,9 +57,6 @@ public: // ŠÖ”
 	// Œãˆ—
 	void Finalize();
 
-	// Õ“Ë‚µ‚½
-	void OnCollision();
-
 private: // •Ï”
 
 	// ’e‚ÌŒ`ó
