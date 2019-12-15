@@ -77,7 +77,7 @@ void Game::Initialize(HWND window, int width, int height)
 	m_gameStateManager->RegisterState<TitleState>("Title");
 	m_gameStateManager->RegisterState<PlayState>("Play");
 	m_gameStateManager->RegisterState<ResultState>("Result");
-	m_gameStateManager->SetStartState("Play");
+	m_gameStateManager->SetStartState("Title");
 	GameContext::Register<GameStateManager>(m_gameStateManager);
 }
 

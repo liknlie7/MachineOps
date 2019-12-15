@@ -54,12 +54,6 @@ void PlayState::Update()
 	Mouse::State mouseState = Mouse::Get().GetState();
 	Keyboard::State keyState = Keyboard::Get().GetState();
 
-	if (keyState.IsKeyDown(Keyboard::Space))
-	{
-		GameStateManager* gameStateManager = GameContext::Get<GameStateManager>();
-		gameStateManager->RequestState("Title");
-	}
-
 	// プレイヤー更新
 	m_pPlayer->Update();
 
