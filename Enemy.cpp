@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Enemy.h"
+#include "Player.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -16,6 +17,7 @@ Enemy::Enemy(int _type)
 	, m_changeAngle(30)
 	, m_bulletEndAngle(0)
 	, m_shotInterval(10.0f)
+	, m_shotRotate(0.0f)
 {
 	m_enemyType = _type;
 }
@@ -39,7 +41,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 
 	switch (m_enemyType)
 	{
-		
+
 	case NORMAL_TYPE: // ノーマルタイプ
 
 		// モデルデータ読み込み 
@@ -99,8 +101,8 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		m_speed = 0.08f;
 
 		m_life = 30;
-		m_shotType = ALL_DIRECTION_SHOT;
-		m_collider.radius = 2.0f;
+		m_shotType = WHORL_SHOT;
+		m_collider.radius = /*2.0*/5.0f;
 		m_collider.center = m_pos;
 		//m_decisionAreaPos = m_pos;
 
@@ -115,55 +117,79 @@ void Enemy::Update()
 	Vector3 m_dir;
 	m_dir = m_playerPos - m_pos;
 	m_dir.Normalize();
+	m_enemyAngle = atan2(m_dir.x, m_dir.z);
 
-	switch (m_enemyType)
-	{
-	case NORMAL_TYPE:
+	//switch (m_enemyType)
+	//{
+	//case NORMAL_TYPE:
 
-		//ChasePlayer(m_playerPos);
+	//	//ChasePlayer(m_playerPos);
 
-		m_bulletEndAngle -= 180 + m_wayNum / 2 * m_changeAngle;
+	//	m_bulletEndAngle -= 180 + m_wayNum / 2 * m_changeAngle;
 
-		//for (int i = 0; i < m_wayNum; i++)
-		//{
-		//	CreateBullet();
-		//}
+	//	//for (int i = 0; i < m_wayNum; i++)
+	//	//{
+	//	//	CreateBullet();
+	//	//}
 
-		break;
-	case SHIELD_TYPE:
+	//	break;
+	//case SHIELD_TYPE:
 
-		break;
-	case BOSS_TYPE:
-		
-		
-
-		m_playerPos.Normalize();
-		Vector3 baseDir = m_playerPos;
+	//	break;
+	//case BOSS_TYPE:
 
 
-		break;
-	}
-	
-	m_shotInterval++;
 
-	switch (m_shotType)
-	{
-	case NORMAL_SHOT:
-		break;
-	case ALL_DIRECTION_SHOT:
-		
-		if (m_shotInterval > 15.0f)
-		{
-			for (int rad = 0; rad < 130; rad += 6)
-			{
-				m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), (float)rad, Vector3(0.0f, 0.0f, 0.15f)));
-				CreateBullet();
-				m_shotInterval = 0;
-			}
-		}
-		break;
-	}
+	//	//m_playerPos.Normalize();
+	//	//Vector3 baseDir = m_playerPos;
 
+
+	//	break;
+	//}
+
+	//m_shotInterval++;
+	//switch (m_shotType)
+	//{
+	//case NORMAL_SHOT:
+	//{
+	//	if (m_shotInterval > 15.0f)
+	//	{
+	//		m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), m_enemyAngle, Vector3(0.0f, 0.0f, 0.15f)));
+	//		CreateBullet();
+	//		m_shotInterval = 0;
+
+	//		break;
+	//	}
+	//}
+	//case ALL_DIRECTION_SHOT:
+	//{
+	//	if (m_shotInterval > 15.0f)
+	//	{
+	//		for (int rad = 0; rad < 130; rad += 6)
+	//		{
+	//			m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), (float)rad + m_enemyAngle, Vector3(0.0f, 0.0f, 0.15f)));
+	//			CreateBullet();
+	//			m_shotInterval = 0;
+	//		}
+	//	}
+	//	break;
+	//}
+	//case WHORL_SHOT:
+	//	if (m_shotInterval > 5.0f)
+	//	{
+
+	//		int i = 0;
+	//		while (i < 5)
+	//		{
+	//			m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), m_shotRotate, Vector3(0.0f, 0.0f, 0.15f)));
+	//			CreateBullet();
+	//			m_shotRotate += 0.2f;
+	//			m_shotInterval = 0;
+	//			i++;
+	//		}
+	//	}
+	//	break;
+	//}
 	// 速度代入
 	m_pos += m_vel;
 
@@ -173,17 +199,16 @@ void Enemy::Update()
 	}
 
 
-	m_enemyAngle = atan2(m_dir.x, m_dir.z);
 	Matrix rotate = Matrix::CreateRotationY(m_enemyAngle);
-	Matrix scale = Matrix::CreateScale(1.5f);
+	Matrix scale = Matrix::CreateScale(/*1.5f*/8.0f);
 	m_mat = scale * rotate * Matrix::CreateTranslation(Vector3(m_pos.x, 1.0f, m_pos.z));
 
-	m_collider.center = m_pos;
+	//m_collider.center = m_pos;
 
-	if (m_life == 0)
-		m_pEnemy = nullptr;
+	//if (m_life == 0)
+	//	m_pEnemy = nullptr;
 
-	OutRangeBullet();
+	//OutRangeBullet();
 
 
 }

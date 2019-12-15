@@ -136,6 +136,8 @@ private: // 変数
 	int												m_shotType;
 	// 射撃インターバル
 	float											m_shotInterval;
+	// 弾の回転
+	float											m_shotRotate;
 	// 速さ
 	float											m_speed;
 	// 敵機の角度

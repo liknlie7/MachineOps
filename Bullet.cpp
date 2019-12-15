@@ -10,7 +10,7 @@ using namespace std;
 // コンストラクタ
 Bullet::Bullet(Vector3 _pos, float _angle, Vector3 _speed)
 	: m_isValid(true)
-	, m_life(100.0f)
+	, m_life(200.0f)
 {
 	m_pos = _pos;
 	m_vel = _speed;
