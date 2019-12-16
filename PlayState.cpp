@@ -136,7 +136,7 @@ void PlayState::Update()
 	{
 		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
 		{
-			//m_pPlayer->OnCollision();
+			m_pPlayer->SetHitFlag(true);
 			m_pEnemy->BulletOnCollision(i);
 		}
 	}

@@ -13,7 +13,7 @@ Player::Player()
 	: m_mousePos(0.0f, 0.0f, 0.0f)
 	, m_shotInterval(15.0f)
 	, m_hitFlag(false)
-	, m_blinkTime(50)
+	, m_blinkTime(30)
 	, m_angle(0.0f)
 	, m_isShiftDown(false)
 {
@@ -152,6 +152,6 @@ void Player::Blink()
 	if (m_blinkTime < 0)
 	{
 		m_hitFlag = false;
-		m_blinkTime = 50;
+		m_blinkTime = 30;
 	}
 }

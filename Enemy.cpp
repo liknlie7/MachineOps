@@ -9,7 +9,7 @@ using namespace std;
 
 // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 Enemy::Enemy(int _type)
-	: m_blinkTime(50)
+	: m_blinkTime(30)
 	, m_isValid(false)
 	, m_playerPos(0.0f, 0.0f, 0.0f)
 	, m_life(300)
@@ -214,6 +214,7 @@ void Enemy::Update()
 		m_pEnemy = nullptr;
 
 	OutRangeBullet();
+	if (m_isValid)  Blink();
 
 
 }
@@ -223,9 +224,9 @@ void Enemy::Update()
 void Enemy::Render(const Matrix& _view)
 {
 	// ƒ‚ƒfƒ‹•`‰æ
-	//if (m_blinkTime % 5 == 0)
-	if (m_life != 0)
-		m_pEnemy->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<CommonStates>(), m_mat, _view, GameContext::Get<Projection>()->GetMatrix());
+	if (m_blinkTime % 5 == 0)
+		if (m_life != 0)
+			m_pEnemy->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<CommonStates>(), m_mat, _view, GameContext::Get<Projection>()->GetMatrix());
 
 	// ’e•`‰æ
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
@@ -260,7 +261,7 @@ void Enemy::Blink()
 	if (m_blinkTime < 0)
 	{
 		m_isValid = false;
-		m_blinkTime = 50;
+		m_blinkTime = 30;
 	}
 }
 
@@ -269,7 +270,7 @@ void Enemy::OnCollision()
 {
 	m_life--;
 
-	Blink();
+	m_isValid = true;
 }
 
 // ’e‚Ìì¬
