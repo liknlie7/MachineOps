@@ -28,9 +28,9 @@ using Microsoft::WRL::ComPtr;
 
 Game::Game() noexcept(false)
 {
-	m_deviceResources = make_unique<DX::DeviceResources>();
-	m_deviceResources->RegisterDeviceNotify(this);
-	GameContext::Register<DX::DeviceResources>(m_deviceResources);
+	m_pDeviceResources = make_unique<DX::DeviceResources>();
+	m_pDeviceResources->RegisterDeviceNotify(this);
+	GameContext::Register<DX::DeviceResources>(m_pDeviceResources);
 }
 
 Game::~Game()
@@ -43,22 +43,26 @@ Game::~Game()
 void Game::Initialize(HWND window, int width, int height)
 {
 	// マウスの作成
-	m_mouse = make_unique<Mouse>();
-	m_mouse->SetWindow(window);
+	m_pMouse = make_unique<Mouse>();
+	m_pMouse->SetWindow(window);
 
 	// キーボードの作成
-	m_keyboard = make_unique<Keyboard>();
+	m_pKeyboard = make_unique<Keyboard>();
 
-	m_deviceResources->SetWindow(window, width, height);
+	m_pDeviceResources->SetWindow(window, width, height);
 
-	m_deviceResources->CreateDeviceResources();
+	m_pDeviceResources->CreateDeviceResources();
 	CreateDeviceDependentResources();
 
 	// コモンステート作成
-	m_state = make_unique<CommonStates>(m_deviceResources->GetD3DDevice());
-	GameContext::Register<CommonStates>(m_state);
+	m_pState = make_unique<CommonStates>(m_pDeviceResources->GetD3DDevice());
+	GameContext::Register<CommonStates>(m_pState);
 
-	m_deviceResources->CreateWindowSizeDependentResources();
+	// スプライトバッチの作成
+	m_pSpriteBatch = std::make_unique<SpriteBatch>(m_pDeviceResources->GetD3DDeviceContext());
+	GameContext::Register<SpriteBatch>(m_pSpriteBatch);
+
+	m_pDeviceResources->CreateWindowSizeDependentResources();
 	CreateWindowSizeDependentResources();
 
 	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
@@ -70,15 +74,15 @@ void Game::Initialize(HWND window, int width, int height)
 
 
 	DebugFont* debugFont = DebugFont::GetInstance();
-	debugFont->create(m_deviceResources->GetD3DDevice(), m_deviceResources->GetD3DDeviceContext());
+	debugFont->create(m_pDeviceResources->GetD3DDevice(), m_pDeviceResources->GetD3DDeviceContext());
 
 
-	m_gameStateManager = make_unique<GameStateManager>();
-	m_gameStateManager->RegisterState<TitleState>("Title");
-	m_gameStateManager->RegisterState<PlayState>("Play");
-	m_gameStateManager->RegisterState<ResultState>("Result");
-	m_gameStateManager->SetStartState("Play");
-	GameContext::Register<GameStateManager>(m_gameStateManager);
+	m_pGameStateManager = make_unique<GameStateManager>();
+	m_pGameStateManager->RegisterState<TitleState>("Title");
+	m_pGameStateManager->RegisterState<PlayState>("Play");
+	m_pGameStateManager->RegisterState<ResultState>("Result");
+	m_pGameStateManager->SetStartState("Play");
+	GameContext::Register<GameStateManager>(m_pGameStateManager);
 }
 
 
@@ -101,7 +105,7 @@ void Game::Update(DX::StepTimer const& timer)
 
 	// TODO: Add your game logic here.
 	elapsedTime;
-	m_gameStateManager->Update();
+	m_pGameStateManager->Update();
 }
 #pragma endregion
 
@@ -117,38 +121,37 @@ void Game::Render()
 
 	Clear();
 
-	m_deviceResources->PIXBeginEvent(L"Render");
-	auto context = m_deviceResources->GetD3DDeviceContext();
+	m_pDeviceResources->PIXBeginEvent(L"Render");
+	auto context = m_pDeviceResources->GetD3DDeviceContext();
 
 	// TODO: Add your rendering code here.
 	context;
-	m_gameStateManager->Render();
+	m_pGameStateManager->Render();
 
-	m_deviceResources->PIXEndEvent();
-
+	m_pDeviceResources->PIXEndEvent();
 	// Show the new frame.
-	m_deviceResources->Present();
+	m_pDeviceResources->Present();
 }
 
 // Helper method to clear the back buffers.
 void Game::Clear()
 {
-	m_deviceResources->PIXBeginEvent(L"Clear");
+	m_pDeviceResources->PIXBeginEvent(L"Clear");
 
 	// Clear the views.
-	auto context = m_deviceResources->GetD3DDeviceContext();
-	auto renderTarget = m_deviceResources->GetRenderTargetView();
-	auto depthStencil = m_deviceResources->GetDepthStencilView();
+	auto context = m_pDeviceResources->GetD3DDeviceContext();
+	auto renderTarget = m_pDeviceResources->GetRenderTargetView();
+	auto depthStencil = m_pDeviceResources->GetDepthStencilView();
 
 	context->ClearRenderTargetView(renderTarget, Colors::CornflowerBlue);
 	context->ClearDepthStencilView(depthStencil, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	context->OMSetRenderTargets(1, &renderTarget, depthStencil);
 
 	// Set the viewport.
-	auto viewport = m_deviceResources->GetScreenViewport();
+	auto viewport = m_pDeviceResources->GetScreenViewport();
 	context->RSSetViewports(1, &viewport);
 
-	m_deviceResources->PIXEndEvent();
+	m_pDeviceResources->PIXEndEvent();
 }
 #pragma endregion
 
@@ -178,13 +181,13 @@ void Game::OnResuming()
 
 void Game::OnWindowMoved()
 {
-	auto r = m_deviceResources->GetOutputSize();
-	m_deviceResources->WindowSizeChanged(r.right, r.bottom);
+	auto r = m_pDeviceResources->GetOutputSize();
+	m_pDeviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
 void Game::OnWindowSizeChanged(int width, int height)
 {
-	if (!m_deviceResources->WindowSizeChanged(width, height))
+	if (!m_pDeviceResources->WindowSizeChanged(width, height))
 		return;
 
 	CreateWindowSizeDependentResources();
@@ -196,8 +199,8 @@ void Game::OnWindowSizeChanged(int width, int height)
 void Game::GetDefaultSize(int& width, int& height) const
 {
 	// TODO: Change to desired default window size (note minimum size is 320x200).
-	width = 800;
-	height = 600;
+	width = 1280;
+	height = 720;
 }
 #pragma endregion
 
@@ -205,7 +208,7 @@ void Game::GetDefaultSize(int& width, int& height) const
 // These are the resources that depend on the device.
 void Game::CreateDeviceDependentResources()
 {
-	auto device = m_deviceResources->GetD3DDevice();
+	auto device = m_pDeviceResources->GetD3DDevice();
 
 	// TODO: Initialize device dependent objects here (independent of window size).
 	device;
@@ -217,21 +220,21 @@ void Game::CreateWindowSizeDependentResources()
 	// TODO: Initialize windows-size dependent objects here.
 
 	// ウインドウサイズからアスペクト比を算出する
-	RECT size = m_deviceResources->GetOutputSize();
+	RECT size = m_pDeviceResources->GetOutputSize();
 	float aspectRatio = float(size.right) / float(size.bottom);
 
 	// 画角を設定
 	float fovAngleY = XMConvertToRadians(45.0f);
 
 	// 射影行列を作成する
-	m_projection = std::make_unique<Projection>();
-	m_projection->SetPerspectiveFieldOfView(
+	m_pProjection = std::make_unique<Projection>();
+	m_pProjection->SetPerspectiveFieldOfView(
 		fovAngleY,
 		aspectRatio,
 		0.01f,
 		100.0f
 	);
-	GameContext::Register<Projection>(m_projection);
+	GameContext::Register<Projection>(m_pProjection);
 }
 
 void Game::OnDeviceLost()

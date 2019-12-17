@@ -1,4 +1,5 @@
 #include "pch.h"
+
 #include "Enemy.h"
 #include "Player.h"
 
@@ -216,7 +217,6 @@ void Enemy::Update()
 	OutRangeBullet();
 	if (m_isValid)  Blink();
 
-
 }
 
 
@@ -233,7 +233,6 @@ void Enemy::Render(const Matrix& _view)
 	{
 		(*itr)->Render(_view);
 	}
-
 }
 
 // å„énññ

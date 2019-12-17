@@ -66,28 +66,28 @@ private:
 
 
 	// Device resources.
-	std::unique_ptr<DX::DeviceResources>    m_deviceResources;
+	std::unique_ptr<DX::DeviceResources>    m_pDeviceResources;
 
 	// Rendering loop timer.
 	DX::StepTimer                           m_timer;
 
 	// 射影行列
-	std::unique_ptr<Projection>             m_projection;
+	std::unique_ptr<Projection>             m_pProjection;
 
 	// マウス
-	std::unique_ptr<DirectX::Mouse>			m_mouse;
+	std::unique_ptr<DirectX::Mouse>			m_pMouse;
 
 	// キーボード
-	std::unique_ptr<DirectX::Keyboard>      m_keyboard;
+	std::unique_ptr<DirectX::Keyboard>      m_pKeyboard;
 
 	// コモンステート
-	std::unique_ptr<DirectX::CommonStates>	m_state;
+	std::unique_ptr<DirectX::CommonStates>	m_pState;
 
 	// スプライトバッチ
-	std::unique_ptr<DirectX::SpriteBatch>   m_spriteBatch;
+	std::unique_ptr<DirectX::SpriteBatch>   m_pSpriteBatch;
 
 	// コモンステート
-	std::unique_ptr<GameStateManager>       m_gameStateManager;
+	std::unique_ptr<GameStateManager>       m_pGameStateManager;
 
 	Player* player;
 

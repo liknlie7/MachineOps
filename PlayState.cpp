@@ -46,6 +46,9 @@ void PlayState::Initialize()
 		Matrix::CreateScale(Vector3(.5f, -.5f, 1.f)) *
 		Matrix::CreateTranslation(Vector3(.5f, .5f, 0.f)) *
 		Matrix::CreateScale(Vector3(float(size.right), float(size.bottom), 1.f));
+
+	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\GreenHP.png", nullptr, m_greenHpBarTexture.GetAddressOf());
+	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\RedHP.png", nullptr, m_redHpBarTexture.GetAddressOf());
 }
 
 // 更新
@@ -163,6 +166,7 @@ void PlayState::Render()
 	debugFont->print(10, 40, L"[Space] Title");
 	debugFont->draw();
 
+
 	// プレイヤー表示
 	m_pPlayer->Render(m_pFollowCamera->getViewMatrix());
 
@@ -171,6 +175,20 @@ void PlayState::Render()
 
 	// 床の表示
 	m_pFloor->Render(m_pFollowCamera->getViewMatrix());
+
+	GameContext::Get<SpriteBatch>()->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
+	// 赤ゲージ表示
+	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 595), nullptr, Colors::White,
+		0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
+	// 薄緑ゲージ表示
+	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Vector4(1.0f,1.0f,1.0f,0.5f),
+		0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
+	// 緑ゲージ表示
+	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Colors::White,
+		0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
+
+	GameContext::Get<SpriteBatch>()->End();
+
 }
 
 // 後始末

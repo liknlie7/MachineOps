@@ -6,6 +6,7 @@
 #include <SimpleMath.h>
 #include <Effects.h>
 #include <Keyboard.h>
+#include <SpriteBatch.h>
 
 #include "DeviceResources.h"
 #include "GameContext.h"
@@ -13,6 +14,7 @@
 #include "Projection.h"
 #include "Keyboard.h"
 #include "GameStateManager.h"
+#include "WICTextureLoader.h" 
 
 #include "DebugFont.h"
 #include "DebugCamera.h"
@@ -59,6 +61,10 @@ private:
 
 	// 色
 	DirectX::SimpleMath::Color							m_color;
+
+	// 体力テクスチャ
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_greenHpBarTexture;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_redHpBarTexture;
 	
 
 	std::unique_ptr<DirectX::GeometricPrimitive> geo;
