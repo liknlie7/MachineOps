@@ -16,7 +16,7 @@
 #include "Keyboard.h"
 
 
-class GameStateManager;
+class GameSceneManager;
 
 class Player;
 
@@ -87,7 +87,7 @@ private:
 	std::unique_ptr<DirectX::SpriteBatch>   m_pSpriteBatch;
 
 	// コモンステート
-	std::unique_ptr<GameStateManager>       m_pGameStateManager;
+	std::unique_ptr<GameSceneManager>       m_pGameSceneManager;
 
 	Player* player;
 

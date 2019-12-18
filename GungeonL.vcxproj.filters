@@ -17,11 +17,11 @@
     <Filter Include="Manager">
       <UniqueIdentifier>{76ba27d4-f84e-4b54-b4f0-2cd052d5f74f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameState">
-      <UniqueIdentifier>{a829e195-26f0-4e75-880d-b6d636750ceb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\Enemy">
       <UniqueIdentifier>{8568d1ac-01fb-464e-8509-26783509192a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameScene">
+      <UniqueIdentifier>{562db1f7-eb02-4020-854d-f7e9099ca424}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -43,15 +43,6 @@
     </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>GameState</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStateManager.h">
-      <Filter>GameState</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayState.h">
-      <Filter>GameState</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h">
       <Filter>Common</Filter>
@@ -84,12 +75,6 @@
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="ResultState.h">
-      <Filter>GameState</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleState.h">
-      <Filter>GameState</Filter>
-    </ClInclude>
     <ClInclude Include="ServiceLocator.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -98,6 +83,21 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSceneManager.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultScene.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>GameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -118,15 +118,6 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="GameStateManager.cpp">
-      <Filter>GameState</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayState.cpp">
-      <Filter>GameState</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleState.cpp">
-      <Filter>GameState</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -146,11 +137,20 @@
       <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="ResultState.cpp">
-      <Filter>GameState</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSceneManager.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScene.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>GameScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,11 +10,11 @@
 
 #include "DebugFont.h"
 #include "GameContext.h"
-#include "GameStateManager.h"
+#include "GameSceneManager.h"
 
-#include "TitleState.h"
-#include "PlayState.h"
-#include "ResultState.h"
+#include "TitleScene.h"
+#include "PlayScene.h"
+#include "ResultScene.h"
 
 extern void ExitGame();
 
@@ -77,12 +77,12 @@ void Game::Initialize(HWND window, int width, int height)
 	debugFont->create(m_pDeviceResources->GetD3DDevice(), m_pDeviceResources->GetD3DDeviceContext());
 
 
-	m_pGameStateManager = make_unique<GameStateManager>();
-	m_pGameStateManager->RegisterState<TitleState>("Title");
-	m_pGameStateManager->RegisterState<PlayState>("Play");
-	m_pGameStateManager->RegisterState<ResultState>("Result");
-	m_pGameStateManager->SetStartState("Play");
-	GameContext::Register<GameStateManager>(m_pGameStateManager);
+	m_pGameSceneManager = make_unique<GameSceneManager>();
+	m_pGameSceneManager->RegisterScene<TitleScene>("Title");
+	m_pGameSceneManager->RegisterScene<PlayScene>("Play");
+	m_pGameSceneManager->RegisterScene<ResultScene>("Result");
+	m_pGameSceneManager->SetStartScene("Play");
+	GameContext::Register<GameSceneManager>(m_pGameSceneManager);
 }
 
 
@@ -105,7 +105,7 @@ void Game::Update(DX::StepTimer const& timer)
 
 	// TODO: Add your game logic here.
 	elapsedTime;
-	m_pGameStateManager->Update(timer);
+	m_pGameSceneManager->Update(timer);
 }
 #pragma endregion
 
@@ -126,7 +126,7 @@ void Game::Render()
 
 	// TODO: Add your rendering code here.
 	context;
-	m_pGameStateManager->Render();
+	m_pGameSceneManager->Render();
 
 	m_pDeviceResources->PIXEndEvent();
 	// Show the new frame.
