@@ -2,12 +2,14 @@
 
 #include "GameState.h"
 #include "DeviceResources.h"
-#include <SimpleMath.h>
 
+#include <SimpleMath.h>
 #include <SpriteBatch.h>
 #include <SpriteFont.h>
 #include <Keyboard.h>
 #include <CommonStates.h>
+
+#include "StepTimer.h"
 
 class TitleState : public GameState
 {
@@ -19,7 +21,7 @@ public:
 public:
 
 	void Initialize() override;
-	void Update() override;
+	void Update(DX::StepTimer const& timer) override;
 	void Render() override;
 	void Finalize() override;
 

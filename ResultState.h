@@ -8,6 +8,8 @@
 #include <Keyboard.h>
 #include <CommonStates.h>
 
+#include "StepTimer.h"
+
 class ResultState : public GameState
 {
 public:
@@ -18,7 +20,7 @@ public:
 public:
 
 	void Initialize() override;
-	void Update() override;
+	void Update(DX::StepTimer const& timer) override;
 	void Render() override;
 	void Finalize() override;
 

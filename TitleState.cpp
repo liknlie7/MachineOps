@@ -34,7 +34,7 @@ void TitleState::Initialize()
 }
 
 
-void TitleState::Update()
+void TitleState::Update(DX::StepTimer const& timer)
 {
 	if (alpha >= 1)
 		fadeFlag = true;

@@ -15,6 +15,7 @@
 #include "Keyboard.h"
 #include "GameStateManager.h"
 #include "WICTextureLoader.h" 
+#include "StepTimer.h"
 
 #include "DebugFont.h"
 #include "DebugCamera.h"
@@ -35,7 +36,7 @@ public:
 public:
 
 	void Initialize() override;
-	void Update() override;
+	void Update(DX::StepTimer const& timer) override;
 	void Render() override;
 	void Finalize() override;
 

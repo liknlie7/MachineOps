@@ -60,7 +60,7 @@ void PlayState::Initialize()
 }
 
 // 更新
-void PlayState::Update()
+void PlayState::Update(DX::StepTimer const& timer)
 {
 	Mouse::State mouseState = Mouse::Get().GetState();
 	Keyboard::State keyState = Keyboard::Get().GetState();
@@ -197,11 +197,11 @@ void PlayState::Render()
 	////GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Colors::White,
 	////	0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
 	// 薄緑ゲージ表示
-	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(m_prevGaugePositionX + (m_currentGaugePositionX - m_prevGaugePositionX) * 0.5f, 600), nullptr, Vector4(1.0f, 1.0f, 1.0f, 0.5f),
-		0.0f, Vector2::Zero, Vector2(m_prevGaugeScaleX + (m_currentGaugeScaleX - m_prevGaugeScaleX) * 0.5f, 0.2f));
-	//// 緑ゲージ表示
-	//GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(m_currentGaugePositionX, 600), nullptr, Colors::White,
-	//	0.0f, Vector2::Zero, Vector2(m_currentGaugeScaleX, 0.2f));
+	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(m_prevGaugePositionX + (m_currentGaugePositionX - m_prevGaugePositionX) * 0.01f, 600), nullptr, Vector4(1.0f, 1.0f, 1.0f, 0.5f),
+		0.0f, Vector2::Zero, Vector2(m_prevGaugeScaleX + (m_currentGaugeScaleX - m_prevGaugeScaleX) * 0.01f, 0.2f));
+	// 緑ゲージ表示
+	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(m_currentGaugePositionX, 600), nullptr, Colors::White,
+		0.0f, Vector2::Zero, Vector2(m_currentGaugeScaleX, 0.2f));
 
 	GameContext::Get<SpriteBatch>()->End();
 

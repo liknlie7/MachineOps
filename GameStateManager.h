@@ -5,6 +5,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "StepTimer.h"
+
 class GameState;
 
 class GameStateManager final
@@ -38,7 +40,7 @@ public:
 
 	void SetStartState(const std::string& stateName);
 
-	void Update();
+	void Update(DX::StepTimer const& timer);
 	void Render();
 
 	void RequestState(const std::string& stateName);

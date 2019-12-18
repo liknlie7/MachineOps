@@ -25,7 +25,7 @@ void GameStateManager::SetStartState(const std::string& stateName)
 }
 
 
-void GameStateManager::Update()
+void GameStateManager::Update(DX::StepTimer const& timer)
 {
 	if (!m_nextStateName.empty())
 	{
@@ -33,7 +33,7 @@ void GameStateManager::Update()
 	}
 
 	assert(m_activeState && "There is no active state.");
-	m_activeState->Update();
+	m_activeState->Update(timer);
 }
 
 
