@@ -47,7 +47,11 @@ public: // ŠÖ”
 	// Œãn––
 	void Finalize() override;
 
+	// üŒ`•âŠÔ
 	float Lerp(float _start, float _end, float _time);
+
+	// ‹…–ÊüŒ`•âŠÔ
+	float Slerp(float _start, float _end, float _time);
 
 private: // ’è”
 

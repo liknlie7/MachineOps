@@ -237,7 +237,15 @@ void PlayScene::Finalize()
 }
 
 // üŒ`•âŠÔ
-float PlayScene::Lerp(float _start, float _end, float time)
+float PlayScene::Lerp(float _start, float _end, float _time)
 {
-	return _start + (_end - _start) * time;
+	return _start + (_end - _start) * _time;
+}
+
+// ‹…–ÊüŒ`•âŠÔ
+float PlayScene::Slerp(float _start, float _end, float _time)
+{
+	float rate = (sinf(0.0f * DirectX::XM_PI /
+		2.0f - DirectX::XM_PI * _time) + 1.0f) / 2.0f;
+	return _start + (_end - _start) * rate;
 }
