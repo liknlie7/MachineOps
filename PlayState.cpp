@@ -49,6 +49,14 @@ void PlayState::Initialize()
 
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\GreenHP.png", nullptr, m_greenHpBarTexture.GetAddressOf());
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\RedHP.png", nullptr, m_redHpBarTexture.GetAddressOf());
+
+	// HP用
+	m_gaugeDefaultPositionX = 350;
+	m_gaugeDefaultScaleX = 1.0f;
+	m_currentGaugePositionX = 350;
+	m_prevGaugePositionX = m_currentGaugePositionX;
+	m_currentGaugeScaleX = 1.0f;
+	m_prevGaugeScaleX = m_currentGaugeScaleX;
 }
 
 // 更新
@@ -132,6 +140,8 @@ void PlayState::Update()
 		if (Collision::HitCheckSphereToSphere(m_pEnemy->GetCollider(), playerBullet[i]))
 		{
 			m_pEnemy->OnCollision();
+			m_prevGaugeScaleX = m_currentGaugeScaleX;
+			m_prevGaugePositionX = m_currentGaugePositionX;
 			m_pPlayer->m_pWeapon->BulletOnCollision(i);
 		}
 	}
@@ -155,6 +165,12 @@ void PlayState::Update()
 		GameStateManager* gameStateManager = GameContext::Get<GameStateManager>();
 		gameStateManager->RequestState("Result");
 	}
+	// 体力の比率計算
+	float lifeRate = m_pEnemy->GetCurrentLife() / m_pEnemy->GetMaxLife();
+	// ゲージのサイズ変更
+	m_currentGaugeScaleX = m_gaugeDefaultScaleX * lifeRate;
+	// サイズ変更に合わせて場所を移動
+	m_currentGaugePositionX = m_gaugeDefaultPositionX - m_gaugeDefaultScaleX * (1 - lifeRate) * 0.5;
 }
 
 // 描画
@@ -177,15 +193,15 @@ void PlayState::Render()
 	m_pFloor->Render(m_pFollowCamera->getViewMatrix());
 
 	GameContext::Get<SpriteBatch>()->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
-	// 赤ゲージ表示
-	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 595), nullptr, Colors::White,
-		0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
+	////// 赤ゲージ表示
+	////GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Colors::White,
+	////	0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
 	// 薄緑ゲージ表示
-	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Vector4(1.0f,1.0f,1.0f,0.5f),
-		0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
-	// 緑ゲージ表示
-	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Colors::White,
-		0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
+	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(m_prevGaugePositionX + (m_currentGaugePositionX - m_prevGaugePositionX) * 0.5f, 600), nullptr, Vector4(1.0f, 1.0f, 1.0f, 0.5f),
+		0.0f, Vector2::Zero, Vector2(m_prevGaugeScaleX + (m_currentGaugeScaleX - m_prevGaugeScaleX) * 0.5f, 0.2f));
+	//// 緑ゲージ表示
+	//GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(m_currentGaugePositionX, 600), nullptr, Colors::White,
+	//	0.0f, Vector2::Zero, Vector2(m_currentGaugeScaleX, 0.2f));
 
 	GameContext::Get<SpriteBatch>()->End();
 

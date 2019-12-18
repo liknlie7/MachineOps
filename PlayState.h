@@ -66,6 +66,15 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_greenHpBarTexture;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_redHpBarTexture;
 	
+	// 体力ゲージの基本位置
+	float m_gaugeDefaultPositionX;
+	// 体力ゲージの基本スケール
+	float m_gaugeDefaultScaleX;
+
+	float m_currentGaugePositionX;
+	float m_prevGaugePositionX;
+	float m_currentGaugeScaleX;
+	float m_prevGaugeScaleX;
 
 	std::unique_ptr<DirectX::GeometricPrimitive> geo;
 	DirectX::SimpleMath::Matrix geoMat;

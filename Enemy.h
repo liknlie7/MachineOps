@@ -92,6 +92,18 @@ public: // アクセサ
 		m_playerPos = _playerPos;
 	}
 
+	// 体力最大値の取得
+	float GetMaxLife()
+	{
+		return m_maxLife;
+	}
+	// 現在の体力の取得
+	float GetCurrentLife()
+	{
+		return m_life;
+	}
+
+
 public: // 関数
 
 	// 初期化
@@ -150,7 +162,8 @@ private: // 変数
 	// 弾の角度の間隔
 	float											m_changeAngle;
 	// 体力
-	int												m_life;
+	float											m_maxLife;
+	float											m_life;
 	// ヒットフラグ
 	bool											m_isValid;
 	// 点滅時間

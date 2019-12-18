@@ -13,7 +13,8 @@ Enemy::Enemy(int _type)
 	: m_blinkTime(30)
 	, m_isValid(false)
 	, m_playerPos(0.0f, 0.0f, 0.0f)
-	, m_life(300)
+	, m_life(30)
+	, m_maxLife(30)
 	, m_wayNum(3)
 	, m_changeAngle(30)
 	, m_bulletEndAngle(0)
@@ -101,7 +102,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		// ë¨Ç≥ÇÃèâä˙âª
 		m_speed = 0.08f;
 
-		m_life = 30;
+		m_life = m_maxLife;
 		m_shotType = NORMAL_SHOT;
 		m_collider.radius = /*2.0*/5.0f;
 		m_collider.center = m_pos;
