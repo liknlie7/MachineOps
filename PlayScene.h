@@ -26,21 +26,34 @@
 #include "Enemy.h"
 #include "Collision.h"
 
+// プレイシーンクラス
 class PlayScene : public GameScene
 {
-public:
+public: // 基本
 
+	// コンストラクタ
 	PlayScene();
+	// デストラクタ
 	virtual ~PlayScene();
 
-public:
+public: // 関数
 
+	// 初期化
 	void Initialize() override;
-	void Update(DX::StepTimer const& timer) override;
+	// 更新
+	void Update(DX::StepTimer const& _timer) override;
+	// 描画
 	void Render() override;
+	// 後始末
 	void Finalize() override;
 
-private:
+	float Lerp(float _start, float _end, float _time);
+
+private: // 定数
+
+	static const float DAMAGE_TIME;
+
+private: // 変数
 
 	// エフェクト
 	std::unique_ptr<DirectX::BasicEffect>				m_pBasicEffect;
@@ -63,22 +76,23 @@ private:
 	// 色
 	DirectX::SimpleMath::Color							m_color;
 
+	// 時間
+	float												m_totalTime;
+
 	// 体力テクスチャ
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_greenHpBarTexture;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_redHpBarTexture;
 
-	// 体力ゲージの基本位置
-	float m_gaugeDefaultPositionX;
-	// 体力ゲージの基本スケール
-	float m_gaugeDefaultScaleX;
-
-	float m_currentGaugePositionX;
-	float m_prevGaugePositionX;
+	// 体力ゲージデフォルトサイズ
+	float m_defaultGaugeScaleX;
+	// 現在の体力ゲージスケール
 	float m_currentGaugeScaleX;
+	// 前の体力ゲージスケール
 	float m_prevGaugeScaleX;
+	// じわじわ減少するゲージ
+	float m_lightGreenGaugeRate;
 
 	std::unique_ptr<DirectX::GeometricPrimitive> geo;
 	DirectX::SimpleMath::Matrix geoMat;
 	DirectX::SimpleMath::Vector3 geoVec;
 };
-

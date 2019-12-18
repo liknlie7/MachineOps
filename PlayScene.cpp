@@ -7,6 +7,10 @@ using namespace DirectX::SimpleMath;
 
 using namespace std;
 
+
+// ライフゲージ減少にかかる時間
+const float PlayScene::DAMAGE_TIME = 1.5f;
+
 // コンストラクタ
 PlayScene::PlayScene()
 	: GameScene()
@@ -50,17 +54,20 @@ void PlayScene::Initialize()
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\GreenHP.png", nullptr, m_greenHpBarTexture.GetAddressOf());
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\RedHP.png", nullptr, m_redHpBarTexture.GetAddressOf());
 
-	// HP用
-	m_gaugeDefaultPositionX = 350;
-	m_gaugeDefaultScaleX = 1.0f;
-	m_currentGaugePositionX = 350;
-	m_prevGaugePositionX = m_currentGaugePositionX;
+	// 敵のライフデフォルトスケール値
+	m_defaultGaugeScaleX = 1.0f;
+	// 現在の敵のライフ
 	m_currentGaugeScaleX = 1.0f;
+	// 次の敵のライフ
 	m_prevGaugeScaleX = m_currentGaugeScaleX;
+	// じわじわ減るライフゲージ
+	m_lightGreenGaugeRate = 0;
+	// 経過時間
+	m_totalTime = 0;
 }
 
 // 更新
-void PlayScene::Update(DX::StepTimer const& timer)
+void PlayScene::Update(DX::StepTimer const& _timer)
 {
 	Mouse::State mouseState = Mouse::Get().GetState();
 	Keyboard::State keyState = Keyboard::Get().GetState();
@@ -96,7 +103,7 @@ void PlayScene::Update(DX::StepTimer const& timer)
 	Vector3 v2 = Vector3(50.0f, 0.0f, 50.0f);    // 右下
 	Vector3 v3 = Vector3(50.0f, 0.0f, -50.0f);   // 右上
 
-												 // 交差点
+	// 交差点
 	Vector3 hitPos;
 
 	// 三角形を作成
@@ -140,8 +147,6 @@ void PlayScene::Update(DX::StepTimer const& timer)
 		if (Collision::HitCheckSphereToSphere(m_pEnemy->GetCollider(), playerBullet[i]))
 		{
 			m_pEnemy->OnCollision();
-			m_prevGaugeScaleX = m_currentGaugeScaleX;
-			m_prevGaugePositionX = m_currentGaugePositionX;
 			m_pPlayer->m_pWeapon->BulletOnCollision(i);
 		}
 	}
@@ -151,6 +156,12 @@ void PlayScene::Update(DX::StepTimer const& timer)
 		{
 			m_pPlayer->SetHitFlag(true);
 			m_pEnemy->BulletOnCollision(i);
+			// 敵の体力の比率計算
+			float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
+			// 現在のゲージサイズ
+			m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
+
+
 		}
 	}
 
@@ -165,12 +176,25 @@ void PlayScene::Update(DX::StepTimer const& timer)
 		GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
 		gameSceneManager->RequestScene("Result");
 	}
-	// 体力の比率計算
-	float lifeRate = m_pEnemy->GetCurrentLife() / m_pEnemy->GetMaxLife();
-	// ゲージのサイズ変更
-	m_currentGaugeScaleX = m_gaugeDefaultScaleX * lifeRate;
-	// サイズ変更に合わせて場所を移動
-	m_currentGaugePositionX = m_gaugeDefaultPositionX - m_gaugeDefaultScaleX * (1 - lifeRate) * 0.5;
+
+
+
+	// 経過時間
+	m_totalTime += (float)_timer.GetElapsedSeconds();
+	if (m_totalTime < DAMAGE_TIME)
+	{
+		float time = m_totalTime / DAMAGE_TIME;
+		m_lightGreenGaugeRate = Lerp(m_prevGaugeScaleX, m_currentGaugeScaleX, time);
+	}
+	else
+	{
+		m_prevGaugeScaleX = m_currentGaugeScaleX;
+
+		m_totalTime = 0;
+	}
+	
+	//if (m_currentGaugeScaleX == m_prevGaugeScaleX)
+	//	m_totalTime = 0;
 }
 
 // 描画
@@ -197,10 +221,10 @@ void PlayScene::Render()
 	////GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Colors::White,
 	////	0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
 	// 薄緑ゲージ表示
-	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(m_prevGaugePositionX + (m_currentGaugePositionX - m_prevGaugePositionX) * 0.01f, 600), nullptr, Vector4(1.0f, 1.0f, 1.0f, 0.5f),
-		0.0f, Vector2::Zero, Vector2(m_prevGaugeScaleX + (m_currentGaugeScaleX - m_prevGaugeScaleX) * 0.01f, 0.2f));
+	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Vector4(1.0f, 1.0f, 1.0f, 0.5f),
+		0.0f, Vector2::Zero, Vector2(m_lightGreenGaugeRate, 0.2f));
 	// 緑ゲージ表示
-	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(m_currentGaugePositionX, 600), nullptr, Colors::White,
+	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Colors::White,
 		0.0f, Vector2::Zero, Vector2(m_currentGaugeScaleX, 0.2f));
 
 	GameContext::Get<SpriteBatch>()->End();
@@ -210,4 +234,10 @@ void PlayScene::Render()
 // 後始末
 void PlayScene::Finalize()
 {
+}
+
+// 線形補間
+float PlayScene::Lerp(float _start, float _end, float time)
+{
+	return _start + (_end - _start) * time;
 }

@@ -92,13 +92,13 @@ public: // アクセサ
 		m_playerPos = _playerPos;
 	}
 
-	// 体力最大値の取得
+	// 体力の最大値取得
 	float GetMaxLife()
 	{
 		return m_maxLife;
 	}
-	// 現在の体力の取得
-	float GetCurrentLife()
+	// 体力の取得
+	float GetLife()
 	{
 		return m_life;
 	}

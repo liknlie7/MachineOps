@@ -34,7 +34,7 @@ void TitleScene::Initialize()
 }
 
 
-void TitleScene::Update(DX::StepTimer const& timer)
+void TitleScene::Update(DX::StepTimer const& _timer)
 {
 	if (alpha >= 1)
 		fadeFlag = true;

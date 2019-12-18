@@ -15,7 +15,7 @@ public:
 public:
 
 	virtual void Initialize() = 0;
-	virtual void Update(DX::StepTimer const& timer) = 0;
+	virtual void Update(DX::StepTimer const& _timer) = 0;
 	virtual void Render() = 0;
 	virtual void Finalize() = 0;
 };

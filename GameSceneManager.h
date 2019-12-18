@@ -40,7 +40,7 @@ public:
 
 	void SetStartScene(const std::string& _sceneName);
 
-	void Update(DX::StepTimer const& timer);
+	void Update(DX::StepTimer const& _timer);
 	void Render();
 
 	void RequestScene(const std::string& _ceneName);

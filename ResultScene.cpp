@@ -30,7 +30,7 @@ void ResultScene::Initialize()
 }
 
 
-void ResultScene::Update(DX::StepTimer const& timer)
+void ResultScene::Update(DX::StepTimer const& _timer)
 {
 	Keyboard::State keyState = Keyboard::Get().GetState();
 
