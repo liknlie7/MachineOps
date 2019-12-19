@@ -1,32 +1,46 @@
 #pragma once
+
 #include "SimpleMath.h"
 #include "SpriteBatch.h"
 #include "SpriteFont.h"
+
 // シングルトンのタイプ
 // 0:自身の生ポインタで管理（注：明示的な解放をしないとメモリリークする）
 // 1:自身のユニークポインタで管理（注：ユニークポインタの理解推奨）
 // 2:静的な実態で管理（注：プログラム終了のタイミングでしか解放できない）
 #define DEBUG_FONT_SINGLETON_TYPE 1
+
+// デバッグフォント
 class DebugFont
 {
-public:
+private: // コンストラクタ
+
+	DebugFont();
+
+public: // デストラクタ
+
+	~DebugFont();
+
+public: // 定数
 
 	// 文字列最大数サイズ
 	static const size_t STRING_SIZE_MAX = 256;
-private:
-	DebugFont();
-public:
-	~DebugFont();
-public:
+
+public: // 関数
+
 	// 生成
 	void create(ID3D11Device1* device, ID3D11DeviceContext1* context);
+
 	// 描画
 	void draw();
+
 	// リセット
 	void reset();
+
 	// 表示情報登録
 	void print(float posX, float posY, wchar_t const* const format, ...);
 	void print(DirectX::SimpleMath::Vector2 pos, wchar_t const* const format, ...);
+
 #if DEBUG_FONT_SINGLETON_TYPE == 0
 public:
 	// オブジェクトへのポインタを返す
@@ -62,8 +76,11 @@ public:
 	}
 private:
 	static DebugFont* m_pInstance;
+
 #elif DEBUG_FONT_SINGLETON_TYPE == 1
+
 public:
+
 	// オブジェクトへのポインタを返す
 	static DebugFont* GetInstance()
 	{
@@ -81,9 +98,11 @@ public:
 		if (m_pInstance)
 			m_pInstance.reset();
 	}
+
 private:
 	// オブジェクトへのポインタ
 	static std::unique_ptr<DebugFont> m_pInstance;
+
 #else
 public:
 	// オブジェクトへのポインタを返す

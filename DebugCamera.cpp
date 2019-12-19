@@ -2,12 +2,10 @@
 
 #include "DebugCamera.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
+// デフォルト距離
 const float DebugCamera::DEFAULT_CAMERA_DISTANCE = 5.0f;
 
-
+// コンストラクタ
 DebugCamera::DebugCamera()
 	: m_yAngle(0.0f)
 	, m_xAngle(0.0f)
@@ -16,23 +14,25 @@ DebugCamera::DebugCamera()
 {
 }
 
-
+// デストラクタ
 DebugCamera::~DebugCamera()
 {
 }
 
-
+// 更新
 void DebugCamera::update()
 {
-	auto state = Mouse::Get().GetState();
+	// マウスの取得
+	auto state = DirectX::Mouse::Get().GetState();
 
 	// 相対モードなら何もしない
-	if (state.positionMode == Mouse::MODE_RELATIVE) return;
+	if (state.positionMode == DirectX::Mouse::MODE_RELATIVE) return;
 
+	// トラッカー更新
 	m_tracker.Update(state);
 
 	// マウスの左ボタンが押された
-	if (m_tracker.leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
+	if (m_tracker.leftButton == DirectX::Mouse::ButtonStateTracker::ButtonState::PRESSED)
 	{
 		// マウスの座標を取得
 		m_prevX = state.x;
@@ -53,27 +53,27 @@ void DebugCamera::update()
 	if (m_scrollWheelValue > 0)
 	{
 		m_scrollWheelValue = 0;
-		Mouse::Get().ResetScrollWheelValue();
+		DirectX::Mouse::Get().ResetScrollWheelValue();
 	}
 
 	// ビュー行列を算出する
-	Matrix rotY = Matrix::CreateRotationY(m_yAngle);
-	Matrix rotX = Matrix::CreateRotationX(m_xAngle);
+	DirectX::SimpleMath::Matrix rotY = DirectX::SimpleMath::Matrix::CreateRotationY(m_yAngle);
+	DirectX::SimpleMath::Matrix rotX = DirectX::SimpleMath::Matrix::CreateRotationX(m_xAngle);
 
-	Matrix rt = rotY * rotX;
+	DirectX::SimpleMath::Matrix rt = rotY * rotX;
 
-	Vector3 eye(0.0f, 2.0f, 2.0f);
-	Vector3 target(0.0f, 0.0f, 0.0f);
-	Vector3 up(0.0f, 1.0f, 0.0f);
+	DirectX::SimpleMath::Vector3 eye(0.0f, 2.0f, 2.0f);
+	DirectX::SimpleMath::Vector3 target(0.0f, 0.0f, 0.0f);
+	DirectX::SimpleMath::Vector3 up(0.0f, 1.0f, 0.0f);
 
-	eye = Vector3::Transform(eye, rt.Invert());
+	eye = DirectX::SimpleMath::Vector3::Transform(eye, rt.Invert());
 	eye *= (DEFAULT_CAMERA_DISTANCE - m_scrollWheelValue / 100);
-	up = Vector3::Transform(up, rt.Invert());
+	up = DirectX::SimpleMath::Vector3::Transform(up, rt.Invert());
 
 	m_eye = eye;
 	m_target = target;
 
-	m_view = Matrix::CreateLookAt(eye, target, up);
+	m_view = DirectX::SimpleMath::Matrix::CreateLookAt(eye, target, up);
 }
 
 // 行列の生成
@@ -86,9 +86,9 @@ void DebugCamera::motion(int x, int y)
 	if (dx != 0.0f || dy != 0.0f)
 	{
 		// Ｙ軸の回転
-		float yAngle = dx * XM_PI / 180.0f;
+		float yAngle = dx * DirectX::XM_PI / 180.0f;
 		// Ｘ軸の回転
-		float xAngle = dy * XM_PI / 180.0f;
+		float xAngle = dy * DirectX::XM_PI / 180.0f;
 
 		m_xAngle += xAngle;
 		m_yAngle += yAngle;

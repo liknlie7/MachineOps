@@ -3,24 +3,18 @@
 #include "SimpleMath.h"
 #include "Mouse.h"
 
-
+// デバッグカメラ
 class DebugCamera
 {
-public:
+public: // 基本
 
-	// カメラの距離
-	static const float DEFAULT_CAMERA_DISTANCE;
-
-public:
-
+	// コンストラクタ
 	DebugCamera();
+
+	// デストラクタ
 	~DebugCamera();
 
-public:
-
-	void update();
-
-public:
+public: //アクセサ
 
 	// ビュー行列取得
 	DirectX::SimpleMath::Matrix getViewMatrix()
@@ -40,14 +34,25 @@ public:
 		return m_target;
 	}
 
-private:
+public: // 関数
+
+	// 更新
+	void update();
+
+private: // サブ関数
 
 	void motion(int x, int y);
 
-private:
+public: // 定数
+
+	// カメラの距離
+	static const float DEFAULT_CAMERA_DISTANCE;
+
+private: // 変数
 
 	// 横回転
 	float m_yAngle;
+
 	// 縦回転
 	float m_xAngle;
 
