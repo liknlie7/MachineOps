@@ -46,19 +46,19 @@ public:
 public: // アクセサ
 
 	// モデルの情報の取得
-	DirectX::Model* GetModel()
+	DirectX::Model* GetModel() const
 	{
 		return m_pEnemy.get();
 	}
 
 	// 座標取得
-	DirectX::SimpleMath::Vector3 GetPos()
+	DirectX::SimpleMath::Vector3 GetPos() const 
 	{
 		return m_pos;
 	}
 
 	// 弾の座標取得
-	std::vector<DirectX::SimpleMath::Vector3> GetBulletPos()
+	std::vector<DirectX::SimpleMath::Vector3> GetBulletPos() const
 	{
 		std::vector<DirectX::SimpleMath::Vector3> bulletsPos;
 		for (auto& numBullet : m_pBullets)
@@ -69,36 +69,36 @@ public: // アクセサ
 	}
 
 	// 接触判定フラグの取得
-	bool GetIsValid()
+	bool GetIsValid() const
 	{
 		return m_isValid;
 	}
 
 	// 接触判定フラグの設定
-	void SetIsValid(bool _hitFlag)
+	void SetIsValid(const bool& _hitFlag)
 	{
 		m_isValid = _hitFlag;
 	}
 
 	// コライダーの取得
-	Collision::Sphere GetCollider()
+	Collision::Sphere GetCollider() const
 	{
 		return m_collider;
 	}
 
 	// プレイヤーの位置の設定
-	void SetPlayerPos(DirectX::SimpleMath::Vector3 _playerPos)
+	void SetPlayerPos(const DirectX::SimpleMath::Vector3& _playerPos)
 	{
 		m_playerPos = _playerPos;
 	}
 
 	// 体力の最大値取得
-	float GetMaxLife()
+	float GetMaxLife() const
 	{
 		return m_maxLife;
 	}
 	// 体力の取得
-	float GetLife()
+	float GetLife() const 
 	{
 		return m_life;
 	}

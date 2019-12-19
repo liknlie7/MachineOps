@@ -14,19 +14,19 @@ public: // 基本
 public: // アクセサ
 
 	// ビュー行列取得
-	DirectX::SimpleMath::Matrix getViewMatrix()
+	DirectX::SimpleMath::Matrix getViewMatrix() const
 	{
 		return m_view;
 	}
 
 	// 注視点の設定
-	void FollowCamera::SetTargetPosition(DirectX::SimpleMath::Vector3 target)
+	void FollowCamera::SetTargetPosition(const DirectX::SimpleMath::Vector3& target)
 	{
 		m_target = target;
 	}
 
 	// 視点の設定
-	void FollowCamera::SetEyePosition(DirectX::SimpleMath::Vector3 eye)
+	void FollowCamera::SetEyePosition(const DirectX::SimpleMath::Vector3& eye)
 	{
 		m_eye = eye;
 	}

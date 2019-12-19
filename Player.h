@@ -31,44 +31,44 @@ public: // 基本
 public: // アクセサ
 
 	// 座標の取得
-	DirectX::SimpleMath::Vector3 Player::GetPos()
+	DirectX::SimpleMath::Vector3 Player::GetPos() const
 	{
 		return m_pos;
 	}
 
 	// マウス座標の設定
-	void SetMousePos(DirectX::SimpleMath::Vector3 _mousePos)
+	void SetMousePos(const DirectX::SimpleMath::Vector3& _mousePos)
 	{
 		m_mousePos = _mousePos;
 	}
 
 	// 弾の座標取得
-	std::vector<DirectX::SimpleMath::Vector3> GetBulletPos()
+	std::vector<DirectX::SimpleMath::Vector3> GetBulletPos() const
 	{
 		return m_pWeapon->GetBulletPos();
 	}
 
 	// 接触判定フラグの取得
-	bool Player::GetHitFlag()
+	bool Player::GetHitFlag() const
 	{
 		return m_hitFlag;
 	}
 	// 接触判定フラグの設定
-	void Player::SetHitFlag(bool _hitFlag)
+	void Player::SetHitFlag(const bool& _hitFlag)
 	{
 		m_hitFlag = _hitFlag;
 	}
 
-	void Player::SetBulletHitFlag(bool _isHitFlag)
+	void Player::SetBulletHitFlag(const bool& _isHitFlag)
 	{
 		m_pWeapon->SetBulletHitFlag(_isHitFlag);
 	}
-	void Player::SetBulletNumber(int _bulletNumber)
+	void Player::SetBulletNumber(const int& _bulletNumber)
 	{
 		m_pWeapon->SetBulletNumber(_bulletNumber);
 	}
 
-	Collision::Sphere Player::GetCollider()
+	Collision::Sphere Player::GetCollider() const
 	{
 		return m_collider;
 	}

@@ -20,7 +20,7 @@ public: // 基本
 public: // アクセサ
 
 	// 座標取得
-	DirectX::SimpleMath::Vector3 GetPos()
+	DirectX::SimpleMath::Vector3 GetPos() const 
 	{
 		return m_pos;
 	}
@@ -31,17 +31,17 @@ public: // アクセサ
 	}
 
 	// フラグ取得
-	bool GetIsValid()
+	bool GetIsValid() const
 	{
 		return m_isValid;
 	}
 	// フラグ設定
-	void SetIsValid(bool _flag)
+	void SetIsValid(const bool& _flag)
 	{
 		m_isValid = _flag;
 	}
 
-	float GetLife()
+	float GetLife() const
 	{
 		return m_life;
 	}

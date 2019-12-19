@@ -25,13 +25,13 @@ public: // 基本
 public: // アクセサ
 
 	// 座標設定
-	void SetWeaponPos(DirectX::SimpleMath::Vector3 _pos)
+	void SetWeaponPos(const DirectX::SimpleMath::Vector3& _pos)
 	{
 		m_pos = _pos;
 	}
 
 	// 弾の座標取得
-	std::vector<DirectX::SimpleMath::Vector3> GetBulletPos()
+	std::vector<DirectX::SimpleMath::Vector3> GetBulletPos() const
 	{
 		std::vector<DirectX::SimpleMath::Vector3> bulletsPos;
 		for (auto& numBullet : m_pBullets)
@@ -42,22 +42,22 @@ public: // アクセサ
 	}
 
 	// プレイヤーの座標設定
-	void SetPlayerPos(DirectX::SimpleMath::Vector3 _playerPos)
+	void SetPlayerPos(const DirectX::SimpleMath::Vector3& _playerPos)
 	{
 		m_playerPos = _playerPos;
 	}
 
 	// 角度の設定
-	void SetAngle(float _angle)
+	void SetAngle(const float& _angle)
 	{
 		m_angle = _angle;
 	}
 
-	void SetBulletHitFlag(bool _isHitFlag)
+	void SetBulletHitFlag(const bool& _isHitFlag)
 	{
 		bulletHitFlag = _isHitFlag;
 	}
-	void SetBulletNumber(int _bulletNumber)
+	void SetBulletNumber(const int& _bulletNumber)
 	{
 		bulletNumber = _bulletNumber;
 	}
