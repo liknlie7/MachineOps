@@ -164,13 +164,13 @@
     <MeshContentTask Include="..\Gungeon\Enemy1.FBX">
       <Filter>Assets</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="..\Gungeon\Floor.FBX">
-      <Filter>Assets</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="..\Gungeon\tank.FBX">
       <Filter>Assets</Filter>
     </MeshContentTask>
     <MeshContentTask Include="..\Gungeon\Enemy2.FBX">
+      <Filter>Assets</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="floor.FBX">
       <Filter>Assets</Filter>
     </MeshContentTask>
   </ItemGroup>

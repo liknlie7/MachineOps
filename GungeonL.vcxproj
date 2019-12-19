@@ -235,8 +235,8 @@
   <ItemGroup>
     <MeshContentTask Include="..\Gungeon\Enemy1.FBX" />
     <MeshContentTask Include="..\Gungeon\Enemy2.FBX" />
-    <MeshContentTask Include="..\Gungeon\Floor.FBX" />
     <MeshContentTask Include="..\Gungeon\tank.FBX" />
+    <MeshContentTask Include="floor.FBX" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

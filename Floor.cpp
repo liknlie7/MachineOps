@@ -14,7 +14,7 @@ void Floor::Initialize()
 	factory->SetDirectory(L"Resources/Models");
 
 	// ファイルを指定してモデルデータ読み込み
-	m_pModel = Model::CreateFromCMO(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources/Models/Floor.cmo", *factory);
+	m_pModel = Model::CreateFromCMO(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources/Models/floor.cmo", *factory);
 
 	delete factory;
 }
