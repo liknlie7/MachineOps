@@ -9,7 +9,7 @@ using namespace std;
 
 
 // ライフゲージ減少にかかる時間
-const float PlayScene::DAMAGE_TIME = 1.5f;
+const float PlayScene::DAMAGE_TIME = 1.0f;
 
 // コンストラクタ
 PlayScene::PlayScene()
@@ -64,6 +64,7 @@ void PlayScene::Initialize()
 	m_lightGreenGaugeRate = 0;
 	// 経過時間
 	m_totalTime = 0;
+	m_gaugeFlag = false;
 }
 
 // 更新
@@ -178,23 +179,24 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 	}
 
 
-
 	// 経過時間
 	m_totalTime += (float)_timer.GetElapsedSeconds();
 	if (m_totalTime < DAMAGE_TIME)
 	{
 		float time = m_totalTime / DAMAGE_TIME;
 		m_lightGreenGaugeRate = Lerp(m_prevGaugeScaleX, m_currentGaugeScaleX, time);
+		m_gaugeFlag = false;
+
 	}
 	else
 	{
-		m_prevGaugeScaleX = m_currentGaugeScaleX;
-
 		m_totalTime = 0;
+		m_gaugeFlag = true;
 	}
-	
-	//if (m_currentGaugeScaleX == m_prevGaugeScaleX)
-	//	m_totalTime = 0;
+	if (m_gaugeFlag)
+	{
+		m_prevGaugeScaleX = m_currentGaugeScaleX;
+	}
 }
 
 // 描画
@@ -217,9 +219,9 @@ void PlayScene::Render()
 	m_pFloor->Render(m_pFollowCamera->getViewMatrix());
 
 	GameContext::Get<SpriteBatch>()->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
-	////// 赤ゲージ表示
-	////GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Colors::White,
-	////	0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
+	// 赤ゲージ表示
+	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Colors::White,
+		0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
 	// 薄緑ゲージ表示
 	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Vector4(1.0f, 1.0f, 1.0f, 0.5f),
 		0.0f, Vector2::Zero, Vector2(m_lightGreenGaugeRate, 0.2f));

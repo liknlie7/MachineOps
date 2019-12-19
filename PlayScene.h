@@ -95,6 +95,7 @@ private: // •Ï”
 	float m_prevGaugeScaleX;
 	// ‚¶‚í‚¶‚íŒ¸­‚·‚éƒQ[ƒW
 	float m_lightGreenGaugeRate;
+	bool m_gaugeFlag;
 
 	std::unique_ptr<DirectX::GeometricPrimitive> geo;
 	DirectX::SimpleMath::Matrix geoMat;
