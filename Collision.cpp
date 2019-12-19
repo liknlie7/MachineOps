@@ -1,15 +1,12 @@
 #include "pch.h"
 #include "Collision.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
 // 球と球の衝突判定
 // 衝突している時 true
 bool Collision::HitCheckSphereToSphere(const Sphere& _sphereA, const Sphere& _sphereB)
 {
 	// 球の中心の差
-	Vector3 sub = _sphereA.center - _sphereB.center;
+	DirectX::SimpleMath::Vector3 sub = _sphereA.center - _sphereB.center;
 
 	// ルート計算は処理が重いため Length で
 	//float distance = sqrtf(sub.x * sub.x + sub.y * sub.y + sub.z * sub.z);
@@ -35,7 +32,7 @@ bool Collision::HitCheckSphereToCapsule(const Sphere& _sphere, const Capsule& _c
 bool Collision::HitCheckCapsuleToCapsule(const Capsule& _capsuleA, const Capsule& _capsuleB)
 {
 	float s, t;
-	Vector3 c1, c2;
+	DirectX::SimpleMath::Vector3 c1, c2;
 	// カプセルの中心の線分間の距離の平方を計算
 	float dist2 = ClosestPtSegmentSegment(_capsuleA.segment.start, _capsuleA.segment.end, _capsuleB.segment.start, _capsuleB.segment.end, s, t, c1, c2);
 	float radius = _capsuleA.radius + _capsuleB.radius;
@@ -61,11 +58,11 @@ bool Collision::HitCheckSphereToBox(const Sphere& _sphere, const Box& _box)
 
 // 点cと線分abの間の距離の平方を返す関数
 // start = 線分の始点, end = 線分の終点, point = 点, return 点と線分の間の距離の平方
-float Collision::SqDistPointSegment(Vector3 _start, Vector3 _end, Vector3 _point)
+float Collision::SqDistPointSegment(const DirectX::SimpleMath::Vector3& _start, const DirectX::SimpleMath::Vector3& _end, const DirectX::SimpleMath::Vector3& _point)
 {
-	Vector3 ab = _end - _start;
-	Vector3 ac = _point - _start;
-	Vector3 bc = _point - _end;
+	DirectX::SimpleMath::Vector3 ab = _end - _start;
+	DirectX::SimpleMath::Vector3 ac = _point - _start;
+	DirectX::SimpleMath::Vector3 bc = _point - _end;
 	float e = ac.Dot(ab);
 	if (e <= 0.0f) return ac.Dot(ac);
 	float f = ab.Dot(ab);
@@ -85,14 +82,14 @@ float Collision::Clamp(float _n, float _min, float _max)
 // start1 = 線分1の始点, end1 = 線分1の終点, start2 = 線分2の始点, end2 = 線分２の終点
 // s  = 線分1上の最短位置を表す係数, t = 線分2上の最短位置を表す係数
 // c1 = 線分1上の最短距離の位置, c2 = 線分2上の最短位置の距離
-float Collision::ClosestPtSegmentSegment(Vector3 _start1, Vector3 _end1
-	, Vector3 _start2, Vector3 _end2
+float Collision::ClosestPtSegmentSegment(DirectX::SimpleMath::Vector3 _start1, DirectX::SimpleMath::Vector3 _end1
+	, DirectX::SimpleMath::Vector3 _start2, DirectX::SimpleMath::Vector3 _end2
 	, float &_s, float &_t
-	, Vector3& _c1, Vector3& _c2)
+	, DirectX::SimpleMath::Vector3& _c1, DirectX::SimpleMath::Vector3& _c2)
 {
-	Vector3 d1 = _end1 - _start1;
-	Vector3 d2 = _end2 - _start2;
-	Vector3 r = _start1 - _start2;
+	DirectX::SimpleMath::Vector3 d1 = _end1 - _start1;
+	DirectX::SimpleMath::Vector3 d2 = _end2 - _start2;
+	DirectX::SimpleMath::Vector3 r = _start1 - _start2;
 	float a = d1.Dot(d1);
 	float e = d2.Dot(d2);
 	float f = d2.Dot(r);
@@ -153,7 +150,7 @@ float Collision::ClosestPtSegmentSegment(Vector3 _start1, Vector3 _end1
 }
 
 // 点とボックスの間の最短距離の平方を計算する関数
-float Collision::SqDistPointBox(const Vector3& _point, const Box& _box)
+float Collision::SqDistPointBox(const DirectX::SimpleMath::Vector3& _point, const Box& _box)
 {
 	float point[3] = { _point.x, _point.y, _point.z };
 	float min[3] = { _box.center.x - _box.radius.x, _box.center.y - _box.radius.y, _box.center.z - _box.radius.z, };
@@ -171,7 +168,8 @@ float Collision::SqDistPointBox(const Vector3& _point, const Box& _box)
 
 // 線分と三角形の交差判定
 // p = 線分の始点, q = 線分の終点, tri = 三角形, crossPoint = 線分と三角形の交差点
-bool Collision::IntersectSegmentTriangle(Vector3 _start, Vector3 _end, Triangle _tri, Vector3* _crossPoint)
+bool Collision::IntersectSegmentTriangle(const DirectX::SimpleMath::Vector3& _start, const DirectX::SimpleMath::Vector3& _end
+	, const Triangle& _tri, DirectX::SimpleMath::Vector3* _crossPoint)
 {
 	float distp = _start.Dot(_tri.p.Normal()) + _tri.p.D();
 	if (distp < 0.0f) return false;

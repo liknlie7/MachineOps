@@ -86,12 +86,12 @@ public: // 関数
 	static bool HitCheckSphereToBox(const Sphere& _sphere, const Box& _box);
 
 	// 線分と三角形の交差判定
-	static bool IntersectSegmentTriangle(DirectX::SimpleMath::Vector3 _start, DirectX::SimpleMath::Vector3 _end, Triangle _tri, DirectX::SimpleMath::Vector3* _crossPoint);
+	static bool IntersectSegmentTriangle(const DirectX::SimpleMath::Vector3& _start, const DirectX::SimpleMath::Vector3& _end, const Triangle& _tri, DirectX::SimpleMath::Vector3* _crossPoint);
 
 private: // サブ関数
 
 	// 点と線分の間の距離の平方を返す関数
-	static float SqDistPointSegment(DirectX::SimpleMath::Vector3 _start, DirectX::SimpleMath::Vector3 _end, DirectX::SimpleMath::Vector3 _point);
+	static float SqDistPointSegment(const DirectX::SimpleMath::Vector3& _start, const DirectX::SimpleMath::Vector3& _end, const DirectX::SimpleMath::Vector3& _point);
 
 	// クランプ関数
 	static float Clamp(float _n, float _min, float _max);
