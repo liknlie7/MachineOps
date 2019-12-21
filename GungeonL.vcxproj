@@ -171,12 +171,14 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Boid.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="DebugFont.h" />
     <ClInclude Include="DeviceResources.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Flock.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Game.h" />
@@ -189,6 +191,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Projection.h" />
+    <ClInclude Include="Pvector.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Singleton.h" />
@@ -198,12 +201,14 @@
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Boid.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="DebugFont.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Flock.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -219,6 +224,7 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="Pvector.cpp" />
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Weapon.cpp" />

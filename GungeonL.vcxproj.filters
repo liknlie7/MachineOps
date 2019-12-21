@@ -23,6 +23,9 @@
     <Filter Include="GameScene">
       <UniqueIdentifier>{562db1f7-eb02-4020-854d-f7e9099ca424}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Boids">
+      <UniqueIdentifier>{db3d4ccd-7398-4719-a4bb-582ff6fa2150}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -74,7 +77,6 @@
     <ClInclude Include="Collision.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="ServiceLocator.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -96,6 +98,12 @@
     <ClInclude Include="TitleScene.h">
       <Filter>GameScene</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Flock.h" />
+    <ClInclude Include="Boid.h" />
+    <ClInclude Include="Pvector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -133,7 +141,6 @@
     <ClCompile Include="Collision.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Enemy.cpp">
       <Filter>Object\Enemy</Filter>
     </ClCompile>
@@ -149,6 +156,12 @@
     <ClCompile Include="TitleScene.cpp">
       <Filter>GameScene</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Flock.cpp" />
+    <ClCompile Include="Boid.cpp" />
+    <ClCompile Include="Pvector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
