@@ -44,7 +44,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 	switch (m_enemyType)
 	{
 
-	case NORMAL_TYPE: // ノーマルタイプ
+	case NORMAL_ENEMY: // ノーマルタイプ
 
 		// モデルデータ読み込み 
 		m_pEnemy = Model::CreateFromCMO(
@@ -67,7 +67,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		break;
 
 		// 盾持ち
-	case SHIELD_TYPE:
+	case SHIELD_ENEMY:
 
 		// モデルデータ読み込み 
 		m_pEnemy = Model::CreateFromCMO(
@@ -89,7 +89,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 
 		break;
 
-	case BOSS_TYPE:
+	case BOSS_ENEMY:
 		// モデルデータ読み込み 
 		m_pEnemy = Model::CreateFromCMO(
 			GameContext::Get<DX::DeviceResources>()->GetD3DDevice(),
@@ -123,7 +123,7 @@ void Enemy::Update()
 
 	switch (m_enemyType)
 	{
-	case NORMAL_TYPE:
+	case NORMAL_ENEMY:
 
 		//ChasePlayer(m_playerPos);
 
@@ -135,10 +135,10 @@ void Enemy::Update()
 		//}
 
 		break;
-	case SHIELD_TYPE:
+	case SHIELD_ENEMY:
 
 		break;
-	case BOSS_TYPE:
+	case BOSS_ENEMY:
 
 
 
@@ -150,9 +150,9 @@ void Enemy::Update()
 	}
 
 	if (m_life <= 20 && m_life > 10)
-		m_shotType = ALL_DIRECTION_SHOT;
-	if (m_life <= 10)
 		m_shotType = WHORL_SHOT;
+	if (m_life <= 10)
+		m_shotType = ALL_DIRECTION_SHOT;
 
 	m_shotInterval++;
 	switch (m_shotType)
@@ -282,6 +282,7 @@ void Enemy::CreateBullet()
 	}
 }
 
+// 弾が衝突した時
 void Enemy::BulletOnCollision(int _number)
 {
 	m_pBullets[_number]->SetIsValid(false);
@@ -296,6 +297,7 @@ void Enemy::BulletOnCollision(int _number)
 	}
 }
 
+// 範囲外に出たら
 void Enemy::OutRangeBullet()
 {
 	vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();

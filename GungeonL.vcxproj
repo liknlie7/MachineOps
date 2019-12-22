@@ -187,11 +187,11 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameSceneManager.h" />
     <ClInclude Include="GridFloor.h" />
+    <ClInclude Include="HPGauge.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Projection.h" />
-    <ClInclude Include="Pvector.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Singleton.h" />
@@ -215,6 +215,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameSceneManager.cpp" />
     <ClCompile Include="GridFloor.cpp" />
+    <ClCompile Include="HPGauge.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -224,7 +225,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
-    <ClCompile Include="Pvector.cpp" />
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Weapon.cpp" />

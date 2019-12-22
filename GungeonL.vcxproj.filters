@@ -101,9 +101,13 @@
     <ClInclude Include="GameObject.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Flock.h" />
-    <ClInclude Include="Boid.h" />
-    <ClInclude Include="Pvector.h" />
+    <ClInclude Include="Boid.h">
+      <Filter>Boids</Filter>
+    </ClInclude>
+    <ClInclude Include="Flock.h">
+      <Filter>Boids</Filter>
+    </ClInclude>
+    <ClInclude Include="HPGauge.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -159,9 +163,13 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Flock.cpp" />
-    <ClCompile Include="Boid.cpp" />
-    <ClCompile Include="Pvector.cpp" />
+    <ClCompile Include="Boid.cpp">
+      <Filter>Boids</Filter>
+    </ClCompile>
+    <ClCompile Include="Flock.cpp">
+      <Filter>Boids</Filter>
+    </ClCompile>
+    <ClCompile Include="HPGauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">

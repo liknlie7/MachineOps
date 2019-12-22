@@ -39,7 +39,7 @@ void PlayScene::Initialize()
 	m_pPlayer->Initialize();
 
 	// 敵作成
-	m_pEnemy = make_unique<Enemy>(m_pEnemy->BOSS_TYPE);
+	m_pEnemy = make_unique<Enemy>(m_pEnemy->BOSS_ENEMY);
 	m_pEnemy->Initialize(Vector3(0.0f, 1.0f, -15.0f));
 
 	m_color = Colors::Red;
@@ -220,10 +220,10 @@ void PlayScene::Render()
 
 	GameContext::Get<SpriteBatch>()->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
 	// 赤ゲージ表示
-	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Colors::White,
+	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Colors::Black,
 		0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
 	// 薄緑ゲージ表示
-	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Vector4(1.0f, 1.0f, 1.0f, 0.5f),
+	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Vector4(1.0f, 1.0f, 1.0f, 0.5f),
 		0.0f, Vector2::Zero, Vector2(m_lightGreenGaugeRate, 0.2f));
 	// 緑ゲージ表示
 	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Colors::White,

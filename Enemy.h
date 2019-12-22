@@ -29,9 +29,9 @@ public:
 	// “G‚ÌŽí—Þ
 	enum EnemyType
 	{
-		NORMAL_TYPE= 1,
-		SHIELD_TYPE,
-		BOSS_TYPE,
+		NORMAL_ENEMY = 1,
+		SHIELD_ENEMY,
+		BOSS_ENEMY,
 	};
 
 	// ŽËŒ‚‚ÌŽí—Þ

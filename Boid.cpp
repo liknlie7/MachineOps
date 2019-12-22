@@ -265,4 +265,6 @@ DirectX::SimpleMath::Vector3 Boid::Limit(DirectX::SimpleMath::Vector3 _vector, f
 	{
 		return DirectX::SimpleMath::Vector3(_vector.x / size, _vector.y / size, _vector.z / size);
 	}
+
+	return _vector;
 }

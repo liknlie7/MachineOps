@@ -38,6 +38,10 @@ public: // ŠÖ”
 	// XV
 	void Update(DirectX::SimpleMath::Vector3 _eye, DirectX::SimpleMath::Vector3 _target);
 
+	void Shake(float _duration, float _magnitude);
+
+	void DoShake(float _duration, float _magnitude);
+
 public: // ’è”
 
 	// ‹“_
