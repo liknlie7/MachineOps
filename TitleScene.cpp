@@ -63,8 +63,8 @@ void TitleScene::Update(DX::StepTimer const& _timer)
 void TitleScene::Render()
 {
 	m_spriteBatch->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
-	m_spriteFont->DrawString(m_spriteBatch.get(), "Machine Ops", SimpleMath::Vector2(260, 240), Colors::Black, 0, SimpleMath::Vector2(0, 0), 2);
-	m_spriteFont->DrawString(m_spriteBatch.get(), "Press SPACE key to start", SimpleMath::Vector2(270, 400), color, 0, SimpleMath::Vector2(0, 0));
+	m_spriteFont->DrawString(m_spriteBatch.get(), "Machine Ops", SimpleMath::Vector2(500, 240), Colors::Black, 0, SimpleMath::Vector2(0, 0), 2);
+	m_spriteFont->DrawString(m_spriteBatch.get(), "Press SPACE key to start", SimpleMath::Vector2(500, 400), color, 0, SimpleMath::Vector2(0, 0));
 	m_spriteBatch->End();
 }
 

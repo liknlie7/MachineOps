@@ -8,6 +8,9 @@ using namespace DirectX::SimpleMath;
 
 using namespace std;
 
+//1.5
+const float ::Enemy::SIZE = 8.0f;
+
 // コンストラクタ
 Enemy::Enemy(int _type)
 	: m_blinkTime(30)
@@ -64,6 +67,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		m_collider.center = m_pos;
 		//m_decisionAreaPos = m_pos;
 
+		m_shotType = NORMAL_SHOT;
 		break;
 
 		// 盾持ち
@@ -86,6 +90,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		m_collider.radius = 2.0f;
 		m_collider.center = m_pos;
 		//m_decisionAreaPos = m_pos;
+		m_shotType = 4;
 
 		break;
 
@@ -125,7 +130,7 @@ void Enemy::Update()
 	{
 	case NORMAL_ENEMY:
 
-		//ChasePlayer(m_playerPos);
+		ChasePlayer(m_playerPos);
 
 		m_bulletEndAngle -= 180 + m_wayNum / 2 * m_changeAngle;
 
@@ -196,6 +201,8 @@ void Enemy::Update()
 			}
 		}
 		break;
+	default:
+		break;
 	}
 	// 速度代入
 	m_pos += m_vel;
@@ -207,7 +214,7 @@ void Enemy::Update()
 
 
 	Matrix rotate = Matrix::CreateRotationY(m_enemyAngle);
-	Matrix scale = Matrix::CreateScale(/*1.5f*/8.0f);
+	Matrix scale = Matrix::CreateScale(SIZE);
 	m_mat = scale * rotate * Matrix::CreateTranslation(Vector3(m_pos.x, 1.0f, m_pos.z));
 
 	m_collider.center = m_pos;

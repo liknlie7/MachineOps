@@ -130,6 +130,10 @@ public: // ŠÖ”
 	void OutRangeBullet();
 
 
+private: // ’è”
+
+	static const float SIZE;
+
 private: // •Ï”
 
 	// ƒ‚ƒfƒ‹

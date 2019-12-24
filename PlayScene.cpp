@@ -15,7 +15,7 @@ const float PlayScene::DAMAGE_TIME = 1.0f;
 PlayScene::PlayScene()
 	: GameScene()
 {
-
+	bossFlag = true;
 }
 
 // デストラクタ
@@ -39,8 +39,22 @@ void PlayScene::Initialize()
 	m_pPlayer->Initialize();
 
 	// 敵作成
-	m_pEnemy = make_unique<Enemy>(m_pEnemy->BOSS_ENEMY);
-	m_pEnemy->Initialize(Vector3(0.0f, 1.0f, -15.0f));
+	if (bossFlag)
+	{
+		m_pEnemy = make_unique<Enemy>(m_pEnemy->BOSS_ENEMY);
+		m_pEnemy->Initialize(Vector3(0.0f, 1.0f, -15.0f));
+	}
+	if (!bossFlag)
+	{
+		m_pEnemies[0] = make_unique<Enemy>(m_pEnemies[0]->NORMAL_ENEMY);
+		m_pEnemies[0]->Initialize(Vector3(10.0f, 1.0f, -5.0f));
+		m_pEnemies[1] = make_unique<Enemy>(m_pEnemies[1]->NORMAL_ENEMY);
+		m_pEnemies[1]->Initialize(Vector3(-10.0f, 1.0f, -5.0f));
+		m_pEnemies[2] = make_unique<Enemy>(m_pEnemies[2]->SHIELD_ENEMY);
+		m_pEnemies[2]->Initialize(Vector3(10.0f, 1.0f, -10.0f));
+		m_pEnemies[3] = make_unique<Enemy>(m_pEnemies[3]->SHIELD_ENEMY);
+		m_pEnemies[3]->Initialize(Vector3(-10.0f, 1.0f, -10.0f));
+	}
 
 	m_color = Colors::Red;
 
@@ -77,8 +91,19 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 	m_pPlayer->Update();
 
 	// 敵更新
-	m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
-	m_pEnemy->Update();
+	if (bossFlag)
+	{
+		m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
+		m_pEnemy->Update();
+	}
+	if (!bossFlag)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			m_pEnemies[i]->SetPlayerPos(m_pPlayer->GetPos());
+			m_pEnemies[i]->Update();
+		}
+	}
 
 	// 追尾カメラ更新
 	m_pFollowCamera->Update(m_pPlayer->GetPos() + FollowCamera::EYE_VEC, m_pPlayer->GetPos());
@@ -123,59 +148,61 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 	geoMat = Matrix::CreateTranslation(geoVec);
 
 	// 弾の中心と半径を設定
-	vector<Vector3> playerBullets = m_pPlayer->GetBulletPos();
-	vector<Vector3> enemyBullets = m_pEnemy->GetBulletPos();
-
-	vector<Collision::Sphere> playerBullet;
-	vector<Collision::Sphere> enemyBullet;
-
-	playerBullet.resize(playerBullets.size());
-	enemyBullet.resize(enemyBullets.size());
-
-	for (unsigned int i = 0; i < playerBullets.size(); i++)
+	if (bossFlag)
 	{
-		playerBullet[i].center = playerBullets[i];
-		playerBullet[i].radius = 0.15f;
-	}
-	for (unsigned int i = 0; i < enemyBullets.size(); i++)
-	{
-		enemyBullet[i].center = enemyBullets[i];
-		enemyBullet[i].radius = 0.15f;
-	}
+		vector<Vector3> playerBullets = m_pPlayer->GetBulletPos();
 
-	for (unsigned int i = 0; i < playerBullet.size(); i++)
-	{
-		if (Collision::HitCheckSphereToSphere(m_pEnemy->GetCollider(), playerBullet[i]))
+		vector<Vector3> enemyBullets = m_pEnemy->GetBulletPos();
+
+		vector<Collision::Sphere> playerBullet;
+		vector<Collision::Sphere> enemyBullet;
+
+		playerBullet.resize(playerBullets.size());
+
+		enemyBullet.resize(enemyBullets.size());
+		for (unsigned int i = 0; i < playerBullets.size(); i++)
 		{
-			m_pEnemy->OnCollision();
-			m_pPlayer->m_pWeapon->BulletOnCollision(i);
+			playerBullet[i].center = playerBullets[i];
+			playerBullet[i].radius = 0.15f;
 		}
-	}
-	for (unsigned int i = 0; i < enemyBullet.size(); i++)
-	{
-		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
+		for (unsigned int i = 0; i < enemyBullets.size(); i++)
 		{
-			m_pPlayer->SetHitFlag(true);
-			m_pEnemy->BulletOnCollision(i);
-			// 敵の体力の比率計算
-			float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
-			// 現在のゲージサイズ
-			m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
-
-
+			enemyBullet[i].center = enemyBullets[i];
+			enemyBullet[i].radius = 0.15f;
 		}
-	}
+		for (unsigned int i = 0; i < playerBullet.size(); i++)
+		{
+			if (Collision::HitCheckSphereToSphere(m_pEnemy->GetCollider(), playerBullet[i]))
+			{
+				m_pEnemy->OnCollision();
+				m_pPlayer->m_pWeapon->BulletOnCollision(i);
+			}
+		}
+		for (unsigned int i = 0; i < enemyBullet.size(); i++)
+		{
+			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
+			{
+				m_pPlayer->SetHitFlag(true);
+				m_pEnemy->BulletOnCollision(i);
+				// 敵の体力の比率計算
+				float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
+				// 現在のゲージサイズ
+				m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
 
-	// プレイヤーと敵との接触判定
-	if (!m_pPlayer->GetHitFlag())
-		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
-			m_pPlayer->SetHitFlag(true);
 
-	// リザルトシーンへ遷移
-	if (m_pEnemy->GetModel() == nullptr)
-	{
-		GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
-		gameSceneManager->RequestScene("Result");
+			}
+		}
+
+		// プレイヤーと敵との接触判定
+		if (!m_pPlayer->GetHitFlag())
+			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
+				m_pPlayer->SetHitFlag(true);
+		// リザルトシーンへ遷移
+		if (m_pEnemy->GetModel() == nullptr)
+		{
+			GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
+			gameSceneManager->RequestScene("Result");
+		}
 	}
 
 
@@ -213,24 +240,35 @@ void PlayScene::Render()
 	m_pPlayer->Render(m_pFollowCamera->getViewMatrix());
 
 	// 敵表示
+	if(bossFlag)
 	m_pEnemy->Render(m_pFollowCamera->getViewMatrix());
+
+	if (!bossFlag)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			m_pEnemies[i]->Render(m_pFollowCamera->getViewMatrix());
+		}
+	}
 
 	// 床の表示
 	m_pFloor->Render(m_pFollowCamera->getViewMatrix());
 
-	GameContext::Get<SpriteBatch>()->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
-	// 赤ゲージ表示
-	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Colors::Black,
-		0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
-	// 薄緑ゲージ表示
-	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Vector4(1.0f, 1.0f, 1.0f, 0.5f),
-		0.0f, Vector2::Zero, Vector2(m_lightGreenGaugeRate, 0.2f));
-	// 緑ゲージ表示
-	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Colors::White,
-		0.0f, Vector2::Zero, Vector2(m_currentGaugeScaleX, 0.2f));
+	if (bossFlag)
+	{
+		GameContext::Get<SpriteBatch>()->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
+		// 赤ゲージ表示
+		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Colors::Black,
+			0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
+		// 薄緑ゲージ表示
+		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Vector4(1.0f, 1.0f, 1.0f, 0.5f),
+			0.0f, Vector2::Zero, Vector2(m_lightGreenGaugeRate, 0.2f));
+		// 緑ゲージ表示
+		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Colors::White,
+			0.0f, Vector2::Zero, Vector2(m_currentGaugeScaleX, 0.2f));
 
-	GameContext::Get<SpriteBatch>()->End();
-
+		GameContext::Get<SpriteBatch>()->End();
+	}
 }
 
 // 後始末

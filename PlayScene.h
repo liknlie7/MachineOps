@@ -76,6 +76,8 @@ private: // •Ï”
 
 	// “G
 	std::unique_ptr<Enemy>								m_pEnemy;
+	std::unique_ptr<Enemy>								m_pEnemies[4];
+	bool bossFlag;
 
 	// F
 	DirectX::SimpleMath::Color							m_color;
