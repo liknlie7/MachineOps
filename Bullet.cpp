@@ -30,15 +30,25 @@ void Bullet::Update()
 	// 移動
 	m_pos += m_vel;
 
+	// 飛行時間を減らす
 	m_life--;
 
+	// 飛行時間がなくなったら
+	if (m_life < 0)
+	{
+		m_isValid = false;
+	}
+
+	// 行列更新
 	m_mat = Matrix::CreateTranslation(Vector3(m_pos));
 }
 
 // 描画
 void Bullet::Render(const Matrix& _view)
 {
-	m_bullet->Draw(m_mat, _view, GameContext::Get<Projection>()->GetMatrix(), Colors::Yellow);
+	// 弾の描画
+	if (m_isValid)
+		m_bullet->Draw(m_mat, _view, GameContext::Get<Projection>()->GetMatrix(), Colors::Yellow);
 }
 
 // 後処理

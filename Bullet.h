@@ -41,6 +41,7 @@ public: // アクセサ
 		m_isValid = _flag;
 	}
 
+	// 飛行時間の取得
 	float GetLife() const
 	{
 		return m_life;
@@ -64,6 +65,7 @@ private: // 変数
 
 	// フラグ
 	bool m_isValid;
+
 	// 飛行距離
 	float m_life;
 };
