@@ -66,6 +66,9 @@ void Game::Initialize(HWND window, int width, int height)
 	m_pSound->Initialize(window);
 	GameContext::Register<Sound>(m_pSound);
 
+	// マウスカーソルを消す
+	ShowCursor(false);
+
 	m_pDeviceResources->CreateWindowSizeDependentResources();
 	CreateWindowSizeDependentResources();
 
