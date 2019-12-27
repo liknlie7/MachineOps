@@ -14,6 +14,7 @@
 #include "GameContext.h"
 #include "GameObject.h"
 #include "Weapon.h"
+#include "Sound.h"
 
 class Bullet;
 class Weapon;
@@ -120,6 +121,7 @@ private:
 	// Shiftボタンフラグ
 	bool										 m_isShiftDown;
 
+	IDirectSoundBuffer8* m_shotSound;
 public:
 
 	// 銃

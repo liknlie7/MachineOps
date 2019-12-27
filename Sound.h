@@ -26,6 +26,14 @@ private: // 構造体
 		unsigned long dataSize;
 	};
 
+public: // アクセサ
+
+	// サウンドの取得
+	IDirectSoundBuffer8* GetSound(int _number)
+	{
+		return m_secondaryBuffer1[_number];
+	}
+
 public: // 関数
 
 	// コンストラクタ
@@ -70,7 +78,7 @@ private:// 変数
 	IDirectSound3DListener8*			m_listener;
 
 	// セカンダリバッファ
-	IDirectSoundBuffer8*				m_secondaryBuffer1;
+	IDirectSoundBuffer8*				m_secondaryBuffer1[ALL_SOUND];
 	// セカンダリ3Dバッファ
-	IDirectSound3DBuffer8*				m_secondary3DBuffer1;
+	IDirectSound3DBuffer8*				m_secondary3DBuffer1[ALL_SOUND];
 };

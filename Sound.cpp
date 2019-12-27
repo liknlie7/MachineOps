@@ -8,8 +8,11 @@ Sound::Sound()
 	, m_primaryBuffer(0)
 	, m_listener(0)
 {
-	m_secondaryBuffer1 = 0;
-	m_secondary3DBuffer1 = 0;
+	for (int i = 0; i < ALL_SOUND; i++)
+	{
+		m_secondaryBuffer1[i] = 0;
+		m_secondary3DBuffer1[i] = 0;
+	}
 }
 
 // 初期化
@@ -26,12 +29,7 @@ bool Sound::Initialize(HWND _hwnd)
 	}
 
 	// Wavファイルをセカンダリバッファへ読み込む
-	result = LoadWaveFile("catridge.wav", &m_secondaryBuffer1, &m_secondary3DBuffer1);
-	if (!result)
-	{
-		return false;
-	}
-
+	result = LoadWaveFile("catridge.wav", &m_secondaryBuffer1[0], &m_secondary3DBuffer1[0]);
 	return true;
 }
 
@@ -39,12 +37,13 @@ bool Sound::Initialize(HWND _hwnd)
 void Sound::Shutdown()
 {
 	// セカンダリバッファの開放
-	ShutdownWaveFile(&m_secondaryBuffer1, &m_secondary3DBuffer1);
+	for (int i = 0; i < ALL_SOUND; i++)
+	{
+		ShutdownWaveFile(&m_secondaryBuffer1[i], &m_secondary3DBuffer1[i]);
+	}
 
 	// ダイレクトサウンドの終了
 	ShutdownDirectSound();
-
-	return;
 }
 
 

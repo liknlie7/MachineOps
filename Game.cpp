@@ -64,7 +64,7 @@ void Game::Initialize(HWND window, int width, int height)
 	// ƒTƒEƒ“ƒh‚Ìì¬
 	m_pSound = new Sound;
 	m_pSound->Initialize(window);
-	m_pSound->PlayWaveFile();
+	GameContext::Register<Sound>(m_pSound);
 
 	m_pDeviceResources->CreateWindowSizeDependentResources();
 	CreateWindowSizeDependentResources();

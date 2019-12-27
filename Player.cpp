@@ -18,6 +18,7 @@ Player::Player()
 	, m_isShiftDown(false)
 {
 	m_pWeapon = make_unique<Weapon>();
+	m_shotSound = GameContext::Get<Sound>()->GetSound(0);
 }
 
 
@@ -80,7 +81,10 @@ void Player::Update()
 	else
 	{
 		// W‚ð‰Ÿ‰º
-		if (keyState.W) m_vel.z = -0.1f;
+		if (keyState.W)
+		{
+			m_vel.z = -0.1f;
+		}
 		// A‚ð‰Ÿ‰º
 		if (keyState.A) m_vel.x = -0.1f;
 		// S‚ð‰Ÿ‰º
