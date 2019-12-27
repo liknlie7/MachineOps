@@ -15,7 +15,6 @@
 #include "GameObject.h"
 #include "Weapon.h"
 
-
 class Bullet;
 class Weapon;
 

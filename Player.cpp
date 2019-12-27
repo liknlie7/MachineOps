@@ -44,6 +44,7 @@ void Player::Initialize()
 
 	// e‚Ìì¬
 	m_pWeapon->Initialize();
+
 }
 
 // XV

@@ -61,6 +61,11 @@ void Game::Initialize(HWND window, int width, int height)
 	m_pSpriteBatch = std::make_unique<SpriteBatch>(m_pDeviceResources->GetD3DDeviceContext());
 	GameContext::Register<SpriteBatch>(m_pSpriteBatch);
 
+	// ƒTƒEƒ“ƒh‚Ìì¬
+	m_pSound = new Sound;
+	m_pSound->Initialize(window);
+	m_pSound->PlayWaveFile();
+
 	m_pDeviceResources->CreateWindowSizeDependentResources();
 	CreateWindowSizeDependentResources();
 
@@ -104,6 +109,7 @@ void Game::Update(DX::StepTimer const& timer)
 
 	// TODO: Add your game logic here.
 	elapsedTime;
+	
 	m_pGameSceneManager->Update(timer);
 }
 #pragma endregion

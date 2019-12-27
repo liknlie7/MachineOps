@@ -108,6 +108,7 @@
       <Filter>Boids</Filter>
     </ClInclude>
     <ClInclude Include="HPGauge.h" />
+    <ClInclude Include="Sound.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -170,6 +171,7 @@
       <Filter>Boids</Filter>
     </ClCompile>
     <ClCompile Include="HPGauge.cpp" />
+    <ClCompile Include="Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">

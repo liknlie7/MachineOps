@@ -14,6 +14,7 @@
 #include "StepTimer.h"
 #include "Mouse.h"
 #include "Keyboard.h"
+#include "Sound.h"
 
 
 class GameSceneManager;
@@ -88,7 +89,7 @@ private:
 
 	// コモンステート
 	std::unique_ptr<GameSceneManager>       m_pGameSceneManager;
-
-	Player* player;
-
+	
+	// サウンド
+	Sound*									m_pSound;
 };
