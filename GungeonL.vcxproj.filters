@@ -107,8 +107,13 @@
     <ClInclude Include="Flock.h">
       <Filter>Boids</Filter>
     </ClInclude>
-    <ClInclude Include="HPGauge.h" />
-    <ClInclude Include="Sound.h" />
+    <ClInclude Include="Sound.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="HPGauge.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseCursor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -170,8 +175,13 @@
     <ClCompile Include="Flock.cpp">
       <Filter>Boids</Filter>
     </ClCompile>
-    <ClCompile Include="HPGauge.cpp" />
-    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Sound.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="HPGauge.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseCursor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">

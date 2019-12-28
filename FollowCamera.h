@@ -2,6 +2,8 @@
 #include <d3d11_1.h>
 #include <SimpleMath.h>
 
+#include "GameContext.h"
+#include "DeviceResources.h"
 
 // 追尾カメラ
 class FollowCamera
@@ -14,21 +16,27 @@ public: // 基本
 public: // アクセサ
 
 	// ビュー行列取得
-	DirectX::SimpleMath::Matrix getViewMatrix() const
+	DirectX::SimpleMath::Matrix GetViewMatrix() const
 	{
 		return m_view;
 	}
 
 	// 注視点の設定
-	void FollowCamera::SetTargetPosition(const DirectX::SimpleMath::Vector3& target)
+	void SetTargetPosition(const DirectX::SimpleMath::Vector3& target)
 	{
 		m_target = target;
 	}
 
 	// 視点の設定
-	void FollowCamera::SetEyePosition(const DirectX::SimpleMath::Vector3& eye)
+	void SetEyePosition(const DirectX::SimpleMath::Vector3& eye)
 	{
 		m_eye = eye;
+	}
+
+	// ViewPortの取得
+	DirectX::SimpleMath::Matrix GetViewPort()
+	{
+		return m_viewPort;
 	}
 
 public: // 関数
@@ -37,6 +45,8 @@ public: // 関数
 	void Initialize();
 	// 更新
 	void Update(DirectX::SimpleMath::Vector3 _eye, DirectX::SimpleMath::Vector3 _target);
+
+private: // サブ関数
 
 	void Shake(float _duration, float _magnitude);
 
@@ -58,4 +68,8 @@ private: // 変数
 	// 注視点
 	DirectX::SimpleMath::Vector3 m_target;
 	DirectX::SimpleMath::Vector3 m_up;
+
+	// ViewPort
+	DirectX::SimpleMath::Matrix							m_viewPort;
+
 };

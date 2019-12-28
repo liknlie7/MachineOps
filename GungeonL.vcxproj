@@ -188,6 +188,7 @@
     <ClInclude Include="GameSceneManager.h" />
     <ClInclude Include="GridFloor.h" />
     <ClInclude Include="HPGauge.h" />
+    <ClInclude Include="MouseCursor.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="GridFloor.cpp" />
     <ClCompile Include="HPGauge.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MouseCursor.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

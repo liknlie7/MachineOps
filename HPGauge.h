@@ -43,6 +43,8 @@ public: // 関数
 	// 描画
 	void Render();
 
+private: // サブ関数
+
 	// 線形補間
 	float Lerp(float _start, float _end, float _time)
 	{
@@ -51,6 +53,7 @@ public: // 関数
 
 private: // 定数
 
+	// デフォルトXサイズ
 	static const float DEFAULT_GAUGE_SCALE_X;
 
 private: // 変数

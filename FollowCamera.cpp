@@ -22,6 +22,14 @@ FollowCamera::FollowCamera()
 	m_eye = EYE_VEC;
 	m_target = Vector3(0.0f, 0.0f, 0.0f);
 	m_up = UP_VEC;
+
+	// ビューポートの作成
+	RECT size = GameContext::Get<DX::DeviceResources>()->GetOutputSize();
+	m_viewPort =
+		Matrix::CreateScale(Vector3(.5f, -.5f, 1.f)) *
+		Matrix::CreateTranslation(Vector3(.5f, .5f, 0.f)) *
+		Matrix::CreateScale(Vector3(float(size.right), float(size.bottom), 1.f));
+
 }
 
 void FollowCamera::Initialize()
@@ -31,10 +39,8 @@ void FollowCamera::Initialize()
 
 void FollowCamera::Update(Vector3 _eye, Vector3 _target)
 {
-	
-
 	m_view = DirectX::SimpleMath::Matrix::CreateLookAt(_eye, _target, m_up);
-	DoShake(0.5f, 0.3f);
+	//DoShake(0.5f, 0.3f);
 }
 
 void FollowCamera::Shake(float _duration, float _magnitude)

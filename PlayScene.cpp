@@ -29,6 +29,10 @@ void PlayScene::Initialize()
 	// 追尾カメラの作成
 	m_pFollowCamera = make_unique<FollowCamera>();
 	m_pFollowCamera->Initialize();
+	GameContext::Register<FollowCamera>(m_pFollowCamera);
+
+	// カーソルの作成
+	m_pCursor = make_unique<MouseCursor>();
 
 	// フロア作成
 	m_pFloor = make_unique<Floor>();
@@ -58,13 +62,6 @@ void PlayScene::Initialize()
 
 	m_color = Colors::Red;
 
-	// ビューポートの作成
-	RECT size = GameContext::Get<DX::DeviceResources>()->GetOutputSize();
-	m_viewPort =
-		Matrix::CreateScale(Vector3(.5f, -.5f, 1.f)) *
-		Matrix::CreateTranslation(Vector3(.5f, .5f, 0.f)) *
-		Matrix::CreateScale(Vector3(float(size.right), float(size.bottom), 1.f));
-
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\GreenHP.png", nullptr, m_greenHpBarTexture.GetAddressOf());
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\RedHP.png", nullptr, m_redHpBarTexture.GetAddressOf());
 
@@ -84,7 +81,6 @@ void PlayScene::Initialize()
 // 更新
 void PlayScene::Update(DX::StepTimer const& _timer)
 {
-	Mouse::State mouseState = Mouse::Get().GetState();
 	Keyboard::State keyState = Keyboard::Get().GetState();
 
 	// プレイヤー更新
@@ -108,44 +104,22 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 	// 追尾カメラ更新
 	m_pFollowCamera->Update(m_pPlayer->GetPos() + FollowCamera::EYE_VEC, m_pPlayer->GetPos());
 
+	// カーソル更新
+	m_pCursor->Update();
+
 	m_color = Colors::Red;
 
-	// マウス座標をワールド座標へ変換
-	// マウスRayの作成
-	Vector3 mousePos = Vector3::Transform(Vector3((float)mouseState.x, (float)mouseState.y, 0), m_viewPort.Invert());
-	Vector3 pointNear = Vector3(mousePos.x, mousePos.y, 0.0f);
-	Vector3 pointFar = Vector3(mousePos.x, mousePos.y, 1.0f);
-	Matrix inverseviewproj = (m_pFollowCamera->getViewMatrix() *  GameContext::Get<Projection>()->GetMatrix()).Invert();
-	Vector3 rayNear = Vector3::Transform(pointNear, inverseviewproj);
-	Vector3 rayFar = Vector3::Transform(pointFar, inverseviewproj);
-	Vector3 raySubtraction = rayFar - rayNear;
-	Vector3 rayDirection = raySubtraction;
-	// 正規化
-	rayDirection.Normalize();
-
-	// 頂点ベクトル
-	Vector3 v0 = Vector3(-50.0f, 0.0f, -50.0f);  // 左上
-	Vector3 v1 = Vector3(-50.0f, 0.0f, 50.0f);   // 左下
-	Vector3 v2 = Vector3(50.0f, 0.0f, 50.0f);    // 右下
-	Vector3 v3 = Vector3(50.0f, 0.0f, -50.0f);   // 右上
 
 	// 交差点
 	Vector3 hitPos;
 
-	// 三角形を作成
-	Collision::Triangle tri1(v0, v2, v1);
-	Collision::Triangle tri2(v0, v3, v2);
-
-	// マウスRayと三角形の当たり判定(交差点検出)
-	if (Collision::IntersectSegmentTriangle(rayNear, rayFar, tri1, &hitPos) ||
-		Collision::IntersectSegmentTriangle(rayNear, rayFar, tri2, &hitPos))
+	// マウスRayと床の当たり判定(交差点検出)
+	if (Collision::IntersectSegmentTriangle(m_pCursor->GetRayNear(), m_pCursor->GetRayFar(), m_pFloor->GetTriangle(0), &hitPos) ||
+		Collision::IntersectSegmentTriangle(m_pCursor->GetRayNear(), m_pCursor->GetRayFar(), m_pFloor->GetTriangle(1), &hitPos))
 	{
 		m_pPlayer->SetMousePos(hitPos);
-		geoVec = hitPos;
 	}
 
-	// 交差地点デバッグ
-	geoMat = Matrix::CreateTranslation(geoVec);
 
 	// 弾の中心と半径を設定
 	if (bossFlag)
@@ -237,26 +211,26 @@ void PlayScene::Render()
 
 
 	// プレイヤー表示
-	m_pPlayer->Render(m_pFollowCamera->getViewMatrix());
+	m_pPlayer->Render(m_pFollowCamera->GetViewMatrix());
 
 	// 敵表示
 	if(bossFlag)
-	m_pEnemy->Render(m_pFollowCamera->getViewMatrix());
+	m_pEnemy->Render(m_pFollowCamera->GetViewMatrix());
 
 	if (!bossFlag)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			m_pEnemies[i]->Render(m_pFollowCamera->getViewMatrix());
+			m_pEnemies[i]->Render(m_pFollowCamera->GetViewMatrix());
 		}
 	}
 
 	// 床の表示
-	m_pFloor->Render(m_pFollowCamera->getViewMatrix());
+	m_pFloor->Render(m_pFollowCamera->GetViewMatrix());
 
+		GameContext::Get<SpriteBatch>()->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
 	if (bossFlag)
 	{
-		GameContext::Get<SpriteBatch>()->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
 		// 赤ゲージ表示
 		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Colors::Black,
 			0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
@@ -267,8 +241,10 @@ void PlayScene::Render()
 		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Colors::White,
 			0.0f, Vector2::Zero, Vector2(m_currentGaugeScaleX, 0.2f));
 
-		GameContext::Get<SpriteBatch>()->End();
 	}
+	m_pCursor->Render();
+
+		GameContext::Get<SpriteBatch>()->End();
 }
 
 // 後始末

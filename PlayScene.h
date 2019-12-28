@@ -25,6 +25,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Collision.h"
+#include "MouseCursor.h"
 
 // プレイシーンクラス
 class PlayScene : public GameScene
@@ -47,6 +48,8 @@ public: // 関数
 	// 後始末
 	void Finalize() override;
 
+private: // サブ関数
+
 	// 線形補間
 	float Lerp(float _start, float _end, float _time);
 
@@ -68,6 +71,9 @@ private: // 変数
 	// 追尾カメラ
 	std::unique_ptr<FollowCamera>						m_pFollowCamera;
 
+	// カーソル
+	std::unique_ptr<MouseCursor>						m_pCursor;
+	
 	// フロア
 	std::unique_ptr<Floor>								m_pFloor;
 
@@ -98,8 +104,4 @@ private: // 変数
 	// じわじわ減少するゲージ
 	float m_lightGreenGaugeRate;
 	bool m_gaugeFlag;
-
-	std::unique_ptr<DirectX::GeometricPrimitive> geo;
-	DirectX::SimpleMath::Matrix geoMat;
-	DirectX::SimpleMath::Vector3 geoVec;
 };
