@@ -14,8 +14,8 @@ Bullet::Bullet(Vector3 _pos, float _angle, Vector3 _speed)
 {
 	m_pos = _pos;
 	m_vel = _speed;
-	Matrix rotate = Matrix::CreateRotationY(_angle);
-	m_vel = Vector3::Transform(m_vel, rotate);
+	m_rotate = Matrix::CreateRotationY(_angle);
+	m_vel = Vector3::Transform(m_vel, m_rotate);
 }
 
 // ‰Šú‰»
@@ -40,7 +40,7 @@ void Bullet::Update()
 	}
 
 	// s—ñXV
-	m_mat = Matrix::CreateTranslation(Vector3(m_pos));
+	m_mat = m_rotate * Matrix::CreateTranslation(Vector3(m_pos));
 }
 
 // •`‰æ

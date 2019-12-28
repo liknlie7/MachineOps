@@ -21,7 +21,8 @@ void Weapon::Initialize()
 	// ïêäÌÇÃçÏê¨
 	m_pWeapon = GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), Vector3(0.1f, 0.1f, 0.5f));
 	// íeÇÃçÏê¨
-	m_pBulletGeometric = GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);
+	//m_pBulletGeometric = GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);
+	m_pBulletGeometric = GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(),Vector3(0.1f,0.1f,1.5f));
 }
 
 // çXêV
@@ -69,7 +70,7 @@ void Weapon::Finalize()
 void Weapon::CreateBullet()
 {
 	// íeÇÃçÏê¨
-	m_pBullets.push_back(make_unique<Bullet>(m_playerPos + Vector3(0.0f, 0.9f, 0.0f), m_angle, Vector3(0.0f, 0.0f, 0.3f)));
+	m_pBullets.push_back(make_unique<Bullet>(m_playerPos + Vector3(0.0f, 0.9f, 0.0f), m_angle, Vector3(0.0f, 0.0f, 0.8f)));
 
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{

@@ -63,6 +63,9 @@ private: // •Ï”
 	// ’e‚ÌŒ`ó
 	DirectX::GeometricPrimitive*	m_bullet;
 
+	// ‰ñ“]
+	DirectX::SimpleMath::Matrix		m_rotate;
+
 	// ƒtƒ‰ƒO
 	bool m_isValid;
 

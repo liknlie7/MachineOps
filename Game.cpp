@@ -88,7 +88,7 @@ void Game::Initialize(HWND window, int width, int height)
 	m_pGameSceneManager->RegisterScene<TitleScene>("Title");
 	m_pGameSceneManager->RegisterScene<PlayScene>("Play");
 	m_pGameSceneManager->RegisterScene<ResultScene>("Result");
-	m_pGameSceneManager->SetStartScene("Title");
+	m_pGameSceneManager->SetStartScene("Play");
 	GameContext::Register<GameSceneManager>(m_pGameSceneManager);
 }
 

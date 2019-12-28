@@ -111,7 +111,7 @@ void Player::Update()
 	// ’e‚ğ”­Ë‚·‚é
 	m_shotInterval++;
 	
-	if (m_shotInterval > 15.0f)
+	if (m_shotInterval > 7.0f)
 	{
 		// ¶ƒNƒŠƒbƒN
 		if (mouseState.leftButton)
