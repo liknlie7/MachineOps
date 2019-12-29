@@ -121,83 +121,83 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 	}
 
 
-	//// 弾の中心と半径を設定
-	//if (bossFlag)
-	//{
-	//	vector<Vector3> playerBullets = m_pPlayer->GetBulletPos();
+	// 弾の中心と半径を設定
+	if (bossFlag)
+	{
+		vector<Vector3> playerBullets = m_pPlayer->GetBulletPos();
 
-	//	vector<Vector3> enemyBullets = m_pEnemy->GetBulletPos();
+		vector<Vector3> enemyBullets = m_pEnemy->GetBulletPos();
 
-	//	vector<Collision::Sphere> playerBullet;
-	//	vector<Collision::Sphere> enemyBullet;
+		vector<Collision::Box> playerBullet;
+		vector<Collision::Sphere> enemyBullet;
 
-	//	playerBullet.resize(playerBullets.size());
+		playerBullet.resize(playerBullets.size());
 
-	//	enemyBullet.resize(enemyBullets.size());
-	//	for (unsigned int i = 0; i < playerBullets.size(); i++)
-	//	{
-	//		playerBullet[i].center = playerBullets[i];
-	//		playerBullet[i].radius = 0.15f;
-	//	}
-	//	for (unsigned int i = 0; i < enemyBullets.size(); i++)
-	//	{
-	//		enemyBullet[i].center = enemyBullets[i];
-	//		enemyBullet[i].radius = 0.15f;
-	//	}
-	//	for (unsigned int i = 0; i < playerBullet.size(); i++)
-	//	{
-	//		if (Collision::HitCheckSphereToSphere(m_pEnemy->GetCollider(), playerBullet[i]))
-	//		{
-	//			m_pEnemy->OnCollision();
-	//			m_pPlayer->m_pWeapon->BulletOnCollision(i);
-	//		}
-	//	}
-	//	for (unsigned int i = 0; i < enemyBullet.size(); i++)
-	//	{
-	//		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
-	//		{
-	//			m_pPlayer->SetHitFlag(true);
-	//			m_pEnemy->BulletOnCollision(i);
-	//			// 敵の体力の比率計算
-	//			float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
-	//			// 現在のゲージサイズ
-	//			m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
-
-
-	//		}
-	//	}
-
-	//	// プレイヤーと敵との接触判定
-	//	if (!m_pPlayer->GetHitFlag())
-	//		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
-	//			m_pPlayer->SetHitFlag(true);
-	//	// リザルトシーンへ遷移
-	//	if (m_pEnemy->GetModel() == nullptr)
-	//	{
-	//		GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
-	//		gameSceneManager->RequestScene("Result");
-	//	}
-	//}
+		enemyBullet.resize(enemyBullets.size());
+		for (unsigned int i = 0; i < playerBullets.size(); i++)
+		{
+			playerBullet[i].center = playerBullets[i];
+			playerBullet[i].radius = Vector3(0.1f,0.1,0.5f);
+		}
+		for (unsigned int i = 0; i < enemyBullets.size(); i++)
+		{
+			enemyBullet[i].center = enemyBullets[i];
+			enemyBullet[i].radius = 0.15f;
+		}
+		for (unsigned int i = 0; i < playerBullet.size(); i++)
+		{
+			if (Collision::HitCheckSphereToBox(m_pEnemy->GetCollider(), playerBullet[i]))
+			{
+				m_pEnemy->OnCollision();
+				m_pPlayer->m_pWeapon->BulletOnCollision(i);
+			}
+		}
+		for (unsigned int i = 0; i < enemyBullet.size(); i++)
+		{
+			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
+			{
+				m_pPlayer->SetHitFlag(true);
+				m_pEnemy->BulletOnCollision(i);
+				// 敵の体力の比率計算
+				float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
+				// 現在のゲージサイズ
+				m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
 
 
-	//// 経過時間
-	//m_totalTime += (float)_timer.GetElapsedSeconds();
-	//if (m_totalTime < DAMAGE_TIME)
-	//{
-	//	float time = m_totalTime / DAMAGE_TIME;
-	//	m_lightGreenGaugeRate = Lerp(m_prevGaugeScaleX, m_currentGaugeScaleX, time);
-	//	m_gaugeFlag = false;
+			}
+		}
 
-	//}
-	//else
-	//{
-	//	m_totalTime = 0;
-	//	m_gaugeFlag = true;
-	//}
-	//if (m_gaugeFlag)
-	//{
-	//	m_prevGaugeScaleX = m_currentGaugeScaleX;
-	//}
+		// プレイヤーと敵との接触判定
+		if (!m_pPlayer->GetHitFlag())
+			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
+				m_pPlayer->SetHitFlag(true);
+		// リザルトシーンへ遷移
+		if (m_pEnemy->GetModel() == nullptr)
+		{
+			GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
+			gameSceneManager->RequestScene("Result");
+		}
+	}
+
+
+	// 経過時間
+	m_totalTime += (float)_timer.GetElapsedSeconds();
+	if (m_totalTime < DAMAGE_TIME)
+	{
+		float time = m_totalTime / DAMAGE_TIME;
+		m_lightGreenGaugeRate = Lerp(m_prevGaugeScaleX, m_currentGaugeScaleX, time);
+		m_gaugeFlag = false;
+
+	}
+	else
+	{
+		m_totalTime = 0;
+		m_gaugeFlag = true;
+	}
+	if (m_gaugeFlag)
+	{
+		m_prevGaugeScaleX = m_currentGaugeScaleX;
+	}
 }
 
 // 描画

@@ -84,6 +84,8 @@ public: // 関数
 	// 後始末
 	void Finalize();
 
+private: // サブ関数
+
 	// 点滅
 	void Blink();
 
