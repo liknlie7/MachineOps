@@ -12,7 +12,7 @@ Weapon::Weapon()
 	: bulletHitFlag(false)
 	, bulletNumber(0)
 {
-	m_pos = Vector3(0.0f, 0.0f, 0.5f);
+	m_position = Vector3(0.0f, 0.0f, 0.5f);
 }
 
 // èâä˙âª
@@ -28,7 +28,7 @@ void Weapon::Initialize()
 // çXêV
 void Weapon::Update()
 {
-	m_mat = Matrix::CreateTranslation(m_pos) * Matrix::CreateRotationY(m_angle) *
+	m_matrix = Matrix::CreateTranslation(m_position) * Matrix::CreateRotationY(m_angle) *
 		Matrix::CreateTranslation(m_playerPos);
 
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
@@ -46,7 +46,7 @@ void Weapon::Update()
 	//	if ((*itr)->GetIsValid())
 	//	{
 	//		m_pBullets.erase(itr);
-	//		(*itr)->SetIsValid(false);
+	//		//(*itr)->SetIsValid(false);
 	//	}
 	//	i++;
 	//}
@@ -70,7 +70,7 @@ void Weapon::Finalize()
 void Weapon::CreateBullet()
 {
 	// íeÇÃçÏê¨
-	m_pBullets.push_back(make_unique<Bullet>(m_playerPos + Vector3(0.0f, 0.9f, 0.0f), m_angle, Vector3(0.0f, 0.0f, 0.8f)));
+	m_pBullets.push_back(make_unique<Bullet>(m_playerPos + Vector3(0.0f, 0.9f, 0.0f), m_angle, Vector3(0.0f, 0.0f, 0.8f),"PlayerBullet"));
 
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{

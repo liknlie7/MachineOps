@@ -8,6 +8,12 @@ using namespace DirectX::SimpleMath;
 const float Floor::AREA_WIDTH = 50.0f;
 const float Floor::AREA_HEIGHT = 50.0f;
 
+Floor::Floor(const std::string& _tag)
+	: GameObject(_tag)
+{
+
+}
+
 void Floor::Initialize()
 {
 	// エフェクトファクトリの作成
@@ -28,7 +34,12 @@ void Floor::Initialize()
 	 m_vector[3] = Vector3(AREA_WIDTH, 0.0f, -AREA_HEIGHT);   // 右上
 }
 
-void Floor::Render(DirectX::SimpleMath::Matrix _view)
+void Floor::Update()
+{
+
+}
+
+void Floor::Render(const DirectX::SimpleMath::Matrix& _view)
 {
 	Matrix world = Matrix::Identity;
 

@@ -24,7 +24,7 @@ class Player : public GameObject
 public: // 基本
 
 	// コンストラクタ
-	Player();
+	Player(const std::string& _tag);
 	// デストラクタ
 	~Player();
 
@@ -33,7 +33,7 @@ public: // アクセサ
 	// 座標の取得
 	DirectX::SimpleMath::Vector3 Player::GetPos() const
 	{
-		return m_pos;
+		return m_position;
 	}
 
 	// マウス座標の設定
@@ -88,6 +88,9 @@ private: // サブ関数
 
 	// 点滅
 	void Blink();
+
+	// 衝突
+	void OnCollision(GameObject* _object);
 
 private: // 変数
 

@@ -13,6 +13,7 @@
 #include "GameObject.h"
 #include "GameContext.h"
 #include "Bullet.h"
+#include "GameObject.h"
 
 // 敵
 class Enemy : public GameObject
@@ -20,7 +21,7 @@ class Enemy : public GameObject
 public: // 基本
 
 	// コンストラクタ
-	Enemy(int _type);
+	Enemy(const int _type, const std::string& _tag);
 	// デストラクタ
 	~Enemy();
 
@@ -52,9 +53,9 @@ public: // アクセサ
 	}
 
 	// 座標取得
-	DirectX::SimpleMath::Vector3 GetPos() const 
+	DirectX::SimpleMath::Vector3 GetPos() const
 	{
-		return m_pos;
+		return m_position;
 	}
 
 	// 弾の座標取得
@@ -98,7 +99,7 @@ public: // アクセサ
 		return m_maxLife;
 	}
 	// 体力の取得
-	float GetLife() const 
+	float GetLife() const
 	{
 		return m_life;
 	}
@@ -132,7 +133,10 @@ public: // 関数
 
 private: // 定数
 
+	// サイズ
 	static const float SIZE;
+	// ボスサイズ
+	static const float BOSS_SIZE;
 
 private: // 変数
 

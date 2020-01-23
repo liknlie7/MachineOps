@@ -15,7 +15,6 @@ Boid::Boid(const DirectX::SimpleMath::Vector3& _vector)
 	m_maxSpeed = 1.5f;
 	// 最大加速度
 	m_maxForce = 0.5f;
-
 }
 
 // コンストラクタ

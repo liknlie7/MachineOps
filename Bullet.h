@@ -13,21 +13,21 @@ class Bullet :public GameObject
 public: // 基本
 
 	// コンストラクタ
-	Bullet(DirectX::SimpleMath::Vector3 _pos, float _angle, DirectX::SimpleMath::Vector3 _speed);
+	Bullet(const DirectX::SimpleMath::Vector3& _pos, const float& _angle, const DirectX::SimpleMath::Vector3& _speed, const std::string& tag);
 	// デストラクタ
 	~Bullet() {}
 
 public: // アクセサ
 
 	// 座標取得
-	DirectX::SimpleMath::Vector3 GetPos() const 
+	DirectX::SimpleMath::Vector3 GetPos() const
 	{
-		return m_pos;
+		return m_position;
 	}
 	// 座標設定
 	void SetPos(const DirectX::SimpleMath::Vector3& _pos)
 	{
-		m_pos = _pos;
+		m_position = _pos;
 	}
 
 	// フラグ取得

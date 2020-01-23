@@ -16,8 +16,8 @@
 #include "Keyboard.h"
 #include "Sound.h"
 
-
 class GameSceneManager;
+class CollisionManager;
 
 class Player;
 
@@ -92,4 +92,8 @@ private:
 	
 	// サウンド
 	Sound*									m_pSound;
+
+	// コリジョンマネージャー
+	std::unique_ptr<CollisionManager>       m_pCollisionManager;
+
 };

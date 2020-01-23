@@ -3,17 +3,23 @@
 #include "GameObject.h"
 
 
-
-GameObject::GameObject()
-	: m_pos(0.0f, 1.0f, 0.0f)
-	, m_rot(0.0f, 0.0f, 0.0f)
+// コンストラクタ
+GameObject::GameObject(const std::string& _tag)
+	: m_isValid(true)
+	, m_tag(_tag)
+	, m_position(0.0f, 1.0f, 0.0f)
+	, m_rotation(0.0f, 0.0f, 0.0f)
 	, m_scale(1.0f, 1.0f, 1.0f)
-	, m_vel(0.0f, 0.0f, 0.0f)
+	, m_velocity(0.0f, 0.0f, 0.0f)
 {
 }
 
-
+// デストラクタ
 GameObject::~GameObject()
+{
+}
+
+void GameObject::OnCollision(GameObject * _object)
 {
 }
 

@@ -27,7 +27,7 @@ public: // アクセサ
 	// 座標設定
 	void SetWeaponPos(const DirectX::SimpleMath::Vector3& _pos)
 	{
-		m_pos = _pos;
+		m_position = _pos;
 	}
 
 	// 弾の座標取得

@@ -8,16 +8,20 @@ using namespace DirectX::SimpleMath;
 
 using namespace std;
 
-//1.5
-const float ::Enemy::SIZE = 8.0f;
+// 通常の大きさ
+const float Enemy::SIZE = 1.5f;
+
+// ボスの大きさ
+const float Enemy::BOSS_SIZE = 8.0f;
 
 // コンストラクタ
-Enemy::Enemy(int _type)
-	: m_blinkTime(30)
+Enemy::Enemy(const int _type, const std::string& _tag)
+	: GameObject(_tag)
+	, m_blinkTime(30)
 	, m_isValid(false)
 	, m_playerPos(0.0f, 0.0f, 0.0f)
-	, m_life(30)
-	, m_maxLife(30)
+	, m_life(100)
+	, m_maxLife(100)
 	, m_wayNum(3)
 	, m_changeAngle(30)
 	, m_bulletEndAngle(0)
@@ -57,14 +61,14 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		);
 		delete factory;
 
-		m_pos = _pos;
+		m_position = _pos;
 		// 速さの初期化
 		m_speed = 0.08f;
 
 		m_life = 300;
 
 		m_collider.radius = 2.0f;
-		m_collider.center = m_pos;
+		m_collider.center = m_position;
 		//m_decisionAreaPos = m_pos;
 
 		m_shotType = NORMAL_SHOT;
@@ -81,14 +85,14 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		);
 		delete factory;
 
-		m_pos = _pos;
+		m_position = _pos;
 		// 速さの初期化
 		m_speed = 0.05f;
 
 		m_life = 5;
 
 		m_collider.radius = 2.0f;
-		m_collider.center = m_pos;
+		m_collider.center = m_position;
 		//m_decisionAreaPos = m_pos;
 		m_shotType = 4;
 
@@ -103,14 +107,14 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		);
 		delete factory;
 
-		m_pos = _pos;
+		m_position = _pos;
 		// 速さの初期化
 		m_speed = 0.08f;
 
 		m_life = m_maxLife;
 		m_shotType = NORMAL_SHOT;
-		m_collider.radius = /*2.0*/5.0f;
-		m_collider.center = m_pos;
+		m_collider.radius = /*2.0f*/5.0f;
+		m_collider.center = m_position;
 		//m_decisionAreaPos = m_pos;
 
 		break;
@@ -122,7 +126,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 void Enemy::Update()
 {
 	Vector3 m_dir;
-	m_dir = m_playerPos - m_pos;
+	m_dir = m_playerPos - m_position;
 	m_dir.Normalize();
 	m_enemyAngle = atan2(m_dir.x, m_dir.z);
 
@@ -134,10 +138,10 @@ void Enemy::Update()
 
 		m_bulletEndAngle -= 180 + m_wayNum / 2 * m_changeAngle;
 
-		//for (int i = 0; i < m_wayNum; i++)
-		//{
-		//	CreateBullet();
-		//}
+		for (int i = 0; i < m_wayNum; i++)
+		{
+			CreateBullet();
+		}
 
 		break;
 	case SHIELD_ENEMY:
@@ -154,9 +158,9 @@ void Enemy::Update()
 		break;
 	}
 
-	if (m_life <= 20 && m_life > 10)
+	if (m_life <= 80 && m_life > 50)
 		m_shotType = WHORL_SHOT;
-	if (m_life <= 10)
+	if (m_life <= 50)
 		m_shotType = ALL_DIRECTION_SHOT;
 
 	m_shotInterval++;
@@ -166,7 +170,7 @@ void Enemy::Update()
 	{
 		if (m_shotInterval > 15.0f)
 		{
-			m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), m_enemyAngle, Vector3(0.0f, 0.0f, 0.15f)));
+			m_pBullets.push_back(make_unique<Bullet>(m_position + Vector3(0.0f, 0.1f, 0.0f), m_enemyAngle, Vector3(0.0f, 0.0f, 0.15f), "EnemyBullet"));
 			CreateBullet();
 			m_shotInterval = 0;
 
@@ -179,7 +183,7 @@ void Enemy::Update()
 		{
 			for (int rad = 0; rad < 130; rad += 6)
 			{
-				m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), (float)rad + m_enemyAngle, Vector3(0.0f, 0.0f, 0.15f)));
+				m_pBullets.push_back(make_unique<Bullet>(m_position + Vector3(0.0f, 0.1f, 0.0f), (float)rad + m_enemyAngle, Vector3(0.0f, 0.0f, 0.15f), "EnemyBullet"));
 				CreateBullet();
 				m_shotInterval = 0;
 			}
@@ -193,7 +197,7 @@ void Enemy::Update()
 			int i = 0;
 			while (i < 5)
 			{
-				m_pBullets.push_back(make_unique<Bullet>(m_pos + Vector3(0.0f, 0.1f, 0.0f), m_shotRotate, Vector3(0.0f, 0.0f, 0.15f)));
+				m_pBullets.push_back(make_unique<Bullet>(m_position + Vector3(0.0f, 0.1f, 0.0f), m_shotRotate, Vector3(0.0f, 0.0f, 0.15f),"EnemyBullet"));
 				CreateBullet();
 				m_shotRotate += 0.2f;
 				m_shotInterval = 0;
@@ -205,7 +209,7 @@ void Enemy::Update()
 		break;
 	}
 	// 速度代入
-	m_pos += m_vel;
+	m_position += m_velocity;
 
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{
@@ -214,10 +218,10 @@ void Enemy::Update()
 
 
 	Matrix rotate = Matrix::CreateRotationY(m_enemyAngle);
-	Matrix scale = Matrix::CreateScale(SIZE);
-	m_mat = scale * rotate * Matrix::CreateTranslation(Vector3(m_pos.x, 1.0f, m_pos.z));
+	Matrix scale = Matrix::CreateScale(BOSS_SIZE);
+	m_matrix = scale * rotate * Matrix::CreateTranslation(Vector3(m_position.x, 1.0f, m_position.z));
 
-	m_collider.center = m_pos;
+	m_collider.center = m_position;
 
 	if (m_life == 0)
 		m_pEnemy = nullptr;
@@ -234,7 +238,7 @@ void Enemy::Render(const Matrix& _view)
 	// モデル描画
 	if (m_blinkTime % 5 == 0)
 		if (m_life != 0)
-			m_pEnemy->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<CommonStates>(), m_mat, _view, GameContext::Get<Projection>()->GetMatrix());
+			m_pEnemy->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<CommonStates>(), m_matrix, _view, GameContext::Get<Projection>()->GetMatrix());
 
 	// 弾描画
 	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
@@ -253,11 +257,11 @@ void Enemy::Finalize()
 void Enemy::ChasePlayer(Vector3 _playerPos)
 {
 	// プレイヤーへの向きを計算
-	Vector3 dir = _playerPos - m_pos;
+	Vector3 dir = _playerPos - m_position;
 	dir.Normalize();
 
 	// 敵の移動
-	m_pos += dir * m_speed;
+	m_position += dir * m_speed;
 }
 
 // 点滅

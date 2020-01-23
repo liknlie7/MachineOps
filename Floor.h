@@ -9,14 +9,15 @@
 #include "Projection.h"
 #include "GameContext.h"
 #include "Collision.h"
+#include "GameObject.h"
 
 // 床
-class Floor
+class Floor : public GameObject
 {
 public: // 基本
 
 	// コンストラクタ
-	Floor() {}
+	Floor(const std::string& _tag);
 	// デストラクタ
 	~Floor() {}
 
@@ -35,8 +36,10 @@ public: // 関数
 
 	// 初期化
 	void Initialize();
+	// 更新
+	void Update() override;
 	// 描画
-	void Render(DirectX::SimpleMath::Matrix _view);
+	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 
 public: // 定数
 

@@ -10,6 +10,7 @@
 #include "DebugFont.h"
 #include "GameContext.h"
 #include "GameSceneManager.h"
+#include "CollisionManager.h"
 
 #include "TitleScene.h"
 #include "PlayScene.h"
@@ -88,8 +89,15 @@ void Game::Initialize(HWND window, int width, int height)
 	m_pGameSceneManager->RegisterScene<TitleScene>("Title");
 	m_pGameSceneManager->RegisterScene<PlayScene>("Play");
 	m_pGameSceneManager->RegisterScene<ResultScene>("Result");
-	m_pGameSceneManager->SetStartScene("Play");
+	m_pGameSceneManager->SetStartScene("Title");
 	GameContext::Register<GameSceneManager>(m_pGameSceneManager);
+
+	m_pCollisionManager = std::make_unique<CollisionManager>();
+
+	m_pCollisionManager->AllowCollision("Player", "Enemy");
+	m_pCollisionManager->AllowCollision("Player", "EnemyBullet");	m_pCollisionManager->AllowCollision("PlayerBullet", "Enemy");	m_pCollisionManager->AllowCollision("Enemy", "Enemy");	m_pCollisionManager->AllowCollision("Mouse", "Floor");
+	GameContext::Register<CollisionManager>(m_pCollisionManager);
+
 }
 
 
@@ -113,7 +121,11 @@ void Game::Update(DX::StepTimer const& timer)
 	// TODO: Add your game logic here.
 	elapsedTime;
 	
+	// シーンの更新
 	m_pGameSceneManager->Update(timer);
+
+	// 当たり判定の更新
+	m_pCollisionManager->DetectCollision();
 }
 #pragma endregion
 

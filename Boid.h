@@ -15,6 +15,13 @@ public: // 基本
 	// デストラクタ
 	~Boid() {}
 
+public: // アクセサ
+
+	DirectX::SimpleMath::Vector3 GetPos() const
+	{
+		return m_pos;
+	}
+
 public: // 関数
 
 	void ApplyForce(const DirectX::SimpleMath::Vector3& _force);

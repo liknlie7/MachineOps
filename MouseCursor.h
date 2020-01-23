@@ -9,13 +9,14 @@
 #include "GameContext.h"
 #include "Projection.h"
 #include "WICTextureLoader.h" 
+#include "GameObject.h"
 
-class MouseCursor
+class MouseCursor : public GameObject
 {
 public: // 基本
 
 	// コンストラクタ
-	MouseCursor();
+	MouseCursor(const std::string& _tag);
 	// デストラクタ
 	~MouseCursor() {}
 
@@ -34,10 +35,10 @@ public: // アクセサ
 public: // 関数
 
 	// 更新
-	void Update();
+	void Update() override;
 
 	// 描画
-	void Render();
+	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 
 private: // 変数
 

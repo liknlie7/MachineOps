@@ -6,8 +6,9 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 // コンストラクタ
-MouseCursor::MouseCursor()
-	: m_pos(Vector3(0, 0, 0))
+MouseCursor::MouseCursor(const std::string& _tag)
+	: GameObject(_tag)
+	, m_pos(Vector3(0, 0, 0))
 {
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\Reticle.png", nullptr, m_reticle.GetAddressOf());
 
@@ -33,7 +34,7 @@ void MouseCursor::Update()
 
 }
 
-void MouseCursor::Render()
+void MouseCursor::Render(const DirectX::SimpleMath::Matrix& _view)
 {
 	GameContext::Get<DirectX::SpriteBatch>()->Draw(m_reticle.Get(), Vector3(m_state.x, m_state.y, 0), nullptr, Colors::LightYellow,
 		0.0f, Vector2(64, 64), Vector2(0.3f, 0.3f));

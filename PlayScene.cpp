@@ -32,32 +32,32 @@ void PlayScene::Initialize()
 	GameContext::Register<FollowCamera>(m_pFollowCamera);
 
 	// カーソルの作成
-	m_pCursor = make_unique<MouseCursor>();
+	m_pCursor = make_unique<MouseCursor>("Mouse");
 
 	// フロア作成
-	m_pFloor = make_unique<Floor>();
+	m_pFloor = make_unique<Floor>("Floor");
 	m_pFloor->Initialize();
 
 	// プレイヤー作成
-	m_pPlayer = make_unique<Player>();
+	m_pPlayer = make_unique<Player>("Player");
 	m_pPlayer->Initialize();
 
 	// 敵作成
 	if (bossFlag)
 	{
-		m_pEnemy = make_unique<Enemy>(m_pEnemy->BOSS_ENEMY);
+		m_pEnemy = make_unique<Enemy>(m_pEnemy->BOSS_ENEMY, "Enemy");
 		m_pEnemy->Initialize(Vector3(0.0f, 1.0f, -15.0f));
 	}
 	if (!bossFlag)
 	{
-		m_pEnemies[0] = make_unique<Enemy>(m_pEnemies[0]->NORMAL_ENEMY);
-		m_pEnemies[0]->Initialize(Vector3(10.0f, 1.0f, -5.0f));
-		m_pEnemies[1] = make_unique<Enemy>(m_pEnemies[1]->NORMAL_ENEMY);
-		m_pEnemies[1]->Initialize(Vector3(-10.0f, 1.0f, -5.0f));
-		m_pEnemies[2] = make_unique<Enemy>(m_pEnemies[2]->SHIELD_ENEMY);
-		m_pEnemies[2]->Initialize(Vector3(10.0f, 1.0f, -10.0f));
-		m_pEnemies[3] = make_unique<Enemy>(m_pEnemies[3]->SHIELD_ENEMY);
-		m_pEnemies[3]->Initialize(Vector3(-10.0f, 1.0f, -10.0f));
+		m_pEnemies[0] = make_unique<Enemy>(m_pEnemies[0]->NORMAL_ENEMY, "Enemy");
+		m_pEnemies[0]->Initialize(Vector3(10.0f, 1.0f, 5.0f));
+		m_pEnemies[1] = make_unique<Enemy>(m_pEnemies[1]->NORMAL_ENEMY, "Enemy");
+		m_pEnemies[1]->Initialize(Vector3(10.0f, 1.0f, 5.0f));
+		m_pEnemies[2] = make_unique<Enemy>(m_pEnemies[2]->SHIELD_ENEMY, "Enemy");
+		m_pEnemies[2]->Initialize(Vector3(10.0f, 1.0f, 5.0f));
+		m_pEnemies[3] = make_unique<Enemy>(m_pEnemies[3]->SHIELD_ENEMY, "Enemy");
+		m_pEnemies[3]->Initialize(Vector3(10.0f, 1.0f, 5.0f));
 	}
 
 	m_color = Colors::Red;
@@ -137,7 +137,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 		for (unsigned int i = 0; i < playerBullets.size(); i++)
 		{
 			playerBullet[i].center = playerBullets[i];
-			playerBullet[i].radius = Vector3(0.1f,0.1,0.5f);
+			playerBullet[i].radius = Vector3(0.1f, 0.1, 0.5f);
 		}
 		for (unsigned int i = 0; i < enemyBullets.size(); i++)
 		{
@@ -243,7 +243,7 @@ void PlayScene::Render()
 
 	}
 
-	m_pCursor->Render();
+	m_pCursor->Render(m_pFollowCamera->GetViewMatrix());
 
 	GameContext::Get<SpriteBatch>()->End();
 }

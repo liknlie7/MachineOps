@@ -9,8 +9,9 @@ using namespace DirectX::SimpleMath;
 using namespace std;
 
 // コンストラクタ
-Player::Player()
-	: m_mousePos(0.0f, 0.0f, 0.0f)
+Player::Player(const std::string& _tag)
+	: GameObject(_tag)
+	, m_mousePos(0.0f, 0.0f, 0.0f)
 	, m_shotInterval(15.0f)
 	, m_hitFlag(false)
 	, m_blinkTime(30)
@@ -41,7 +42,7 @@ void Player::Initialize()
 
 	// コライダー
 	m_collider.radius = 1.0f;
-	m_collider.center = m_pos;
+	m_collider.center = m_position;
 
 	// 銃の作成
 	m_pWeapon->Initialize();
@@ -62,7 +63,7 @@ void Player::Update()
 	m_mouseTracker.Update(mouseState);
 
 	// 速度初期化
-	m_vel = Vector3(0.0f, 0.0f, 0.0f);
+	m_velocity = Vector3(0.0f, 0.0f, 0.0f);
 
 	if (keyState.IsKeyUp(DirectX::Keyboard::Keys::LeftShift)) m_isShiftDown = false;
 	if (keyState.IsKeyDown(DirectX::Keyboard::Keys::LeftShift)) m_isShiftDown = true;
@@ -70,43 +71,44 @@ void Player::Update()
 	if (!m_isShiftDown)
 	{
 		// Wを押下
-		if (keyState.W) m_vel.z = -0.2f;
+		if (keyState.W) m_velocity.z = -0.2f;
 		// Aを押下
-		if (keyState.A) m_vel.x = -0.2f;
+		if (keyState.A) m_velocity.x = -0.2f;
 		// Sを押下
-		if (keyState.S) m_vel.z = +0.2f;
+		if (keyState.S) m_velocity.z = +0.2f;
 		// Dを押下
-		if (keyState.D) m_vel.x = +0.2f;
+		if (keyState.D) m_velocity.x = +0.2f;
 	}
 	else
 	{
 		// Wを押下
 		if (keyState.W)
 		{
-			m_vel.z = -0.1f;
+			m_velocity.z = -0.1f;
+			m_shotSound->Play(0,0,0);
 		}
 		// Aを押下
-		if (keyState.A) m_vel.x = -0.1f;
+		if (keyState.A) m_velocity.x = -0.1f;
 		// Sを押下
-		if (keyState.S) m_vel.z = +0.1f;
+		if (keyState.S) m_velocity.z = +0.1f;
 		// Dを押下
-		if (keyState.D) m_vel.x = +0.1f;
+		if (keyState.D) m_velocity.x = +0.1f;
 
 	}
 
 	if (m_hitFlag)  Blink();
 
 	// 速度代入
-	m_pos += m_vel;
+	m_position += m_velocity;
 
-	m_dir = m_mousePos - m_pos;
+	m_dir = m_mousePos - m_position;
 	m_dir.Normalize();
 
 	m_angle = atan2(m_dir.x, m_dir.z);
-	Matrix trans = Matrix::CreateTranslation(Vector3(m_pos));
+	Matrix trans = Matrix::CreateTranslation(Vector3(m_position));
 	Matrix rotate = Matrix::CreateRotationY(m_angle);
 
-	m_mat = rotate * trans;
+	m_matrix = rotate * trans;
 
 	// 弾を発射する
 	m_shotInterval++;
@@ -124,10 +126,10 @@ void Player::Update()
 
 	// 武器の更新
 	m_pWeapon->SetAngle(m_angle);
-	m_pWeapon->SetPlayerPos(m_pos);
+	m_pWeapon->SetPlayerPos(m_position);
 	m_pWeapon->Update();
 
-	m_collider.center = m_pos;
+	m_collider.center = m_position;
 
 }
 
@@ -137,7 +139,7 @@ void Player::Render(const Matrix& _view)
 	// プレイヤー描画
 	if (m_blinkTime % 5 == 0)
 		m_pPlayer->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(),
-			*GameContext::Get<CommonStates>(), m_mat, _view, GameContext::Get<Projection>()->GetMatrix());
+			*GameContext::Get<CommonStates>(), m_matrix, _view, GameContext::Get<Projection>()->GetMatrix());
 
 	// 武器の描画
 	m_pWeapon->Render(_view);
@@ -145,6 +147,12 @@ void Player::Render(const Matrix& _view)
 
 // 後始末
 void Player::Finalize()
+{
+
+}
+
+// 衝突
+void Player::OnCollision(GameObject* _object)
 {
 
 }
