@@ -30,6 +30,19 @@
 // プレイシーンクラス
 class PlayScene : public GameScene
 {
+public: 
+
+	// ゲームステート
+	enum GAME_STATE
+	{
+		STATE_START,		// ゲーム開始
+		STATE_GAME,			// ゲーム中
+		STATE_CONTINUE,		// 死んだので再チャレンジ
+		STATE_NEXT,			// 次のウェーブへ
+		STATE_GAMEOVERA,	// ゲームオーバー
+	};
+
+
 public: // 基本
 
 	// コンストラクタ
@@ -48,6 +61,21 @@ public: // 関数
 	// 後始末
 	void Finalize() override;
 
+	// ゲームの初期化
+	GAME_STATE InitializeGame();
+
+	// ゲームをスタート
+	GAME_STATE StartGame();
+
+	// ゲーム中
+	GAME_STATE PlayGame();
+
+	// コンティニュー
+	GAME_STATE ContinueGame();
+
+	// 次のウェーブへ
+	GAME_STATE NextWave();
+
 private: // サブ関数
 
 	// 線形補間
@@ -61,6 +89,9 @@ private: // 定数
 	static const float DAMAGE_TIME;
 
 private: // 変数
+
+	// ゲームの状態
+	GAME_STATE											m_gameState;
 
 	// エフェクト
 	std::unique_ptr<DirectX::BasicEffect>				m_pBasicEffect;

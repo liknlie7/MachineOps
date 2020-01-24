@@ -8,26 +8,26 @@
       <UniqueIdentifier>7ebf47e8-ba54-410d-aae3-9bc081748a66</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Object">
-      <UniqueIdentifier>{78f8537a-6775-4ec0-bb6c-2b737ab03abe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Debug">
       <UniqueIdentifier>{5372218d-5981-44b8-9c29-13d4f6286189}</UniqueIdentifier>
     </Filter>
     <Filter Include="Manager">
       <UniqueIdentifier>{76ba27d4-f84e-4b54-b4f0-2cd052d5f74f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Enemy">
-      <UniqueIdentifier>{8568d1ac-01fb-464e-8509-26783509192a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameScene">
       <UniqueIdentifier>{562db1f7-eb02-4020-854d-f7e9099ca424}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Boids">
-      <UniqueIdentifier>{db3d4ccd-7398-4719-a4bb-582ff6fa2150}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Collider">
       <UniqueIdentifier>{e9eb1156-5e1e-4b46-ae4c-a24b2ad31c6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{db3d4ccd-7398-4719-a4bb-582ff6fa2150}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{78f8537a-6775-4ec0-bb6c-2b737ab03abe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemy">
+      <UniqueIdentifier>{8568d1ac-01fb-464e-8509-26783509192a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -105,10 +105,10 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Boid.h">
-      <Filter>Boids</Filter>
+      <Filter>AI</Filter>
     </ClInclude>
     <ClInclude Include="Flock.h">
-      <Filter>Boids</Filter>
+      <Filter>AI</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>Manager</Filter>
@@ -185,10 +185,10 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Boid.cpp">
-      <Filter>Boids</Filter>
+      <Filter>AI</Filter>
     </ClCompile>
     <ClCompile Include="Flock.cpp">
-      <Filter>Boids</Filter>
+      <Filter>AI</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>Manager</Filter>

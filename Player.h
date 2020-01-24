@@ -21,6 +21,15 @@ class Weapon;
 
 class Player : public GameObject
 {
+private:
+
+	enum STATE
+	{
+		STATE_NORMAL,
+		STATE_HIT,
+		STATE_DEAD,
+	};
+
 public: // 基本
 
 	// コンストラクタ
@@ -49,26 +58,47 @@ public: // アクセサ
 	}
 
 	// 接触判定フラグの取得
-	bool Player::GetHitFlag() const
+	bool GetHitFlag() const
 	{
 		return m_hitFlag;
 	}
 	// 接触判定フラグの設定
-	void Player::SetHitFlag(const bool& _hitFlag)
+	void SetHitFlag(const bool& _hitFlag)
 	{
 		m_hitFlag = _hitFlag;
 	}
 
-	void Player::SetBulletHitFlag(const bool& _isHitFlag)
+	// アクティブフラグの取得
+	bool GetActiveFlag() const
+	{
+		return m_activeFlag;
+	}
+
+	// アクティブフラグの設定
+	void SetActiveFlag(const bool _flag)
+	{
+		m_activeFlag = _flag;
+	}
+
+	// 体力の取得
+	int GetLife() const
+	{
+		return m_life;
+	}
+
+	// 弾のヒットフラグ設定
+	void SetBulletHitFlag(const bool& _isHitFlag)
 	{
 		m_pWeapon->SetBulletHitFlag(_isHitFlag);
 	}
-	void Player::SetBulletNumber(const int& _bulletNumber)
+	// 弾の番号取得
+	void SetBulletNumber(const int& _bulletNumber)
 	{
 		m_pWeapon->SetBulletNumber(_bulletNumber);
 	}
 
-	Collision::Sphere Player::GetCollider() const
+	// 当たり判定の取得
+	Collision::Sphere GetCollider() const
 	{
 		return m_collider;
 	}
@@ -84,13 +114,18 @@ public: // 関数
 	// 後始末
 	void Finalize();
 
+	// 衝突
+	void OnCollision();
+
 private: // サブ関数
 
 	// 点滅
 	void Blink();
 
+	// TODO: タグ判定
 	// 衝突
 	void OnCollision(GameObject* _object);
+
 
 private: // 変数
 
@@ -125,8 +160,14 @@ private:
 	int											 m_blinkTime;
 	// Shiftボタンフラグ
 	bool										 m_isShiftDown;
+	// 体力
+	int											 m_life;
+	// アクティブフラグ
+	bool										 m_activeFlag;
 
+	// サウンド
 	IDirectSoundBuffer8* m_shotSound;
+
 public:
 
 	// 銃

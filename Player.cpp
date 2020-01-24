@@ -8,6 +8,8 @@ using namespace DirectX::SimpleMath;
 
 using namespace std;
 
+// TODO:ステート管理にする
+
 // コンストラクタ
 Player::Player(const std::string& _tag)
 	: GameObject(_tag)
@@ -17,6 +19,8 @@ Player::Player(const std::string& _tag)
 	, m_blinkTime(30)
 	, m_angle(0.0f)
 	, m_isShiftDown(false)
+	, m_life(1)
+	, m_activeFlag(true)
 {
 	m_pWeapon = make_unique<Weapon>();
 	m_shotSound = GameContext::Get<Sound>()->GetSound(0);
@@ -39,6 +43,10 @@ void Player::Initialize()
 	factory->SetDirectory(L"Resources/Models");
 	m_pPlayer = Model::CreateFromCMO(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources/Models/tank.cmo", *factory);
 	delete factory;
+
+	m_activeFlag = true;
+
+	m_life = 1;
 
 	// コライダー
 	m_collider.radius = 1.0f;
@@ -96,7 +104,9 @@ void Player::Update()
 
 	}
 
-	if (m_hitFlag)  Blink();
+	if (m_hitFlag)  
+		Blink();
+
 
 	// 速度代入
 	m_position += m_velocity;
@@ -155,6 +165,14 @@ void Player::Finalize()
 void Player::OnCollision(GameObject* _object)
 {
 
+}
+
+// 衝突
+void Player::OnCollision()
+{
+	m_hitFlag = true;
+
+	m_life--;
 }
 
 // 点滅
