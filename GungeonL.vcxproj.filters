@@ -29,6 +29,9 @@
     <Filter Include="Object\Enemy">
       <UniqueIdentifier>{8568d1ac-01fb-464e-8509-26783509192a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{5eceb251-eb2e-4188-bd8c-cdf55bb4fa6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -129,6 +132,15 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
+    <ClInclude Include="BinaryFile.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Myeffect.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -209,6 +221,15 @@
     <ClCompile Include="BoxCollider.cpp">
       <Filter>Collider</Filter>
     </ClCompile>
+    <ClCompile Include="BinaryFile.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="MyEffect.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -238,5 +259,21 @@
     <ResourceCompile Include="resource.rc">
       <Filter>Common</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Particle.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="ParticleGS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticlePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticleVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -297,7 +297,7 @@ void PlayScene::Finalize()
 {
 }
 
-
+// ƒvƒŒƒC’†
 PlayScene::GAME_STATE PlayScene::PlayGame()
 {
 	return STATE_GAME;
