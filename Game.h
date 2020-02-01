@@ -18,6 +18,7 @@
 
 class GameSceneManager;
 class CollisionManager;
+class EffectManager;
 
 class Player;
 
@@ -89,11 +90,14 @@ private:
 
 	// コモンステート
 	std::unique_ptr<GameSceneManager>       m_pGameSceneManager;
-	
+
 	// サウンド
 	Sound*									m_pSound;
 
 	// コリジョンマネージャー
 	std::unique_ptr<CollisionManager>       m_pCollisionManager;
+
+	// エフェクトマネージャー
+	std::unique_ptr<EffectManager>			m_effectMask;
 
 };

@@ -11,6 +11,7 @@
 #include "GameContext.h"
 #include "GameSceneManager.h"
 #include "CollisionManager.h"
+#include "EffectManager.h"
 
 #include "TitleScene.h"
 #include "PlayScene.h"
@@ -61,6 +62,11 @@ void Game::Initialize(HWND window, int width, int height)
 	// スプライトバッチの作成
 	m_pSpriteBatch = std::make_unique<SpriteBatch>(m_pDeviceResources->GetD3DDeviceContext());
 	GameContext::Register<SpriteBatch>(m_pSpriteBatch);
+
+	// エフェクト（マスク）の作成
+	//m_effectMask = std::make_unique<EffectManager>();
+	//m_effectMask->InitializeMask(1.0f);
+	//GameContext::Register<EffectManager>(m_effectMask);
 
 	// サウンドの作成
 	m_pSound = new Sound;
@@ -126,6 +132,10 @@ void Game::Update(DX::StepTimer const& timer)
 
 	// 当たり判定の更新
 	m_pCollisionManager->DetectCollision();
+
+	// マスクの更新
+	//m_effectMask->UpdateEffectMask(elapsedTime);
+
 }
 #pragma endregion
 
@@ -147,6 +157,9 @@ void Game::Render()
 	// TODO: Add your rendering code here.
 	context;
 	m_pGameSceneManager->Render();
+
+	// マスク
+	//m_effectMask->DrawEffectMask();
 
 	m_pDeviceResources->PIXEndEvent();
 	// Show the new frame.

@@ -26,6 +26,7 @@
 #include "Enemy.h"
 #include "Collision.h"
 #include "MouseCursor.h"
+#include "EffectManager.h"
 
 // プレイシーンクラス
 class PlayScene : public GameScene
@@ -75,6 +76,16 @@ public: // 関数
 
 	// 次のウェーブへ
 	GAME_STATE NextWave();
+
+	// エフェクト用ベーシックエフェクトを取得する関数
+	DirectX::BasicEffect* GetBatchEffect() { return m_batchEffect.get(); }
+	// エフェクト用プリミティブバッチを取得する関数
+	DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>* GetPrimitiveBatch() {
+		return m_primitiveBatch.get();
+	}
+	// エフェクト用入力レイアウトを取得する関数
+	ID3D11InputLayout* GetInputLayout() { return m_inputLayout.Get(); }
+
 
 private: // サブ関数
 
@@ -135,4 +146,12 @@ private: // 変数
 	// じわじわ減少するゲージ
 	float m_lightGreenGaugeRate;
 	bool m_gaugeFlag;
+
+	//----- エフェクト用 -----//
+	// エフェクト
+	std::unique_ptr<DirectX::BasicEffect> m_batchEffect;
+	// プリミティブバッチ
+	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>> m_primitiveBatch;
+	// 入力レイアウト
+	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
 };

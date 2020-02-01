@@ -20,8 +20,8 @@ Enemy::Enemy(const int _type, const std::string& _tag)
 	, m_blinkTime(30)
 	, m_isValid(false)
 	, m_playerPos(0.0f, 0.0f, 0.0f)
-	, m_life(100)
-	, m_maxLife(100)
+	, m_life(30)
+	, m_maxLife(30)
 	, m_wayNum(3)
 	, m_changeAngle(30)
 	, m_bulletEndAngle(0)
@@ -158,9 +158,9 @@ void Enemy::Update()
 		break;
 	}
 
-	if (m_life <= 80 && m_life > 50)
+	if (m_life <= 20 && m_life > 10)
 		m_shotType = WHORL_SHOT;
-	if (m_life <= 50)
+	if (m_life <= 0)
 		m_shotType = ALL_DIRECTION_SHOT;
 
 	m_shotInterval++;

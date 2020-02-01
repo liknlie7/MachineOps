@@ -186,6 +186,7 @@
     <ClInclude Include="DeviceResources.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="File.h" />
     <ClInclude Include="Flock.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="FollowCamera.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="DeviceResources.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="File.cpp" />
     <ClCompile Include="Flock.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
@@ -269,6 +271,13 @@
     <None Include="Particle.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="MaskShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
     <FxCompile Include="ParticleGS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>

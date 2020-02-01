@@ -46,7 +46,7 @@ void ResultScene::Update(DX::StepTimer const& _timer)
 void ResultScene::Render()
 {
 	m_spriteBatch->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
-	m_spriteFont->DrawString(m_spriteBatch.get(), "Coming soon...", SimpleMath::Vector2(550, 520), Colors::Black, 0, SimpleMath::Vector2(0, 0), 1.5f);
+	m_spriteFont->DrawString(m_spriteBatch.get(), "Game Clear!!", SimpleMath::Vector2(550, 520), Colors::Black, 0, SimpleMath::Vector2(0, 0), 1.5f);
 	m_spriteBatch->End();
 }
 

@@ -14,7 +14,7 @@ const float PlayScene::DAMAGE_TIME = 1.0f;
 // コンストラクタ
 PlayScene::PlayScene()
 	: GameScene()
-	, m_gameState(STATE_START)
+	, m_gameState(STATE_GAME)
 {
 	bossFlag = true;
 }
@@ -77,6 +77,28 @@ void PlayScene::Initialize()
 	// 経過時間
 	m_totalTime = 0;
 	m_gaugeFlag = false;
+
+	// 画面を開く
+	//GameContext::Get<EffectManager>()->Open();
+
+
+	// エフェクトの作成
+	m_batchEffect = std::make_unique<DirectX::BasicEffect>(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
+	m_batchEffect->SetTextureEnabled(true);
+	m_batchEffect->SetVertexColorEnabled(true);
+
+	// 入力レイアウト生成
+	void const* shaderByteCode;
+	size_t byteCodeLength;
+	m_batchEffect->GetVertexShaderBytecode(&shaderByteCode, &byteCodeLength);
+	GameContext::Get<DX::DeviceResources>()->GetD3DDevice()->
+		CreateInputLayout(DirectX::VertexPositionColorTexture::InputElements,
+			DirectX::VertexPositionColorTexture::InputElementCount,
+			shaderByteCode, byteCodeLength, m_inputLayout.GetAddressOf());
+
+	// プリミティブバッチの作成
+	m_primitiveBatch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>>(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext());
+
 }
 
 // 更新
@@ -84,162 +106,175 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 {
 	Keyboard::State keyState = Keyboard::Get().GetState();
 
-	// プレイヤー更新
-	if (m_pPlayer->GetActiveFlag() == true)
-		m_pPlayer->Update();
-
-	// 敵更新
-	if (bossFlag)
-	{
-		if (m_pPlayer->GetActiveFlag() == true)
-			m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
-		m_pEnemy->Update();
-	}
-	if (!bossFlag)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			if (m_pPlayer->GetActiveFlag() == true)
-				m_pEnemies[i]->SetPlayerPos(m_pPlayer->GetPos());
-			m_pEnemies[i]->Update();
-		}
-	}
-
-	// 追尾カメラ更新
-	if (m_pPlayer->GetActiveFlag() == true)
-		m_pFollowCamera->Update(m_pPlayer->GetPos() + FollowCamera::EYE_VEC, m_pPlayer->GetPos());
-
-	// カーソル更新
-	m_pCursor->Update();
-
-	m_color = Colors::Red;
-
-
-	// 交差点
-	Vector3 hitPos;
-
-	// マウスRayと床の当たり判定(交差点検出)
-	if (m_pPlayer->GetActiveFlag() == true)
-	{
-		if (Collision::IntersectSegmentTriangle(m_pCursor->GetRayNear(), m_pCursor->GetRayFar(), m_pFloor->GetTriangle(0), &hitPos) ||
-			Collision::IntersectSegmentTriangle(m_pCursor->GetRayNear(), m_pCursor->GetRayFar(), m_pFloor->GetTriangle(1), &hitPos))
-		{
-			m_pPlayer->SetMousePos(hitPos);
-		}
-	}
-
-
-	// 弾の中心と半径を設定
-	if (bossFlag)
-	{
-		vector<Vector3> playerBullets;
-
-		if (m_pPlayer->GetActiveFlag() == true)
-			playerBullets = m_pPlayer->GetBulletPos();
-
-		vector<Vector3> enemyBullets = m_pEnemy->GetBulletPos();
-
-		vector<Collision::Box> playerBullet;
-		vector<Collision::Sphere> enemyBullet;
-
-		playerBullet.resize(playerBullets.size());
-
-		enemyBullet.resize(enemyBullets.size());
-		for (unsigned int i = 0; i < playerBullets.size(); i++)
-		{
-			playerBullet[i].center = playerBullets[i];
-			playerBullet[i].radius = Vector3(0.1f, 0.1, 0.5f);
-		}
-		for (unsigned int i = 0; i < enemyBullets.size(); i++)
-		{
-			enemyBullet[i].center = enemyBullets[i];
-			enemyBullet[i].radius = 0.15f;
-		}
-		for (unsigned int i = 0; i < playerBullet.size(); i++)
-		{
-			if (Collision::HitCheckSphereToBox(m_pEnemy->GetCollider(), playerBullet[i]))
-			{
-				m_pEnemy->OnCollision();
-				m_pPlayer->m_pWeapon->BulletOnCollision(i);
-			}
-		}
-
-		// プレイヤーと敵の弾の当たり判定
-		for (unsigned int i = 0; i < enemyBullet.size(); i++)
-		{
-			if (m_pPlayer->GetActiveFlag() == true)
-			{
-				if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
-				{
-					m_pPlayer->OnCollision();
-					m_pEnemy->BulletOnCollision(i);
-					// 敵の体力の比率計算
-					float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
-					// 現在のゲージサイズ
-					m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
-				}
-			}
-		}
-
-		// プレイヤーと敵の当たり判定
-		if (m_pPlayer->GetActiveFlag() == true
-			&& m_pEnemy != nullptr)
-		{
-			if (!m_pPlayer->GetHitFlag())
-			{
-				if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
-				{
-					m_pPlayer->OnCollision();
-				}
-			}
-		}
-
-		// 体力が０なら消去
-		if (m_pPlayer->GetLife() == 0)
-		{
-			m_pPlayer->SetActiveFlag(false);
-		}
-
-	}
-	// リザルトシーンへ遷移
-	if (m_pEnemy->GetModel() == nullptr)
-	{
-		GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
-		gameSceneManager->RequestScene("Result");
-	}
-
-
-
-	// 体力ゲージ
-	// 経過時間
-	m_totalTime += (float)_timer.GetElapsedSeconds();
-	if (m_totalTime < DAMAGE_TIME)
-	{
-		float time = m_totalTime / DAMAGE_TIME;
-		m_lightGreenGaugeRate = Lerp(m_prevGaugeScaleX, m_currentGaugeScaleX, time);
-		m_gaugeFlag = false;
-
-	}
-	else
-	{
-		m_totalTime = 0;
-		m_gaugeFlag = true;
-	}
-	if (m_gaugeFlag)
-	{
-		m_prevGaugeScaleX = m_currentGaugeScaleX;
-	}
+	//auto effectMask = GameContext::Get<EffectManager>();
 
 	switch (m_gameState)
 	{
 	case STATE_START:
+
+		// 画面が閉じるまでまつ
+		//if (effectMask->IsClose())
+		//{
+		//	m_gameState = STATE_GAME;
+		//}
+
 		break;
 	case STATE_GAME:
+
+		// プレイヤー更新
+		if (m_pPlayer->GetActiveFlag() == true)
+			m_pPlayer->Update();
+
+		// 敵更新
+		if (bossFlag)
+		{
+			if (m_pPlayer->GetActiveFlag() == true)
+				m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
+			m_pEnemy->Update();
+		}
+		if (!bossFlag)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (m_pPlayer->GetActiveFlag() == true)
+					m_pEnemies[i]->SetPlayerPos(m_pPlayer->GetPos());
+				m_pEnemies[i]->Update();
+			}
+		}
+
+		// 追尾カメラ更新
+		if (m_pPlayer->GetActiveFlag() == true)
+			m_pFollowCamera->Update(m_pPlayer->GetPos() + FollowCamera::EYE_VEC, m_pPlayer->GetPos());
+
+		// カーソル更新
+		m_pCursor->Update();
+
+		m_color = Colors::Red;
+
+
+		// 交差点
+		Vector3 hitPos;
+
+		// マウスRayと床の当たり判定(交差点検出)
+		if (m_pPlayer->GetActiveFlag() == true)
+		{
+			if (Collision::IntersectSegmentTriangle(m_pCursor->GetRayNear(), m_pCursor->GetRayFar(), m_pFloor->GetTriangle(0), &hitPos) ||
+				Collision::IntersectSegmentTriangle(m_pCursor->GetRayNear(), m_pCursor->GetRayFar(), m_pFloor->GetTriangle(1), &hitPos))
+			{
+				m_pPlayer->SetMousePos(hitPos);
+			}
+		}
+
+
+		// 弾の中心と半径を設定
+		if (bossFlag)
+		{
+			vector<Vector3> playerBullets;
+
+			if (m_pPlayer->GetActiveFlag() == true)
+				playerBullets = m_pPlayer->GetBulletPos();
+
+			vector<Vector3> enemyBullets = m_pEnemy->GetBulletPos();
+
+			vector<Collision::Box> playerBullet;
+			vector<Collision::Sphere> enemyBullet;
+
+			playerBullet.resize(playerBullets.size());
+
+			enemyBullet.resize(enemyBullets.size());
+			for (unsigned int i = 0; i < playerBullets.size(); i++)
+			{
+				playerBullet[i].center = playerBullets[i];
+				playerBullet[i].radius = Vector3(0.1f, 0.1, 0.5f);
+			}
+			for (unsigned int i = 0; i < enemyBullets.size(); i++)
+			{
+				enemyBullet[i].center = enemyBullets[i];
+				enemyBullet[i].radius = 0.15f;
+			}
+			for (unsigned int i = 0; i < playerBullet.size(); i++)
+			{
+				if (Collision::HitCheckSphereToBox(m_pEnemy->GetCollider(), playerBullet[i]))
+				{
+					m_pEnemy->OnCollision();
+					m_pPlayer->m_pWeapon->BulletOnCollision(i);
+					// 敵の体力の比率計算
+					float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
+					// 現在のゲージサイズ
+					m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
+
+				}
+			}
+
+			// プレイヤーと敵の弾の当たり判定
+			for (unsigned int i = 0; i < enemyBullet.size(); i++)
+			{
+				if (m_pPlayer->GetActiveFlag() == true)
+				{
+					if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
+					{
+						m_pPlayer->OnCollision();
+						m_pEnemy->BulletOnCollision(i);
+					}
+				}
+			}
+
+			// プレイヤーと敵の当たり判定
+			if (m_pPlayer->GetActiveFlag() == true
+				&& m_pEnemy != nullptr)
+			{
+				if (!m_pPlayer->GetHitFlag())
+				{
+					if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
+					{
+						m_pPlayer->OnCollision();
+					}
+				}
+			}
+
+			// 体力が０なら消去
+			if (m_pPlayer->GetLife() == 0)
+			{
+				m_pPlayer->SetActiveFlag(false);
+			}
+
+		}
+		// リザルトシーンへ遷移
+		if (m_pEnemy->GetModel() == nullptr)
+		{
+			GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
+			gameSceneManager->RequestScene("Result");
+		}
+
+
+
+		// 体力ゲージ
+		// 経過時間
+		m_totalTime += (float)_timer.GetElapsedSeconds();
+		if (m_totalTime < DAMAGE_TIME)
+		{
+			float time = m_totalTime / DAMAGE_TIME;
+			m_lightGreenGaugeRate = Lerp(m_prevGaugeScaleX, m_currentGaugeScaleX, time);
+			m_gaugeFlag = false;
+
+		}
+		else
+		{
+			m_totalTime = 0;
+			m_gaugeFlag = true;
+		}
+		if (m_gaugeFlag)
+		{
+			m_prevGaugeScaleX = m_currentGaugeScaleX;
+		}
+
 		break;
-	case STATE_CONTINUE:
-		break;
-	case STATE_GAMEOVERA:
-		break;
+		//case STATE_CONTINUE:
+		//	break;
+		//case STATE_GAMEOVERA:
+		//	break;
+		//default:
+		//	break;
 	}
 }
 

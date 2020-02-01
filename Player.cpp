@@ -93,7 +93,7 @@ void Player::Update()
 		if (keyState.W)
 		{
 			m_velocity.z = -0.1f;
-			m_shotSound->Play(0,0,0);
+			//m_shotSound->Play(0,0,0);
 		}
 		// A‚ð‰Ÿ‰º
 		if (keyState.A) m_velocity.x = -0.1f;
@@ -172,7 +172,7 @@ void Player::OnCollision()
 {
 	m_hitFlag = true;
 
-	m_life--;
+	//m_life--;
 }
 
 // “_–Å
