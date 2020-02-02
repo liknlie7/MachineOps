@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "EffectManager.h"
+#include "EffectMask.h"
 #include <WICTextureLoader.h>
 #include "d3d11.h"
 #include <Effects.h>
@@ -8,7 +8,7 @@
 using namespace DirectX::SimpleMath;
 using namespace DirectX;
 
-EffectManager::EffectManager()
+EffectMask::EffectMask()
 	: m_interval(0.0f)
 	, m_rate(1.0f)
 	, m_open(true)
@@ -17,7 +17,7 @@ EffectManager::EffectManager()
 {
 }
 
-void EffectManager::Initialize(float _interval)
+void EffectMask::Initialize(float _interval)
 {
 	DX::DeviceResources*   deviceResources = GameContext::Get<DX::DeviceResources>();
 	ID3D11Device*          device = deviceResources->GetD3DDevice();
@@ -73,7 +73,7 @@ void EffectManager::Initialize(float _interval)
 }
 
 
-void EffectManager::Update(float _elapsedTime)
+void EffectMask::Update(float _elapsedTime)
 {
 	if (m_open)
 	{
@@ -90,7 +90,7 @@ void EffectManager::Update(float _elapsedTime)
 }
 
 
-void EffectManager::Render()
+void EffectMask::Render()
 {
 	DirectX::CommonStates* state = GameContext::Get<DirectX::CommonStates>();
 	DX::DeviceResources*   deviceResources = GameContext::Get<DX::DeviceResources>();
@@ -138,23 +138,23 @@ void EffectManager::Render()
 
 }
 
-void EffectManager::Open()
+void EffectMask::Open()
 {
 	m_open = true;
 }
 
-void EffectManager::Close()
+void EffectMask::Close()
 {
 	m_open = false;
 }
 
-bool EffectManager::IsOpen()
+bool EffectMask::IsOpen()
 {
 	if (m_open && m_rate == 1.0f) return true;
 	return false;
 }
 
-bool EffectManager::IsClose()
+bool EffectMask::IsClose()
 {
 	if (!m_open && m_rate <= 0.0f) return true;
 	return false;

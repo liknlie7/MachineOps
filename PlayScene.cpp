@@ -106,7 +106,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 {
 	Keyboard::State keyState = Keyboard::Get().GetState();
 
-	auto effectMask = GameContext::Get<EffectManager>();
+	auto effectMask = GameContext::Get<EffectMask>();
 
 	switch (m_gameState)
 	{

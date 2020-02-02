@@ -9,37 +9,28 @@
 #include "File.h"
 #include <list>
 
-class EffectManager
+class EffectMask
 {
-public: // 基本
+private: // 定数
 
-	EffectManager();
-	~EffectManager() {};
-
-public:
-	struct ConstBuffer
+		 // ピクセルシェーダーに渡す定数バッファの構造体
+	struct cbChangesEveryFrame
 	{
-		DirectX::SimpleMath::Matrix		matWorld;
-		DirectX::SimpleMath::Matrix		matView;
-		DirectX::SimpleMath::Matrix		matProj;
-		DirectX::SimpleMath::Vector4	Time;
+		FLOAT radius;
+		FLOAT aspectRatio;
+		DirectX::XMFLOAT2 dummy;
 	};
 
-	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
+public: // 基本
 
-	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_cBuffer;
+		// コンストラクタ
+	EffectMask();
+	// デストラクアｔ
+	~EffectMask() {};
 
-	// 頂点シェーダ
-	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
-	// ピクセルシェーダ
-	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
-	// ジオメトリシェーダ
-	Microsoft::WRL::ComPtr<ID3D11GeometryShader> m_geometryShader;
+public: // 関数
 
-	// TODO: クラス分け
-	//フェード-----------------------------------------------------------------------------------------------
-public:
-	// 初期化
+		// 初期化
 	void Initialize(float _interval);
 	// 更新
 	void Update(float _elapsedTime);
@@ -64,8 +55,18 @@ public:
 	// オープン具合を返す関数(0～1)
 	float GetOpenRate() { return m_rate; }
 
-private:
-	// オープン又はクローズするまでの時間
+public: // 変数
+
+	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
+
+	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_cBuffer;
+
+	// ピクセルシェーダ
+	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
+
+private: // 変数
+
+		 // オープン又はクローズするまでの時間
 	float m_interval;
 
 	// 割合(0～1):0の場合閉じている
@@ -79,14 +80,6 @@ private:
 
 	// 2Dテクスチャ
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> m_texture2D;
-
-	// ピクセルシェーダーに渡す定数バッファの構造体
-	struct cbChangesEveryFrame
-	{
-		FLOAT radius;
-		FLOAT aspectRatio;
-		DirectX::XMFLOAT2 dummy;
-	};
 
 	// 定数バッファ
 	cbChangesEveryFrame m_cbChangesEveryFrame;

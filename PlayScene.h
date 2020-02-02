@@ -26,7 +26,7 @@
 #include "Enemy.h"
 #include "Collision.h"
 #include "MouseCursor.h"
-#include "EffectManager.h"
+#include "EffectMask.h"
 
 // プレイシーンクラス
 class PlayScene : public GameScene

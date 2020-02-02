@@ -132,9 +132,6 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="EffectManager.h">
-      <Filter>Shader</Filter>
-    </ClInclude>
     <ClInclude Include="File.h">
       <Filter>Shader</Filter>
     </ClInclude>
@@ -143,6 +140,9 @@
     </ClInclude>
     <ClInclude Include="TitleSoundSeet.h">
       <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectMask.h">
+      <Filter>Shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -224,11 +224,11 @@
     <ClCompile Include="File.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
-    <ClCompile Include="EffectManager.cpp">
-      <Filter>Shader</Filter>
-    </ClCompile>
     <ClCompile Include="Adx2Le.cpp">
       <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectMask.cpp">
+      <Filter>Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

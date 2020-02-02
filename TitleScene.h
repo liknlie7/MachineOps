@@ -12,7 +12,7 @@
 #include "GameSceneManager.h"
 #include "StepTimer.h"
 #include "GameContext.h"
-#include "EffectManager.h"
+#include "EffectMask.h"
 #include "Adx2Le.h"
 #include "TitleSoundSeet.h"
 

@@ -36,7 +36,7 @@ void TitleScene::Initialize()
 void TitleScene::Update(DX::StepTimer const& _timer)
 {
 	// フェードエフェクトの取得
-	auto effectMask = GameContext::Get<EffectManager>();
+	auto effectMask = GameContext::Get<EffectMask>();
 
 	// 経過時間の更新
 	float elapsedTime = float(_timer.GetElapsedSeconds());

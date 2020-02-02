@@ -11,7 +11,7 @@
 #include "GameContext.h"
 #include "GameSceneManager.h"
 #include "CollisionManager.h"
-#include "EffectManager.h"
+#include "EffectMask.h"
 
 #include "TitleScene.h"
 #include "PlayScene.h"
@@ -66,9 +66,9 @@ void Game::Initialize(HWND window, int width, int height)
 	GameContext::Register<SpriteBatch>(m_pSpriteBatch);
 
 	// エフェクト（マスク）の作成
-	m_effectMask = std::make_unique<EffectManager>();
+	m_effectMask = std::make_unique<EffectMask>();
 	m_effectMask->Initialize(1.0f);
-	GameContext::Register<EffectManager>(m_effectMask);
+	GameContext::Register<EffectMask>(m_effectMask);
 
 	// サウンドの作成
 	m_adx2Le = std::make_unique<Adx2Le>();

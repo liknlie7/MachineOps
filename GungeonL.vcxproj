@@ -188,7 +188,7 @@
     <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="DebugFont.h" />
     <ClInclude Include="DeviceResources.h" />
-    <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="EffectMask.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="Flock.h" />
@@ -227,7 +227,7 @@
     <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="DebugFont.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
-    <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="EffectMask.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Flock.cpp" />

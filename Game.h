@@ -18,7 +18,7 @@
 
 class GameSceneManager;
 class CollisionManager;
-class EffectManager;
+class EffectMask;
 
 class Player;
 
@@ -98,7 +98,7 @@ private:
 	// コリジョンマネージャー
 	std::unique_ptr<CollisionManager>       m_pCollisionManager;
 
-	// エフェクトマネージャー
-	std::unique_ptr<EffectManager>			m_effectMask;
+	// エフェクトマスク
+	std::unique_ptr<EffectMask>				m_effectMask;
 
 };
