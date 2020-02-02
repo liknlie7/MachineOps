@@ -71,9 +71,8 @@ void Game::Initialize(HWND window, int width, int height)
 	GameContext::Register<EffectManager>(m_effectMask);
 
 	// サウンドの作成
-	m_pSound = new Sound;
-	m_pSound->Initialize(window);
-	GameContext::Register<Sound>(m_pSound);
+	m_adx2Le = std::make_unique<Adx2Le>();
+	GameContext::Register<Adx2Le>(m_adx2Le);
 
 	// マウスカーソル非表示
 	ShowCursor(false);

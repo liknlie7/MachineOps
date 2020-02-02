@@ -23,7 +23,7 @@ Player::Player(const std::string& _tag)
 	, m_activeFlag(true)
 {
 	m_pWeapon = make_unique<Weapon>();
-	m_shotSound = GameContext::Get<Sound>()->GetSound(0);
+	//m_shotSound = GameContext::Get<Sound>()->GetSound(0);
 }
 
 

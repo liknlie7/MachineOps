@@ -14,7 +14,7 @@
 #include "StepTimer.h"
 #include "Mouse.h"
 #include "Keyboard.h"
-#include "Sound.h"
+#include "Adx2Le.h"
 
 class GameSceneManager;
 class CollisionManager;
@@ -93,7 +93,7 @@ private:
 	std::unique_ptr<GameSceneManager>       m_pGameSceneManager;
 
 	// サウンド
-	Sound*									m_pSound;
+	std::unique_ptr<Adx2Le>					m_adx2Le;
 
 	// コリジョンマネージャー
 	std::unique_ptr<CollisionManager>       m_pCollisionManager;

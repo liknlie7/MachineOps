@@ -14,7 +14,7 @@
 #include "GameContext.h"
 #include "GameObject.h"
 #include "Weapon.h"
-#include "Sound.h"
+//#include "Sound.h"
 
 class Bullet;
 class Weapon;
@@ -166,7 +166,7 @@ private:
 	bool										 m_activeFlag;
 
 	// ƒTƒEƒ“ƒh
-	IDirectSoundBuffer8* m_shotSound;
+	//IDirectSoundBuffer8* m_shotSound;
 
 public:
 

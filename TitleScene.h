@@ -5,33 +5,43 @@
 
 #include <SimpleMath.h>
 #include <SpriteBatch.h>
-#include <SpriteFont.h>
 #include <Keyboard.h>
 #include <CommonStates.h>
 #include <WICTextureLoader.h>
 
+#include "GameSceneManager.h"
 #include "StepTimer.h"
 #include "GameContext.h"
 #include "EffectManager.h"
+#include "Adx2Le.h"
+#include "TitleSoundSeet.h"
 
+// タイトルシーン
 class TitleScene : public GameScene
 {
-public:
 
+public: // 基本
+
+	// コンストラクタ
 	TitleScene();
+	// デストラクタ
 	virtual ~TitleScene();
 
-public:
+public: // 関数
 
+	// 初期化
 	void Initialize() override;
+	// 更新
 	void Update(DX::StepTimer const& _timer) override;
+	// 描画
 	void Render() override;
+	// 後処理
 	void Finalize() override;
 
-private:
+private: // 変数
 
+	// スプライトバッチ
 	std::unique_ptr<DirectX::SpriteBatch>	m_spriteBatch;
-	std::unique_ptr<DirectX::SpriteFont>	m_spriteFont;
 
 	// テクスチャ
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_titleTexture;
@@ -41,9 +51,6 @@ private:
 	// キーボードトラッカー
 	DirectX::Keyboard::KeyboardStateTracker*				m_keyboardTracker;
 
+	// 経過時間
 	float m_time;
-
-	DirectX::SimpleMath::Vector4 color;
-	float alpha;
-	bool fadeFlag;
 };

@@ -32,6 +32,9 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{5eceb251-eb2e-4188-bd8c-cdf55bb4fa6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{7dc21abd-c84b-4f0c-9b51-df46b2fa65c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -113,9 +116,6 @@
     <ClInclude Include="Flock.h">
       <Filter>AI</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
     <ClInclude Include="HPGauge.h">
       <Filter>Object</Filter>
     </ClInclude>
@@ -137,6 +137,12 @@
     </ClInclude>
     <ClInclude Include="File.h">
       <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Adx2Le.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleSoundSeet.h">
+      <Filter>Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -199,9 +205,6 @@
     <ClCompile Include="Flock.cpp">
       <Filter>AI</Filter>
     </ClCompile>
-    <ClCompile Include="Sound.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
     <ClCompile Include="HPGauge.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -223,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
       <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Adx2Le.cpp">
+      <Filter>Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
