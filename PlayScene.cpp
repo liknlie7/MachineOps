@@ -14,7 +14,7 @@ const float PlayScene::DAMAGE_TIME = 1.0f;
 // コンストラクタ
 PlayScene::PlayScene()
 	: GameScene()
-	, m_gameState(STATE_GAME)
+	, m_gameState(STATE_START)
 {
 	bossFlag = true;
 }
@@ -78,7 +78,7 @@ void PlayScene::Initialize()
 	m_totalTime = 0;
 	m_gaugeFlag = false;
 
-	// 画面を開く
+	//// 画面を開く
 	//GameContext::Get<EffectManager>()->Open();
 
 
@@ -106,17 +106,19 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 {
 	Keyboard::State keyState = Keyboard::Get().GetState();
 
-	//auto effectMask = GameContext::Get<EffectManager>();
+	auto effectMask = GameContext::Get<EffectManager>();
 
 	switch (m_gameState)
 	{
 	case STATE_START:
 
-		// 画面が閉じるまでまつ
-		//if (effectMask->IsClose())
-		//{
-		//	m_gameState = STATE_GAME;
-		//}
+		effectMask->Open();
+
+		// 画面が開くまでまつ
+		if (effectMask->IsOpen())
+		{
+			m_gameState = STATE_GAME;
+		}
 
 		break;
 	case STATE_GAME:

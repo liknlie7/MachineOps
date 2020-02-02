@@ -81,6 +81,7 @@ private:
 
 	// キーボード
 	std::unique_ptr<DirectX::Keyboard>      m_pKeyboard;
+	std::unique_ptr<DirectX::Keyboard::KeyboardStateTracker> m_pKeyboardTracker;
 
 	// コモンステート
 	std::unique_ptr<DirectX::CommonStates>	m_pState;

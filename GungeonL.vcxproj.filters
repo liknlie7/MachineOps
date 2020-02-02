@@ -132,16 +132,12 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="BinaryFile.h">
-      <Filter>Shader</Filter>
-    </ClInclude>
     <ClInclude Include="EffectManager.h">
       <Filter>Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Myeffect.h">
+    <ClInclude Include="File.h">
       <Filter>Shader</Filter>
     </ClInclude>
-    <ClInclude Include="File.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -222,16 +218,12 @@
     <ClCompile Include="BoxCollider.cpp">
       <Filter>Collider</Filter>
     </ClCompile>
-    <ClCompile Include="BinaryFile.cpp">
+    <ClCompile Include="File.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
-    <ClCompile Include="MyEffect.cpp">
-      <Filter>Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="File.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -263,20 +255,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Particle.hlsli">
-      <Filter>Shader</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="ParticleGS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="ParticlePS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="ParticleVS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="MaskShader.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>

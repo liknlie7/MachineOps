@@ -49,6 +49,8 @@ void Game::Initialize(HWND window, int width, int height)
 
 	// キーボードの作成
 	m_pKeyboard = make_unique<Keyboard>();
+	m_pKeyboardTracker = make_unique<Keyboard::KeyboardStateTracker>();
+	GameContext::Register<Keyboard::KeyboardStateTracker>(m_pKeyboardTracker);
 
 	m_pDeviceResources->SetWindow(window, width, height);
 
@@ -64,9 +66,9 @@ void Game::Initialize(HWND window, int width, int height)
 	GameContext::Register<SpriteBatch>(m_pSpriteBatch);
 
 	// エフェクト（マスク）の作成
-	//m_effectMask = std::make_unique<EffectManager>();
-	//m_effectMask->InitializeMask(1.0f);
-	//GameContext::Register<EffectManager>(m_effectMask);
+	m_effectMask = std::make_unique<EffectManager>();
+	m_effectMask->Initialize(1.0f);
+	GameContext::Register<EffectManager>(m_effectMask);
 
 	// サウンドの作成
 	m_pSound = new Sound;
@@ -134,7 +136,7 @@ void Game::Update(DX::StepTimer const& timer)
 	m_pCollisionManager->DetectCollision();
 
 	// マスクの更新
-	//m_effectMask->UpdateEffectMask(elapsedTime);
+	m_effectMask->Update(elapsedTime);
 
 }
 #pragma endregion
@@ -159,7 +161,7 @@ void Game::Render()
 	m_pGameSceneManager->Render();
 
 	// マスク
-	//m_effectMask->DrawEffectMask();
+	m_effectMask->Render();
 
 	m_pDeviceResources->PIXEndEvent();
 	// Show the new frame.

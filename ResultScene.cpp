@@ -15,6 +15,8 @@ ResultScene::ResultScene()
 {
 	m_spriteBatch = std::make_unique<SpriteBatch>(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext());
 	m_spriteFont = make_unique<SpriteFont>(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"SegoeUI_18.spritefont");
+
+	m_keyboardTracker = GameContext::Get<Keyboard::KeyboardStateTracker>();
 }
 
 
@@ -33,8 +35,9 @@ void ResultScene::Initialize()
 void ResultScene::Update(DX::StepTimer const& _timer)
 {
 	Keyboard::State keyState = Keyboard::Get().GetState();
+	m_keyboardTracker->Update(keyState);
 
-	if (keyState.IsKeyDown(Keyboard::Space))
+	if (m_keyboardTracker->pressed.Space)
 	{
 		GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
 		gameSceneManager->RequestScene("Title");

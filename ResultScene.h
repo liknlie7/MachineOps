@@ -29,4 +29,6 @@ private:
 	std::unique_ptr<DirectX::SpriteBatch>	m_spriteBatch;
 	std::unique_ptr<DirectX::SpriteFont>	m_spriteFont;
 
+	DirectX::Keyboard::KeyboardStateTracker*	m_keyboardTracker;
+
 };

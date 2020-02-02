@@ -4,7 +4,6 @@
 #include "StepTimer.h"
 #include <SimpleMath.h>
 #include <SpriteBatch.h>
-#include "MyEffect.h"
 #include "Model.h"
 #include "GameContext.h"
 #include "File.h"
@@ -27,69 +26,25 @@ public:
 	};
 
 	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
-	//void Create(const wchar_t* _name, int _count);
-	//void Initialize(float _life, DirectX::SimpleMath::Vector3 _pos);
-	//void InitializeNormal(float _life, DirectX::SimpleMath::Vector3 _pos);
-	//void InitializeCorn(float _life, DirectX::SimpleMath::Vector3 _pos, DirectX::SimpleMath::Vector3 _dir);
-	//void Update(DX::StepTimer _timer);
-	//void Render();
-	//void Lost();
 
-	//void SetRenderState(DirectX::SimpleMath::Vector3 _camera, DirectX::SimpleMath::Matrix _view, DirectX::SimpleMath::Matrix _proj);
-	//void Draw(DirectX::SimpleMath::Matrix _world, DirectX::SimpleMath::Matrix _view, DirectX::SimpleMath::Matrix _proj);
-
-	//void RenderModel();
-
-//private:
-//	//MyEffect*					m_myEffect[10];
-//	std::list<MyEffect*>		m_effectList;
-//	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_texture;
-//	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_texture2;
-//
-//
-//	DX::StepTimer                           m_timer;
-//
-//
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_cBuffer;
-//	std::unique_ptr<DirectX::CommonStates> m_states;
-//
+
 	// 頂点シェーダ
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
 	// ピクセルシェーダ
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
 	// ジオメトリシェーダ
 	Microsoft::WRL::ComPtr<ID3D11GeometryShader> m_geometryShader;
-//
-//	// プリミティブバッチ
-//	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>> m_batch;
-//	// 入力レイアウト
-//	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
-//	std::vector<DirectX::VertexPositionColorTexture>  m_vertex;
-//
-//	DirectX::SimpleMath::Vector3 m_centerPosition;
-//
-//	DirectX::SimpleMath::Matrix m_billboardTranslation;
-//	DirectX::SimpleMath::Matrix m_view;
-//	DirectX::SimpleMath::Matrix m_proj;
-//
-//	std::unique_ptr<DirectX::EffectFactory> m_fxFactory;
-//	std::unique_ptr<DirectX::Model> m_model;
-//
-//
-//	Microsoft::WRL::ComPtr<ID3D11Texture2D> m_capture;
-//	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>	m_rtv;
-//	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_srv;
-//
-//
+
 	// TODO: クラス分け
 	//フェード-----------------------------------------------------------------------------------------------
 public:
 	// 初期化
-	void InitializeMask(float _interval);
+	void Initialize(float _interval);
 	// 更新
-	void UpdateEffectMask(float _elapsedTime);
+	void Update(float _elapsedTime);
 	// 描画
-	void DrawEffectMask();
+	void Render();
 
 	// オープンする関数
 	void Open();

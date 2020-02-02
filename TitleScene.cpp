@@ -13,10 +13,11 @@ using namespace DirectX::SimpleMath;
 
 TitleScene::TitleScene()
 	: GameScene()
+	, m_time(0)
 {
-	m_spriteBatch = std::make_unique<SpriteBatch>(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext());
 	m_spriteFont = make_unique<SpriteFont>(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"SegoeUI_18.spritefont");
 
+	m_keyboardTracker = GameContext::Get<Keyboard::KeyboardStateTracker>();
 	alpha = 1;
 	color = Vector4(0, 0, 0, alpha);
 	fadeFlag = true;
@@ -30,12 +31,19 @@ TitleScene::~TitleScene()
 
 void TitleScene::Initialize()
 {
-
+	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\BackGround.png", nullptr, m_backGroundTexture.GetAddressOf());
+	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\Title.png", nullptr, m_titleTexture.GetAddressOf());
+	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\Massage.png", nullptr, m_massageTexture.GetAddressOf());
 }
 
 
 void TitleScene::Update(DX::StepTimer const& _timer)
 {
+	auto effectMask = GameContext::Get<EffectManager>();
+
+	float elapsedTime = float(_timer.GetElapsedSeconds());
+	m_time += elapsedTime;
+
 	if (alpha >= 1)
 		fadeFlag = true;
 
@@ -51,8 +59,14 @@ void TitleScene::Update(DX::StepTimer const& _timer)
 
 
 	Keyboard::State keyState = Keyboard::Get().GetState();
+	m_keyboardTracker->Update(keyState);
 
-	if (keyState.IsKeyDown(Keyboard::Space))
+	if (m_keyboardTracker->pressed.Space)
+	{
+		effectMask->Close();
+	}
+	// ‰æ–Ê‚ª•Â‚¶‚é‚Ü‚Å‚Ü‚Â
+	if (effectMask->IsClose())
 	{
 		GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
 		gameSceneManager->RequestScene("Play");
@@ -62,15 +76,18 @@ void TitleScene::Update(DX::StepTimer const& _timer)
 
 void TitleScene::Render()
 {
-	m_spriteBatch->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
-	m_spriteFont->DrawString(m_spriteBatch.get(), "Machine Ops", SimpleMath::Vector2(500, 240), Colors::Black, 0, SimpleMath::Vector2(0, 0), 2);
-	m_spriteFont->DrawString(m_spriteBatch.get(), "Press SPACE key to start", SimpleMath::Vector2(500, 400), color, 0, SimpleMath::Vector2(0, 0));
-	m_spriteBatch->End();
+	SpriteBatch* spriteBatch = GameContext::Get<SpriteBatch>();
+
+	spriteBatch->Begin();
+	spriteBatch->Draw(m_backGroundTexture.Get(), Vector2::Zero);
+	spriteBatch->Draw(m_titleTexture.Get(), Vector2(190, 220), nullptr, Colors::White, 0.0f, Vector2::Zero, Vector2(0.8f, 0.8f));
+	if (sin(m_time * 4) > 0)
+	spriteBatch->Draw(m_massageTexture.Get(), Vector2(380,450), nullptr, Colors::White, 0.0f, Vector2::Zero, Vector2(0.3f, 0.3f));
+	spriteBatch->End();
 }
 
 
 void TitleScene::Finalize()
 {
-	m_spriteBatch.reset();
 	m_spriteFont.reset();
 }
