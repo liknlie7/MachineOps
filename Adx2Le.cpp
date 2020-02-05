@@ -21,8 +21,9 @@ Adx2Le::Adx2Le()
 	, m_hcamxVoicePool(nullptr)
 	, m_acb(CRI_NULL)
 	, m_dbas(CRIATOMDBAS_ILLEGAL_ID)
-{
 
+{
+	
 }
 
 

@@ -13,7 +13,7 @@ class EffectMask
 {
 private: // 定数
 
-		 // ピクセルシェーダーに渡す定数バッファの構造体
+	 // ピクセルシェーダーに渡す定数バッファの構造体
 	struct cbChangesEveryFrame
 	{
 		FLOAT radius;
@@ -23,14 +23,14 @@ private: // 定数
 
 public: // 基本
 
-		// コンストラクタ
+	// コンストラクタ
 	EffectMask();
 	// デストラクアｔ
 	~EffectMask() {};
 
 public: // 関数
 
-		// 初期化
+	// 初期化
 	void Initialize(float _interval);
 	// 更新
 	void Update(float _elapsedTime);

@@ -2,10 +2,15 @@
 
 #include "TitleScene.h"
 
+// TODO: ボリュームを徐々に下げる処理
+//		 フェードのパターン変更
+
 // コンストラクタ
 TitleScene::TitleScene()
 	: GameScene()
 	, m_time(0)
+	, m_volumeFadeFlag(false)
+	, m_volume(1.0f)
 {
 	// トラッカーの設定
 	m_keyboardTracker = GameContext::Get<DirectX::Keyboard::KeyboardStateTracker>();
@@ -29,7 +34,7 @@ void TitleScene::Initialize()
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\Massage.png", nullptr, m_massageTexture.GetAddressOf());
 
 	// BGMの再生
-	GameContext::Get<Adx2Le>()->Play(CRI_TITLE_TITLEBGM);
+	GameContext::Get<Adx2Le>()->Play(CRI_TITLE_TITLEBGM, m_volume);
 }
 
 // 描画
@@ -55,9 +60,22 @@ void TitleScene::Update(DX::StepTimer const& _timer)
 
 		// フェードアウト
 		effectMask->Close();
+		m_volumeFadeFlag = true;
 	}
+
+	// ボリュームを徐々に下げる
+	if (m_volumeFadeFlag)
+	{
+		m_volume -= elapsedTime;
+
+		GameContext::Get<Adx2Le>()->SetVolumeByID(CRI_TITLE_TITLEBGM, m_volume);
+	
+		if (m_volume <= 0.0f)
+			m_volumeFadeFlag = false;
+	}
+
 	// 画面が閉じるまでまつ
-	if (effectMask->IsClose())
+	if (effectMask->IsClose() && m_volume < 0.0f)
 	{
 		// シーンマネージャーの取得
 		GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();

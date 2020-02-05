@@ -53,4 +53,8 @@ private: // 変数
 
 	// 経過時間
 	float m_time;
+
+	// サウンドフェード用
+	bool m_volumeFadeFlag;
+	float m_volume;
 };
