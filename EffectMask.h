@@ -1,19 +1,25 @@
 #pragma once
 
-#include "DeviceResources.h"
-#include "StepTimer.h"
 #include <SimpleMath.h>
 #include <SpriteBatch.h>
+#include <WICTextureLoader.h>
+#include <Model.h>
+#include <Effects.h>
+#include <list>
+
+#include "DeviceResources.h"
+#include "StepTimer.h"
 #include "Model.h"
 #include "GameContext.h"
 #include "File.h"
-#include <list>
+#include "d3d11.h"
 
+// フェード用
 class EffectMask
 {
 private: // 定数
 
-	 // ピクセルシェーダーに渡す定数バッファの構造体
+	// ピクセルシェーダーに渡す定数バッファの構造体
 	struct cbChangesEveryFrame
 	{
 		FLOAT radius;
@@ -25,7 +31,7 @@ public: // 基本
 
 	// コンストラクタ
 	EffectMask();
-	// デストラクアｔ
+	// デストラクタ
 	~EffectMask() {};
 
 public: // 関数
@@ -57,8 +63,6 @@ public: // 関数
 
 public: // 変数
 
-	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
-
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_cBuffer;
 
 	// ピクセルシェーダ
@@ -66,7 +70,7 @@ public: // 変数
 
 private: // 変数
 
-		 // オープン又はクローズするまでの時間
+	// オープン又はクローズするまでの時間
 	float m_interval;
 
 	// 割合(0～1):0の場合閉じている

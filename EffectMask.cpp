@@ -1,9 +1,5 @@
 #include "pch.h"
 #include "EffectMask.h"
-#include <WICTextureLoader.h>
-#include "d3d11.h"
-#include <Effects.h>
-#include <Model.h>
 
 using namespace DirectX::SimpleMath;
 using namespace DirectX;
@@ -13,7 +9,6 @@ EffectMask::EffectMask()
 	, m_rate(1.0f)
 	, m_open(true)
 	, m_color(DirectX::Colors::White)
-
 {
 }
 

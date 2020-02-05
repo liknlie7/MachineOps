@@ -144,6 +144,9 @@
     <ClInclude Include="EffectMask.h">
       <Filter>Shader</Filter>
     </ClInclude>
+    <ClInclude Include="WarningEffect.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -230,6 +233,9 @@
     <ClCompile Include="EffectMask.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
+    <ClCompile Include="WarningEffect.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -262,6 +268,9 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="MaskShader.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="WarningShader.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
