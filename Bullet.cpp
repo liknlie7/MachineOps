@@ -11,7 +11,7 @@ using namespace std;
 Bullet::Bullet(const Vector3& _pos, const float& _angle, const Vector3& _speed, const std::string& _tag)
 	: GameObject(_tag)
 	, m_isValid(true)
-	, m_life(150.0f)
+	, m_life(300.0f)
 {
 	m_position = _pos;
 	m_velocity = _speed;
