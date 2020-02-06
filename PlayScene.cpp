@@ -27,6 +27,19 @@ PlayScene::~PlayScene()
 // 初期化
 void PlayScene::Initialize()
 {
+	// サウンドの作成
+	m_playSceneSound = std::make_unique<Adx2Le>();
+	m_playerSound = std::make_unique<Adx2Le>();
+
+	// サウンドの設定
+	m_playSceneSound->Initialize(L"Resources\\Sounds\\PlayScene.acf");
+	m_playerSound->Initialize(L"Resources\\Sounds\\PlayScene.acf");
+	m_playSceneSound->LoadAcbFile(L"Resources\\Sounds\\PlayScene.acb");
+	m_playerSound->LoadAcbFile(L"Resources\\Sounds\\Player.acb");
+
+	// BGMの再生
+	m_playSceneSound->Play(CRI_PLAYSCENE_PLAYSCENEBGM,0.8f);
+
 	// 追尾カメラの作成
 	m_pFollowCamera = make_unique<FollowCamera>();
 	m_pFollowCamera->Initialize();
@@ -42,6 +55,7 @@ void PlayScene::Initialize()
 	// プレイヤー作成
 	m_pPlayer = make_unique<Player>("Player");
 	m_pPlayer->Initialize();
+	m_pPlayer->SetSoundPlayer(m_playerSound.get());
 
 	// 敵作成
 	if (bossFlag)

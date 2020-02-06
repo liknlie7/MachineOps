@@ -9,6 +9,7 @@ using namespace DirectX::SimpleMath;
 using namespace std;
 
 // TODO:ステート管理にする
+// TODO: タグ判定
 
 // コンストラクタ
 Player::Player(const std::string& _tag)
@@ -130,6 +131,7 @@ void Player::Update()
 		{
 			// 弾の生成
 			m_pWeapon->CreateBullet();
+			m_sound->Play(CRI_PLAYER_SHOT);
 			m_shotInterval = 0;
 		}
 	}

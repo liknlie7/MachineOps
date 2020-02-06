@@ -70,10 +70,6 @@ void Game::Initialize(HWND window, int width, int height)
 	m_effectMask->Initialize(1.0f);
 	GameContext::Register<EffectMask>(m_effectMask);
 
-	// サウンドの作成
-	m_adx2Le = std::make_unique<Adx2Le>();
-	GameContext::Register<Adx2Le>(m_adx2Le);
-
 	// マウスカーソル非表示
 	ShowCursor(false);
 

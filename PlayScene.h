@@ -16,6 +16,7 @@
 #include "GameSceneManager.h"
 #include "WICTextureLoader.h" 
 #include "StepTimer.h"
+#include "Adx2Le.h"
 
 #include "DebugFont.h"
 #include "DebugCamera.h"
@@ -27,6 +28,8 @@
 #include "Collision.h"
 #include "MouseCursor.h"
 #include "EffectMask.h"
+#include "PlayerSound.h"
+#include "PlaySceneSound.h"
 
 // プレイシーンクラス
 class PlayScene : public GameScene
@@ -100,6 +103,10 @@ private: // 定数
 	static const float DAMAGE_TIME;
 
 private: // 変数
+
+	// サウンド
+	std::unique_ptr<Adx2Le>					m_playSceneSound;
+	std::unique_ptr<Adx2Le>					m_playerSound;
 
 	// ゲームの状態
 	GAME_STATE											m_gameState;

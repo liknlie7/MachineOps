@@ -15,14 +15,18 @@ TitleScene::TitleScene()
 	// トラッカーの設定
 	m_keyboardTracker = GameContext::Get<DirectX::Keyboard::KeyboardStateTracker>();
 
+	// サウンドの作成
+	m_adx2Le = std::make_unique<Adx2Le>();
+
 	// サウンドの設定
-	GameContext::Get<Adx2Le>()->Initialize(L"Resources\\Sounds\\TitleSounds.acf");
-	GameContext::Get<Adx2Le>()->LoadAcbFile(L"Resources\\Sounds\\TitleSounds.acb");
+	m_adx2Le->Initialize(L"Resources\\Sounds\\TitleSounds.acf");
+	m_adx2Le->LoadAcbFile(L"Resources\\Sounds\\TitleSounds.acb");
 }
 
 // デストラクタ
 TitleScene::~TitleScene()
 {
+	m_adx2Le->Finalize();
 }
 
 // 初期化
@@ -34,7 +38,7 @@ void TitleScene::Initialize()
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\Massage.png", nullptr, m_massageTexture.GetAddressOf());
 
 	// BGMの再生
-	GameContext::Get<Adx2Le>()->Play(CRI_TITLE_TITLEBGM, m_volume);
+	m_adx2Le->Play(CRI_TITLE_TITLEBGM, m_volume);
 }
 
 // 描画
@@ -56,7 +60,7 @@ void TitleScene::Update(DX::StepTimer const& _timer)
 	if (m_keyboardTracker->pressed.Space)
 	{
 		// スタート音の再生
-		GameContext::Get<Adx2Le>()->Play(CRI_TITLE_STARTSE);
+		m_adx2Le->Play(CRI_TITLE_STARTSE);
 
 		// フェードアウト
 		effectMask->Close();
@@ -68,7 +72,7 @@ void TitleScene::Update(DX::StepTimer const& _timer)
 	{
 		m_volume -= elapsedTime;
 
-		GameContext::Get<Adx2Le>()->SetVolumeByID(CRI_TITLE_TITLEBGM, m_volume);
+		m_adx2Le->SetVolumeByID(CRI_TITLE_TITLEBGM, m_volume);
 	
 		if (m_volume <= 0.0f)
 			m_volumeFadeFlag = false;
@@ -80,7 +84,7 @@ void TitleScene::Update(DX::StepTimer const& _timer)
 		// シーンマネージャーの取得
 		GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
 		// サウンドを停止させる
-		GameContext::Get<Adx2Le>()->Stop();
+		m_adx2Le->Stop();
 		// プレイシーンへ遷移
 		gameSceneManager->RequestScene("Play");
 	}

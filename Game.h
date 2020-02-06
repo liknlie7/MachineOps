@@ -92,9 +92,6 @@ private:
 	// コモンステート
 	std::unique_ptr<GameSceneManager>       m_pGameSceneManager;
 
-	// サウンド
-	std::unique_ptr<Adx2Le>					m_adx2Le;
-
 	// コリジョンマネージャー
 	std::unique_ptr<CollisionManager>       m_pCollisionManager;
 

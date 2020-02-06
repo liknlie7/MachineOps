@@ -204,7 +204,9 @@
     <ClInclude Include="MouseCursor.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerSound.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="PlaySceneSound.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="ServiceLocator.h" />

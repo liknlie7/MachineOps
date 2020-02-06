@@ -35,6 +35,12 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{7dc21abd-c84b-4f0c-9b51-df46b2fa65c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound\TitleScene">
+      <UniqueIdentifier>{adef2894-2ee5-42e4-b4e8-ddbaab9945bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\PlayScene">
+      <UniqueIdentifier>{205bfd31-1451-4e01-a628-fb6d4ca24bc3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -138,14 +144,20 @@
     <ClInclude Include="Adx2Le.h">
       <Filter>Sound</Filter>
     </ClInclude>
-    <ClInclude Include="TitleSoundSeet.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
     <ClInclude Include="EffectMask.h">
       <Filter>Shader</Filter>
     </ClInclude>
     <ClInclude Include="WarningEffect.h">
       <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleSoundSeet.h">
+      <Filter>Sound\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySceneSound.h">
+      <Filter>Sound\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSound.h">
+      <Filter>Sound\PlayScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

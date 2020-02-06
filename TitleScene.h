@@ -40,6 +40,9 @@ public: // 関数
 
 private: // 変数
 
+	// サウンド
+	std::unique_ptr<Adx2Le>					m_adx2Le;
+
 	// スプライトバッチ
 	std::unique_ptr<DirectX::SpriteBatch>	m_spriteBatch;
 

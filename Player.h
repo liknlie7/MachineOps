@@ -14,7 +14,8 @@
 #include "GameContext.h"
 #include "GameObject.h"
 #include "Weapon.h"
-//#include "Sound.h"
+#include "Adx2Le.h"
+#include "PlayerSound.h"
 
 class Bullet;
 class Weapon;
@@ -103,6 +104,12 @@ public: // アクセサ
 		return m_collider;
 	}
 
+	// サウンドプレーヤーの取得
+	void SetSoundPlayer(Adx2Le* _sound)
+	{
+		m_sound = _sound;
+	}
+
 public: // 関数
 
 	// 初期化
@@ -122,7 +129,6 @@ private: // サブ関数
 	// 点滅
 	void Blink();
 
-	// TODO: タグ判定
 	// 衝突
 	void OnCollision(GameObject* _object);
 
@@ -137,6 +143,9 @@ private: // 変数
 	DirectX::Mouse::ButtonStateTracker m_mouseTracker;
 
 	ID3D11DeviceContext* m_context;
+
+	// サウンド
+	Adx2Le*					m_sound;
 
 private:
 
