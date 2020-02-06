@@ -160,7 +160,7 @@ void Enemy::Update()
 
 	if (m_life <= 20 && m_life > 10)
 		m_shotType = WHORL_SHOT;
-	if (m_life <= 0)
+	if (m_life <= 10)
 		m_shotType = ALL_DIRECTION_SHOT;
 
 	m_shotInterval++;
