@@ -38,7 +38,7 @@ void PlayScene::Initialize()
 	m_playerSound->LoadAcbFile(L"Resources\\Sounds\\Player.acb");
 
 	// BGM‚ÌÄ¶
-	m_playSceneSound->Play(CRI_PLAYSCENE_PLAYSCENEBGM,0.8f);
+	m_playSceneSound->Play(CRI_PLAYSCENE_PLAYSCENEBGM,1.0f);
 
 	// ’Ç”öƒJƒƒ‰‚Ìì¬
 	m_pFollowCamera = make_unique<FollowCamera>();
