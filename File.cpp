@@ -6,8 +6,8 @@ using namespace std;
 
 // コンストラクタ
 File::File(const wchar_t *fname)
-: length(0)
-, data(nullptr)
+: m_length(0)
+, m_data(nullptr)
 {
 	ifstream in(fname, ios::in | ios::binary);
 
@@ -21,11 +21,11 @@ File::File(const wchar_t *fname)
 
 	// ファイルサイズがintで表せる最大値を超えていないか
 	_ASSERT(!(std::numeric_limits<int>::max() < size_));
-	length = static_cast<int>(size_);
+	m_length = static_cast<int>(size_);
 
 	//メモリを確保して読み込む
-	data = new char[length];
-	in.read(data, length);
+	m_data = new char[m_length];
+	in.read(m_data, m_length);
 
 	// クローズ
 	in.close();
@@ -34,9 +34,9 @@ File::File(const wchar_t *fname)
 // デストラクタ
 File::~File()
 {
-	if (data)
+	if (m_data)
 	{
-		delete[] data;
+		delete[] m_data;
 	}
 }
 

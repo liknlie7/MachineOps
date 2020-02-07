@@ -22,7 +22,7 @@ void EffectMask::Initialize(float _interval)
 
 	// ピクセルシェーダーの読み込みと作成
 	File* ps = new File(L"Resources\\Shaders\\MaskShader.cso");
-	device->CreatePixelShader((void*)ps->data, ps->length, NULL, m_pixelShader.GetAddressOf());
+	device->CreatePixelShader((void*)ps->m_data, ps->m_length, NULL, m_pixelShader.GetAddressOf());
 	delete ps;
 
 	// 定数バッファの定義
@@ -34,7 +34,7 @@ void EffectMask::Initialize(float _interval)
 
 	// 定数バッファの作成
 	cBufferDesc.ByteWidth = sizeof(cbChangesEveryFrame);
-	device->CreateBuffer(&cBufferDesc, NULL, m_cBuffer.GetAddressOf());
+	device->CreateBuffer(&cBufferDesc, NULL, m_CBuffer.GetAddressOf());
 
 	// レンダリングターゲット用のテクスチャを作成
 	D3D11_TEXTURE2D_DESC texDesc;
@@ -49,7 +49,7 @@ void EffectMask::Initialize(float _interval)
 	texDesc.ArraySize = 1;
 	texDesc.SampleDesc.Count = 1;
 	texDesc.SampleDesc.Quality = 0;
-	device->CreateTexture2D(&texDesc, NULL, m_texture2D.GetAddressOf());
+	device->CreateTexture2D(&texDesc,NULL, m_texture2D.GetAddressOf());
 
 	// レンダーターゲットビューの生成
 	D3D11_RENDER_TARGET_VIEW_DESC rtvDesc;
@@ -114,12 +114,12 @@ void EffectMask::Render()
 	{
 		// 定数バッファへの書き込み
 		D3D11_MAPPED_SUBRESOURCE mappedResource;
-		deviceContext->Map(m_cBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+		deviceContext->Map(m_CBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 		CopyMemory(mappedResource.pData, &m_cbChangesEveryFrame, sizeof(cbChangesEveryFrame));
-		deviceContext->Unmap(m_cBuffer.Get(), 0);
+		deviceContext->Unmap(m_CBuffer.Get(), 0);
 
 		// ピクセルシェーダーに定数バッファを設定
-		ID3D11Buffer* buffers[] = { m_cBuffer.Get() };
+		ID3D11Buffer* buffers[] = { m_CBuffer.Get() };
 		deviceContext->PSSetConstantBuffers(0, 1, buffers);
 
 		// ピクセルシェーダーを設定

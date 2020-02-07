@@ -30,6 +30,7 @@
 #include "EffectMask.h"
 #include "PlayerSound.h"
 #include "PlaySceneSound.h"
+#include "WarningEffect.h"
 
 // プレイシーンクラス
 class PlayScene : public GameScene
@@ -45,7 +46,6 @@ public:
 		STATE_NEXT,			// 次のウェーブへ
 		STATE_GAMEOVERA,	// ゲームオーバー
 	};
-
 
 public: // 基本
 
@@ -113,6 +113,8 @@ private: // 変数
 
 	// エフェクト
 	std::unique_ptr<DirectX::BasicEffect>				m_pBasicEffect;
+	EffectMask*											m_maskEffect;
+	WarningEffect*										m_warningEffect;
 
 	// ViewPort
 	DirectX::SimpleMath::Matrix							m_viewPort;

@@ -22,6 +22,7 @@ PlayScene::PlayScene()
 // デストラクタ
 PlayScene::~PlayScene()
 {
+
 }
 
 // 初期化
@@ -100,6 +101,8 @@ void PlayScene::Initialize()
 	m_batchEffect = std::make_unique<DirectX::BasicEffect>(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
 	m_batchEffect->SetTextureEnabled(true);
 	m_batchEffect->SetVertexColorEnabled(true);
+	m_warningEffect->Create();
+
 
 	// 入力レイアウト生成
 	void const* shaderByteCode;
@@ -120,16 +123,17 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 {
 	Keyboard::State keyState = Keyboard::Get().GetState();
 
-	auto effectMask = GameContext::Get<EffectMask>();
+	m_maskEffect = GameContext::Get<EffectMask>();
 
+	m_warningEffect->Update();
 	switch (m_gameState)
 	{
 	case STATE_START:
 
-		effectMask->Open();
+		m_maskEffect->Open();
 
 		// 画面が開くまでまつ
-		if (effectMask->IsOpen())
+		if (m_maskEffect->IsOpen())
 		{
 			m_gameState = STATE_GAME;
 		}
@@ -341,6 +345,8 @@ void PlayScene::Render()
 	m_pCursor->Render(m_pFollowCamera->GetViewMatrix());
 
 	GameContext::Get<SpriteBatch>()->End();
+
+	m_warningEffect->Render(m_pFollowCamera->GetViewMatrix());
 }
 
 // 後始末
