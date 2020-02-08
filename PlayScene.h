@@ -30,11 +30,12 @@
 #include "EffectMask.h"
 #include "PlayerSound.h"
 #include "PlaySceneSound.h"
+#include "WarningEffect.h"
 
 // プレイシーンクラス
 class PlayScene : public GameScene
 {
-public: 
+public:
 
 	// ゲームステート
 	enum GAME_STATE
@@ -52,6 +53,32 @@ public: // 基本
 	PlayScene();
 	// デストラクタ
 	virtual ~PlayScene();
+
+public: // アクセッサ
+
+	// カメラの取得
+	FollowCamera* GetCamera()
+	{
+		return m_pFollowCamera.get();
+	}
+
+	// エフェクト用ベーシックエフェクトを取得する関数
+	DirectX::BasicEffect* GetBatchEffect()
+	{
+		return m_batchEffect.get();
+	}
+
+	// エフェクト用プリミティブバッチを取得する関数
+	DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>* GetPrimitiveBatch()
+	{
+		return m_primitiveBatch.get();
+	}
+
+	// エフェクト用入力レイアウトを取得する関数
+	ID3D11InputLayout* GetInputLayout()
+	{
+		return m_inputLayout.Get();
+	}
 
 public: // 関数
 
@@ -79,16 +106,6 @@ public: // 関数
 	// 次のウェーブへ
 	GAME_STATE NextWave();
 
-	// エフェクト用ベーシックエフェクトを取得する関数
-	DirectX::BasicEffect* GetBatchEffect() { return m_batchEffect.get(); }
-	// エフェクト用プリミティブバッチを取得する関数
-	DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>* GetPrimitiveBatch() {
-		return m_primitiveBatch.get();
-	}
-	// エフェクト用入力レイアウトを取得する関数
-	ID3D11InputLayout* GetInputLayout() { return m_inputLayout.Get(); }
-
-
 private: // サブ関数
 
 	// 線形補間
@@ -107,12 +124,18 @@ private: // 変数
 	std::unique_ptr<Adx2Le>					m_playSceneSound;
 	std::unique_ptr<Adx2Le>					m_playerSound;
 
+	//----- エフェクト用 -----//
+	// エフェクト
+	std::unique_ptr<DirectX::BasicEffect> m_batchEffect;
+	// プリミティブバッチ
+	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>> m_primitiveBatch;
+	// 入力レイアウト
+	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
 	// ゲームの状態
 	GAME_STATE											m_gameState;
 
 	// エフェクト
 	std::unique_ptr<DirectX::BasicEffect>				m_pBasicEffect;
-	EffectMask*											m_maskEffect;
 
 	// ViewPort
 	DirectX::SimpleMath::Matrix							m_viewPort;
@@ -122,7 +145,7 @@ private: // 変数
 
 	// カーソル
 	std::unique_ptr<MouseCursor>						m_pCursor;
-	
+
 	// フロア
 	std::unique_ptr<Floor>								m_pFloor;
 
@@ -154,11 +177,7 @@ private: // 変数
 	float m_lightGreenGaugeRate;
 	bool m_gaugeFlag;
 
-	//----- エフェクト用 -----//
-	// エフェクト
-	std::unique_ptr<DirectX::BasicEffect> m_batchEffect;
-	// プリミティブバッチ
-	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>> m_primitiveBatch;
-	// 入力レイアウト
-	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
+	// 警告エフェクト
+	std::unique_ptr<WarningEffect>						m_warningEffect;
+
 };

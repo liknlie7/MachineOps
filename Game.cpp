@@ -27,6 +27,7 @@ using namespace std;
 
 using Microsoft::WRL::ComPtr;
 
+// TODO:Update‚Ìˆø”elapsedTime‚É’u‚«Š·‚¦
 Game::Game() noexcept(false)
 {
 	m_pDeviceResources = make_unique<DX::DeviceResources>();

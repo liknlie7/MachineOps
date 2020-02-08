@@ -216,6 +216,8 @@
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TitleSoundSeet.h" />
     <ClInclude Include="Utilities.h" />
+    <ClInclude Include="WarningEffect.h" />
+    <ClInclude Include="WarningLine.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +255,8 @@
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="WarningEffect.cpp" />
+    <ClCompile Include="WarningLine.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>

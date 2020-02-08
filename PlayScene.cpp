@@ -101,7 +101,7 @@ void PlayScene::Initialize()
 	m_batchEffect = std::make_unique<DirectX::BasicEffect>(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
 	m_batchEffect->SetTextureEnabled(true);
 	m_batchEffect->SetVertexColorEnabled(true);
-
+	GameContext::Register<DirectX::BasicEffect>(m_batchEffect);
 
 	// 入力レイアウト生成
 	void const* shaderByteCode;
@@ -115,23 +115,28 @@ void PlayScene::Initialize()
 	// プリミティブバッチの作成
 	m_primitiveBatch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>>(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext());
 
+	m_warningEffect = std::make_unique<WarningEffect>();
 }
 
 // 更新
 void PlayScene::Update(DX::StepTimer const& _timer)
 {
+	float elapsedTime = float(_timer.GetElapsedSeconds());
+
 	Keyboard::State keyState = Keyboard::Get().GetState();
 
-	m_maskEffect = GameContext::Get<EffectMask>();
+	EffectMask* maskEffect = GameContext::Get<EffectMask>();
+	m_warningEffect->Update(elapsedTime);
+
 
 	switch (m_gameState)
 	{
 	case STATE_START:
 
-		m_maskEffect->Open();
+		maskEffect->Open();
 
 		// 画面が開くまでまつ
-		if (m_maskEffect->IsOpen())
+		if (maskEffect->IsOpen())
 		{
 			m_gameState = STATE_GAME;
 		}
@@ -341,6 +346,8 @@ void PlayScene::Render()
 	}
 
 	m_pCursor->Render(m_pFollowCamera->GetViewMatrix());
+
+	m_warningEffect->Render();
 
 	GameContext::Get<SpriteBatch>()->End();
 }

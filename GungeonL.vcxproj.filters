@@ -29,9 +29,6 @@
     <Filter Include="Object\Enemy">
       <UniqueIdentifier>{8568d1ac-01fb-464e-8509-26783509192a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader">
-      <UniqueIdentifier>{5eceb251-eb2e-4188-bd8c-cdf55bb4fa6a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sound">
       <UniqueIdentifier>{7dc21abd-c84b-4f0c-9b51-df46b2fa65c1}</UniqueIdentifier>
     </Filter>
@@ -40,6 +37,9 @@
     </Filter>
     <Filter Include="Sound\PlayScene">
       <UniqueIdentifier>{205bfd31-1451-4e01-a628-fb6d4ca24bc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{5eceb251-eb2e-4188-bd8c-cdf55bb4fa6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -139,13 +139,13 @@
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="File.h">
-      <Filter>Shader</Filter>
+      <Filter>Effect</Filter>
     </ClInclude>
     <ClInclude Include="Adx2Le.h">
       <Filter>Sound</Filter>
     </ClInclude>
     <ClInclude Include="EffectMask.h">
-      <Filter>Shader</Filter>
+      <Filter>Effect</Filter>
     </ClInclude>
     <ClInclude Include="TitleSoundSeet.h">
       <Filter>Sound\TitleScene</Filter>
@@ -156,6 +156,8 @@
     <ClInclude Include="PlayerSound.h">
       <Filter>Sound\PlayScene</Filter>
     </ClInclude>
+    <ClInclude Include="WarningEffect.h" />
+    <ClInclude Include="WarningLine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -234,14 +236,16 @@
       <Filter>Collider</Filter>
     </ClCompile>
     <ClCompile Include="File.cpp">
-      <Filter>Shader</Filter>
+      <Filter>Effect</Filter>
     </ClCompile>
     <ClCompile Include="Adx2Le.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
     <ClCompile Include="EffectMask.cpp">
-      <Filter>Shader</Filter>
+      <Filter>Effect</Filter>
     </ClCompile>
+    <ClCompile Include="WarningEffect.cpp" />
+    <ClCompile Include="WarningLine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -274,7 +278,7 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="MaskShader.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Effect</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
