@@ -13,14 +13,13 @@ EffectMask::EffectMask()
 
 }
 
-void EffectMask::Initialize(float _interval,DirectX::SimpleMath::Vector4 _color)
+void EffectMask::Initialize(float _interval)
 {
 	DX::DeviceResources*   deviceResources = GameContext::Get<DX::DeviceResources>();
 	ID3D11Device*          device = deviceResources->GetD3DDevice();
 	ID3D11DeviceContext*   deviceContext = deviceResources->GetD3DDeviceContext();
 
 	m_interval = _interval;
-	m_color = _color;
 
 	// ピクセルシェーダーの読み込みと作成
 	File* ps = new File(L"Resources\\Shaders\\MaskShader.cso");

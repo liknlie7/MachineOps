@@ -68,7 +68,7 @@ void Game::Initialize(HWND window, int width, int height)
 
 	// エフェクト（マスク）の作成
 	m_effectMask = std::make_unique<EffectMask>();
-	m_effectMask->Initialize(1.0f, DirectX::SimpleMath::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+	m_effectMask->Initialize(1.0f);
 	GameContext::Register<EffectMask>(m_effectMask);
 
 	// マウスカーソル非表示

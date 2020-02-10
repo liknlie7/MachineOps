@@ -28,6 +28,9 @@ public: // 関数
 	// 描画
 	void Render();
 
+	// 処理が終わったら
+	bool IsEnd();
+
 private: // 変数
 
 	// ライン
@@ -41,5 +44,14 @@ private: // 変数
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_messageTexture;
 	// アイコンテクスチャ
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_iconTexture;
+	// マスク用
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_maskTexture;
 
+	// マスク用カラー
+	DirectX::SimpleMath::Vector4							m_maskColor;
+
+	// 経過時間
+	float													m_time;
+	// 表示する時間
+	float													m_interval;
 };

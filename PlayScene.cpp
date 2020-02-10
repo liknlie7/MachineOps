@@ -15,6 +15,8 @@ const float PlayScene::DAMAGE_TIME = 1.0f;
 PlayScene::PlayScene()
 	: GameScene()
 	, m_gameState(STATE_START)
+	, m_waveState(BOSS_WAVE)
+	, m_waveCount(0)
 {
 	bossFlag = true;
 }
@@ -117,6 +119,10 @@ void PlayScene::Initialize()
 
 	m_warningEffect = std::make_unique<WarningEffect>();
 	m_warningEffect->Initialize();
+	
+	m_waveCount = 5;
+	m_playSceneSound->Play(CRI_PLAYSCENE_WARNING, 1.0f);
+
 }
 
 // 更新
@@ -126,20 +132,33 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 
 	Keyboard::State keyState = Keyboard::Get().GetState();
 
-	EffectMask* maskEffect = GameContext::Get<EffectMask>();
-	m_warningEffect->Update(elapsedTime);
+	EffectMask* fadeEffect = GameContext::Get<EffectMask>();
 
 
 	switch (m_gameState)
 	{
 	case STATE_START:
 
-		maskEffect->Open();
-
-		// 画面が開くまでまつ
-		if (maskEffect->IsOpen())
+		if (m_waveState == NORMAL_WAVE)
 		{
-			m_gameState = STATE_GAME;
+			fadeEffect->Open();
+
+			// 画面が開くまでまつ
+			if (fadeEffect->IsOpen())
+			{
+				m_gameState = STATE_GAME;
+			}
+		}
+
+		if (m_waveState == BOSS_WAVE)
+		{
+
+			m_warningEffect->Update(elapsedTime);
+
+			if (m_warningEffect->IsEnd())
+			{
+				m_gameState = STATE_GAME;
+			}
 		}
 
 		break;

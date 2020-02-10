@@ -47,6 +47,13 @@ public:
 		STATE_GAMEOVERA,	// ゲームオーバー
 	};
 
+	// ウェーブ
+	enum WAVE_STATE
+	{
+		NORMAL_WAVE,		// 通常ウェーブ
+		BOSS_WAVE,			// ボスウェーブ
+	};
+
 public: // 基本
 
 	// コンストラクタ
@@ -134,6 +141,9 @@ private: // 変数
 	// ゲームの状態
 	GAME_STATE											m_gameState;
 
+	// ウェーブの状態
+	WAVE_STATE											m_waveState;
+
 	// エフェクト
 	std::unique_ptr<DirectX::BasicEffect>				m_pBasicEffect;
 
@@ -180,4 +190,6 @@ private: // 変数
 	// 警告エフェクト
 	std::unique_ptr<WarningEffect>						m_warningEffect;
 
+	// ウェーブカウント
+	int m_waveCount;
 };
