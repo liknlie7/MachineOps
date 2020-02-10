@@ -116,6 +116,7 @@ void PlayScene::Initialize()
 	m_primitiveBatch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>>(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext());
 
 	m_warningEffect = std::make_unique<WarningEffect>();
+	m_warningEffect->Initialize();
 }
 
 // çXêV

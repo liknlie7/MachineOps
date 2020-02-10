@@ -41,6 +41,9 @@
     <Filter Include="Effect">
       <UniqueIdentifier>{5eceb251-eb2e-4188-bd8c-cdf55bb4fa6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Effect\Warning">
+      <UniqueIdentifier>{7e010480-3041-4aa5-8239-2903c293cf03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -156,8 +159,15 @@
     <ClInclude Include="PlayerSound.h">
       <Filter>Sound\PlayScene</Filter>
     </ClInclude>
-    <ClInclude Include="WarningEffect.h" />
-    <ClInclude Include="WarningLine.h" />
+    <ClInclude Include="WarningMessage.h">
+      <Filter>Effect\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="WarningEffect.h">
+      <Filter>Effect\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="WarningLine.h">
+      <Filter>Effect\Warning</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -244,8 +254,15 @@
     <ClCompile Include="EffectMask.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
-    <ClCompile Include="WarningEffect.cpp" />
-    <ClCompile Include="WarningLine.cpp" />
+    <ClCompile Include="WarningEffect.cpp">
+      <Filter>Effect\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="WarningLine.cpp">
+      <Filter>Effect\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="WarningMessage.cpp">
+      <Filter>Effect\Warning</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">

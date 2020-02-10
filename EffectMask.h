@@ -37,7 +37,7 @@ public: // Šî–{
 public: // ŠÖ”
 
 	// ‰Šú‰»
-	void Initialize(float _interval);
+	void Initialize(float _interval, DirectX::SimpleMath::Vector4 _color);
 	// XV
 	void Update(float _elapsedTime);
 	// •`‰æ

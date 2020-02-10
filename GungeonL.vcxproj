@@ -218,6 +218,7 @@
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="WarningEffect.h" />
     <ClInclude Include="WarningLine.h" />
+    <ClInclude Include="WarningMessage.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +258,7 @@
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="WarningEffect.cpp" />
     <ClCompile Include="WarningLine.cpp" />
+    <ClCompile Include="WarningMessage.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>

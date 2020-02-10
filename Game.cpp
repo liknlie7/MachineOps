@@ -68,7 +68,7 @@ void Game::Initialize(HWND window, int width, int height)
 
 	// エフェクト（マスク）の作成
 	m_effectMask = std::make_unique<EffectMask>();
-	m_effectMask->Initialize(1.0f);
+	m_effectMask->Initialize(1.0f, DirectX::SimpleMath::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 	GameContext::Register<EffectMask>(m_effectMask);
 
 	// マウスカーソル非表示
@@ -93,7 +93,7 @@ void Game::Initialize(HWND window, int width, int height)
 	m_pGameSceneManager->RegisterScene<TitleScene>("Title");
 	m_pGameSceneManager->RegisterScene<PlayScene>("Play");
 	m_pGameSceneManager->RegisterScene<ResultScene>("Result");
-	m_pGameSceneManager->SetStartScene("Title");
+	m_pGameSceneManager->SetStartScene("Play");
 	GameContext::Register<GameSceneManager>(m_pGameSceneManager);
 
 	m_pCollisionManager = std::make_unique<CollisionManager>();
@@ -124,7 +124,7 @@ void Game::Update(DX::StepTimer const& timer)
 
 	// TODO: Add your game logic here.
 	elapsedTime;
-	
+
 	// シーンの更新
 	m_pGameSceneManager->Update(timer);
 

@@ -3,8 +3,12 @@
 #include <SimpleMath.h>
 #include <PrimitiveBatch.h>
 #include <VertexTypes.h>
+#include <WICTextureLoader.h>
 
+#include "DeviceResources.h"
+#include "GameContext.h"
 #include "WarningLine.h"
+#include "WarningMessage.h"
 
 class WarningEffect
 {
@@ -26,6 +30,16 @@ public: // 関数
 
 private: // 変数
 
-	std::unique_ptr<WarningLine>		m_pLine;
-};
+	// ライン
+	std::unique_ptr<WarningLine>		m_pLine[2];
+	// メッセージ
+	std::unique_ptr<WarningMessage>		m_pMessage;
+	
+	// ラインテクスチャ
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_lineTexture;
+	// メッセージテクスチャ
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_messageTexture;
+	// アイコンテクスチャ
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_iconTexture;
 
+};
