@@ -33,7 +33,7 @@ void Wall::Render(const DirectX::SimpleMath::Matrix & _view)
 {
 	// s—ñì¬
 	DirectX::SimpleMath::Matrix world = DirectX::SimpleMath::Matrix::Identity;
-	world *= DirectX::SimpleMath::Matrix::CreateScale(0.5f, 0.5f, 0.5f);
+	world *= DirectX::SimpleMath::Matrix::CreateScale(0.3f, 0.3f, 0.3f);
 
 	// ƒ‚ƒfƒ‹•`‰æ
 	m_pModel->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<DirectX::CommonStates>(), world, _view, GameContext::Get<Projection>()->GetMatrix());
