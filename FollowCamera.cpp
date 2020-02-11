@@ -7,11 +7,8 @@
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
-//const Vector3 FollowCamera::EYE_VEC = Vector3(0.0f, 15.0f, 18.0f);
-//const Vector3 FollowCamera::UP_VEC = Vector3(0.0f, 1.0f, 0.0f);
-
 // ê^è„
-const Vector3 FollowCamera::EYE_VEC = Vector3(0.0f, 30.0f, 0.0f);
+const Vector3 FollowCamera::EYE_VEC = Vector3(0.0f, 40.0f, 0.0f);
 const Vector3 FollowCamera::UP_VEC = Vector3(0.0f, 0.0f, -1.0f);
 
 
