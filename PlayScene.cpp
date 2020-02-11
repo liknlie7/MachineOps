@@ -55,6 +55,10 @@ void PlayScene::Initialize()
 	m_pFloor = make_unique<Floor>("Floor");
 	m_pFloor->Initialize();
 
+	// 壁作成
+	m_pWall = make_unique<Wall>("Wall");
+	m_pWall->Initialize();
+
 	// プレイヤー作成
 	m_pPlayer = make_unique<Player>("Player");
 	m_pPlayer->Initialize();
@@ -347,8 +351,11 @@ void PlayScene::Render()
 		}
 	}
 
-	// 床の表示
+	// フロアの表示
 	m_pFloor->Render(m_pFollowCamera->GetViewMatrix());
+
+	// 壁の表示
+	m_pWall->Render(m_pFollowCamera->GetViewMatrix());
 
 	GameContext::Get<SpriteBatch>()->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
 	if (bossFlag)

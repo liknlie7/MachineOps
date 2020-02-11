@@ -216,6 +216,7 @@
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TitleSoundSeet.h" />
     <ClInclude Include="Utilities.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="WarningEffect.h" />
     <ClInclude Include="WarningLine.h" />
     <ClInclude Include="WarningMessage.h" />
@@ -256,6 +257,7 @@
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WarningEffect.cpp" />
     <ClCompile Include="WarningLine.cpp" />
     <ClCompile Include="WarningMessage.cpp" />
@@ -275,6 +277,7 @@
     <MeshContentTask Include="..\Gungeon\Enemy2.FBX" />
     <MeshContentTask Include="..\Gungeon\tank.FBX" />
     <MeshContentTask Include="floor.FBX" />
+    <MeshContentTask Include="Wall.FBX" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="MaskShader.hlsl">

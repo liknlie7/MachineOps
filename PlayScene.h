@@ -23,6 +23,7 @@
 #include "GridFloor.h"
 #include "FollowCamera.h"
 #include "Floor.h"
+#include "Wall.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Collision.h"
@@ -158,6 +159,9 @@ private: // 変数
 
 	// フロア
 	std::unique_ptr<Floor>								m_pFloor;
+
+	// 壁
+	std::unique_ptr<Wall>								m_pWall;
 
 	// プレイヤー
 	std::unique_ptr<Player>								m_pPlayer;
