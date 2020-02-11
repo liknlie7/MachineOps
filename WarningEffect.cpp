@@ -5,7 +5,7 @@
 WarningEffect::WarningEffect()
 	: m_maskColor(DirectX::SimpleMath::Vector4(0.54f, 0.0f, 0.0f, 0.3f))
 	, m_time(1.0f)
-	, m_interval(2.0f)
+	, m_interval(2.5f)
 {
 	for (int i = 0; i < 2; i++)
 		m_pLine[i] = std::make_unique<WarningLine>();
