@@ -11,7 +11,7 @@ const float WarningMessage::ROTATION = 0.0f;
 const DirectX::SimpleMath::Vector2 WarningMessage::MAGNIFICATION = DirectX::SimpleMath::Vector2(1.0f, 1.0f);
 
 // フェードスピード
-const float WarningMessage::FADE_SPEED = 0.005f;
+const float WarningMessage::FADE_SPEED = 0.025f;
 
 // コンストラクタ
 WarningMessage::WarningMessage()
@@ -44,7 +44,7 @@ void WarningMessage::Update(float _elapsedTime)
 	{
 		m_fadeType = false;
 	}
-	else if (m_alpha <= 0.7f)
+	else if (m_alpha <= 0.1f)
 	{
 		m_fadeType = true;
 	}
