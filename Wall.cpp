@@ -21,11 +21,11 @@ void Wall::Initialize()
 
 	delete factory;
 
-}
+	m_collider[TOP].center = DirectX::SimpleMath::Vector3(0.0f, 2.5f, -20.0f);
+	m_collider[TOP].radius = DirectX::SimpleMath::Vector3(40.0f, 5.0f, 1.5f);
 
-// çXêV
-void Wall::Update()
-{
+	m_test = DirectX::GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 
+		DirectX::SimpleMath::Vector3(40.0f, 5.0f, 1.5f));
 }
 
 // ï`âÊ
@@ -37,4 +37,9 @@ void Wall::Render(const DirectX::SimpleMath::Matrix & _view)
 
 	// ÉÇÉfÉãï`âÊ
 	m_pModel->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<DirectX::CommonStates>(), world, _view, GameContext::Get<Projection>()->GetMatrix());
+
+	DirectX::SimpleMath::Matrix test = DirectX::SimpleMath::Matrix::CreateTranslation(DirectX::SimpleMath::Vector3(0.0f,2.5f,-20.0f));
+
+	m_test->Draw(test, _view, GameContext::Get<Projection>()->GetMatrix(), DirectX::Colors::Yellow, nullptr, true);
+
 }

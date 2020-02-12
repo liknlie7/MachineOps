@@ -124,6 +124,9 @@ public: // 関数
 	// 衝突
 	void OnCollision();
 
+	// 壁との衝突
+	void OnCollisionToWall();
+
 private: // サブ関数
 
 	// 点滅
@@ -173,6 +176,8 @@ private:
 	int											 m_life;
 	// アクティブフラグ
 	bool										 m_activeFlag;
+	// 壁との接触フラグ
+	bool										 m_isWallHit;
 
 	// サウンド
 	//IDirectSoundBuffer8* m_shotSound;

@@ -99,7 +99,7 @@ void Game::Initialize(HWND window, int width, int height)
 	m_pCollisionManager = std::make_unique<CollisionManager>();
 
 	m_pCollisionManager->AllowCollision("Player", "Enemy");
-	m_pCollisionManager->AllowCollision("Player", "EnemyBullet");	m_pCollisionManager->AllowCollision("PlayerBullet", "Enemy");	m_pCollisionManager->AllowCollision("Enemy", "Enemy");	m_pCollisionManager->AllowCollision("Mouse", "Floor");
+	m_pCollisionManager->AllowCollision("Player", "EnemyBullet");	m_pCollisionManager->AllowCollision("PlayerBullet", "Enemy");	m_pCollisionManager->AllowCollision("Enemy", "Enemy");	m_pCollisionManager->AllowCollision("Mouse", "Floor");	m_pCollisionManager->AllowCollision("Player", "Wall");
 	GameContext::Register<CollisionManager>(m_pCollisionManager);
 
 }

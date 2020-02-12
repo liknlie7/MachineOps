@@ -22,6 +22,7 @@ Player::Player(const std::string& _tag)
 	, m_isShiftDown(false)
 	, m_life(1)
 	, m_activeFlag(true)
+	, m_isWallHit(false)
 {
 	m_pWeapon = make_unique<Weapon>();
 	//m_shotSound = GameContext::Get<Sound>()->GetSound(0);
@@ -91,11 +92,7 @@ void Player::Update()
 	else
 	{
 		// Wを押下
-		if (keyState.W)
-		{
-			m_velocity.z = -0.1f;
-			//m_shotSound->Play(0,0,0);
-		}
+		if (keyState.W) m_velocity.z = -0.1f;
 		// Aを押下
 		if (keyState.A) m_velocity.x = -0.1f;
 		// Sを押下
@@ -105,13 +102,18 @@ void Player::Update()
 
 	}
 
-	if (m_hitFlag)  
+	if (m_hitFlag)
 		Blink();
 
 
 	// 速度代入
 	m_position += m_velocity;
 
+	if (m_isWallHit)
+	{
+		m_position.Clamp(m_position, Vector3(0.0f, 0.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f));
+		m_isWallHit = false;
+	}
 	m_dir = m_mousePos - m_position;
 	m_dir.Normalize();
 
@@ -123,7 +125,7 @@ void Player::Update()
 
 	// 弾を発射する
 	m_shotInterval++;
-	
+
 	if (m_shotInterval > 7.0f)
 	{
 		// 左クリック
@@ -175,6 +177,12 @@ void Player::OnCollision()
 	m_hitFlag = true;
 
 	//m_life--;
+}
+
+// 壁との衝突
+void Player::OnCollisionToWall()
+{
+	m_isWallHit = true;
 }
 
 // 点滅
