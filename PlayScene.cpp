@@ -212,15 +212,6 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 			}
 		}
 
-		// •Ç‚ÆŽ©‹@‚Ì“–‚½‚è”»’è
-		if (m_pPlayer->GetActiveFlag() == true)
-		{
-			if (Collision::HitCheckSphereToBox(m_pPlayer->GetCollider(), m_pWall->GetCollider(Wall::TOP)))
-			{
-				m_pPlayer->OnCollisionToWall();
-			}
-		}
-
 		// ’e‚Ì’†S‚Æ”¼Œa‚ðÝ’è
 		if (bossFlag)
 		{

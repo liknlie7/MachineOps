@@ -8,6 +8,10 @@ using namespace DirectX::SimpleMath;
 
 using namespace std;
 
+const Vector3 Player::RANGE_MIN = Vector3(-18.5f, 0.0f, -19.0f);
+const Vector3 Player::RANGE_MAX = Vector3(18.0f, 0.0f, 19.8f);
+
+
 // TODO:ステート管理にする
 // TODO: タグ判定
 
@@ -22,10 +26,8 @@ Player::Player(const std::string& _tag)
 	, m_isShiftDown(false)
 	, m_life(1)
 	, m_activeFlag(true)
-	, m_isWallHit(false)
 {
 	m_pWeapon = make_unique<Weapon>();
-	//m_shotSound = GameContext::Get<Sound>()->GetSound(0);
 }
 
 
@@ -109,12 +111,12 @@ void Player::Update()
 	// 速度代入
 	m_position += m_velocity;
 
-	if (m_isWallHit)
-	{
-		m_position.Clamp(m_position, Vector3(0.0f, 0.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f));
-		m_isWallHit = false;
-	}
-	m_dir = m_mousePos - m_position;
+	// 範囲外から出ないようにする
+	m_position.x = Clamp(m_position.x, RANGE_MIN.x, RANGE_MAX.x);
+	m_position.z = Clamp(m_position.z, RANGE_MIN.z, RANGE_MAX.z);
+
+
+		m_dir = m_mousePos - m_position;
 	m_dir.Normalize();
 
 	m_angle = atan2(m_dir.x, m_dir.z);
@@ -179,12 +181,6 @@ void Player::OnCollision()
 	//m_life--;
 }
 
-// 壁との衝突
-void Player::OnCollisionToWall()
-{
-	m_isWallHit = true;
-}
-
 // 点滅
 void Player::Blink()
 {
@@ -196,3 +192,19 @@ void Player::Blink()
 		m_blinkTime = 30;
 	}
 }
+
+//Vector3 Player::Clamp(Vector3 _vector, Vector3 _low, Vector3 _high)
+//{
+//	if (_vector < _low)
+//	{
+//		return _low;
+//	}
+//	else if (_vector > _high)
+//	{
+//		return _high;
+//	}
+//	else
+//	{
+//		return _vector;
+//	}
+//}
