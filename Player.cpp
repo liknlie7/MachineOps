@@ -192,19 +192,3 @@ void Player::Blink()
 		m_blinkTime = 30;
 	}
 }
-
-//Vector3 Player::Clamp(Vector3 _vector, Vector3 _low, Vector3 _high)
-//{
-//	if (_vector < _low)
-//	{
-//		return _low;
-//	}
-//	else if (_vector > _high)
-//	{
-//		return _high;
-//	}
-//	else
-//	{
-//		return _vector;
-//	}
-//}
