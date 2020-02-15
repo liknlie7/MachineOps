@@ -4,6 +4,7 @@
 
 #include "GameContext.h"
 #include "DeviceResources.h"
+#include "Utilities.h"
 
 // ’Ç”öƒJƒƒ‰
 class FollowCamera
@@ -58,6 +59,10 @@ public: // ’è”
 	static const DirectX::SimpleMath::Vector3 EYE_VEC;
 	// ƒJƒƒ‰ã
 	static const DirectX::SimpleMath::Vector3 UP_VEC;
+	// ˆÚ“®§ŒÀ”ÍˆÍ
+	static const DirectX::SimpleMath::Vector3 RANGE_MIN;
+	static const DirectX::SimpleMath::Vector3 RANGE_MAX;
+
 
 private: // •Ï”
 

@@ -7,10 +7,13 @@
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
-// ê^è„
+// éãì_
 const Vector3 FollowCamera::EYE_VEC = Vector3(0.0f, 30.0f, 0.0f);
+// ÉJÉÅÉâÇÃå¸Ç´
 const Vector3 FollowCamera::UP_VEC = Vector3(0.0f, 0.0f, -1.0f);
-
+// à⁄ìÆêßå¿îÕàÕ
+const Vector3 FollowCamera::RANGE_MIN = Vector3(-5.0f, 0.0f, -9.0f);
+const Vector3 FollowCamera::RANGE_MAX = Vector3(5.0f, 0.0f, 10.0f);
 
 
 
@@ -36,6 +39,11 @@ void FollowCamera::Initialize()
 
 void FollowCamera::Update(Vector3 _eye, Vector3 _target)
 {
+	_target.x = Clamp(_target.x, RANGE_MIN.x, RANGE_MAX.x);
+	_target.z = Clamp(_target.z, RANGE_MIN.z, RANGE_MAX.z);
+	_eye.x = Clamp(_eye.x, RANGE_MIN.x, RANGE_MAX.x);
+	_eye.z = Clamp(_eye.z, RANGE_MIN.z, RANGE_MAX.z);
+
 	m_view = DirectX::SimpleMath::Matrix::CreateLookAt(_eye, _target, m_up);
 	//DoShake(0.5f, 0.3f);
 }
@@ -52,10 +60,10 @@ void FollowCamera::DoShake(float _duration, float _magnitude)
 	//srand((unsigned)time(0));
 	//while (elapsed < _duration)
 	//{
-		float x = pos.x + ((rand() % 2)) * _magnitude;
-		float y = pos.y + ((rand() % 2)) * _magnitude;
+	float x = pos.x + ((rand() % 2)) * _magnitude;
+	float y = pos.y + ((rand() % 2)) * _magnitude;
 
-		m_eye = Vector3(x, y, pos.z);
+	m_eye = Vector3(x, y, pos.z);
 
 	//}
 }
