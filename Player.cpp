@@ -18,6 +18,7 @@ const Vector3 Player::RANGE_MAX = Vector3(18.0f, 0.0f, 19.8f);
 // コンストラクタ
 Player::Player(const std::string& _tag)
 	: GameObject(_tag)
+	, m_state(STATE_NORMAL)
 	, m_mousePos(0.0f, 0.0f, 0.0f)
 	, m_shotInterval(15.0f)
 	, m_hitFlag(false)
@@ -26,6 +27,7 @@ Player::Player(const std::string& _tag)
 	, m_isShiftDown(false)
 	, m_life(1)
 	, m_activeFlag(true)
+	, m_accel(0.0f, 0.0f, 0.0f)
 {
 	m_pWeapon = make_unique<Weapon>();
 }
@@ -107,6 +109,10 @@ void Player::Update()
 	if (m_hitFlag)
 		Blink();
 
+	if (m_enemyHitFlag) {
+		m_velocity = Vector3::Zero;
+		m_enemyHitFlag = false;
+	}
 
 	// 速度代入
 	m_position += m_velocity;
@@ -116,7 +122,7 @@ void Player::Update()
 	m_position.z = Clamp(m_position.z, RANGE_MIN.z, RANGE_MAX.z);
 
 
-		m_dir = m_mousePos - m_position;
+	m_dir = m_mousePos - m_position;
 	m_dir.Normalize();
 
 	m_angle = atan2(m_dir.x, m_dir.z);
@@ -181,6 +187,14 @@ void Player::OnCollision()
 	//m_life--;
 }
 
+// 敵との衝突
+void Player::OnCollisionEnemy(Vector3 _enemyPos)
+{
+	Vector3 v = m_position - _enemyPos;
+	v.Length();
+
+}
+
 // 点滅
 void Player::Blink()
 {
@@ -191,4 +205,20 @@ void Player::Blink()
 		m_hitFlag = false;
 		m_blinkTime = 30;
 	}
+}
+
+void Player::AddForce(float angle, float force)
+{
+	// 進行方向ベクトル
+	DirectX::SimpleMath::Vector3 dir(0.0f, 0.0f, -1.0f);
+
+	// 自機の向きベクトルを求める
+	DirectX::SimpleMath::Matrix rotY = DirectX::SimpleMath::Matrix::CreateRotationY(angle);
+	dir = DirectX::SimpleMath::Vector3::Transform(dir, rotY);
+
+	// 加速度
+	m_accel = dir * force;
+
+	// 速度に加速度を足す
+	m_velocity += m_accel;
 }

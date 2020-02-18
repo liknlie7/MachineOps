@@ -124,6 +124,8 @@ public: // 関数
 
 	// 衝突
 	void OnCollision();
+	// 敵との衝突
+	void OnCollisionEnemy(DirectX::SimpleMath::Vector3 _enemyPos);
 
 private: // サブ関数
 
@@ -132,6 +134,8 @@ private: // サブ関数
 
 	// 衝突
 	void OnCollision(GameObject* _object);
+
+	void Player::AddForce(float angle, float force);
 
 private: // 定数
 
@@ -159,11 +163,17 @@ private:
 	std::unique_ptr<DirectX::Model>				 m_pPlayer;
 	Collision::Sphere							 m_collider;
 
+	// 状態
+	STATE										 m_state;
+
 	// 向き
 	DirectX::SimpleMath::Vector3				 m_dir;
 
 	// マウス座標
 	DirectX::SimpleMath::Vector3				 m_mousePos;
+
+	// 加速度
+	DirectX::SimpleMath::Vector3				 m_accel;
 
 	// 角度
 	float										 m_angle;
@@ -179,6 +189,8 @@ private:
 	int											 m_life;
 	// アクティブフラグ
 	bool										 m_activeFlag;
+
+	bool										 m_enemyHitFlag;
 
 public:
 

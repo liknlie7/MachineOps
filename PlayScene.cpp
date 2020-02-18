@@ -273,7 +273,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 				{
 					if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
 					{
-						m_pPlayer->OnCollision();
+						m_pPlayer->OnCollisionEnemy(m_pEnemy->GetPosition());
 					}
 				}
 			}
