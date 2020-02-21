@@ -99,8 +99,8 @@ void PlayScene::Initialize()
 	m_totalTime = 0;
 	m_gaugeFlag = false;
 
-	//// 画面を開く
-	//GameContext::Get<EffectManager>()->Open();
+	// 画面を開く
+	GameContext::Get<EffectMask>()->Open();
 
 
 	// エフェクトの作成
@@ -253,17 +253,20 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 			}
 
 			// プレイヤーと敵の弾の当たり判定
-			//for (unsigned int i = 0; i < enemyBullet.size(); i++)
-			//{
-			//	if (m_pPlayer->GetActiveFlag() == true)
-			//	{
-			//		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
-			//		{
-			//			m_pPlayer->OnCollision();
-			//			m_pEnemy->BulletOnCollision(i);
-			//		}
-			//	}
-			//}
+			for (unsigned int i = 0; i < enemyBullet.size(); i++)
+			{
+				if (m_pPlayer->GetActiveFlag() == true)
+				{
+					if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
+					{
+						// シーンマネージャーの取得
+						GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
+						
+						// プレイシーンへ遷移
+						gameSceneManager->RequestScene("ResultGameOver");
+					}
+				}
+			}
 
 			// 壁と敵の弾の当たり判定
 			for (unsigned int i = 0; i < enemyBullet.size(); i++)
@@ -301,7 +304,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 		if (m_pEnemy->GetModel() == nullptr)
 		{
 			GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
-			gameSceneManager->RequestScene("Result");
+			gameSceneManager->RequestScene("ResultClear");
 		}
 
 

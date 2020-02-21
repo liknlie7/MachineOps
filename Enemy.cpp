@@ -109,7 +109,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 
 		m_position = _pos;
 		// ‘¬‚³‚Ì‰Šú‰»
-		m_speed = 0.05f;
+		m_speed = 0.03f;
 
 		m_life = m_maxLife;
 		m_shotType = NORMAL_SHOT;

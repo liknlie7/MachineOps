@@ -15,7 +15,8 @@
 
 #include "TitleScene.h"
 #include "PlayScene.h"
-#include "ResultScene.h"
+#include "ResultClearScene.h"
+#include "ResultGameOverScene.h"
 
 extern void ExitGame();
 
@@ -92,9 +93,12 @@ void Game::Initialize(HWND window, int width, int height)
 	m_pGameSceneManager = make_unique<GameSceneManager>();
 	m_pGameSceneManager->RegisterScene<TitleScene>("Title");
 	m_pGameSceneManager->RegisterScene<PlayScene>("Play");
-	m_pGameSceneManager->RegisterScene<ResultScene>("Result");
-	m_pGameSceneManager->SetStartScene("Play");
+	m_pGameSceneManager->RegisterScene<ResultClearScene>("ResultClear");
+	m_pGameSceneManager->RegisterScene<ResultGameOverScene>("ResultGameOver");
+	
+	m_pGameSceneManager->SetStartScene("Title");
 	GameContext::Register<GameSceneManager>(m_pGameSceneManager);
+	
 
 	m_pCollisionManager = std::make_unique<CollisionManager>();
 

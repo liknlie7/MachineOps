@@ -43,9 +43,6 @@ private: // 変数
 	// サウンド
 	std::unique_ptr<Adx2Le>					m_adx2Le;
 
-	// スプライトバッチ
-	std::unique_ptr<DirectX::SpriteBatch>	m_spriteBatch;
-
 	// テクスチャ
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_titleTexture;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_backGroundTexture;
