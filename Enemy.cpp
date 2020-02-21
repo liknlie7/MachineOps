@@ -179,7 +179,7 @@ void Enemy::Update()
 	}
 	case ALL_DIRECTION_SHOT:
 	{
-		if (m_shotInterval > 15.0f)
+		if (m_shotInterval > 50.0f)
 		{
 			for (int rad = 0; rad < 130; rad += 6)
 			{
@@ -191,7 +191,7 @@ void Enemy::Update()
 		break;
 	}
 	case WHORL_SHOT:
-		if (m_shotInterval > 5.0f)
+		if (m_shotInterval > 10.0f)
 		{
 
 			int i = 0;
