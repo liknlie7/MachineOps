@@ -20,8 +20,8 @@ Enemy::Enemy(const int _type, const std::string& _tag)
 	, m_blinkTime(30)
 	, m_isValid(false)
 	, m_playerPos(0.0f, 0.0f, 0.0f)
-	, m_life(30)
-	, m_maxLife(30)
+	, m_life(100)
+	, m_maxLife(100)
 	, m_wayNum(3)
 	, m_changeAngle(30)
 	, m_bulletEndAngle(0)
@@ -109,7 +109,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 
 		m_position = _pos;
 		// ë¨Ç≥ÇÃèâä˙âª
-		m_speed = 0.08f;
+		m_speed = 0.05f;
 
 		m_life = m_maxLife;
 		m_shotType = NORMAL_SHOT;
@@ -149,7 +149,7 @@ void Enemy::Update()
 		break;
 	case BOSS_ENEMY:
 
-
+		ChasePlayer(m_playerPos);
 
 		m_playerPos.Normalize();
 		Vector3 baseDir = m_playerPos;
@@ -158,9 +158,9 @@ void Enemy::Update()
 		break;
 	}
 
-	if (m_life <= 20 && m_life > 10)
+	if (m_life <= 70 && m_life > 40)
 		m_shotType = WHORL_SHOT;
-	if (m_life <= 10)
+	if (m_life <= 40)
 		m_shotType = ALL_DIRECTION_SHOT;
 
 	m_shotInterval++;
