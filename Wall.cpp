@@ -21,11 +21,22 @@ void Wall::Initialize()
 
 	delete factory;
 
-	m_collider[TOP].center = DirectX::SimpleMath::Vector3(0.0f, 2.5f, -20.0f);
-	m_collider[TOP].radius = DirectX::SimpleMath::Vector3(40.0f, 5.0f, 1.5f);
-
-	m_test = DirectX::GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 
-		DirectX::SimpleMath::Vector3(40.0f, 5.0f, 1.5f));
+	m_collider[TOP_RIGHT].center = DirectX::SimpleMath::Vector3(-26.0f, 2.5f, -21.0f);
+	m_collider[TOP_RIGHT].radius = DirectX::SimpleMath::Vector3(20.0f, 5.0f, 1.5f);
+	m_collider[TOP_LEFT].center = DirectX::SimpleMath::Vector3(26.0f, 2.5f, -21.0f);
+	m_collider[TOP_LEFT].radius = DirectX::SimpleMath::Vector3(20.0f, 5.0f, 1.5f);
+	m_collider[BOTTOM_RIGHT].center = DirectX::SimpleMath::Vector3(-26.0f, 2.5f, 24.0f);
+	m_collider[BOTTOM_RIGHT].radius = DirectX::SimpleMath::Vector3(20.0f, 5.0f, 1.5f);
+	m_collider[BOTTOM_LEFT].center = DirectX::SimpleMath::Vector3(26.0f, 2.5f, 24.0f);
+	m_collider[BOTTOM_LEFT].radius = DirectX::SimpleMath::Vector3(20.0f, 5.0f, 1.5f);
+	m_collider[LEFT_TOP].center = DirectX::SimpleMath::Vector3(-22.0f, 2.5f, -26.0f);
+	m_collider[LEFT_TOP].radius = DirectX::SimpleMath::Vector3(1.5f, 5.0f, 20.0f);
+	m_collider[LEFT_BOTTOM].center = DirectX::SimpleMath::Vector3(-22.0f, 2.5f, 27.0f);
+	m_collider[LEFT_BOTTOM].radius = DirectX::SimpleMath::Vector3(1.5f, 5.0f, 20.0f);
+	m_collider[RIGHT_TOP].center = DirectX::SimpleMath::Vector3(22.0f, 2.5f, -26.0f);
+	m_collider[RIGHT_TOP].radius = DirectX::SimpleMath::Vector3(1.5f, 5.0f, 20.0f);
+	m_collider[RIGHT_BOTTOM].center = DirectX::SimpleMath::Vector3(22.0f, 2.5f, 27.0f);
+	m_collider[RIGHT_BOTTOM].radius = DirectX::SimpleMath::Vector3(1.5f, 5.0f, 20.0f);
 }
 
 // •`‰æ
@@ -37,9 +48,4 @@ void Wall::Render(const DirectX::SimpleMath::Matrix & _view)
 
 	// ƒ‚ƒfƒ‹•`‰æ
 	m_pModel->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<DirectX::CommonStates>(), world, _view, GameContext::Get<Projection>()->GetMatrix());
-
-	DirectX::SimpleMath::Matrix test = DirectX::SimpleMath::Matrix::CreateTranslation(DirectX::SimpleMath::Vector3(0.0f,2.5f,-20.0f));
-
-	m_test->Draw(test, _view, GameContext::Get<Projection>()->GetMatrix(), DirectX::Colors::Yellow, nullptr, true);
-
 }

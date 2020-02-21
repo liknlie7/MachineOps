@@ -44,10 +44,14 @@ public: // 定数
 
 	enum PLACE
 	{
-		TOP,		// 上側
-		BOTTOM,		// 下側
-		LEFT,		// 左側
-		RIGHT,		// 右側
+		TOP_RIGHT,		// 上右側
+		TOP_LEFT,		// 上左側
+		BOTTOM_RIGHT,	// 下右側
+		BOTTOM_LEFT,	// 下左側
+		LEFT_TOP,		// 左上側
+		LEFT_BOTTOM,	// 左下側
+		RIGHT_TOP,		// 右上側
+		RIGHT_BOTTOM,	// 右下側
 
 		ALL_PLACE,
 	};

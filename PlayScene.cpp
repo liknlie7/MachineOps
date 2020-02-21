@@ -41,7 +41,7 @@ void PlayScene::Initialize()
 	m_playerSound->LoadAcbFile(L"Resources\\Sounds\\Player.acb");
 
 	// BGMの再生
-	m_playSceneSound->Play(CRI_PLAYSCENE_PLAYSCENEBGM,1.0f);
+	m_playSceneSound->Play(CRI_PLAYSCENE_PLAYSCENEBGM, 1.0f);
 
 	// 追尾カメラの作成
 	m_pFollowCamera = make_unique<FollowCamera>();
@@ -123,7 +123,7 @@ void PlayScene::Initialize()
 
 	m_warningEffect = std::make_unique<WarningEffect>();
 	m_warningEffect->Initialize();
-	
+
 	m_waveCount = 5;
 	m_playSceneSound->Play(CRI_PLAYSCENE_WARNING, 1.0f);
 
@@ -253,13 +253,25 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 			}
 
 			// プレイヤーと敵の弾の当たり判定
+			//for (unsigned int i = 0; i < enemyBullet.size(); i++)
+			//{
+			//	if (m_pPlayer->GetActiveFlag() == true)
+			//	{
+			//		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
+			//		{
+			//			m_pPlayer->OnCollision();
+			//			m_pEnemy->BulletOnCollision(i);
+			//		}
+			//	}
+			//}
+
+			// 壁と敵の弾の当たり判定
 			for (unsigned int i = 0; i < enemyBullet.size(); i++)
 			{
-				if (m_pPlayer->GetActiveFlag() == true)
+				for (int j = 0; j < 8; j++)
 				{
-					if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
+					if (Collision::HitCheckSphereToBox(enemyBullet[i], m_pWall->GetCollider(j)))
 					{
-						m_pPlayer->OnCollision();
 						m_pEnemy->BulletOnCollision(i);
 					}
 				}
