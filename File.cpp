@@ -2,21 +2,19 @@
 #include "File.h"
 #include <limits>
 
-using namespace std;
-
 // コンストラクタ
 File::File(const wchar_t *fname)
 : m_length(0)
 , m_data(nullptr)
 {
-	ifstream in(fname, ios::in | ios::binary);
+	std::ifstream in(fname, std::ios::in | std::ios::binary);
 
 	// オープン成功？
 	_ASSERT(in);
 
 	// ファイルサイズを取得
-	ios::pos_type tmp = in.tellg();
-	ios::off_type size_ = in.seekg(0, ios::end).tellg() - in.seekg(0, ios::beg).tellg();
+	std::ios::pos_type tmp = in.tellg();
+	std::ios::off_type size_ = in.seekg(0, std::ios::end).tellg() - in.seekg(0, std::ios::beg).tellg();
 	in.seekg(tmp);
 
 	// ファイルサイズがintで表せる最大値を超えていないか

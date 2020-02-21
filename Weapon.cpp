@@ -3,34 +3,29 @@
 #include "Weapon.h"
 #include "Player.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-using namespace std;
-
 Weapon::Weapon()
 	: bulletHitFlag(false)
 	, bulletNumber(0)
 {
-	m_position = Vector3(0.0f, 0.0f, 0.5f);
+	m_position = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.5f);
 }
 
 // èâä˙âª
 void Weapon::Initialize()
 {
 	// ïêäÌÇÃçÏê¨
-	m_pWeapon = GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), Vector3(0.1f, 0.1f, 0.5f));
+	m_pWeapon = DirectX::GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), DirectX::SimpleMath::Vector3(0.1f, 0.1f, 0.5f));
 	// íeÇÃçÏê¨
-	m_pBulletGeometric = GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(),Vector3(0.1f,0.1f,1.5f));
+	m_pBulletGeometric = DirectX::GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), DirectX::SimpleMath::Vector3(0.1f,0.1f,1.5f));
 }
 
 // çXêV
 void Weapon::Update()
 {
-	m_matrix = Matrix::CreateTranslation(m_position) * Matrix::CreateRotationY(m_angle) *
-		Matrix::CreateTranslation(m_playerPos);
+	m_matrix = DirectX::SimpleMath::Matrix::CreateTranslation(m_position) * DirectX::SimpleMath::Matrix::CreateRotationY(m_angle) *
+		DirectX::SimpleMath::Matrix::CreateTranslation(m_playerPos);
 
-	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{
 		(*itr)->Update();
 	}
@@ -52,9 +47,9 @@ void Weapon::Update()
 }
 
 // ï`âÊ
-void Weapon::Render(const Matrix& _view)
+void Weapon::Render(const DirectX::SimpleMath::Matrix& _view)
 {
-	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{
 		(*itr)->Render(_view);
 	}
@@ -69,9 +64,9 @@ void Weapon::Finalize()
 void Weapon::CreateBullet()
 {
 	// íeÇÃçÏê¨
-	m_pBullets.push_back(make_unique<Bullet>(m_playerPos + Vector3(0.0f, 0.9f, 0.0f), m_angle, Vector3(0.0f, 0.0f, 0.8f),"PlayerBullet"));
+	m_pBullets.push_back(std::make_unique<Bullet>(m_playerPos + DirectX::SimpleMath::Vector3(0.0f, 0.9f, 0.0f), m_angle, DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.8f),"PlayerBullet"));
 
-	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{
 		(*itr)->Initialize(m_pBulletGeometric.get());
 	}
@@ -81,7 +76,7 @@ void Weapon::BulletOnCollision(int _number)
 {
 	m_pBullets[_number]->SetIsValid(false);
 
-	vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
+	std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
 
 	while (itr != m_pBullets.end())
 	{

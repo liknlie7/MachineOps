@@ -4,16 +4,12 @@
 #include "GameContext.h"
 #include "GameSceneManager.h"
 
-using namespace std;
-
-using namespace DirectX;
-
 // コンストラクタ
 ResultClearScene::ResultClearScene()
 	: GameScene()
 
 {
-	m_keyboardTracker = GameContext::Get<Keyboard::KeyboardStateTracker>();
+	m_keyboardTracker = GameContext::Get<DirectX::Keyboard::KeyboardStateTracker>();
 }
 
 // デストラクタ
@@ -32,7 +28,9 @@ void ResultClearScene::Initialize()
 // 更新
 void ResultClearScene::Update(DX::StepTimer const & _timer)
 {
-	Keyboard::State keyState = Keyboard::Get().GetState();
+	_timer;
+
+	DirectX::Keyboard::State keyState = DirectX::Keyboard::Get().GetState();
 	m_keyboardTracker->Update(keyState);
 
 	if (m_keyboardTracker->pressed.Space)

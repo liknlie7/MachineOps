@@ -5,7 +5,7 @@
 #include "GameSceneManager.h"
 #include "GameScene.h"
 
-
+// コンストラクタ
 GameSceneManager::GameSceneManager()
 	: m_sceneFactories()
 	, m_activeScene(nullptr)
@@ -13,7 +13,7 @@ GameSceneManager::GameSceneManager()
 {
 }
 
-
+// デストラクタ
 GameSceneManager::~GameSceneManager()
 {
 }

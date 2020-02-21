@@ -1,9 +1,7 @@
 #include "pch.h"
 #include "EffectMask.h"
 
-using namespace DirectX::SimpleMath;
-using namespace DirectX;
-
+// コンストラクタ
 EffectMask::EffectMask()
 	: m_interval(0.0f)
 	, m_rate(1.0f)
@@ -13,6 +11,7 @@ EffectMask::EffectMask()
 
 }
 
+// 初期化
 void EffectMask::Initialize(float _interval)
 {
 	DX::DeviceResources*   deviceResources = GameContext::Get<DX::DeviceResources>();
@@ -69,6 +68,7 @@ void EffectMask::Initialize(float _interval)
 }
 
 
+// 更新
 void EffectMask::Update(float _elapsedTime)
 {
 	if (m_open)
@@ -85,7 +85,7 @@ void EffectMask::Update(float _elapsedTime)
 	}
 }
 
-
+// 描画
 void EffectMask::Render()
 {
 	DirectX::CommonStates* state = GameContext::Get<DirectX::CommonStates>();
@@ -134,22 +134,26 @@ void EffectMask::Render()
 
 }
 
+// オープン
 void EffectMask::Open()
 {
 	m_open = true;
 }
 
+// クローズ
 void EffectMask::Close()
 {
 	m_open = false;
 }
 
+// オープン中か
 bool EffectMask::IsOpen()
 {
 	if (m_open && m_rate == 1.0f) return true;
 	return false;
 }
 
+// クローズ中か
 bool EffectMask::IsClose()
 {
 	if (!m_open && m_rate <= 0.0f) return true;

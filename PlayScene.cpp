@@ -2,12 +2,6 @@
 
 #include "PlayScene.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-using namespace std;
-
-
 // ライフゲージ減少にかかる時間
 const float PlayScene::DAMAGE_TIME = 1.0f;
 
@@ -44,45 +38,45 @@ void PlayScene::Initialize()
 	m_playSceneSound->Play(CRI_PLAYSCENE_PLAYSCENEBGM, 1.0f);
 
 	// 追尾カメラの作成
-	m_pFollowCamera = make_unique<FollowCamera>();
+	m_pFollowCamera = std::make_unique<FollowCamera>();
 	m_pFollowCamera->Initialize();
 	GameContext::Register<FollowCamera>(m_pFollowCamera);
 
 	// カーソルの作成
-	m_pCursor = make_unique<MouseCursor>("Mouse");
+	m_pCursor = std::make_unique<MouseCursor>("Mouse");
 
 	// フロア作成
-	m_pFloor = make_unique<Floor>("Floor");
+	m_pFloor = std::make_unique<Floor>("Floor");
 	m_pFloor->Initialize();
 
 	// 壁作成
-	m_pWall = make_unique<Wall>("Wall");
+	m_pWall = std::make_unique<Wall>("Wall");
 	m_pWall->Initialize();
 
 	// プレイヤー作成
-	m_pPlayer = make_unique<Player>("Player");
+	m_pPlayer = std::make_unique<Player>("Player");
 	m_pPlayer->Initialize();
 	m_pPlayer->SetSoundPlayer(m_playerSound.get());
 
 	// 敵作成
 	if (bossFlag)
 	{
-		m_pEnemy = make_unique<Enemy>(m_pEnemy->BOSS_ENEMY, "Enemy");
-		m_pEnemy->Initialize(Vector3(0.0f, 1.0f, -15.0f));
+		m_pEnemy = std::make_unique<Enemy>(m_pEnemy->BOSS_ENEMY, "Enemy");
+		m_pEnemy->Initialize(DirectX::SimpleMath::Vector3(0.0f, 1.0f, -15.0f));
 	}
 	if (!bossFlag)
 	{
-		m_pEnemies[0] = make_unique<Enemy>(m_pEnemies[0]->NORMAL_ENEMY, "Enemy");
-		m_pEnemies[0]->Initialize(Vector3(10.0f, 1.0f, 5.0f));
-		m_pEnemies[1] = make_unique<Enemy>(m_pEnemies[1]->NORMAL_ENEMY, "Enemy");
-		m_pEnemies[1]->Initialize(Vector3(10.0f, 1.0f, 5.0f));
-		m_pEnemies[2] = make_unique<Enemy>(m_pEnemies[2]->SHIELD_ENEMY, "Enemy");
-		m_pEnemies[2]->Initialize(Vector3(10.0f, 1.0f, 5.0f));
-		m_pEnemies[3] = make_unique<Enemy>(m_pEnemies[3]->SHIELD_ENEMY, "Enemy");
-		m_pEnemies[3]->Initialize(Vector3(10.0f, 1.0f, 5.0f));
+		m_pEnemies[0] = std::make_unique<Enemy>(m_pEnemies[0]->NORMAL_ENEMY, "Enemy");
+		m_pEnemies[0]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
+		m_pEnemies[1] = std::make_unique<Enemy>(m_pEnemies[1]->NORMAL_ENEMY, "Enemy");
+		m_pEnemies[1]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
+		m_pEnemies[2] = std::make_unique<Enemy>(m_pEnemies[2]->SHIELD_ENEMY, "Enemy");
+		m_pEnemies[2]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
+		m_pEnemies[3] = std::make_unique<Enemy>(m_pEnemies[3]->SHIELD_ENEMY, "Enemy");
+		m_pEnemies[3]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
 	}
 
-	m_color = Colors::Red;
+	m_color = DirectX::Colors::Red;
 
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\GreenHP.png", nullptr, m_greenHpBarTexture.GetAddressOf());
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\RedHP.png", nullptr, m_redHpBarTexture.GetAddressOf());
@@ -134,7 +128,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 {
 	float elapsedTime = float(_timer.GetElapsedSeconds());
 
-	Keyboard::State keyState = Keyboard::Get().GetState();
+	DirectX::Keyboard::State keyState = DirectX::Keyboard::Get().GetState();
 
 	EffectMask* fadeEffect = GameContext::Get<EffectMask>();
 
@@ -196,11 +190,11 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 		// カーソル更新
 		m_pCursor->Update();
 
-		m_color = Colors::Red;
+		m_color = DirectX::Colors::Red;
 
 
 		// 交差点
-		Vector3 hitPos;
+		DirectX::SimpleMath::Vector3 hitPos;
 
 		// マウスRayと床の当たり判定(交差点検出)
 		if (m_pPlayer->GetActiveFlag() == true)
@@ -215,15 +209,15 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 		// 弾の中心と半径を設定
 		if (bossFlag)
 		{
-			vector<Vector3> playerBullets;
+			std::vector<DirectX::SimpleMath::Vector3> playerBullets;
 
 			if (m_pPlayer->GetActiveFlag() == true)
 				playerBullets = m_pPlayer->GetBulletPos();
 
-			vector<Vector3> enemyBullets = m_pEnemy->GetBulletPos();
+			std::vector<DirectX::SimpleMath::Vector3> enemyBullets = m_pEnemy->GetBulletPos();
 
-			vector<Collision::Box> playerBullet;
-			vector<Collision::Sphere> enemyBullet;
+			std::vector<Collision::Box> playerBullet;
+			std::vector<Collision::Sphere> enemyBullet;
 
 			playerBullet.resize(playerBullets.size());
 
@@ -231,7 +225,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 			for (unsigned int i = 0; i < playerBullets.size(); i++)
 			{
 				playerBullet[i].center = playerBullets[i];
-				playerBullet[i].radius = Vector3(0.1f, 0.1, 0.5f);
+				playerBullet[i].radius = DirectX::SimpleMath::Vector3(0.1f, 0.1, 0.5f);
 			}
 			for (unsigned int i = 0; i < enemyBullets.size(); i++)
 			{
@@ -261,7 +255,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 					{
 						// シーンマネージャーの取得
 						GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
-						
+
 						// プレイシーンへ遷移
 						gameSceneManager->RequestScene("ResultGameOver");
 					}
@@ -371,18 +365,18 @@ void PlayScene::Render()
 	// 壁の表示
 	m_pWall->Render(m_pFollowCamera->GetViewMatrix());
 
-	GameContext::Get<SpriteBatch>()->Begin(SpriteSortMode_Deferred, GameContext::Get<CommonStates>()->NonPremultiplied());
+	GameContext::Get<DirectX::SpriteBatch>()->Begin(DirectX::SpriteSortMode_Deferred, GameContext::Get<DirectX::CommonStates>()->NonPremultiplied());
 	if (bossFlag)
 	{
 		// 赤ゲージ表示
-		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Colors::Black,
-			0.0f, Vector2::Zero, Vector2(1.0f, 0.2f));
+		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, DirectX::Colors::Black,
+			0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(1.0f, 0.2f));
 		// 薄緑ゲージ表示
-		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, Vector4(1.0f, 1.0f, 1.0f, 0.5f),
-			0.0f, Vector2::Zero, Vector2(m_lightGreenGaugeRate, 0.2f));
+		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, DirectX::SimpleMath::Vector4(1.0f, 1.0f, 1.0f, 0.5f),
+			0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(m_lightGreenGaugeRate, 0.2f));
 		// 緑ゲージ表示
-		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, Colors::White,
-			0.0f, Vector2::Zero, Vector2(m_currentGaugeScaleX, 0.2f));
+		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, DirectX::Colors::White,
+			0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(m_currentGaugeScaleX, 0.2f));
 
 	}
 
@@ -390,7 +384,7 @@ void PlayScene::Render()
 
 	m_warningEffect->Render();
 
-	GameContext::Get<SpriteBatch>()->End();
+	GameContext::Get<DirectX::SpriteBatch>()->End();
 }
 
 // 後始末

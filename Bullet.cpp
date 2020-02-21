@@ -2,25 +2,20 @@
 
 #include "Bullet.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-using namespace std;
-
 // コンストラクタ
-Bullet::Bullet(const Vector3& _pos, const float& _angle, const Vector3& _speed, const std::string& _tag)
+Bullet::Bullet(const DirectX::SimpleMath::Vector3& _pos, const float& _angle, const DirectX::SimpleMath::Vector3& _speed, const std::string& _tag)
 	: GameObject(_tag)
 	, m_isValid(true)
 	, m_life(300.0f)
 {
 	m_position = _pos;
 	m_velocity = _speed;
-	m_rotate = Matrix::CreateRotationY(_angle);
-	m_velocity = Vector3::Transform(m_velocity, m_rotate);
+	m_rotate = DirectX::SimpleMath::Matrix::CreateRotationY(_angle);
+	m_velocity = DirectX::SimpleMath::Vector3::Transform(m_velocity, m_rotate);
 }
 
 // 初期化
-void Bullet::Initialize(GeometricPrimitive* _type)
+void Bullet::Initialize(DirectX::GeometricPrimitive* _type)
 {
 	m_bullet = _type;
 }
@@ -41,15 +36,15 @@ void Bullet::Update()
 	}
 
 	// 行列更新
-	m_matrix = m_rotate * Matrix::CreateTranslation(Vector3(m_position));
+	m_matrix = m_rotate * DirectX::SimpleMath::Matrix::CreateTranslation(DirectX::SimpleMath::Vector3(m_position));
 }
 
 // 描画
-void Bullet::Render(const Matrix& _view)
+void Bullet::Render(const DirectX::SimpleMath::Matrix& _view)
 {
 	// 弾の描画
 	if (m_isValid)
-		m_bullet->Draw(m_matrix, _view, GameContext::Get<Projection>()->GetMatrix(), Colors::Yellow);
+		m_bullet->Draw(m_matrix, _view, GameContext::Get<Projection>()->GetMatrix(), DirectX::Colors::Yellow);
 }
 
 // 後処理

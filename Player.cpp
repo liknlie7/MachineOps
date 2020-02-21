@@ -3,13 +3,8 @@
 #include "Player.h"
 #include "Bullet.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-using namespace std;
-
-const Vector3 Player::RANGE_MIN = Vector3(-18.5f, 0.0f, -19.0f);
-const Vector3 Player::RANGE_MAX = Vector3(18.0f, 0.0f, 19.8f);
+const DirectX::SimpleMath::Vector3 Player::RANGE_MIN = DirectX::SimpleMath::Vector3(-18.5f, 0.0f, -19.0f);
+const DirectX::SimpleMath::Vector3 Player::RANGE_MAX = DirectX::SimpleMath::Vector3(18.0f, 0.0f, 19.8f);
 
 
 // TODO:ステート管理にする
@@ -29,7 +24,7 @@ Player::Player(const std::string& _tag)
 	, m_activeFlag(true)
 	, m_accel(0.0f, 0.0f, 0.0f)
 {
-	m_pWeapon = make_unique<Weapon>();
+	m_pWeapon = std::make_unique<Weapon>();
 }
 
 
@@ -42,12 +37,12 @@ Player::~Player()
 void Player::Initialize()
 {
 	// KeyboardStateTrackerオブジェクトを生成する 
-	m_keyboardTracker = std::make_unique<Keyboard::KeyboardStateTracker>();
+	m_keyboardTracker = std::make_unique<DirectX::Keyboard::KeyboardStateTracker>();
 
 	// モデル作成 
-	EffectFactory* factory = new EffectFactory(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
+	DirectX::EffectFactory* factory = new DirectX::EffectFactory(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
 	factory->SetDirectory(L"Resources/Models");
-	m_pPlayer = Model::CreateFromCMO(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources/Models/tank.cmo", *factory);
+	m_pPlayer = DirectX::Model::CreateFromCMO(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources/Models/tank.cmo", *factory);
 	delete factory;
 
 	m_activeFlag = true;
@@ -77,7 +72,7 @@ void Player::Update()
 	m_mouseTracker.Update(mouseState);
 
 	// 速度初期化
-	m_velocity = Vector3(0.0f, 0.0f, 0.0f);
+	m_velocity = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
 
 	if (keyState.IsKeyUp(DirectX::Keyboard::Keys::LeftShift)) m_isShiftDown = false;
 	if (keyState.IsKeyDown(DirectX::Keyboard::Keys::LeftShift)) m_isShiftDown = true;
@@ -110,7 +105,7 @@ void Player::Update()
 		Blink();
 
 	if (m_enemyHitFlag) {
-		m_velocity = Vector3::Zero;
+		m_velocity = DirectX::SimpleMath::Vector3::Zero;
 		m_enemyHitFlag = false;
 	}
 
@@ -126,8 +121,8 @@ void Player::Update()
 	m_dir.Normalize();
 
 	m_angle = atan2(m_dir.x, m_dir.z);
-	Matrix trans = Matrix::CreateTranslation(Vector3(m_position));
-	Matrix rotate = Matrix::CreateRotationY(m_angle);
+	DirectX::SimpleMath::Matrix trans = DirectX::SimpleMath::Matrix::CreateTranslation(DirectX::SimpleMath::Vector3(m_position));
+	DirectX::SimpleMath::Matrix rotate = DirectX::SimpleMath::Matrix::CreateRotationY(m_angle);
 
 	m_matrix = rotate * trans;
 
@@ -156,12 +151,12 @@ void Player::Update()
 }
 
 // 描画
-void Player::Render(const Matrix& _view)
+void Player::Render(const DirectX::SimpleMath::Matrix& _view)
 {
 	// プレイヤー描画
 	if (m_blinkTime % 5 == 0)
 		m_pPlayer->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(),
-			*GameContext::Get<CommonStates>(), m_matrix, _view, GameContext::Get<Projection>()->GetMatrix());
+			*GameContext::Get<DirectX::CommonStates>(), m_matrix, _view, GameContext::Get<Projection>()->GetMatrix());
 
 	// 武器の描画
 	m_pWeapon->Render(_view);
@@ -176,7 +171,7 @@ void Player::Finalize()
 // 衝突
 void Player::OnCollision(GameObject* _object)
 {
-
+	_object;
 }
 
 // 衝突
@@ -188,9 +183,9 @@ void Player::OnCollision()
 }
 
 // 敵との衝突
-void Player::OnCollisionEnemy(Vector3 _enemyPos)
+void Player::OnCollisionEnemy(DirectX::SimpleMath::Vector3 _enemyPos)
 {
-	Vector3 v = m_position - _enemyPos;
+	DirectX::SimpleMath::Vector3 v = m_position - _enemyPos;
 	v.Length();
 
 }

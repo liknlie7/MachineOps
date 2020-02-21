@@ -3,11 +3,6 @@
 #include "Enemy.h"
 #include "Player.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-using namespace std;
-
 // 通常の大きさ
 const float Enemy::SIZE = 1.5f;
 
@@ -40,10 +35,10 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 {
 
 	// エフェクトファクトリの作成 
-	EffectFactory* factory = new EffectFactory(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
+	DirectX::EffectFactory* factory = new DirectX::EffectFactory(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
 
 	// 弾の形状作成
-	m_pBulletGeometric = GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);
+	m_pBulletGeometric = DirectX::GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);
 
 	// テクスチャの読み込みパス指定 
 	factory->SetDirectory(L"Resources/Models");
@@ -54,7 +49,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 	case NORMAL_ENEMY: // ノーマルタイプ
 
 		// モデルデータ読み込み 
-		m_pEnemy = Model::CreateFromCMO(
+		m_pEnemy = DirectX::Model::CreateFromCMO(
 			GameContext::Get<DX::DeviceResources>()->GetD3DDevice(),
 			L"Resources/Models/Enemy1.cmo",
 			*factory
@@ -78,7 +73,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 	case SHIELD_ENEMY:
 
 		// モデルデータ読み込み 
-		m_pEnemy = Model::CreateFromCMO(
+		m_pEnemy = DirectX::Model::CreateFromCMO(
 			GameContext::Get<DX::DeviceResources>()->GetD3DDevice(),
 			L"Resources/Models/Enemy2.cmo",
 			*factory
@@ -100,7 +95,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 
 	case BOSS_ENEMY:
 		// モデルデータ読み込み 
-		m_pEnemy = Model::CreateFromCMO(
+		m_pEnemy = DirectX::Model::CreateFromCMO(
 			GameContext::Get<DX::DeviceResources>()->GetD3DDevice(),
 			L"Resources/Models/Enemy1.cmo",
 			*factory
@@ -125,7 +120,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 // 更新
 void Enemy::Update()
 {
-	Vector3 m_dir;
+	DirectX::SimpleMath::Vector3 m_dir;
 	m_dir = m_playerPos - m_position;
 	m_dir.Normalize();
 	m_enemyAngle = atan2(m_dir.x, m_dir.z);
@@ -152,7 +147,7 @@ void Enemy::Update()
 		ChasePlayer(m_playerPos);
 
 		m_playerPos.Normalize();
-		Vector3 baseDir = m_playerPos;
+		DirectX::SimpleMath::Vector3 baseDir = m_playerPos;
 
 
 		break;
@@ -170,7 +165,7 @@ void Enemy::Update()
 	{
 		if (m_shotInterval > 15.0f)
 		{
-			m_pBullets.push_back(make_unique<Bullet>(m_position + Vector3(0.0f, 0.1f, 0.0f), m_enemyAngle, Vector3(0.0f, 0.0f, 0.15f), "EnemyBullet"));
+			m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), m_enemyAngle, DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f), "EnemyBullet"));
 			CreateBullet();
 			m_shotInterval = 0;
 
@@ -183,7 +178,7 @@ void Enemy::Update()
 		{
 			for (int rad = 0; rad < 130; rad += 6)
 			{
-				m_pBullets.push_back(make_unique<Bullet>(m_position + Vector3(0.0f, 0.1f, 0.0f), (float)rad + m_enemyAngle, Vector3(0.0f, 0.0f, 0.15f), "EnemyBullet"));
+				m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), (float)rad + m_enemyAngle, DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f), "EnemyBullet"));
 				CreateBullet();
 				m_shotInterval = 0;
 			}
@@ -197,7 +192,7 @@ void Enemy::Update()
 			int i = 0;
 			while (i < 5)
 			{
-				m_pBullets.push_back(make_unique<Bullet>(m_position + Vector3(0.0f, 0.1f, 0.0f), m_shotRotate, Vector3(0.0f, 0.0f, 0.15f),"EnemyBullet"));
+				m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), m_shotRotate, DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f),"EnemyBullet"));
 				CreateBullet();
 				m_shotRotate += 0.2f;
 				m_shotInterval = 0;
@@ -211,15 +206,15 @@ void Enemy::Update()
 	// 速度代入
 	m_position += m_velocity;
 
-	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{
 		(*itr)->Update();
 	}
 
 
-	Matrix rotate = Matrix::CreateRotationY(m_enemyAngle);
-	Matrix scale = Matrix::CreateScale(BOSS_SIZE);
-	m_matrix = scale * rotate * Matrix::CreateTranslation(Vector3(m_position.x, 1.0f, m_position.z));
+	DirectX::SimpleMath::Matrix rotate = DirectX::SimpleMath::Matrix::CreateRotationY(m_enemyAngle);
+	DirectX::SimpleMath::Matrix scale = DirectX::SimpleMath::Matrix::CreateScale(BOSS_SIZE);
+	m_matrix = scale * rotate * DirectX::SimpleMath::Matrix::CreateTranslation(DirectX::SimpleMath::Vector3(m_position.x, 1.0f, m_position.z));
 
 	m_collider.center = m_position;
 
@@ -233,15 +228,15 @@ void Enemy::Update()
 
 
 // 描画
-void Enemy::Render(const Matrix& _view)
+void Enemy::Render(const DirectX::SimpleMath::Matrix& _view)
 {
 	// モデル描画
 	if (m_blinkTime % 5 == 0)
 		if (m_life != 0)
-			m_pEnemy->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<CommonStates>(), m_matrix, _view, GameContext::Get<Projection>()->GetMatrix());
+			m_pEnemy->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<DirectX::CommonStates>(), m_matrix, _view, GameContext::Get<Projection>()->GetMatrix());
 
 	// 弾描画
-	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{
 		(*itr)->Render(_view);
 	}
@@ -254,10 +249,10 @@ void Enemy::Finalize()
 }
 
 // プレイヤーを追いかける
-void Enemy::ChasePlayer(Vector3 _playerPos)
+void Enemy::ChasePlayer(DirectX::SimpleMath::Vector3 _playerPos)
 {
 	// プレイヤーへの向きを計算
-	Vector3 dir = _playerPos - m_position;
+	DirectX::SimpleMath::Vector3 dir = _playerPos - m_position;
 	dir.Normalize();
 
 	// 敵の移動
@@ -287,7 +282,7 @@ void Enemy::OnCollision()
 // 弾の作成
 void Enemy::CreateBullet()
 {
-	for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{
 		(*itr)->Initialize(m_pBulletGeometric.get());
 	}
@@ -298,7 +293,7 @@ void Enemy::BulletOnCollision(int _number)
 {
 	m_pBullets[_number]->SetIsValid(false);
 
-	vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
+	std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
 	while (itr != m_pBullets.end())
 	{
 		if (!(*itr)->GetIsValid())
@@ -311,7 +306,7 @@ void Enemy::BulletOnCollision(int _number)
 // 範囲外に出たら
 void Enemy::OutRangeBullet()
 {
-	vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
+	std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
 
 	while (itr != m_pBullets.end())
 	{

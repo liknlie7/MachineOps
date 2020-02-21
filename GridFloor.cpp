@@ -4,34 +4,29 @@
 
 #include <algorithm>
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-using namespace std;
-
 GridFloor::GridFloor(float size, int divs)
 	: m_size(size)
 	, m_divs(divs)
 {
 
 	m_pDeviceResources = GameContext::Get<DX::DeviceResources>();
-	m_pState = GameContext::Get<CommonStates>();
+	m_pState = GameContext::Get<DirectX::CommonStates>();
 
 	// エフェクトの生成
-	m_pBasicEffect = make_unique<BasicEffect>(m_pDeviceResources->GetD3DDevice());
+	m_pBasicEffect = std::make_unique<DirectX::BasicEffect>(m_pDeviceResources->GetD3DDevice());
 
 	// 頂点カラー(有効)
 	m_pBasicEffect->SetVertexColorEnabled(true);
 
 	// プリミティブオブジェクト生成
-	m_pPrimitiveBatch = make_unique<PrimitiveBatch<VertexPositionColor>>(m_pDeviceResources->GetD3DDeviceContext());
+	m_pPrimitiveBatch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>>(m_pDeviceResources->GetD3DDeviceContext());
 
 	// インプットレイアウト生成
 	void const* shaderByteCode;
 	size_t byteCodeLength;
 	m_pBasicEffect->GetVertexShaderBytecode(&shaderByteCode, &byteCodeLength);
-	m_pDeviceResources->GetD3DDevice()->CreateInputLayout(VertexPositionColor::InputElements,
-		VertexPositionColor::InputElementCount,
+	m_pDeviceResources->GetD3DDevice()->CreateInputLayout(DirectX::VertexPositionColor::InputElements,
+		DirectX::VertexPositionColor::InputElementCount,
 		shaderByteCode, byteCodeLength,
 		m_pInputLayout.GetAddressOf());
 }
@@ -46,9 +41,9 @@ GridFloor::~GridFloor()
 }
 
 
-void GridFloor::draw(Matrix view, Matrix proj, GXMVECTOR color)
+void GridFloor::draw(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix proj, DirectX::GXMVECTOR color)
 {
-	Matrix world;
+	DirectX::SimpleMath::Matrix world;
 
 	m_pDeviceResources->GetD3DDeviceContext()->OMSetBlendState(m_pState->Opaque(), nullptr, 0xFFFFFFFF);
 	m_pDeviceResources->GetD3DDeviceContext()->OMSetDepthStencilState(m_pState->DepthDefault(), 0);
@@ -63,20 +58,20 @@ void GridFloor::draw(Matrix view, Matrix proj, GXMVECTOR color)
 
 	m_pPrimitiveBatch->Begin();
 
-	const XMVECTORF32 xAxis = { m_size, 0.f, 0.f };
-	const XMVECTORF32 yAxis = { 0.f, 0.f, m_size };
+	const DirectX::XMVECTORF32 xAxis = { m_size, 0.f, 0.f };
+	const DirectX::XMVECTORF32 yAxis = { 0.f, 0.f, m_size };
 
-	size_t divs = max<size_t>(1, m_divs);
-	FXMVECTOR origin = g_XMZero;
+	size_t divs = std::max<size_t>(1, m_divs);
+	DirectX::FXMVECTOR origin = DirectX::g_XMZero;
 	for (size_t i = 0; i <= divs; ++i)
 	{
 		float fPercent = float(i) / float(divs);
 		fPercent = (fPercent * 1.0f) - 0.5f;
-		XMVECTOR vScale = XMVectorScale(xAxis, fPercent);
-		vScale = XMVectorAdd(vScale, origin);
+		DirectX::XMVECTOR vScale = XMVectorScale(xAxis, fPercent);
+		vScale = DirectX::XMVectorAdd(vScale, origin);
 
-		VertexPositionColor v1(XMVectorSubtract(vScale, yAxis * 0.5f), color);
-		VertexPositionColor v2(XMVectorAdd(vScale, yAxis * 0.5f), color);
+		DirectX::VertexPositionColor v1(DirectX::XMVectorSubtract(vScale, yAxis * 0.5f), color);
+		DirectX::VertexPositionColor v2(DirectX::XMVectorAdd(vScale, yAxis * 0.5f), color);
 		m_pPrimitiveBatch->DrawLine(v1, v2);
 	}
 
@@ -84,11 +79,11 @@ void GridFloor::draw(Matrix view, Matrix proj, GXMVECTOR color)
 	{
 		FLOAT fPercent = float(i) / float(divs);
 		fPercent = (fPercent * 1.0f) - 0.5f;
-		XMVECTOR vScale = XMVectorScale(yAxis, fPercent);
-		vScale = XMVectorAdd(vScale, origin);
+		DirectX::XMVECTOR vScale = XMVectorScale(yAxis, fPercent);
+		vScale = DirectX::XMVectorAdd(vScale, origin);
 
-		VertexPositionColor v1(XMVectorSubtract(vScale, xAxis * 0.5f), color);
-		VertexPositionColor v2(XMVectorAdd(vScale, xAxis * 0.5f), color);
+		DirectX::VertexPositionColor v1(DirectX::XMVectorSubtract(vScale, xAxis * 0.5f), color);
+		DirectX::VertexPositionColor v2(DirectX::XMVectorAdd(vScale, xAxis * 0.5f), color);
 		m_pPrimitiveBatch->DrawLine(v1, v2);
 	}
 
