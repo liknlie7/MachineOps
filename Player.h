@@ -8,6 +8,7 @@
 #include <Effects.h>
 #include <CommonStates.h>
 
+#include "ResourceManager.h"
 #include "DeviceResources.h"
 #include "Projection.h"
 #include "Collision.h"
@@ -21,9 +22,10 @@
 class Bullet;
 class Weapon;
 
+// プレイヤークラス
 class Player : public GameObject
 {
-private:
+private: // 定数
 
 	enum STATE
 	{
@@ -105,12 +107,6 @@ public: // アクセサ
 		return m_collider;
 	}
 
-	// サウンドプレーヤーの取得
-	void SetSoundPlayer(Adx2Le* _sound)
-	{
-		m_sound = _sound;
-	}
-
 public: // 関数
 
 	// 初期化
@@ -155,12 +151,12 @@ private: // 変数
 	ID3D11DeviceContext* m_context;
 
 	// サウンド
-	Adx2Le*					m_sound;
+	std::weak_ptr<Adx2Le>					m_pSound;
 
 private:
 
 	// プレイヤー
-	std::unique_ptr<DirectX::Model>				 m_pPlayer;
+	std::weak_ptr<DirectX::Model>				 m_pPlayer;
 	Collision::Sphere							 m_collider;
 
 	// 状態

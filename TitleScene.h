@@ -10,14 +10,16 @@
 #include <WICTextureLoader.h>
 
 #include "GameSceneManager.h"
+#include "SceneManager.h"
 #include "StepTimer.h"
 #include "GameContext.h"
 #include "EffectMask.h"
 #include "Adx2Le.h"
 #include "TitleSoundSeet.h"
+#include "ResourceManager.h"
 
 // タイトルシーン
-class TitleScene : public GameScene
+class TitleScene : public IScene
 {
 
 public: // 基本
@@ -30,18 +32,18 @@ public: // 基本
 public: // 関数
 
 	// 初期化
-	void Initialize() override;
+	eScene Initialize() override;
 	// 更新
-	void Update(DX::StepTimer const& _timer) override;
+	eScene Update(DX::StepTimer const& _timer) override;
 	// 描画
-	void Render() override;
+	eScene Render() override;
 	// 後処理
-	void Finalize() override;
+	eScene Finalize() override;
 
 private: // 変数
 
 	// サウンド
-	std::unique_ptr<Adx2Le>					m_adx2Le;
+	std::weak_ptr<Adx2Le>									m_pSound;
 
 	// テクスチャ
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_titleTexture;

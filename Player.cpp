@@ -24,13 +24,22 @@ Player::Player(const std::string& _tag)
 	, m_activeFlag(true)
 	, m_accel(0.0f, 0.0f, 0.0f)
 {
+	// 武器の作成
 	m_pWeapon = std::make_unique<Weapon>();
+
+	// プレイヤーモデルのshared_ptrを受け取る
+	m_pPlayer = std::weak_ptr<DirectX::Model>(ResourceManager::GetInstance().GetModel(L"Resources/Models/tank.cmo"));
+
+	// サウンドのshared_ptrを受け取る
+	//m_pSound = std::weak_ptr<Adx2Le>(ResourceManager::GetInstance().GetSound(L"Resources\\Sounds\\PlayScene"));
+
 }
 
 
 // デストラクタ
 Player::~Player()
 {
+	//m_pSound.reset();
 }
 
 // 初期化
@@ -38,12 +47,6 @@ void Player::Initialize()
 {
 	// KeyboardStateTrackerオブジェクトを生成する 
 	m_keyboardTracker = std::make_unique<DirectX::Keyboard::KeyboardStateTracker>();
-
-	// モデル作成 
-	DirectX::EffectFactory* factory = new DirectX::EffectFactory(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
-	factory->SetDirectory(L"Resources/Models");
-	m_pPlayer = DirectX::Model::CreateFromCMO(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources/Models/tank.cmo", *factory);
-	delete factory;
 
 	m_activeFlag = true;
 
@@ -136,7 +139,11 @@ void Player::Update()
 		{
 			// 弾の生成
 			m_pWeapon->CreateBullet();
-			m_sound->Play(CRI_PLAYER_SHOT);
+
+			// 射撃音の再生
+			//if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
+			//	sptr->Play(CRI_PLAYER_SHOT);
+			
 			m_shotInterval = 0;
 		}
 	}
@@ -153,10 +160,16 @@ void Player::Update()
 // 描画
 void Player::Render(const DirectX::SimpleMath::Matrix& _view)
 {
+	ID3D11DeviceContext1* context = GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext();
+	DirectX::CommonStates* state = GameContext::Get<DirectX::CommonStates>();
+	DirectX::SimpleMath::Matrix proj = GameContext::Get<Projection>()->GetMatrix();
+
 	// プレイヤー描画
 	if (m_blinkTime % 5 == 0)
-		m_pPlayer->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(),
-			*GameContext::Get<DirectX::CommonStates>(), m_matrix, _view, GameContext::Get<Projection>()->GetMatrix());
+		if (std::shared_ptr<DirectX::Model> sptr = m_pPlayer.lock())
+		{
+			sptr->Draw(context, *state, m_matrix, _view, proj);
+		}
 
 	// 武器の描画
 	m_pWeapon->Render(_view);

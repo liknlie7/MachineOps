@@ -7,30 +7,26 @@
 
 // コンストラクタ
 TitleScene::TitleScene()
-	: GameScene()
-	, m_time(0)
+	//: GameScene()
+	: m_time(0)
 	, m_volumeFadeFlag(false)
 	, m_volume(1.0f)
 {
 	// トラッカーの設定
 	m_keyboardTracker = GameContext::Get<DirectX::Keyboard::KeyboardStateTracker>();
 
-	// サウンドの作成
-	m_adx2Le = std::make_unique<Adx2Le>();
-
-	// サウンドの設定
-	m_adx2Le->Initialize(L"Resources\\Sounds\\TitleSounds.acf");
-	m_adx2Le->LoadAcbFile(L"Resources\\Sounds\\TitleSounds.acb");
+	// サウンドのshared_ptrを受け取る
+	m_pSound = std::weak_ptr<Adx2Le>(ResourceManager::GetInstance().GetSound(L"Resources\\Sounds\\TitleSounds"));
 }
 
 // デストラクタ
 TitleScene::~TitleScene()
 {
-	m_adx2Le->Finalize();
+	m_pSound.reset();
 }
 
 // 初期化
-void TitleScene::Initialize()
+eScene TitleScene::Initialize()
 {
 	// テクスチャ読み込み
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\BackGround.png", nullptr, m_backGroundTexture.GetAddressOf());
@@ -38,11 +34,12 @@ void TitleScene::Initialize()
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\Massage.png", nullptr, m_massageTexture.GetAddressOf());
 
 	// BGMの再生
-	m_adx2Le->Play(CRI_TITLE_TITLEBGM, m_volume);
+	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
+		sptr->Play(CRI_TITLE_TITLEBGM, m_volume);
 }
 
 // 描画
-void TitleScene::Update(DX::StepTimer const& _timer)
+eScene TitleScene::Update(DX::StepTimer const& _timer)
 {
 	// フェードエフェクトの取得
 	auto effectMask = GameContext::Get<EffectMask>();
@@ -60,7 +57,9 @@ void TitleScene::Update(DX::StepTimer const& _timer)
 	if (m_keyboardTracker->pressed.Space)
 	{
 		// スタート音の再生
-		m_adx2Le->Play(CRI_TITLE_STARTSE);
+		if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
+			sptr->Play(CRI_TITLE_STARTSE, m_volume);
+
 
 		// フェードアウト
 		effectMask->Close();
@@ -72,8 +71,10 @@ void TitleScene::Update(DX::StepTimer const& _timer)
 	{
 		m_volume -= elapsedTime;
 
-		m_adx2Le->SetVolumeByID(CRI_TITLE_TITLEBGM, m_volume);
-	
+		//m_adx2Le->SetVolumeByID(CRI_TITLE_TITLEBGM, m_volume);
+		if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
+			sptr->SetVolumeByID(CRI_TITLE_TITLEBGM, m_volume);
+
 		if (m_volume <= 0.0f)
 			m_volumeFadeFlag = false;
 	}
@@ -83,15 +84,18 @@ void TitleScene::Update(DX::StepTimer const& _timer)
 	{
 		// シーンマネージャーの取得
 		GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
+
 		// サウンドを停止させる
-		m_adx2Le->Stop();
+		if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
+			sptr->Stop();
+
 		// プレイシーンへ遷移
 		gameSceneManager->RequestScene("Play");
 	}
 }
 
 // 描画
-void TitleScene::Render()
+eScene TitleScene::Render()
 {
 	// スプライトバッチの取得
 	DirectX::SpriteBatch* spriteBatch = GameContext::Get<DirectX::SpriteBatch>();
@@ -108,7 +112,7 @@ void TitleScene::Render()
 }
 
 // 後処理
-void TitleScene::Finalize()
+eScene TitleScene::Finalize()
 {
 
 }

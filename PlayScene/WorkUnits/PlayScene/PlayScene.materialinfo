@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Orca XML File Format -->
+<OrcaTrees ObjectTypeExpression="Full" BinaryEncodingType="Base64" FileVersion="3" FileRevision="0">
+  <OrcaTree OrcaName="(no name)">
+    <Orca OrcaName="PlayScene_MaterialInfo" FormatVersion="Ver.1.02.00" MaterialRootPath="Materials" VersionInfoV3="Ver.3.40.17" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoMaterialInfoFile">
+      <Orca OrcaName="MaterialRootFolder" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveformFolder">
+        <Orca OrcaName="PlaySceneBGM.wav" Channels="2" EncodeFileSize="3136520" ReloopEnableFlag="True" ReloopEnd="4705920" ResamplingRate="44100" SampleFrames="4705920" SamplingRate="44100" SourceFileSize="18823772" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform"/>
+        <Orca OrcaName="Shot.wav" Channels="2" EncodeFileSize="53292" ReloopEnd="79708" ResamplingRate="44100" SampleFrames="79708" SamplingRate="44100" SourceFileSize="318910" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform"/>
+        <Orca OrcaName="Warning.wav" Channels="2" EncodeFileSize="69660" ReloopEnd="103680" ResamplingRate="44100" SampleFrames="103680" SamplingRate="44100" SourceFileSize="414812" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform"/>
+      </Orca>
+    </Orca>
+  </OrcaTree>
+</OrcaTrees>
+<!-- Copyright (c) CRI Middleware Co.,LTD. -->
+<!-- end of document -->

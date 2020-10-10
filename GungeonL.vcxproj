@@ -208,8 +208,10 @@
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="PlaySceneSound.h" />
     <ClInclude Include="Projection.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="ResultClearScene.h" />
     <ClInclude Include="ResultGameOverScene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SphereCollider.h" />
@@ -255,8 +257,10 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ResultClearScene.cpp" />
     <ClCompile Include="ResultGameOverScene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Wall.cpp" />

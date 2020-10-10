@@ -11,9 +11,11 @@
 #include "DeviceResources.h"
 #include "GameContext.h"
 #include "GameScene.h"
+#include "SceneManager.h"
 #include "Projection.h"
 #include "Keyboard.h"
 #include "GameSceneManager.h"
+#include "SceneManager.h"
 #include "WICTextureLoader.h" 
 #include "StepTimer.h"
 #include "Adx2Le.h"
@@ -34,7 +36,7 @@
 #include "WarningEffect.h"
 
 // プレイシーンクラス
-class PlayScene : public GameScene
+class PlayScene : public IScene
 {
 public:
 
@@ -91,13 +93,13 @@ public: // アクセッサ
 public: // 関数
 
 	// 初期化
-	void Initialize() override;
+	eScene Initialize() override;
 	// 更新
-	void Update(DX::StepTimer const& _timer) override;
+	eScene Update(DX::StepTimer const& _timer) override;
 	// 描画
-	void Render() override;
+	eScene Render() override;
 	// 後始末
-	void Finalize() override;
+	eScene Finalize() override;
 
 	// ゲームの初期化
 	GAME_STATE InitializeGame();
@@ -129,8 +131,7 @@ private: // 定数
 private: // 変数
 
 	// サウンド
-	std::unique_ptr<Adx2Le>					m_playSceneSound;
-	std::unique_ptr<Adx2Le>					m_playerSound;
+	std::weak_ptr<Adx2Le>						m_pSound;
 
 	//----- エフェクト用 -----//
 	// エフェクト

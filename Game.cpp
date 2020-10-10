@@ -20,18 +20,10 @@
 
 extern void ExitGame();
 
-
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-using namespace std;
-
-using Microsoft::WRL::ComPtr;
-
 // TODO:Updateの引数elapsedTimeに置き換え
 Game::Game() noexcept(false)
 {
-	m_pDeviceResources = make_unique<DX::DeviceResources>();
+	m_pDeviceResources = std::make_unique<DX::DeviceResources>();
 	m_pDeviceResources->RegisterDeviceNotify(this);
 	GameContext::Register<DX::DeviceResources>(m_pDeviceResources);
 }
@@ -46,13 +38,13 @@ Game::~Game()
 void Game::Initialize(HWND window, int width, int height)
 {
 	// マウスの作成
-	m_pMouse = make_unique<Mouse>();
+	m_pMouse = std::make_unique<DirectX::Mouse>();
 	m_pMouse->SetWindow(window);
 
 	// キーボードの作成
-	m_pKeyboard = make_unique<Keyboard>();
-	m_pKeyboardTracker = make_unique<Keyboard::KeyboardStateTracker>();
-	GameContext::Register<Keyboard::KeyboardStateTracker>(m_pKeyboardTracker);
+	m_pKeyboard = std::make_unique<DirectX::Keyboard>();
+	m_pKeyboardTracker = std::make_unique<DirectX::Keyboard::KeyboardStateTracker>();
+	GameContext::Register<DirectX::Keyboard::KeyboardStateTracker>(m_pKeyboardTracker);
 
 	m_pDeviceResources->SetWindow(window, width, height);
 
@@ -60,12 +52,12 @@ void Game::Initialize(HWND window, int width, int height)
 	CreateDeviceDependentResources();
 
 	// コモンステート作成
-	m_pState = make_unique<CommonStates>(m_pDeviceResources->GetD3DDevice());
-	GameContext::Register<CommonStates>(m_pState);
+	m_pState = std::make_unique<DirectX::CommonStates>(m_pDeviceResources->GetD3DDevice());
+	GameContext::Register<DirectX::CommonStates>(m_pState);
 
 	// スプライトバッチの作成
-	m_pSpriteBatch = std::make_unique<SpriteBatch>(m_pDeviceResources->GetD3DDeviceContext());
-	GameContext::Register<SpriteBatch>(m_pSpriteBatch);
+	m_pSpriteBatch = std::make_unique<DirectX::SpriteBatch>(m_pDeviceResources->GetD3DDeviceContext());
+	GameContext::Register<DirectX::SpriteBatch>(m_pSpriteBatch);
 
 	// エフェクト（マスク）の作成
 	m_effectMask = std::make_unique<EffectMask>();
@@ -90,14 +82,14 @@ void Game::Initialize(HWND window, int width, int height)
 	debugFont->create(m_pDeviceResources->GetD3DDevice(), m_pDeviceResources->GetD3DDeviceContext());
 
 
-	m_pGameSceneManager = make_unique<GameSceneManager>();
-	m_pGameSceneManager->RegisterScene<TitleScene>("Title");
-	m_pGameSceneManager->RegisterScene<PlayScene>("Play");
-	m_pGameSceneManager->RegisterScene<ResultClearScene>("ResultClear");
-	m_pGameSceneManager->RegisterScene<ResultGameOverScene>("ResultGameOver");
-	
-	m_pGameSceneManager->SetStartScene("Title");
-	GameContext::Register<GameSceneManager>(m_pGameSceneManager);
+	//m_pGameSceneManager = std::make_unique<GameSceneManager>();
+	//m_pGameSceneManager->RegisterScene<TitleScene>("Title");
+	//m_pGameSceneManager->RegisterScene<PlayScene>("Play");
+	//m_pGameSceneManager->RegisterScene<ResultClearScene>("ResultClear");
+	//m_pGameSceneManager->RegisterScene<ResultGameOverScene>("ResultGameOver");
+	//
+	//m_pGameSceneManager->SetStartScene("Title");
+	//GameContext::Register<GameSceneManager>(m_pGameSceneManager);
 	
 
 	m_pCollisionManager = std::make_unique<CollisionManager>();
@@ -130,7 +122,7 @@ void Game::Update(DX::StepTimer const& timer)
 	elapsedTime;
 
 	// シーンの更新
-	m_pGameSceneManager->Update(timer);
+	//m_pGameSceneManager->Update(timer);
 
 	// 当たり判定の更新
 	m_pCollisionManager->DetectCollision();
@@ -158,7 +150,7 @@ void Game::Render()
 
 	// TODO: Add your rendering code here.
 	context;
-	m_pGameSceneManager->Render();
+	//m_pGameSceneManager->Render();
 
 	// マスク
 	m_effectMask->Render();
@@ -178,7 +170,7 @@ void Game::Clear()
 	auto renderTarget = m_pDeviceResources->GetRenderTargetView();
 	auto depthStencil = m_pDeviceResources->GetDepthStencilView();
 
-	context->ClearRenderTargetView(renderTarget, Colors::CornflowerBlue);
+	context->ClearRenderTargetView(renderTarget, DirectX::Colors::CornflowerBlue);
 	context->ClearDepthStencilView(depthStencil, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	context->OMSetRenderTargets(1, &renderTarget, depthStencil);
 
@@ -259,7 +251,7 @@ void Game::CreateWindowSizeDependentResources()
 	float aspectRatio = float(size.right) / float(size.bottom);
 
 	// 画角を設定
-	float fovAngleY = XMConvertToRadians(45.0f);
+	float fovAngleY = DirectX::XMConvertToRadians(45.0f);
 
 	// 射影行列を作成する
 	m_pProjection = std::make_unique<Projection>();

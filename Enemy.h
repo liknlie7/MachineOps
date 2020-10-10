@@ -14,6 +14,7 @@
 #include "GameContext.h"
 #include "Bullet.h"
 #include "GameObject.h"
+#include "ResourceManager.h"
 
 // 敵
 class Enemy : public GameObject
@@ -23,7 +24,7 @@ public: // 基本
 	// コンストラクタ
 	Enemy(const int _type, const std::string& _tag);
 	// デストラクタ
-	~Enemy();
+	~Enemy() {};
 
 public:
 
@@ -47,10 +48,10 @@ public:
 public: // アクセサ
 
 	// モデルの情報の取得
-	DirectX::Model* GetModel() const
-	{
-		return m_pEnemy.get();
-	}
+	//DirectX::Model* GetModel() const
+	//{
+	//	return m_pEnemy.get();
+	//}
 
 	// 座標取得
 	DirectX::SimpleMath::Vector3 GetPos() const
@@ -141,7 +142,7 @@ private: // 定数
 private: // 変数
 
 	// モデル
-	std::unique_ptr<DirectX::Model>					m_pEnemy;
+	std::weak_ptr<DirectX::Model>					m_pEnemy;
 	Collision::Sphere								m_collider;
 
 	// 弾

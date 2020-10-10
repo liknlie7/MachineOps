@@ -26,35 +26,14 @@ Enemy::Enemy(const int _type, const std::string& _tag)
 	m_enemyType = _type;
 }
 
-// デストラクタ
-Enemy::~Enemy()
-{
-}
-
 void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 {
-
-	// エフェクトファクトリの作成 
-	DirectX::EffectFactory* factory = new DirectX::EffectFactory(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
-
 	// 弾の形状作成
 	m_pBulletGeometric = DirectX::GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);
 
-	// テクスチャの読み込みパス指定 
-	factory->SetDirectory(L"Resources/Models");
-
 	switch (m_enemyType)
 	{
-
 	case NORMAL_ENEMY: // ノーマルタイプ
-
-		// モデルデータ読み込み 
-		m_pEnemy = DirectX::Model::CreateFromCMO(
-			GameContext::Get<DX::DeviceResources>()->GetD3DDevice(),
-			L"Resources/Models/Enemy1.cmo",
-			*factory
-		);
-		delete factory;
 
 		m_position = _pos;
 		// 速さの初期化
@@ -72,14 +51,6 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		// 盾持ち
 	case SHIELD_ENEMY:
 
-		// モデルデータ読み込み 
-		m_pEnemy = DirectX::Model::CreateFromCMO(
-			GameContext::Get<DX::DeviceResources>()->GetD3DDevice(),
-			L"Resources/Models/Enemy2.cmo",
-			*factory
-		);
-		delete factory;
-
 		m_position = _pos;
 		// 速さの初期化
 		m_speed = 0.05f;
@@ -94,13 +65,9 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 		break;
 
 	case BOSS_ENEMY:
-		// モデルデータ読み込み 
-		m_pEnemy = DirectX::Model::CreateFromCMO(
-			GameContext::Get<DX::DeviceResources>()->GetD3DDevice(),
-			L"Resources/Models/Enemy1.cmo",
-			*factory
-		);
-		delete factory;
+
+		// 敵モデルのshared_ptrを受け取る
+		m_pEnemy = std::weak_ptr<DirectX::Model>(ResourceManager::GetInstance().GetModel(L"Resources/Models/Enemy1.cmo"));
 
 		m_position = _pos;
 		// 速さの初期化
@@ -192,7 +159,7 @@ void Enemy::Update()
 			int i = 0;
 			while (i < 5)
 			{
-				m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), m_shotRotate, DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f),"EnemyBullet"));
+				m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), m_shotRotate, DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f), "EnemyBullet"));
 				CreateBullet();
 				m_shotRotate += 0.2f;
 				m_shotInterval = 0;
@@ -218,8 +185,8 @@ void Enemy::Update()
 
 	m_collider.center = m_position;
 
-	if (m_life == 0)
-		m_pEnemy = nullptr;
+	//if (m_life == 0)
+	//	m_pEnemy = nullptr;
 
 	OutRangeBullet();
 	if (m_isValid)  Blink();
@@ -230,10 +197,15 @@ void Enemy::Update()
 // 描画
 void Enemy::Render(const DirectX::SimpleMath::Matrix& _view)
 {
+	ID3D11DeviceContext1* context = GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext();
+	DirectX::CommonStates* state = GameContext::Get<DirectX::CommonStates>();
+	DirectX::SimpleMath::Matrix proj = GameContext::Get<Projection>()->GetMatrix();
+
 	// モデル描画
 	if (m_blinkTime % 5 == 0)
 		if (m_life != 0)
-			m_pEnemy->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<DirectX::CommonStates>(), m_matrix, _view, GameContext::Get<Projection>()->GetMatrix());
+			if (std::shared_ptr<DirectX::Model> sptr = m_pEnemy.lock())
+				sptr->Draw(context, *state, m_matrix, _view, proj);
 
 	// 弾描画
 	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)

@@ -18,24 +18,18 @@ PlayScene::PlayScene()
 // デストラクタ
 PlayScene::~PlayScene()
 {
-
+	m_pSound.reset();
 }
 
 // 初期化
-void PlayScene::Initialize()
+eScene PlayScene::Initialize()
 {
-	// サウンドの作成
-	m_playSceneSound = std::make_unique<Adx2Le>();
-	m_playerSound = std::make_unique<Adx2Le>();
-
-	// サウンドの設定
-	m_playSceneSound->Initialize(L"Resources\\Sounds\\PlayScene.acf");
-	m_playerSound->Initialize(L"Resources\\Sounds\\PlayScene.acf");
-	m_playSceneSound->LoadAcbFile(L"Resources\\Sounds\\PlayScene.acb");
-	m_playerSound->LoadAcbFile(L"Resources\\Sounds\\Player.acb");
+	// サウンドのshared_ptrを受け取る
+	m_pSound = std::weak_ptr<Adx2Le>(ResourceManager::GetInstance().GetSound(L"Resources\\Sounds\\PlayScene"));
 
 	// BGMの再生
-	m_playSceneSound->Play(CRI_PLAYSCENE_PLAYSCENEBGM, 1.0f);
+	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
+		sptr->Play(CRI_PLAYSCENE_PLAYSCENEBGM, 1.0f);
 
 	// 追尾カメラの作成
 	m_pFollowCamera = std::make_unique<FollowCamera>();
@@ -56,7 +50,6 @@ void PlayScene::Initialize()
 	// プレイヤー作成
 	m_pPlayer = std::make_unique<Player>("Player");
 	m_pPlayer->Initialize();
-	m_pPlayer->SetSoundPlayer(m_playerSound.get());
 
 	// 敵作成
 	if (bossFlag)
@@ -119,12 +112,15 @@ void PlayScene::Initialize()
 	m_warningEffect->Initialize();
 
 	m_waveCount = 5;
-	m_playSceneSound->Play(CRI_PLAYSCENE_WARNING, 1.0f);
+
+	// WARNING再生
+	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
+		sptr->Play(CRI_PLAYSCENE_WARNING, 1.0f);
 
 }
 
 // 更新
-void PlayScene::Update(DX::StepTimer const& _timer)
+eScene PlayScene::Update(DX::StepTimer const& _timer)
 {
 	float elapsedTime = float(_timer.GetElapsedSeconds());
 
@@ -295,11 +291,11 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 
 		}
 		// リザルトシーンへ遷移
-		if (m_pEnemy->GetModel() == nullptr)
-		{
-			GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
-			gameSceneManager->RequestScene("ResultClear");
-		}
+		//if (m_pEnemy->GetModel() == nullptr)
+		//{
+		//	GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
+		//	gameSceneManager->RequestScene("ResultClear");
+		//}
 
 
 
@@ -334,7 +330,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 }
 
 // 描画
-void PlayScene::Render()
+eScene PlayScene::Render()
 {
 	DebugFont* debugFont = DebugFont::GetInstance();
 	debugFont->print(10, 10, L"PlayScene");
@@ -388,7 +384,7 @@ void PlayScene::Render()
 }
 
 // 後始末
-void PlayScene::Finalize()
+eScene PlayScene::Finalize()
 {
 }
 

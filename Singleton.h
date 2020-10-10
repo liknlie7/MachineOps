@@ -8,7 +8,7 @@ public:
 	static inline T& GetInstance()
 	{
 		static T instance;
-		return &instace;
+		return instance;
 	}
 
 protected:

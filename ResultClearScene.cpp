@@ -6,7 +6,6 @@
 
 // コンストラクタ
 ResultClearScene::ResultClearScene()
-	: GameScene()
 
 {
 	m_keyboardTracker = GameContext::Get<DirectX::Keyboard::KeyboardStateTracker>();
@@ -18,7 +17,7 @@ ResultClearScene::~ResultClearScene()
 }
 
 // 初期化
-void ResultClearScene::Initialize()
+eScene ResultClearScene::Initialize()
 {
 	// テクスチャ読み込み
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\ResultBackGround.png", nullptr, m_backGroundTexture.GetAddressOf());
@@ -26,7 +25,7 @@ void ResultClearScene::Initialize()
 }
 
 // 更新
-void ResultClearScene::Update(DX::StepTimer const & _timer)
+eScene ResultClearScene::Update(DX::StepTimer const & _timer)
 {
 	_timer;
 
@@ -41,7 +40,7 @@ void ResultClearScene::Update(DX::StepTimer const & _timer)
 }
 
 // 描画
-void ResultClearScene::Render()
+eScene ResultClearScene::Render()
 {
 	// スプライトバッチの取得
 	DirectX::SpriteBatch* spriteBatch = GameContext::Get<DirectX::SpriteBatch>();
@@ -54,6 +53,6 @@ void ResultClearScene::Render()
 }
 
 // 後処理
-void ResultClearScene::Finalize()
+eScene ResultClearScene::Finalize()
 {
 }

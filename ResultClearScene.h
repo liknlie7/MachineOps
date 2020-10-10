@@ -1,6 +1,4 @@
 #pragma once
-#include "GameScene.h"
-#include "DeviceResources.h"
 
 #include <SpriteBatch.h>
 #include <Keyboard.h>
@@ -9,8 +7,12 @@
 #include <SimpleMath.h>
 #include "StepTimer.h"
 
+#include "GameScene.h"
+#include "DeviceResources.h"
+#include "SceneManager.h"
+
 // クリアシーン
-class ResultClearScene : public GameScene
+class ResultClearScene : public IScene
 {
 public: // 基本
 
@@ -22,13 +24,13 @@ public: // 基本
 public: // 関数
 
 	// 初期化
-	void Initialize() override;
+	eScene Initialize() override;
 	// 更新
-	void Update(DX::StepTimer const& _timer) override;
+	eScene Update(DX::StepTimer const& _timer) override;
 	//描画
-	void Render() override;
+	eScene Render() override;
 	// 後処理
-	void Finalize() override;
+	eScene Finalize() override;
 
 private: // 変数
 

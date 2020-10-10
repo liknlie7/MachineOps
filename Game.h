@@ -16,12 +16,9 @@
 #include "Keyboard.h"
 #include "Adx2Le.h"
 
-class GameSceneManager;
+//class GameSceneManager;
 class CollisionManager;
 class EffectMask;
-
-class Player;
-
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -89,8 +86,8 @@ private:
 	// スプライトバッチ
 	std::unique_ptr<DirectX::SpriteBatch>   m_pSpriteBatch;
 
-	// コモンステート
-	std::unique_ptr<GameSceneManager>       m_pGameSceneManager;
+	// シーンマネージャー
+	//std::unique_ptr<GameSceneManager>       m_pGameSceneManager;
 
 	// コリジョンマネージャー
 	std::unique_ptr<CollisionManager>       m_pCollisionManager;

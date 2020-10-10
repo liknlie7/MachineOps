@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Orca XML File Format -->
+<OrcaTrees ObjectTypeExpression="Full" BinaryEncodingType="Base64" FileVersion="3" FileRevision="0">
+  <OrcaTree OrcaName="(no name)">
+    <Orca OrcaName="ユーザ設定" AcbInfoFileOutputFlag="False" AcfOutputFlag="True" AutoRepreviewFlag="False" BuildRootPath="C:/Users/s182242/Desktop" CurrentBusMap="/CriAtomCraftV2Root/GlobalSettings/BusMap/BusMapforCue/BusMap_Default" CurrentPreviewTargetConfig="/CriAtomCraftV2Root/GlobalSettings/TargetConfigs/Public" CurrentTargetConfig="/CriAtomCraftV2Root/GlobalSettings/TargetConfigs/Public" FormatVersion="Ver.1.02.00" LastOpenedWorkUnitName="PlayScene" OoUniqId="905616a1-852b-47a0-86d4-a4e56a0451e3" SelectPreviewType="None" VersionControlCommitWhenClose="False" VersionControlIncludeAllItemsOfWu="False" VersionControlIncludeChildItem="True" VersionControlLockWhenSaved="False" VersionInfoV3="Ver.3.40.17" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoUserSettings">
+      <Orca OrcaName="PreviewSettingsMap" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoTargetPreviewSettingMapFolder">
+        <Orca OrcaName="Public" PreviewSettingsUniqId="334d05ad-2776-405b-a9a1-7b07c1af6a0a" TargetConfigUniqId="232347eb-b4e3-4bf6-90e6-b82a9c52bfa4" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoTargetPreviewSettingMap"/>
+      </Orca>
+    </Orca>
+  </OrcaTree>
+</OrcaTrees>
+<!-- Copyright (c) CRI Middleware Co.,LTD. -->
+<!-- end of document -->
