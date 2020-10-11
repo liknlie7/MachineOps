@@ -7,8 +7,8 @@ const float PlayScene::DAMAGE_TIME = 1.0f;
 
 // コンストラクタ
 PlayScene::PlayScene()
-	: GameScene()
-	, m_gameState(STATE_START)
+	//: GameScene()
+	: m_gameState(STATE_START)
 	, m_waveState(BOSS_WAVE)
 	, m_waveCount(0)
 {
@@ -117,6 +117,7 @@ eScene PlayScene::Initialize()
 	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
 		sptr->Play(CRI_PLAYSCENE_WARNING, 1.0f);
 
+	return eScene::PLAY;
 }
 
 // 更新
@@ -249,11 +250,11 @@ eScene PlayScene::Update(DX::StepTimer const& _timer)
 				{
 					if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
 					{
-						// シーンマネージャーの取得
-						GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
+						//// シーンマネージャーの取得
+						//GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
 
-						// プレイシーンへ遷移
-						gameSceneManager->RequestScene("ResultGameOver");
+						//// プレイシーンへ遷移
+						//gameSceneManager->RequestScene("ResultGameOver");
 					}
 				}
 			}
@@ -327,6 +328,8 @@ eScene PlayScene::Update(DX::StepTimer const& _timer)
 		//default:
 		//	break;
 	}
+
+	return eScene::PLAY;
 }
 
 // 描画
@@ -381,11 +384,14 @@ eScene PlayScene::Render()
 	m_warningEffect->Render();
 
 	GameContext::Get<DirectX::SpriteBatch>()->End();
+
+	return eScene::PLAY;
 }
 
 // 後始末
 eScene PlayScene::Finalize()
 {
+	return eScene::PLAY;
 }
 
 // プレイ中

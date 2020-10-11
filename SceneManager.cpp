@@ -1,9 +1,14 @@
 #include "pch.h"
 #include "SceneManager.h"
+#include "TitleScene.h"
+#include "PlayScene.h"
+#include "ResultClearScene.h"
+#include "ResultGameOverScene.h"
 
 // コンストラクタ
 SceneManager::SceneManager()
 	: m_pScene(nullptr)
+	, m_nextScene(eScene::NONE)
 {
 
 }
@@ -23,6 +28,18 @@ void SceneManager::Initialize()
 // 現在のシーンの更新
 void SceneManager::Update(DX::StepTimer const & _timer)
 {
+	if (m_pScene == nullptr)
+		return;
+
+	if (m_nextScene != eScene::NONE)
+	{
+		m_pScene->Finalize();
+		delete m_pScene;
+		m_pScene = nullptr;
+
+		m_pScene = ChangeScene(m_nextScene);
+	}
+
 	m_pScene->Update(_timer);
 }
 
@@ -38,39 +55,61 @@ void SceneManager::Finalize()
 	m_pScene->Finalize();
 }
 
+// 最初のシーンの設定
+void SceneManager::SetStartScene(eScene _scene)
+{
+	m_pScene = ChangeScene(_scene);
+}
+
+// シーンのリクエスト
+void SceneManager::RequestScene(eScene _scene)
+{
+	m_nextScene = _scene;
+}
+
 // シーンの作成
 IScene* SceneManager::ChangeScene(eScene _scene)
 {
-	// いずれかのシーンが動作中
-	if (m_pScene != nullptr)
-	{
-		// 削除する
-		delete m_pScene;
-	}
+	//if (m_pScene != nullptr)
+	//	delete m_pScene;
+
+	IScene* pScene = nullptr;
 
 	switch (_scene)
 	{
 	case eScene::TITLE:
 
-		m_pScene = new TitleScene();
+		// タイトルシーンへ遷移
+		pScene = new TitleScene();
 		break;
 
 	case eScene::PLAY:
 
-		m_pScene = new PlayScene();
+		// プレイシーンへ遷移
+		pScene = new PlayScene();
 		break;
-	
+
 	case eScene::RESULT_CLEAR:
 
-		m_pScene = new ResultClearScene();
+		// クリアシーンへ遷移
+		pScene = new ResultClearScene();
 		break;
 
 	case eScene::RESULT_GAMEOVER:
 
-		m_pScene = new ResultGameOverScene();
+		// ゲームオーバーシーンへ遷移
+		pScene = new ResultGameOverScene();
 		break;
 
 	default:
 		break;
 	}
+
+	// シーンの初期化
+	if (pScene != nullptr)
+		pScene->Initialize();
+
+	//m_nextScene = eScene::NONE;
+
+	return pScene;
 }

@@ -36,9 +36,11 @@ eScene TitleScene::Initialize()
 	// BGMの再生
 	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
 		sptr->Play(CRI_TITLE_TITLEBGM, m_volume);
+
+	return eScene::TITLE;
 }
 
-// 描画
+// 更新
 eScene TitleScene::Update(DX::StepTimer const& _timer)
 {
 	// フェードエフェクトの取得
@@ -83,15 +85,19 @@ eScene TitleScene::Update(DX::StepTimer const& _timer)
 	if (effectMask->IsClose() && m_volume < 0.0f)
 	{
 		// シーンマネージャーの取得
-		GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
+		//GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
 
 		// サウンドを停止させる
 		if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
 			sptr->Stop();
 
 		// プレイシーンへ遷移
-		gameSceneManager->RequestScene("Play");
+		//gameSceneManager->RequestScene("Play");
+		SceneManager::GetInstance().RequestScene(eScene::PLAY);
 	}
+
+
+	return eScene::TITLE;
 }
 
 // 描画
@@ -109,10 +115,12 @@ eScene TitleScene::Render()
 		spriteBatch->Draw(m_massageTexture.Get(), DirectX::SimpleMath::Vector2(380, 450), nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(0.3f, 0.3f));
 	}
 	spriteBatch->End();
+
+	return eScene::TITLE;
 }
 
 // 後処理
 eScene TitleScene::Finalize()
 {
-
+	return eScene::TITLE;
 }

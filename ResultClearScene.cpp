@@ -2,7 +2,7 @@
 #include "ResultClearScene.h"
 
 #include "GameContext.h"
-#include "GameSceneManager.h"
+//#include "GameSceneManager.h"
 
 // コンストラクタ
 ResultClearScene::ResultClearScene()
@@ -22,6 +22,8 @@ eScene ResultClearScene::Initialize()
 	// テクスチャ読み込み
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\ResultBackGround.png", nullptr, m_backGroundTexture.GetAddressOf());
 	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\GameClear.png", nullptr, m_clearTexture.GetAddressOf());
+
+	return eScene::RESULT_CLEAR;
 }
 
 // 更新
@@ -34,9 +36,11 @@ eScene ResultClearScene::Update(DX::StepTimer const & _timer)
 
 	if (m_keyboardTracker->pressed.Space)
 	{
-		GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
-		gameSceneManager->RequestScene("Title");
+		//GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
+		//gameSceneManager->RequestScene("Title");
 	}
+
+	return eScene::RESULT_CLEAR;
 }
 
 // 描画
@@ -50,9 +54,12 @@ eScene ResultClearScene::Render()
 	spriteBatch->Draw(m_backGroundTexture.Get(), DirectX::SimpleMath::Vector2::Zero, nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(1.2f, 1.2f));
 	spriteBatch->Draw(m_clearTexture.Get(), DirectX::SimpleMath::Vector2(290, 250), nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(0.8f, 0.8f));
 	spriteBatch->End();
+
+	return eScene::RESULT_CLEAR;
 }
 
 // 後処理
 eScene ResultClearScene::Finalize()
 {
+	return eScene::RESULT_CLEAR;
 }

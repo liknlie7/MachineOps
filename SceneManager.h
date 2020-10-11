@@ -1,10 +1,7 @@
 #pragma once
 
 #include "StepTimer.h"
-#include "TitleScene.h"
-#include "PlayScene.h"
-#include "ResultClearScene.h"
-#include "ResultGameOverScene.h"
+#include "Singleton.h"
 
 enum class eScene
 {
@@ -42,9 +39,9 @@ public: // 関数
 };
 
 // シーンマネージャー
-class SceneManager
+class SceneManager : public Singleton<SceneManager>
 {
-private: // 基本
+public: // 基本
 
 	// コンストラクタ
 	SceneManager();
@@ -66,6 +63,12 @@ public: // 関数
 	// 現在のシーンの後処理
 	void Finalize();
 
+	// 最初のシーンの設定
+	void SetStartScene(eScene _scene);
+
+	// 次のシーンのリクエスト
+	void RequestScene(eScene _scene);
+
 	// シーンの作成
 	IScene* ChangeScene(eScene _scene);
 
@@ -74,6 +77,7 @@ private: // 変数
 	// シーン
 	IScene* m_pScene;
 
+	// 次のシーン
 	eScene m_nextScene;
 
 };

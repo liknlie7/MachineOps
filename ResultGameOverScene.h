@@ -6,10 +6,11 @@
 #include <WICTextureLoader.h>
 #include <SimpleMath.h>
 
-#include "GameScene.h"
 #include "DeviceResources.h"
 #include "StepTimer.h"
 #include "SceneManager.h"
+
+class IScene;
 
 // ゲームオーバーシーン
 class ResultGameOverScene : public IScene
@@ -18,6 +19,7 @@ public: // 基本
 
 	// コンストラクタ
 	ResultGameOverScene();
+
 	// デストラクタ
 	virtual ~ResultGameOverScene();
 
@@ -25,10 +27,13 @@ public: // 関数
 
 	// 初期化
 	eScene Initialize() override;
+
 	// 更新
 	eScene Update(DX::StepTimer const& _timer) override;
+	
 	//描画
 	eScene Render() override;
+	
 	// 後処理
 	eScene Finalize() override;
 

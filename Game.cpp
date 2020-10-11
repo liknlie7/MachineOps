@@ -9,7 +9,7 @@
 
 #include "DebugFont.h"
 #include "GameContext.h"
-#include "GameSceneManager.h"
+//#include "GameSceneManager.h"
 #include "CollisionManager.h"
 #include "EffectMask.h"
 
@@ -82,6 +82,8 @@ void Game::Initialize(HWND window, int width, int height)
 	debugFont->create(m_pDeviceResources->GetD3DDevice(), m_pDeviceResources->GetD3DDeviceContext());
 
 
+	m_pSceneManager = std::make_unique<SceneManager>();
+	m_pSceneManager->SetStartScene(eScene::PLAY);
 	//m_pGameSceneManager = std::make_unique<GameSceneManager>();
 	//m_pGameSceneManager->RegisterScene<TitleScene>("Title");
 	//m_pGameSceneManager->RegisterScene<PlayScene>("Play");
@@ -123,6 +125,7 @@ void Game::Update(DX::StepTimer const& timer)
 
 	// シーンの更新
 	//m_pGameSceneManager->Update(timer);
+	m_pSceneManager->Update(timer);
 
 	// 当たり判定の更新
 	m_pCollisionManager->DetectCollision();
@@ -151,6 +154,7 @@ void Game::Render()
 	// TODO: Add your rendering code here.
 	context;
 	//m_pGameSceneManager->Render();
+	m_pSceneManager->Render();
 
 	// マスク
 	m_effectMask->Render();

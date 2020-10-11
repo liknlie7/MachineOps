@@ -10,11 +10,8 @@
 
 #include "DeviceResources.h"
 #include "GameContext.h"
-#include "GameScene.h"
-#include "SceneManager.h"
 #include "Projection.h"
 #include "Keyboard.h"
-#include "GameSceneManager.h"
 #include "SceneManager.h"
 #include "WICTextureLoader.h" 
 #include "StepTimer.h"
@@ -94,10 +91,13 @@ public: // ŠÖ”
 
 	// ‰Šú‰»
 	eScene Initialize() override;
+
 	// XV
 	eScene Update(DX::StepTimer const& _timer) override;
+	
 	// •`‰æ
 	eScene Render() override;
+	
 	// Œãn––
 	eScene Finalize() override;
 

@@ -11,6 +11,8 @@
 #include "DeviceResources.h"
 #include "SceneManager.h"
 
+class IScene;
+
 // クリアシーン
 class ResultClearScene : public IScene
 {
@@ -18,6 +20,7 @@ public: // 基本
 
 	// コンストラクタ
 	ResultClearScene();
+
 	// デストラクタ
 	virtual ~ResultClearScene();
 
@@ -25,10 +28,13 @@ public: // 関数
 
 	// 初期化
 	eScene Initialize() override;
+	
 	// 更新
 	eScene Update(DX::StepTimer const& _timer) override;
+	
 	//描画
 	eScene Render() override;
+	
 	// 後処理
 	eScene Finalize() override;
 

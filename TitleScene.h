@@ -9,7 +9,6 @@
 #include <CommonStates.h>
 #include <WICTextureLoader.h>
 
-#include "GameSceneManager.h"
 #include "SceneManager.h"
 #include "StepTimer.h"
 #include "GameContext.h"
@@ -17,6 +16,8 @@
 #include "Adx2Le.h"
 #include "TitleSoundSeet.h"
 #include "ResourceManager.h"
+
+class IScene;
 
 // タイトルシーン
 class TitleScene : public IScene
@@ -26,6 +27,7 @@ public: // 基本
 
 	// コンストラクタ
 	TitleScene();
+
 	// デストラクタ
 	virtual ~TitleScene();
 
@@ -33,10 +35,13 @@ public: // 関数
 
 	// 初期化
 	eScene Initialize() override;
+	
 	// 更新
 	eScene Update(DX::StepTimer const& _timer) override;
+	
 	// 描画
 	eScene Render() override;
+	
 	// 後処理
 	eScene Finalize() override;
 

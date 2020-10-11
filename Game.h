@@ -10,6 +10,7 @@
 #include <unordered_map>
 
 #include "DeviceResources.h"
+#include "SceneManager.h"
 #include "Projection.h"
 #include "StepTimer.h"
 #include "Mouse.h"
@@ -88,6 +89,7 @@ private:
 
 	// シーンマネージャー
 	//std::unique_ptr<GameSceneManager>       m_pGameSceneManager;
+	std::unique_ptr<SceneManager>			m_pSceneManager;
 
 	// コリジョンマネージャー
 	std::unique_ptr<CollisionManager>       m_pCollisionManager;
