@@ -32,6 +32,7 @@
 #include "PlaySceneSound.h"
 #include "WarningEffect.h"
 #include "BulletManager.h"
+#include "Bullet.h"
 
 // プレイシーンクラス
 class PlayScene : public IScene
@@ -174,7 +175,7 @@ private: // 変数
 	bool bossFlag;
 
 	// 弾管理用
-	std::unique_ptr<BulletManager>						m_pBulletManager;
+	//std::unique_ptr<BulletManager>						m_pBulletManager;
 
 	// 色
 	DirectX::SimpleMath::Color							m_color;

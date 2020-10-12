@@ -60,6 +60,6 @@ private: // •Ï”
 	std::unique_ptr<DirectX::GeometricPrimitive> m_pBulletType[ALL];
 
 	// ’e”z—ñ
-	std::vector<std::unique_ptr<Bullet>>	m_pBulletArray;
+	//std::vector<std::unique_ptr<Bullet>>	m_pBulletArray;
 };
 

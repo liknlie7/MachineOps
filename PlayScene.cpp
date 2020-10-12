@@ -70,10 +70,10 @@ eScene PlayScene::Initialize()
 	}
 
 	// 弾管理用オブジェクト作成
-	m_pBulletManager = std::make_unique<BulletManager>();
-	m_pBulletManager->Initialize();
-	m_pPlayer->SetBulletManager(m_pBulletManager.get());
-	m_pEnemy->SetBulletManager(m_pBulletManager.get());
+	//m_pBulletManager = std::make_unique<BulletManager>();
+	//m_pBulletManager->Initialize();
+	//m_pPlayer->SetBulletManager(m_pBulletManager.get());
+	//m_pEnemy->SetBulletManager(m_pBulletManager.get());
 
 	m_color = DirectX::Colors::Red;
 
@@ -272,7 +272,7 @@ eScene PlayScene::Update(DX::StepTimer const& _timer)
 				{
 					if (Collision::HitCheckSphereToBox(enemyBullet[i], m_pWall->GetCollider(j)))
 					{
-						m_pEnemy->BulletOnCollision(i);
+						//m_pEnemy->BulletOnCollision(i);
 					}
 				}
 			}

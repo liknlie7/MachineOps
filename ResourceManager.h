@@ -30,6 +30,12 @@ public: // 定数
 	//	PLAYER,			// プレイヤーのサウンド
 	//};
 
+	enum TextureData {
+
+		ALL,
+
+	};
+
 public: // 基本
 
 	// コンストラクタ
@@ -59,6 +65,8 @@ private: // 変数
 
 	// サウンドデータ
 	std::map<std::wstring, std::shared_ptr<Adx2Le>>			m_sounds;
+
+	// テクスチャデータ
 };
 
 

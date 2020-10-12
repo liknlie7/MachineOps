@@ -109,10 +109,10 @@ public: // アクセサ
 	}
 
 	// 弾管理クラスのアドレスを設定
-	void SetBulletManager(BulletManager* _bullet)
-	{
-		m_pBulletManager = _bullet;
-	}
+	//void SetBulletManager(BulletManager* _bullet)
+	//{
+	//	m_pBulletManager = _bullet;
+	//}
 
 public: // 関数
 
@@ -167,7 +167,7 @@ private:
 	Collision::Sphere							 m_collider;
 
 	// 弾管理用
-	BulletManager*								 m_pBulletManager;
+	//BulletManager*								 m_pBulletManager;
 
 	// 弾配列
 	//std::vector<DirectX::GeometricPrimitive>	 m_pBullets;

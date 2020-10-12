@@ -25,10 +25,10 @@ void Weapon::Update()
 	m_matrix = DirectX::SimpleMath::Matrix::CreateTranslation(m_position) * DirectX::SimpleMath::Matrix::CreateRotationY(m_angle) *
 		DirectX::SimpleMath::Matrix::CreateTranslation(m_playerPos);
 
-	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-	{
-		(*itr)->Update();
-	}
+	//for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	//{
+	//	(*itr)->Update();
+	//}
 
 	//int i = 0;
 	//for (vector<unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
@@ -49,10 +49,10 @@ void Weapon::Update()
 // ï`âÊ
 void Weapon::Render(const DirectX::SimpleMath::Matrix& _view)
 {
-	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-	{
-		(*itr)->Render(_view);
-	}
+	//for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	//{
+	//	(*itr)->Render(_view);
+	//}
 }
 
 // å„énññ
@@ -61,28 +61,28 @@ void Weapon::Finalize()
 	m_pWeapon.reset();
 }
 
-void Weapon::CreateBullet()
-{
-	// íeÇÃçÏê¨
-	m_pBullets.push_back(std::make_unique<Bullet>(m_playerPos + DirectX::SimpleMath::Vector3(0.0f, 0.9f, 0.0f), DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.8f), m_angle));
+//void Weapon::CreateBullet()
+//{
+//	// íeÇÃçÏê¨
+//	m_pBullets.push_back(std::make_unique<Bullet>(m_playerPos + DirectX::SimpleMath::Vector3(0.0f, 0.9f, 0.0f), DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.8f), m_angle));
+//
+//	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+//	{
+//		(*itr)->Initialize(m_pBulletGeometric.get());
+//	}
+//}
 
-	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-	{
-		(*itr)->Initialize(m_pBulletGeometric.get());
-	}
-}
-
-void Weapon::BulletOnCollision(int _number)
-{
-	m_pBullets[_number]->SetIsValid(false);
-
-	std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
-
-	while (itr != m_pBullets.end())
-	{
-		if (!(*itr)->GetIsValid())
-			itr = m_pBullets.erase(itr);
-		else
-			++itr;
-	}
-}
+//void Weapon::BulletOnCollision(int _number)
+//{
+//	m_pBullets[_number]->SetIsValid(false);
+//
+//	std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
+//
+//	while (itr != m_pBullets.end())
+//	{
+//		if (!(*itr)->GetIsValid())
+//			itr = m_pBullets.erase(itr);
+//		else
+//			++itr;
+//	}
+//}

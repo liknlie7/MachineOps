@@ -11,8 +11,6 @@
 #include "GameObject.h"
 #include "Bullet.h"
 
-class Bullet;
-
 class Weapon : public GameObject
 {
 public: // 基本
@@ -31,15 +29,15 @@ public: // アクセサ
 	}
 
 	// 弾の座標取得
-	std::vector<DirectX::SimpleMath::Vector3> GetBulletPos() const
-	{
-		std::vector<DirectX::SimpleMath::Vector3> bulletsPos;
-		for (auto& numBullet : m_pBullets)
-		{
-			bulletsPos.push_back(numBullet->GetPosition());
-		}
-		return bulletsPos;
-	}
+	//std::vector<DirectX::SimpleMath::Vector3> GetBulletPos() const
+	//{
+	//	std::vector<DirectX::SimpleMath::Vector3> bulletsPos;
+	//	for (auto& numBullet : m_pBullets)
+	//	{
+	//		bulletsPos.push_back(numBullet->GetPosition());
+	//	}
+	//	return bulletsPos;
+	//}
 
 	// プレイヤーの座標設定
 	void SetPlayerPos(const DirectX::SimpleMath::Vector3& _playerPos)
@@ -84,7 +82,7 @@ private: // 変数
 	std::unique_ptr<DirectX::GeometricPrimitive> m_pWeapon;
 	// 弾
 	std::unique_ptr<DirectX::GeometricPrimitive> m_pBulletGeometric;
-	std::vector<std::unique_ptr<Bullet>>		 m_pBullets;
+	//std::vector<std::unique_ptr<Bullet>>		 m_pBullets;
 
 	// プレイヤーの位置
 	DirectX::SimpleMath::Vector3				 m_playerPos;

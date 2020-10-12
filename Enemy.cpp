@@ -187,7 +187,7 @@ void Enemy::Update()
 	//if (m_life == 0)
 	//	m_pEnemy = nullptr;
 
-	OutRangeBullet();
+	//OutRangeBullet();
 	if (m_isValid)  Blink();
 
 }

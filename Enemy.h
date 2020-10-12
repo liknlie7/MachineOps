@@ -12,10 +12,10 @@
 #include "Collision.h"
 #include "GameObject.h"
 #include "GameContext.h"
-#include "Bullet.h"
+//#include "Bullet.h"
 #include "GameObject.h"
 #include "ResourceManager.h"
-#include "BulletManager.h"
+//#include "BulletManager.h"
 
 // 敵
 class Enemy : public GameObject
@@ -107,10 +107,10 @@ public: // アクセサ
 	}
 
 	// 弾管理クラスのアドレスを設定
-	void SetBulletManager(BulletManager* _bullet)
-	{
-		m_pBulletManager = _bullet;
-	}
+	//void SetBulletManager(BulletManager* _bullet)
+	//{
+	//	m_pBulletManager = _bullet;
+	//}
 
 
 public: // 関数
@@ -133,10 +133,10 @@ public: // 関数
 
 	// 衝突した時
 	void OnCollision();
-	// 弾が衝突した時
-	void BulletOnCollision(int _number);
-	// 弾が画面外に出たら
-	void OutRangeBullet();
+	//// 弾が衝突した時
+	//void BulletOnCollision(int _number);
+	//// 弾が画面外に出たら
+	//void OutRangeBullet();
 
 
 private: // 定数
@@ -156,8 +156,8 @@ private: // 変数
 	//std::unique_ptr<DirectX::GeometricPrimitive>	m_pBulletGeometric;
 	//std::vector<std::unique_ptr<Bullet>>			m_pBullets;
 
-	// 弾管理用オブジェクト
-	BulletManager*									m_pBulletManager;
+	//// 弾管理用オブジェクト
+	//BulletManager*									m_pBulletManager;
 
 	// プレイヤーの位置
 	DirectX::SimpleMath::Vector3					m_playerPos;
