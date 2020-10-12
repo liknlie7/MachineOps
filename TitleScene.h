@@ -7,7 +7,6 @@
 #include <SpriteBatch.h>
 #include <Keyboard.h>
 #include <CommonStates.h>
-#include <WICTextureLoader.h>
 
 #include "SceneManager.h"
 #include "StepTimer.h"
@@ -45,15 +44,25 @@ public: // 関数
 	// 後処理
 	eScene Finalize() override;
 
+private: // 定数
+
+	// テクスチャ用
+	enum Texture
+	{
+		TITLE = 1,		// タイトル名
+		BACK_GROUND,	// 背景
+		TEXT,			// テキスト
+
+		ALL,
+	};
+
 private: // 変数
 
 	// サウンド
 	std::weak_ptr<Adx2Le>									m_pSound;
 
 	// テクスチャ
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_titleTexture;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_backGroundTexture;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_massageTexture;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_textures[Texture::ALL];
 
 	// キーボードトラッカー
 	DirectX::Keyboard::KeyboardStateTracker*				m_keyboardTracker;

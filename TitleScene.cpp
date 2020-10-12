@@ -2,12 +2,8 @@
 
 #include "TitleScene.h"
 
-// TODO: ボリュームを徐々に下げる処理
-//		 フェードのパターン変更
-
 // コンストラクタ
 TitleScene::TitleScene()
-	//: GameScene()
 	: m_time(0)
 	, m_volumeFadeFlag(false)
 	, m_volume(1.0f)
@@ -28,10 +24,10 @@ TitleScene::~TitleScene()
 // 初期化
 eScene TitleScene::Initialize()
 {
-	// テクスチャ読み込み
-	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\BackGround.png", nullptr, m_backGroundTexture.GetAddressOf());
-	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\Title.png", nullptr, m_titleTexture.GetAddressOf());
-	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\Massage.png", nullptr, m_massageTexture.GetAddressOf());
+	// テクスチャデータを受け取る
+	m_textures[TITLE] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\Title.png");
+	m_textures[BACK_GROUND] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\BackGround.png");
+	m_textures[TEXT] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\Massage.png");
 
 	// BGMの再生
 	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
@@ -108,11 +104,11 @@ eScene TitleScene::Render()
 
 	// テクスチャ描画
 	spriteBatch->Begin();
-	spriteBatch->Draw(m_backGroundTexture.Get(), DirectX::SimpleMath::Vector2::Zero);
-	spriteBatch->Draw(m_titleTexture.Get(), DirectX::SimpleMath::Vector2(190, 220), nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(0.8f, 0.8f));
+	spriteBatch->Draw(m_textures[BACK_GROUND].Get(), DirectX::SimpleMath::Vector2::Zero);
+	spriteBatch->Draw(m_textures[TITLE].Get(), DirectX::SimpleMath::Vector2(190, 220), nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(0.8f, 0.8f));
 	// 点滅
 	if (sin(m_time * 4) > 0) {
-		spriteBatch->Draw(m_massageTexture.Get(), DirectX::SimpleMath::Vector2(380, 450), nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(0.3f, 0.3f));
+		spriteBatch->Draw(m_textures[TEXT].Get(), DirectX::SimpleMath::Vector2(380, 450), nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(0.3f, 0.3f));
 	}
 	spriteBatch->End();
 

@@ -9,6 +9,7 @@
 #include "DeviceResources.h"
 #include "StepTimer.h"
 #include "SceneManager.h"
+#include "ResourceManager.h"
 
 class IScene;
 
@@ -37,14 +38,24 @@ public: // 関数
 	// 後処理
 	eScene Finalize() override;
 
+private: // 定数
+
+	// テクスチャ
+	enum Texture
+	{
+		BACK_GROUND = 1,// 背景
+		TEXT,			// テキスト
+
+		ALL,			// 全てのテクスチャ
+	};
+
 private: // 変数
 
 	// キーボードトラッカー
 	DirectX::Keyboard::KeyboardStateTracker*	m_keyboardTracker;
 
 	// テクスチャ
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_backGroundTexture;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_gameOverTexture;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_textures[Texture::ALL];
 
 };
 

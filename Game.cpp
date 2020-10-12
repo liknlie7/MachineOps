@@ -81,7 +81,7 @@ void Game::Initialize(HWND window, int width, int height)
 
 
 	m_pSceneManager = std::make_unique<SceneManager>();
-	m_pSceneManager->SetStartScene(eScene::PLAY);
+	m_pSceneManager->SetStartScene(eScene::TITLE);
 	//m_pGameSceneManager = std::make_unique<GameSceneManager>();
 	//m_pGameSceneManager->RegisterScene<TitleScene>("Title");
 	//m_pGameSceneManager->RegisterScene<PlayScene>("Play");

@@ -130,6 +130,15 @@ private: // 定数
 
 	static const float DAMAGE_TIME;
 
+	// テクスチャ
+	enum Texture
+	{
+		GREEN_HP,	// 緑HP
+		RED_HP,		// 赤HP
+
+		ALL,		// 全てのテクスチャ
+	};
+
 private: // 変数
 
 	// サウンド
@@ -183,9 +192,8 @@ private: // 変数
 	// 時間
 	float												m_totalTime;
 
-	// 体力テクスチャ
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_greenHpBarTexture;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_redHpBarTexture;
+	// テクスチャ
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_textures[Texture::ALL];
 
 	// 体力ゲージデフォルトサイズ
 	float m_defaultGaugeScaleX;

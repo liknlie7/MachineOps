@@ -18,9 +18,9 @@ ResultGameOverScene::~ResultGameOverScene()
 // 初期化
 eScene ResultGameOverScene::Initialize()
 {
-	// テクスチャ読み込み
-	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\ResultBackGround.png", nullptr, m_backGroundTexture.GetAddressOf());
-	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\GameOver.png", nullptr, m_gameOverTexture.GetAddressOf());
+	// テクスチャデータを受け取る
+	m_textures[BACK_GROUND] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\ResultBackGround.png");
+	m_textures[TEXT] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\GameOver.png");
 
 	return eScene::RESULT_GAMEOVER;
 }
@@ -49,8 +49,8 @@ eScene ResultGameOverScene::Render()
 
 	// テクスチャ描画
 	spriteBatch->Begin();
-	spriteBatch->Draw(m_backGroundTexture.Get(), DirectX::SimpleMath::Vector2::Zero, nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(1.2f, 1.2f));
-	spriteBatch->Draw(m_gameOverTexture.Get(), DirectX::SimpleMath::Vector2(330, 250), nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(0.8f, 0.8f));
+	spriteBatch->Draw(m_textures[BACK_GROUND].Get(), DirectX::SimpleMath::Vector2::Zero, nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(1.2f, 1.2f));
+	spriteBatch->Draw(m_textures[TEXT].Get(), DirectX::SimpleMath::Vector2(330, 250), nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(0.8f, 0.8f));
 	spriteBatch->End();
 
 	return eScene::RESULT_GAMEOVER;

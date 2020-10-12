@@ -77,8 +77,9 @@ eScene PlayScene::Initialize()
 
 	m_color = DirectX::Colors::Red;
 
-	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\GreenHP.png", nullptr, m_greenHpBarTexture.GetAddressOf());
-	DirectX::CreateWICTextureFromFile(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources\\Textures\\RedHP.png", nullptr, m_redHpBarTexture.GetAddressOf());
+	// テクスチャデータを受け取る
+	m_textures[GREEN_HP] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\GreenHP.png");
+	m_textures[RED_HP] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\RedHP.png");
 
 	// 敵のライフデフォルトスケール値
 	m_defaultGaugeScaleX = 1.0f;
@@ -374,13 +375,13 @@ eScene PlayScene::Render()
 	if (bossFlag)
 	{
 		// 赤ゲージ表示
-		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, DirectX::Colors::Black,
+		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_textures[RED_HP].Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, DirectX::Colors::Black,
 			0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(1.0f, 0.2f));
 		// 薄緑ゲージ表示
-		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_redHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, DirectX::SimpleMath::Vector4(1.0f, 1.0f, 1.0f, 0.5f),
+		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_textures[RED_HP].Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, DirectX::SimpleMath::Vector4(1.0f, 1.0f, 1.0f, 0.5f),
 			0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(m_lightGreenGaugeRate, 0.2f));
 		// 緑ゲージ表示
-		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_greenHpBarTexture.Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, DirectX::Colors::White,
+		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_textures[GREEN_HP].Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, DirectX::Colors::White,
 			0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(m_currentGaugeScaleX, 0.2f));
 
 	}
