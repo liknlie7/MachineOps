@@ -8,8 +8,7 @@ const float Floor::AREA_WIDTH = 50.0f;
 const float Floor::AREA_HEIGHT = 50.0f;
 
 // コンストラクタ
-Floor::Floor(const std::string& _tag)
-	: GameObject(_tag)
+Floor::Floor()
 {
 
 }

@@ -4,9 +4,8 @@
 
 
 // コンストラクタ
-GameObject::GameObject(const std::string& _tag)
+GameObject::GameObject()
 	: m_isValid(true)
-	, m_tag(_tag)
 	, m_position(0.0f, 1.0f, 0.0f)
 	, m_rotation(0.0f, 0.0f, 0.0f)
 	, m_scale(1.0f, 1.0f, 1.0f)
@@ -16,10 +15,6 @@ GameObject::GameObject(const std::string& _tag)
 
 // デストラクタ
 GameObject::~GameObject()
-{
-}
-
-void GameObject::OnCollision(GameObject * _object)
 {
 }
 

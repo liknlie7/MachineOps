@@ -64,7 +64,7 @@ void Weapon::Finalize()
 void Weapon::CreateBullet()
 {
 	// íeÇÃçÏê¨
-	m_pBullets.push_back(std::make_unique<Bullet>(m_playerPos + DirectX::SimpleMath::Vector3(0.0f, 0.9f, 0.0f), m_angle, DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.8f),"PlayerBullet"));
+	m_pBullets.push_back(std::make_unique<Bullet>(m_playerPos + DirectX::SimpleMath::Vector3(0.0f, 0.9f, 0.0f), DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.8f), m_angle));
 
 	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	{

@@ -87,12 +87,9 @@ private:
 	// スプライトバッチ
 	std::unique_ptr<DirectX::SpriteBatch>   m_pSpriteBatch;
 
-	// シーンマネージャー
+	// シーン管理用
 	//std::unique_ptr<GameSceneManager>       m_pGameSceneManager;
 	std::unique_ptr<SceneManager>			m_pSceneManager;
-
-	// コリジョンマネージャー
-	std::unique_ptr<CollisionManager>       m_pCollisionManager;
 
 	// エフェクトマスク
 	std::unique_ptr<EffectMask>				m_effectMask;

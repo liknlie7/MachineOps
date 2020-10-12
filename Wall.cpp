@@ -2,8 +2,7 @@
 #include "Wall.h"
 
 // コンストラクタ
-Wall::Wall(const std::string & _tag)
-	: GameObject(_tag)
+Wall::Wall()
 {
 }
 

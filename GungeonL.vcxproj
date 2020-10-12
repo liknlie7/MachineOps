@@ -180,11 +180,9 @@
   <ItemGroup>
     <ClInclude Include="Adx2Le.h" />
     <ClInclude Include="Boid.h" />
-    <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Collider.h" />
+    <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Collision.h" />
-    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="DebugFont.h" />
     <ClInclude Include="DeviceResources.h" />
@@ -214,7 +212,6 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TitleSoundSeet.h" />
@@ -228,11 +225,9 @@
   <ItemGroup>
     <ClCompile Include="Adx2Le.cpp" />
     <ClCompile Include="Boid.cpp" />
-    <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="DebugFont.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
@@ -261,7 +256,6 @@
     <ClCompile Include="ResultClearScene.cpp" />
     <ClCompile Include="ResultGameOverScene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WarningEffect.cpp" />

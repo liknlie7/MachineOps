@@ -14,13 +14,14 @@
 #include "Collision.h"
 #include "GameContext.h"
 #include "GameObject.h"
-#include "Weapon.h"
+//#include "Weapon.h"
+#include "BulletManager.h"
 #include "Adx2Le.h"
 #include "PlayerSound.h"
 #include "Utilities.h"
 
 class Bullet;
-class Weapon;
+//class Weapon;
 
 // プレイヤークラス
 class Player : public GameObject
@@ -37,7 +38,7 @@ private: // 定数
 public: // 基本
 
 	// コンストラクタ
-	Player(const std::string& _tag);
+	Player();
 	// デストラクタ
 	~Player();
 
@@ -56,10 +57,10 @@ public: // アクセサ
 	}
 
 	// 弾の座標取得
-	std::vector<DirectX::SimpleMath::Vector3> GetBulletPos() const
-	{
-		return m_pWeapon->GetBulletPos();
-	}
+	//std::vector<DirectX::SimpleMath::Vector3> GetBulletPos() const
+	//{
+	//	return m_pWeapon->GetBulletPos();
+	//}
 
 	// 接触判定フラグの取得
 	bool GetHitFlag() const
@@ -91,20 +92,26 @@ public: // アクセサ
 	}
 
 	// 弾のヒットフラグ設定
-	void SetBulletHitFlag(const bool& _isHitFlag)
-	{
-		m_pWeapon->SetBulletHitFlag(_isHitFlag);
-	}
-	// 弾の番号取得
-	void SetBulletNumber(const int& _bulletNumber)
-	{
-		m_pWeapon->SetBulletNumber(_bulletNumber);
-	}
+	//void SetBulletHitFlag(const bool& _isHitFlag)
+	//{
+	//	m_pWeapon->SetBulletHitFlag(_isHitFlag);
+	//}
+	//// 弾の番号取得
+	//void SetBulletNumber(const int& _bulletNumber)
+	//{
+	//	m_pWeapon->SetBulletNumber(_bulletNumber);
+	//}
 
 	// 当たり判定の取得
 	Collision::Sphere GetCollider() const
 	{
 		return m_collider;
+	}
+
+	// 弾管理クラスのアドレスを設定
+	void SetBulletManager(BulletManager* _bullet)
+	{
+		m_pBulletManager = _bullet;
 	}
 
 public: // 関数
@@ -159,6 +166,12 @@ private:
 	std::weak_ptr<DirectX::Model>				 m_pPlayer;
 	Collision::Sphere							 m_collider;
 
+	// 弾管理用
+	BulletManager*								 m_pBulletManager;
+
+	// 弾配列
+	//std::vector<DirectX::GeometricPrimitive>	 m_pBullets;
+
 	// 状態
 	STATE										 m_state;
 
@@ -191,6 +204,6 @@ private:
 public:
 
 	// 銃
-	std::unique_ptr<Weapon>						 m_pWeapon;
+	//std::unique_ptr<Weapon>						 m_pWeapon;
 
 };

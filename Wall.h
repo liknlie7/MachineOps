@@ -19,7 +19,7 @@ class Wall : public GameObject
 public: // 基本
 
 	// コンストラクタ
-	Wall(const std::string& _tag);
+	Wall();
 	// デストラクタ
 	~Wall() {};
 

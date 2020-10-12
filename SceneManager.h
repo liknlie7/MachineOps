@@ -38,7 +38,7 @@ public: // 関数
 	virtual eScene Finalize() = 0;
 };
 
-// シーンマネージャー
+// シーン管理クラス
 class SceneManager : public Singleton<SceneManager>
 {
 public: // 基本

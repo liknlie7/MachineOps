@@ -12,7 +12,7 @@
 #include "Singleton.h"
 #include "Projection.h"
 
-// リソースマネージャー
+// リソース管理クラス
 class ResourceManager : public Singleton<ResourceManager>
 {
 public: // 定数

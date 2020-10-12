@@ -17,9 +17,6 @@
     <Filter Include="GameScene">
       <UniqueIdentifier>{562db1f7-eb02-4020-854d-f7e9099ca424}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Collider">
-      <UniqueIdentifier>{e9eb1156-5e1e-4b46-ae4c-a24b2ad31c6f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AI">
       <UniqueIdentifier>{db3d4ccd-7398-4719-a4bb-582ff6fa2150}</UniqueIdentifier>
     </Filter>
@@ -126,18 +123,6 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="MouseCursor.h" />
-    <ClInclude Include="SphereCollider.h">
-      <Filter>Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxCollider.h">
-      <Filter>Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
     <ClInclude Include="File.h">
       <Filter>Effect</Filter>
     </ClInclude>
@@ -179,6 +164,7 @@
     </ClInclude>
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="BulletManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -238,18 +224,6 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="MouseCursor.cpp" />
-    <ClCompile Include="SphereCollider.cpp">
-      <Filter>Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxCollider.cpp">
-      <Filter>Collider</Filter>
-    </ClCompile>
     <ClCompile Include="File.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
@@ -282,6 +256,7 @@
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="BulletManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">

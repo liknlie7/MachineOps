@@ -11,9 +11,8 @@ const DirectX::SimpleMath::Vector3 Player::RANGE_MAX = DirectX::SimpleMath::Vect
 // TODO: タグ判定
 
 // コンストラクタ
-Player::Player(const std::string& _tag)
-	: GameObject(_tag)
-	, m_state(STATE_NORMAL)
+Player::Player()
+	: m_state(STATE_NORMAL)
 	, m_mousePos(0.0f, 0.0f, 0.0f)
 	, m_shotInterval(15.0f)
 	, m_hitFlag(false)
@@ -25,14 +24,13 @@ Player::Player(const std::string& _tag)
 	, m_accel(0.0f, 0.0f, 0.0f)
 {
 	// 武器の作成
-	m_pWeapon = std::make_unique<Weapon>();
+	//m_pWeapon = std::make_unique<Weapon>();
 
 	// プレイヤーモデルのshared_ptrを受け取る
 	m_pPlayer = std::weak_ptr<DirectX::Model>(ResourceManager::GetInstance().GetModel(L"Resources/Models/tank.cmo"));
 
 	// サウンドのshared_ptrを受け取る
 	//m_pSound = std::weak_ptr<Adx2Le>(ResourceManager::GetInstance().GetSound(L"Resources\\Sounds\\PlayScene"));
-
 }
 
 
@@ -48,16 +46,16 @@ void Player::Initialize()
 	// KeyboardStateTrackerオブジェクトを生成する 
 	m_keyboardTracker = std::make_unique<DirectX::Keyboard::KeyboardStateTracker>();
 
-	m_activeFlag = true;
-
-	m_life = 1;
-
 	// コライダー
 	m_collider.radius = 1.0f;
 	m_collider.center = m_position;
 
 	// 銃の作成
-	m_pWeapon->Initialize();
+	//m_pWeapon->Initialize();
+
+	// 弾の配列を確保する
+	//m_pBullets.resize(BulletManager::NUM_BULLET);
+	
 
 }
 
@@ -138,20 +136,30 @@ void Player::Update()
 		if (mouseState.leftButton)
 		{
 			// 弾の生成
-			m_pWeapon->CreateBullet();
+			//m_pWeapon->CreateBullet();
 
 			// 射撃音の再生
 			//if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
 			//	sptr->Play(CRI_PLAYER_SHOT);
 			
+			//for (int i = 0; m_pBullets.size(); i++)
+			//{
+			//	// 弾が使用中でないとき
+			//	if (m_pBullets[i] == nullptr)
+			//	{
+			//		// 弾を発射する
+			//		m_pBullets[i] = m_pBulletManager->Create(m_position, DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.8f), m_angle);
+			//	}
+			//}
+
 			m_shotInterval = 0;
 		}
 	}
 
 	// 武器の更新
-	m_pWeapon->SetAngle(m_angle);
-	m_pWeapon->SetPlayerPos(m_position);
-	m_pWeapon->Update();
+	//m_pWeapon->SetAngle(m_angle);
+	//m_pWeapon->SetPlayerPos(m_position);
+	//m_pWeapon->Update();
 
 	m_collider.center = m_position;
 
@@ -172,7 +180,7 @@ void Player::Render(const DirectX::SimpleMath::Matrix& _view)
 		}
 
 	// 武器の描画
-	m_pWeapon->Render(_view);
+	//m_pWeapon->Render(_view);
 }
 
 // 後始末

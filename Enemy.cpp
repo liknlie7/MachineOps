@@ -10,9 +10,8 @@ const float Enemy::SIZE = 1.5f;
 const float Enemy::BOSS_SIZE = 8.0f;
 
 // コンストラクタ
-Enemy::Enemy(const int _type, const std::string& _tag)
-	: GameObject(_tag)
-	, m_blinkTime(30)
+Enemy::Enemy(const int _type)
+	: m_blinkTime(30)
 	, m_isValid(false)
 	, m_playerPos(0.0f, 0.0f, 0.0f)
 	, m_life(100)
@@ -29,7 +28,7 @@ Enemy::Enemy(const int _type, const std::string& _tag)
 void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 {
 	// 弾の形状作成
-	m_pBulletGeometric = DirectX::GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);
+	//m_pBulletGeometric = DirectX::GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);
 
 	switch (m_enemyType)
 	{
@@ -132,8 +131,8 @@ void Enemy::Update()
 	{
 		if (m_shotInterval > 15.0f)
 		{
-			m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), m_enemyAngle, DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f), "EnemyBullet"));
-			CreateBullet();
+			//m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f), m_enemyAngle));
+			//CreateBullet();
 			m_shotInterval = 0;
 
 			break;
@@ -145,8 +144,8 @@ void Enemy::Update()
 		{
 			for (int rad = 0; rad < 130; rad += 6)
 			{
-				m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), (float)rad + m_enemyAngle, DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f), "EnemyBullet"));
-				CreateBullet();
+				//m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f), (float)rad + m_enemyAngle));
+				//CreateBullet();
 				m_shotInterval = 0;
 			}
 		}
@@ -159,8 +158,8 @@ void Enemy::Update()
 			int i = 0;
 			while (i < 5)
 			{
-				m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), m_shotRotate, DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f), "EnemyBullet"));
-				CreateBullet();
+				//m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f), m_shotRotate));
+				//CreateBullet();
 				m_shotRotate += 0.2f;
 				m_shotInterval = 0;
 				i++;
@@ -173,10 +172,10 @@ void Enemy::Update()
 	// 速度代入
 	m_position += m_velocity;
 
-	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-	{
-		(*itr)->Update();
-	}
+	//for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	//{
+	//	(*itr)->Update();
+	//}
 
 
 	DirectX::SimpleMath::Matrix rotate = DirectX::SimpleMath::Matrix::CreateRotationY(m_enemyAngle);
@@ -208,10 +207,10 @@ void Enemy::Render(const DirectX::SimpleMath::Matrix& _view)
 				sptr->Draw(context, *state, m_matrix, _view, proj);
 
 	// 弾描画
-	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-	{
-		(*itr)->Render(_view);
-	}
+	//for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	//{
+	//	(*itr)->Render(_view);
+	//}
 }
 
 // 後始末
@@ -254,37 +253,37 @@ void Enemy::OnCollision()
 // 弾の作成
 void Enemy::CreateBullet()
 {
-	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-	{
-		(*itr)->Initialize(m_pBulletGeometric.get());
-	}
+	//for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	//{
+	//	(*itr)->Initialize(m_pBulletGeometric.get());
+	//}
 }
 
 // 弾が衝突した時
-void Enemy::BulletOnCollision(int _number)
-{
-	m_pBullets[_number]->SetIsValid(false);
-
-	std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
-	while (itr != m_pBullets.end())
-	{
-		if (!(*itr)->GetIsValid())
-			itr = m_pBullets.erase(itr);
-		else
-			++itr;
-	}
-}
+//void Enemy::BulletOnCollision(int _number)
+//{
+//	m_pBullets[_number]->SetIsValid(false);
+//
+//	std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
+//	while (itr != m_pBullets.end())
+//	{
+//		if (!(*itr)->GetIsValid())
+//			itr = m_pBullets.erase(itr);
+//		else
+//			++itr;
+//	}
+//}
 
 // 範囲外に出たら
-void Enemy::OutRangeBullet()
-{
-	std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
-
-	while (itr != m_pBullets.end())
-	{
-		if ((*itr)->GetLife() < 0.0f)
-			itr = m_pBullets.erase(itr);
-		else
-			++itr;
-	}
-}
+//void Enemy::OutRangeBullet()
+//{
+//	std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
+//
+//	while (itr != m_pBullets.end())
+//	{
+//		if ((*itr)->GetLife() < 0.0f)
+//			itr = m_pBullets.erase(itr);
+//		else
+//			++itr;
+//	}
+//}

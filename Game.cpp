@@ -9,8 +9,6 @@
 
 #include "DebugFont.h"
 #include "GameContext.h"
-//#include "GameSceneManager.h"
-#include "CollisionManager.h"
 #include "EffectMask.h"
 
 #include "TitleScene.h"
@@ -94,11 +92,11 @@ void Game::Initialize(HWND window, int width, int height)
 	//GameContext::Register<GameSceneManager>(m_pGameSceneManager);
 	
 
-	m_pCollisionManager = std::make_unique<CollisionManager>();
+	//m_pCollisionManager = std::make_unique<CollisionManager>();
 
-	m_pCollisionManager->AllowCollision("Player", "Enemy");
-	m_pCollisionManager->AllowCollision("Player", "EnemyBullet");	m_pCollisionManager->AllowCollision("PlayerBullet", "Enemy");	m_pCollisionManager->AllowCollision("Enemy", "Enemy");	m_pCollisionManager->AllowCollision("Mouse", "Floor");	m_pCollisionManager->AllowCollision("Player", "Wall");
-	GameContext::Register<CollisionManager>(m_pCollisionManager);
+	//m_pCollisionManager->AllowCollision("Player", "Enemy");
+	//m_pCollisionManager->AllowCollision("Player", "EnemyBullet");	//m_pCollisionManager->AllowCollision("PlayerBullet", "Enemy");	//m_pCollisionManager->AllowCollision("Enemy", "Enemy");	//m_pCollisionManager->AllowCollision("Mouse", "Floor");	//m_pCollisionManager->AllowCollision("Player", "Wall");
+	//GameContext::Register<CollisionManager>(m_pCollisionManager);
 
 }
 
@@ -126,9 +124,6 @@ void Game::Update(DX::StepTimer const& timer)
 	// シーンの更新
 	//m_pGameSceneManager->Update(timer);
 	m_pSceneManager->Update(timer);
-
-	// 当たり判定の更新
-	m_pCollisionManager->DetectCollision();
 
 	// マスクの更新
 	m_effectMask->Update(elapsedTime);

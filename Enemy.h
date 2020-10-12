@@ -15,6 +15,7 @@
 #include "Bullet.h"
 #include "GameObject.h"
 #include "ResourceManager.h"
+#include "BulletManager.h"
 
 // 敵
 class Enemy : public GameObject
@@ -22,7 +23,7 @@ class Enemy : public GameObject
 public: // 基本
 
 	// コンストラクタ
-	Enemy(const int _type, const std::string& _tag);
+	Enemy(const int _type);
 	// デストラクタ
 	~Enemy() {};
 
@@ -60,15 +61,15 @@ public: // アクセサ
 	}
 
 	// 弾の座標取得
-	std::vector<DirectX::SimpleMath::Vector3> GetBulletPos() const
-	{
-		std::vector<DirectX::SimpleMath::Vector3> bulletsPos;
-		for (auto& numBullet : m_pBullets)
-		{
-			bulletsPos.push_back(numBullet->GetPos());
-		}
-		return bulletsPos;
-	}
+	//std::vector<DirectX::SimpleMath::Vector3> GetBulletPos() const
+	//{
+	//	std::vector<DirectX::SimpleMath::Vector3> bulletsPos;
+	//	for (auto& numBullet : m_pBullets)
+	//	{
+	//		bulletsPos.push_back(numBullet->GetPos());
+	//	}
+	//	return bulletsPos;
+	//}
 
 	// 接触判定フラグの取得
 	bool GetIsValid() const
@@ -103,6 +104,12 @@ public: // アクセサ
 	float GetLife() const
 	{
 		return m_life;
+	}
+
+	// 弾管理クラスのアドレスを設定
+	void SetBulletManager(BulletManager* _bullet)
+	{
+		m_pBulletManager = _bullet;
 	}
 
 
@@ -146,8 +153,11 @@ private: // 変数
 	Collision::Sphere								m_collider;
 
 	// 弾
-	std::unique_ptr<DirectX::GeometricPrimitive>	m_pBulletGeometric;
-	std::vector<std::unique_ptr<Bullet>>			m_pBullets;
+	//std::unique_ptr<DirectX::GeometricPrimitive>	m_pBulletGeometric;
+	//std::vector<std::unique_ptr<Bullet>>			m_pBullets;
+
+	// 弾管理用オブジェクト
+	BulletManager*									m_pBulletManager;
 
 	// プレイヤーの位置
 	DirectX::SimpleMath::Vector3					m_playerPos;

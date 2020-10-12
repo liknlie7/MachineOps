@@ -10,7 +10,7 @@ class GameObject
 public: // 基本
 
 	// コンストラクタ
-	GameObject(const std::string& _tag = "GameObject");
+	GameObject();
 	// デストラクタ
 	virtual ~GameObject();
 
@@ -20,8 +20,6 @@ public: // 関数
 	virtual void Update() = 0;
 	// 描画
 	virtual void Render(const DirectX::SimpleMath::Matrix& _view) = 0;
-	// 衝突
-	virtual void OnCollision(GameObject* _object);
 
 	// 無効化
 	void Invalidate();
@@ -30,8 +28,6 @@ public: // 関数
 	// 無効
 	bool IsInvalid() const;
 
-	// タグ取得
-	const std::string& GetTag() const;
 	// 座標取得
 	const DirectX::SimpleMath::Vector3& GetPosition() const;
 	// 回転取得
@@ -39,8 +35,6 @@ public: // 関数
 	// 大きさ取得
 	const DirectX::SimpleMath::Vector3& GetScale() const;
 
-	// タグ設定
-	void SetTag(const std::string& _tag);
 	// 座標設定
 	void SetPosition(const DirectX::SimpleMath::Vector3& _position);
 	// 回転設定
@@ -55,8 +49,6 @@ private: // 変数
 
 	// 有効か
 	bool m_isValid;
-	// タグ
-	std::string m_tag;
 
 protected: // 変数
 
@@ -86,12 +78,6 @@ inline bool GameObject::IsInvalid() const
 	return !m_isValid;
 }
 
-// タグ取得
-inline const std::string& GameObject::GetTag() const
-{
-	return m_tag;
-}
-
 // 座標取得
 inline const DirectX::SimpleMath::Vector3& GameObject::GetPosition() const
 {
@@ -108,12 +94,6 @@ inline const DirectX::SimpleMath::Vector3 & GameObject::GetRotation() const
 inline const DirectX::SimpleMath::Vector3 & GameObject::GetScale() const
 {
 	return m_scale;
-}
-
-// タグ設定
-inline void GameObject::SetTag(const std::string& _tag)
-{
-	m_tag = _tag;
 }
 
 // 座標設定

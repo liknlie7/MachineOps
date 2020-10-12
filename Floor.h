@@ -17,7 +17,7 @@ class Floor : public GameObject
 public: // 基本
 
 	// コンストラクタ
-	Floor(const std::string& _tag);
+	Floor();
 	// デストラクタ
 	~Floor() {}
 

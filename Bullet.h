@@ -3,6 +3,7 @@
 #include <SimpleMath.h>
 #include <GeometricPrimitive.h>
 
+#include "DeviceResources.h"
 #include "Projection.h"
 #include "GameContext.h"
 #include "GameObject.h"
@@ -13,21 +14,16 @@ class Bullet :public GameObject
 public: // 基本
 
 	// コンストラクタ
-	Bullet(const DirectX::SimpleMath::Vector3& _pos, const float& _angle, const DirectX::SimpleMath::Vector3& _speed, const std::string& tag);
+	Bullet(const DirectX::SimpleMath::Vector3& _pos, const DirectX::SimpleMath::Vector3& _vel, const float& _angle);
 	// デストラクタ
 	~Bullet() {}
 
 public: // アクセサ
 
-	// 座標取得
-	DirectX::SimpleMath::Vector3 GetPos() const
+	// 角度の設定
+	void SetAngle(const float _angle)
 	{
-		return m_position;
-	}
-	// 座標設定
-	void SetPos(const DirectX::SimpleMath::Vector3& _pos)
-	{
-		m_position = _pos;
+		m_angle = _angle;
 	}
 
 	// フラグ取得
@@ -47,6 +43,24 @@ public: // アクセサ
 		return m_life;
 	}
 
+	// 使用中かどうかの取得
+	bool GetIsUsed()
+	{
+		return m_used;
+	}
+
+	// 使用中かどうかの設定
+	void SetIsUsed(bool _used)
+	{
+		m_used = _used;
+	}
+
+	//// 弾の形状を設定
+	//void SetBulletType(DirectX::GeometricPrimitive* _bulletType)
+	//{
+	//	m_bullet = _bulletType;
+	//}
+
 public: // 関数
 
 	// 初期化
@@ -61,14 +75,20 @@ public: // 関数
 private: // 変数
 
 	// 弾の形状
-	DirectX::GeometricPrimitive*	m_bullet;
+	//DirectX::GeometricPrimitive*	m_bullet;
 
 	// 回転
 	DirectX::SimpleMath::Matrix		m_rotate;
+
+	// 角度
+	float m_angle;
 
 	// フラグ
 	bool m_isValid;
 
 	// 飛行距離
 	float m_life;
+
+	// 使用中か
+	bool m_used;
 };

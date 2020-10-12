@@ -31,6 +31,7 @@
 #include "PlayerSound.h"
 #include "PlaySceneSound.h"
 #include "WarningEffect.h"
+#include "BulletManager.h"
 
 // プレイシーンクラス
 class PlayScene : public IScene
@@ -171,6 +172,9 @@ private: // 変数
 	std::unique_ptr<Enemy>								m_pEnemy;
 	std::unique_ptr<Enemy>								m_pEnemies[4];
 	bool bossFlag;
+
+	// 弾管理用
+	std::unique_ptr<BulletManager>						m_pBulletManager;
 
 	// 色
 	DirectX::SimpleMath::Color							m_color;
