@@ -44,7 +44,7 @@ private:
 		SPHERE = 1,	// 球
 		BOX,		// ボックス
 
-		ALL,
+		ALL,		// 全ての形状
 	};
 
 	// 丸い弾半径
