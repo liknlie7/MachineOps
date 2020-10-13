@@ -6,6 +6,8 @@
 #include <Effects.h>
 #include <CommonStates.h>
 #include <SpriteBatch.h>
+#include <fstream>
+#include <sstream>
 
 #include "DeviceResources.h"
 #include "Projection.h"
@@ -44,6 +46,15 @@ public:
 		ALL_DIRECTION_SHOT,		// 全方位
 		WINDER_SHOT,			// ワインダー
 		WHORL_SHOT,				// うずまき
+	};
+
+	struct EnemyData
+	{
+		EnemyType	enemyType;	// 敵の種類
+		float		moveSpeed;	// 移動速度
+		int			life;		// 体力
+		ShotType	shotType;	// 射撃タイプ
+		float		collider;	// コライダー
 	};
 
 public: // アクセサ
@@ -126,10 +137,15 @@ public: // 関数
 
 	// プレイヤーを追いかける
 	void ChasePlayer(DirectX::SimpleMath::Vector3 _playerPos);
+	
 	// 点滅
 	void Blink();
+	
 	// 弾の作成
 	void CreateBullet();
+	
+	// CSV読み込み
+	void LoadFile();
 
 	// 衝突した時
 	void OnCollision();

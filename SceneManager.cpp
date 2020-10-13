@@ -109,7 +109,7 @@ IScene* SceneManager::ChangeScene(eScene _scene)
 	if (pScene != nullptr)
 		pScene->Initialize();
 
-	//m_nextScene = eScene::NONE;
+	m_nextScene = eScene::NONE;
 
 	return pScene;
 }

@@ -7,7 +7,6 @@ const float PlayScene::DAMAGE_TIME = 1.0f;
 
 // コンストラクタ
 PlayScene::PlayScene()
-	//: GameScene()
 	: m_gameState(STATE_START)
 	, m_waveState(BOSS_WAVE)
 	, m_waveCount(0)
@@ -22,10 +21,10 @@ PlayScene::~PlayScene()
 }
 
 // 初期化
-eScene PlayScene::Initialize()
+void PlayScene::Initialize()
 {
 	// サウンドのshared_ptrを受け取る
-	m_pSound = std::weak_ptr<Adx2Le>(ResourceManager::GetInstance().GetSound(L"Resources\\Sounds\\PlayScene"));
+	m_pSound = std::weak_ptr<Adx2Le>(ResourceManager::GetInstance()->GetSound(L"Resources\\Sounds\\PlayScene"));
 
 	// BGMの再生
 	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
@@ -78,8 +77,8 @@ eScene PlayScene::Initialize()
 	m_color = DirectX::Colors::Red;
 
 	// テクスチャデータを受け取る
-	m_textures[GREEN_HP] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\GreenHP.png");
-	m_textures[RED_HP] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\RedHP.png");
+	m_textures[GREEN_HP] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\GreenHP.png");
+	m_textures[RED_HP] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\RedHP.png");
 
 	// 敵のライフデフォルトスケール値
 	m_defaultGaugeScaleX = 1.0f;
@@ -123,12 +122,10 @@ eScene PlayScene::Initialize()
 	// WARNING再生
 	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
 		sptr->Play(CRI_PLAYSCENE_WARNING, 1.0f);
-
-	return eScene::PLAY;
 }
 
 // 更新
-eScene PlayScene::Update(DX::StepTimer const& _timer)
+void PlayScene::Update(DX::StepTimer const& _timer)
 {
 	float elapsedTime = float(_timer.GetElapsedSeconds());
 
@@ -258,10 +255,10 @@ eScene PlayScene::Update(DX::StepTimer const& _timer)
 					if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
 					{
 						//// シーン管理の取得
-						//GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
+						//GamvoidManager* gamvoidManager = GameContext::Get<GamvoidManager>();
 
 						//// プレイシーンへ遷移
-						//gameSceneManager->RequestScene("ResultGameOver");
+						//gamvoidManager->RequestScene("ResultGameOver");
 					}
 				}
 			}
@@ -301,8 +298,8 @@ eScene PlayScene::Update(DX::StepTimer const& _timer)
 		// リザルトシーンへ遷移
 		//if (m_pEnemy->GetModel() == nullptr)
 		//{
-		//	GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
-		//	gameSceneManager->RequestScene("ResultClear");
+		//	GamvoidManager* gamvoidManager = GameContext::Get<GamvoidManager>();
+		//	gamvoidManager->RequestScene("ResultClear");
 		//}
 
 
@@ -335,20 +332,11 @@ eScene PlayScene::Update(DX::StepTimer const& _timer)
 		//default:
 		//	break;
 	}
-
-	return eScene::PLAY;
 }
 
 // 描画
-eScene PlayScene::Render()
+void PlayScene::Render()
 {
-	DebugFont* debugFont = DebugFont::GetInstance();
-	debugFont->print(10, 10, L"PlayScene");
-	debugFont->draw();
-	debugFont->print(10, 40, L"[Space] Title");
-	debugFont->draw();
-
-
 	// プレイヤー表示
 	if (m_pPlayer->GetActiveFlag() == true)
 		m_pPlayer->Render(m_pFollowCamera->GetViewMatrix());
@@ -391,14 +379,11 @@ eScene PlayScene::Render()
 	m_warningEffect->Render();
 
 	GameContext::Get<DirectX::SpriteBatch>()->End();
-
-	return eScene::PLAY;
 }
 
 // 後始末
-eScene PlayScene::Finalize()
+void PlayScene::Finalize()
 {
-	return eScene::PLAY;
 }
 
 // プレイ中

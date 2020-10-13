@@ -17,7 +17,6 @@
 #include "StepTimer.h"
 #include "Adx2Le.h"
 
-#include "DebugFont.h"
 #include "DebugCamera.h"
 #include "GridFloor.h"
 #include "FollowCamera.h"
@@ -92,16 +91,16 @@ public: // アクセッサ
 public: // 関数
 
 	// 初期化
-	eScene Initialize() override;
+	void Initialize() override;
 
 	// 更新
-	eScene Update(DX::StepTimer const& _timer) override;
+	void Update(DX::StepTimer const& _timer) override;
 	
 	// 描画
-	eScene Render() override;
+	void Render() override;
 	
 	// 後始末
-	eScene Finalize() override;
+	void Finalize() override;
 
 	// ゲームの初期化
 	GAME_STATE InitializeGame();

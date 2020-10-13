@@ -7,7 +7,6 @@
 
 #include <random>
 
-#include "DebugFont.h"
 #include "GameContext.h"
 #include "EffectMask.h"
 
@@ -28,8 +27,7 @@ Game::Game() noexcept(false)
 
 Game::~Game()
 {
-	DebugFont* debugFont = DebugFont::GetInstance();
-	debugFont->reset();
+
 }
 
 // Initialize the Direct3D resources required to run.
@@ -75,22 +73,9 @@ void Game::Initialize(HWND window, int width, int height)
 	m_timer.SetTargetElapsedSeconds(1.0 / 60);
 	*/
 
-
-	DebugFont* debugFont = DebugFont::GetInstance();
-	debugFont->create(m_pDeviceResources->GetD3DDevice(), m_pDeviceResources->GetD3DDeviceContext());
-
-
-	m_pSceneManager = std::make_unique<SceneManager>();
+	// シーン管理の作成
+	m_pSceneManager = SceneManager::GetInstance();
 	m_pSceneManager->SetStartScene(eScene::TITLE);
-	//m_pGameSceneManager = std::make_unique<GameSceneManager>();
-	//m_pGameSceneManager->RegisterScene<TitleScene>("Title");
-	//m_pGameSceneManager->RegisterScene<PlayScene>("Play");
-	//m_pGameSceneManager->RegisterScene<ResultClearScene>("ResultClear");
-	//m_pGameSceneManager->RegisterScene<ResultGameOverScene>("ResultGameOver");
-	//
-	//m_pGameSceneManager->SetStartScene("Title");
-	//GameContext::Register<GameSceneManager>(m_pGameSceneManager);
-	
 
 	//m_pCollisionManager = std::make_unique<CollisionManager>();
 
@@ -122,7 +107,6 @@ void Game::Update(DX::StepTimer const& timer)
 	elapsedTime;
 
 	// シーンの更新
-	//m_pGameSceneManager->Update(timer);
 	m_pSceneManager->Update(timer);
 
 	// マスクの更新
@@ -266,6 +250,9 @@ void Game::CreateWindowSizeDependentResources()
 void Game::OnDeviceLost()
 {
 	// TODO: Add Direct3D resource cleanup here.
+
+	// 後処理
+	m_pSceneManager->Finalize();
 }
 
 void Game::OnDeviceRestored()

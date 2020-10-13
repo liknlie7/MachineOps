@@ -2,7 +2,6 @@
 #include "ResultGameOverScene.h"
 
 #include "GameContext.h"
-//#include "GameSceneManager.h"
 
 // コンストラクタ
 ResultGameOverScene::ResultGameOverScene()
@@ -16,17 +15,15 @@ ResultGameOverScene::~ResultGameOverScene()
 }
 
 // 初期化
-eScene ResultGameOverScene::Initialize()
+void ResultGameOverScene::Initialize()
 {
 	// テクスチャデータを受け取る
-	m_textures[BACK_GROUND] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\ResultBackGround.png");
-	m_textures[TEXT] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\GameOver.png");
-
-	return eScene::RESULT_GAMEOVER;
+	m_textures[BACK_GROUND] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\ResultBackGround.png");
+	m_textures[TEXT] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\GameOver.png");
 }
 
 // 更新
-eScene ResultGameOverScene::Update(DX::StepTimer const & _timer)
+void ResultGameOverScene::Update(DX::StepTimer const & _timer)
 {
 	_timer;
 	DirectX::Keyboard::State keyState = DirectX::Keyboard::Get().GetState();
@@ -37,12 +34,10 @@ eScene ResultGameOverScene::Update(DX::StepTimer const & _timer)
 		//GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
 		//gameSceneManager->RequestScene("Title");
 	}
-
-	return eScene::RESULT_GAMEOVER;
 }
 
 // 描画
-eScene ResultGameOverScene::Render()
+void ResultGameOverScene::Render()
 {
 	// スプライトバッチの取得
 	DirectX::SpriteBatch* spriteBatch = GameContext::Get<DirectX::SpriteBatch>();
@@ -52,12 +47,10 @@ eScene ResultGameOverScene::Render()
 	spriteBatch->Draw(m_textures[BACK_GROUND].Get(), DirectX::SimpleMath::Vector2::Zero, nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(1.2f, 1.2f));
 	spriteBatch->Draw(m_textures[TEXT].Get(), DirectX::SimpleMath::Vector2(330, 250), nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(0.8f, 0.8f));
 	spriteBatch->End();
-
-	return eScene::RESULT_GAMEOVER;
 }
 
 // 後処理
-eScene ResultGameOverScene::Finalize()
+void ResultGameOverScene::Finalize()
 {
-	return eScene::RESULT_GAMEOVER;
+
 }

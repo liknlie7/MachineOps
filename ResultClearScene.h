@@ -5,9 +5,8 @@
 #include <CommonStates.h>
 #include <WICTextureLoader.h>
 #include <SimpleMath.h>
-#include "StepTimer.h"
 
-#include "GameScene.h"
+#include "StepTimer.h"
 #include "DeviceResources.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
@@ -28,16 +27,16 @@ public: // Šî–{
 public: // ŠÖ”
 
 	// ‰Šú‰»
-	eScene Initialize() override;
+	void Initialize() override;
 	
 	// XV
-	eScene Update(DX::StepTimer const& _timer) override;
+	void Update(DX::StepTimer const& _timer) override;
 	
 	//•`‰æ
-	eScene Render() override;
+	void Render() override;
 	
 	// Œãˆ—
-	eScene Finalize() override;
+	void Finalize() override;
 	
 private: // ’è”
 

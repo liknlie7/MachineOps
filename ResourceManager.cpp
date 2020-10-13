@@ -59,6 +59,7 @@ std::shared_ptr<Adx2Le> ResourceManager::GetSound(const std::wstring _path)
 	return m_sounds[_path];
 }
 
+// テクスチャデータの取得
 Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTexture(const std::wstring _path)
 {
 	ID3D11Device1* device = GameContext::Get<DX::DeviceResources>()->GetD3DDevice();

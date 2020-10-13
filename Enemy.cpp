@@ -66,7 +66,7 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 	case BOSS_ENEMY:
 
 		// 敵モデルのshared_ptrを受け取る
-		m_pEnemy = std::weak_ptr<DirectX::Model>(ResourceManager::GetInstance().GetModel(L"Resources/Models/Enemy1.cmo"));
+		m_pEnemy = std::weak_ptr<DirectX::Model>(ResourceManager::GetInstance()->GetModel(L"Resources/Models/Enemy1.cmo"));
 
 		m_position = _pos;
 		// 速さの初期化
@@ -257,6 +257,35 @@ void Enemy::CreateBullet()
 	//{
 	//	(*itr)->Initialize(m_pBulletGeometric.get());
 	//}
+}
+
+// ファイルの読み込み
+void Enemy::LoadFile()
+{
+	std::ifstream ifs("Resources\\csv\\EnemyData.csv");
+
+	std::string lineBuf;
+
+	std::vector<std::vector<std::string>> csvData;
+
+	while (std::getline(ifs, lineBuf))
+	{
+		csvData.push_back(std::vector<std::string>());
+
+		std::stringstream stream(lineBuf);
+
+		std::string indexBuf;
+
+		while (std::getline(stream, indexBuf, ','))
+		{
+			(*(csvData.end() - 1)).push_back(indexBuf);
+		}
+	}
+
+	//std::vector<EnemyData>
+
+
+
 }
 
 // 弾が衝突した時

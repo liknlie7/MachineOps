@@ -27,10 +27,10 @@ Player::Player()
 	//m_pWeapon = std::make_unique<Weapon>();
 
 	// プレイヤーモデルのshared_ptrを受け取る
-	m_pPlayer = std::weak_ptr<DirectX::Model>(ResourceManager::GetInstance().GetModel(L"Resources/Models/tank.cmo"));
+	m_pPlayer = std::weak_ptr<DirectX::Model>(ResourceManager::GetInstance()->GetModel(L"Resources/Models/tank.cmo"));
 
 	// サウンドのshared_ptrを受け取る
-	//m_pSound = std::weak_ptr<Adx2Le>(ResourceManager::GetInstance().GetSound(L"Resources\\Sounds\\PlayScene"));
+	//m_pSound = std::weak_ptr<Adx2Le>(ResourceManager::GetInstance()->GetSound(L"Resources\\Sounds\\PlayScene"));
 }
 
 

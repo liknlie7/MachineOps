@@ -5,10 +5,10 @@ class Singleton
 {
 public:
 
-	static inline T& GetInstance()
+	static inline T* GetInstance()
 	{
 		static T instance;
-		return instance;
+		return &instance;
 	}
 
 protected:

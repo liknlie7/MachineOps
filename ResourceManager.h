@@ -5,17 +5,19 @@
 #include <CommonStates.h>
 #include <string>
 #include <map>
+#include <WICTextureLoader.h>
 
 #include "GameContext.h"
 #include "DeviceResources.h"
 #include "Adx2Le.h"
 #include "Singleton.h"
 #include "Projection.h"
-#include <WICTextureLoader.h>
 
 // リソース管理クラス
 class ResourceManager : public Singleton<ResourceManager>
 {
+	friend class Singleton<ResourceManager>;
+
 public: // 定数
 
 	// モデルデータ
@@ -39,7 +41,7 @@ public: // 定数
 		Texture,	// テクスチャ
 	};
 
-public: // 基本
+private: // 基本
 
 	// コンストラクタ
 	ResourceManager();

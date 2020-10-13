@@ -77,17 +77,11 @@
     <ClInclude Include="DebugCamera.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="DebugFont.h">
-      <Filter>Debug</Filter>
-    </ClInclude>
     <ClInclude Include="GridFloor.h">
       <Filter>Debug</Filter>
     </ClInclude>
     <ClInclude Include="FollowCamera.h">
       <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="GameContext.h">
-      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Manager</Filter>
@@ -165,6 +159,9 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="BulletManager.h" />
+    <ClInclude Include="GameContext.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -175,9 +172,6 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -185,9 +179,6 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="DebugCamera.cpp">
-      <Filter>Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugFont.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
     <ClCompile Include="GridFloor.cpp">
@@ -257,6 +248,9 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="BulletManager.cpp" />
+    <ClCompile Include="Player.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">

@@ -12,7 +12,7 @@ TitleScene::TitleScene()
 	m_keyboardTracker = GameContext::Get<DirectX::Keyboard::KeyboardStateTracker>();
 
 	// サウンドのshared_ptrを受け取る
-	m_pSound = std::weak_ptr<Adx2Le>(ResourceManager::GetInstance().GetSound(L"Resources\\Sounds\\TitleSounds"));
+	m_pSound = std::weak_ptr<Adx2Le>(ResourceManager::GetInstance()->GetSound(L"Resources\\Sounds\\TitleSounds"));
 }
 
 // デストラクタ
@@ -22,22 +22,20 @@ TitleScene::~TitleScene()
 }
 
 // 初期化
-eScene TitleScene::Initialize()
+void TitleScene::Initialize()
 {
 	// テクスチャデータを受け取る
-	m_textures[TITLE] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\Title.png");
-	m_textures[BACK_GROUND] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\BackGround.png");
-	m_textures[TEXT] = ResourceManager::GetInstance().GetTexture(L"Resources\\Textures\\Massage.png");
+	m_textures[TITLE] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\Title.png");
+	m_textures[BACK_GROUND] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\BackGround.png");
+	m_textures[TEXT] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\Massage.png");
 
 	// BGMの再生
 	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
 		sptr->Play(CRI_TITLE_TITLEBGM, m_volume);
-
-	return eScene::TITLE;
 }
 
 // 更新
-eScene TitleScene::Update(DX::StepTimer const& _timer)
+void TitleScene::Update(DX::StepTimer const& _timer)
 {
 	// フェードエフェクトの取得
 	auto effectMask = GameContext::Get<EffectMask>();
@@ -89,15 +87,12 @@ eScene TitleScene::Update(DX::StepTimer const& _timer)
 
 		// プレイシーンへ遷移
 		//gameSceneManager->RequestScene("Play");
-		SceneManager::GetInstance().RequestScene(eScene::PLAY);
+		SceneManager::GetInstance()->RequestScene(eScene::PLAY);
 	}
-
-
-	return eScene::TITLE;
 }
 
 // 描画
-eScene TitleScene::Render()
+void TitleScene::Render()
 {
 	// スプライトバッチの取得
 	DirectX::SpriteBatch* spriteBatch = GameContext::Get<DirectX::SpriteBatch>();
@@ -111,12 +106,9 @@ eScene TitleScene::Render()
 		spriteBatch->Draw(m_textures[TEXT].Get(), DirectX::SimpleMath::Vector2(380, 450), nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(0.3f, 0.3f));
 	}
 	spriteBatch->End();
-
-	return eScene::TITLE;
 }
 
 // 後処理
-eScene TitleScene::Finalize()
+void TitleScene::Finalize()
 {
-	return eScene::TITLE;
 }

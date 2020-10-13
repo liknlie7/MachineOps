@@ -26,22 +26,24 @@ public: // 基本
 public: // 関数
 
 	// 初期化
-	virtual eScene Initialize() = 0;
+	virtual void Initialize() = 0;
 
 	// 更新
-	virtual eScene Update(DX::StepTimer const& _timer) = 0;
+	virtual void Update(DX::StepTimer const& _timer) = 0;
 
 	// 描画
-	virtual eScene Render() = 0;
+	virtual void Render() = 0;
 
 	// 後処理
-	virtual eScene Finalize() = 0;
+	virtual void Finalize() = 0;
 };
 
 // シーン管理クラス
 class SceneManager : public Singleton<SceneManager>
 {
-public: // 基本
+	friend class Singleton<SceneManager>;
+
+private: // 基本
 
 	// コンストラクタ
 	SceneManager();
