@@ -42,7 +42,7 @@ public:
 	// 射撃の種類
 	enum ShotType
 	{
-		NORMAL_SHOT,			// 通常
+		NORMAL_SHOT = 1,		// 通常
 		ALL_DIRECTION_SHOT,		// 全方位
 		WINDER_SHOT,			// ワインダー
 		WHORL_SHOT,				// うずまき
@@ -50,11 +50,11 @@ public:
 
 	struct EnemyData
 	{
-		EnemyType	enemyType;	// 敵の種類
-		float		moveSpeed;	// 移動速度
-		int			life;		// 体力
-		ShotType	shotType;	// 射撃タイプ
-		float		collider;	// コライダー
+		int 		enemyType = 0;	// 敵の種類
+		float		moveSpeed = 0.0f;	// 移動速度
+		int			life	  = 0;		// 体力
+		int			shotType = 0;	// 射撃タイプ
+		float		collider = 0.0f;	// コライダー
 	};
 
 public: // アクセサ
@@ -145,7 +145,7 @@ public: // 関数
 	void CreateBullet();
 	
 	// CSV読み込み
-	void LoadFile();
+	void LoadEnemyData();
 
 	// 衝突した時
 	void OnCollision();
@@ -167,6 +167,9 @@ private: // 変数
 	// モデル
 	std::weak_ptr<DirectX::Model>					m_pEnemy;
 	Collision::Sphere								m_collider;
+
+	// エネミーデータ
+	std::vector<EnemyData>							m_enemyData;
 
 	// 弾
 	//std::unique_ptr<DirectX::GeometricPrimitive>	m_pBulletGeometric;

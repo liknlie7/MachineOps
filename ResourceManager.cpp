@@ -37,6 +37,7 @@ std::shared_ptr<DirectX::Model> ResourceManager::GetModel(const std::wstring _pa
 }
 
 // サウンドデータの取得--拡張子は渡さなくてよい
+// acf,acbファイルが同名
 std::shared_ptr<Adx2Le> ResourceManager::GetSound(const std::wstring _path)
 {
 	// 作成されている場合サウンドデータを返す
@@ -45,9 +46,11 @@ std::shared_ptr<Adx2Le> ResourceManager::GetSound(const std::wstring _path)
 		return m_sounds[_path];
 	}
 
+	// 拡張子
 	std::wstring acf = L".acf";
 	std::wstring acb = L".acb";
 
+	// パスに拡張子をつなぐ
 	std::wstring acfData = _path + acf;
 	std::wstring acbData = _path + acb;
 
@@ -57,6 +60,32 @@ std::shared_ptr<Adx2Le> ResourceManager::GetSound(const std::wstring _path)
 
 	// サウンドデータを返す
 	return m_sounds[_path];
+}
+
+// サウンドデータの取得--拡張子は渡さなくてよい
+// acf,acbファイルが別名
+std::shared_ptr<Adx2Le> ResourceManager::GetSound(const std::wstring _acf, const std::wstring _acb)
+{
+	// 作成されている場合サウンドデータを返す
+	if (m_sounds.count(_acb) != 0)
+	{
+		return m_sounds[_acb];
+	}
+
+	// 拡張子
+	std::wstring acf = L".acf";
+	std::wstring acb = L".acb";
+
+	// パスに拡張子をつなぐ
+	std::wstring acfData = _acf + acf;
+	std::wstring acbData = _acb + acb;
+
+	m_sounds[_acb] = std::make_shared<Adx2Le>();
+	m_sounds[_acb]->Initialize(acfData.c_str());
+	m_sounds[_acb]->LoadAcbFile(acbData.c_str());
+
+	// サウンドデータを返す
+	return m_sounds[_acb];
 }
 
 // テクスチャデータの取得
@@ -76,39 +105,3 @@ Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTexture(con
 	// テクスチャデータを返す
 	return m_textures[_path];
 }
-
-
-//// サウンドの作成
-//void ResourceManager::CreateSound(const int _soundNumber)
-//{
-//	switch (_soundNumber)
-//	{
-//		// タイトルシーンのサウンドを読み込む
-//	case TITLESCENE_SOUND:
-//
-//		m_sounds[TITLESCENE_SOUND]->Initialize(L"Resources\\Sounds\\TitleSounds.acf");
-//		m_sounds[TITLESCENE_SOUND]->LoadAcbFile(L"Resources\\Sounds\\TitleSounds.acb");
-//
-//		break;
-//
-//		// プレイシーンのサウンドを読み込む
-//	case PLAYSCENE_SOUND:
-//
-//		m_sounds[PLAYSCENE_SOUND]->Initialize(L"Resources\\Sounds\\PlayScene.acf");
-//		m_sounds[PLAYSCENE_SOUND]->LoadAcbFile(L"Resources\\Sounds\\PlayScene.acb");
-//
-//		break;
-//
-//		// プレイヤーのサウンドを読み込む
-//	case PLAYER_SOUND:
-//
-//		m_sounds[PLAYER_SOUND]->Initialize(L"Resources\\Sounds\\PlayScene.acf");
-//		m_sounds[PLAYER_SOUND]->LoadAcbFile(L"Resources\\Sounds\\Player.acb");
-//
-//		break;
-//
-//	default:
-//		break;
-//	}
-//}
-

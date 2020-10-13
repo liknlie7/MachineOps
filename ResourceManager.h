@@ -18,29 +18,6 @@ class ResourceManager : public Singleton<ResourceManager>
 {
 	friend class Singleton<ResourceManager>;
 
-public: // 定数
-
-	// モデルデータ
-	//enum class ModelData {
-	//	PLAYER,			// プレイヤー
-	//	ENEMY,			// 敵
-	//};
-
-	//// サウンドデータ
-	//enum class SoundData {
-	//	TITLESCENE,		// タイトルシーンのサウンド
-	//	PLAYSCENE,		// プレイシーンのサウンド
-	//	PLAYER,			// プレイヤーのサウンド
-	//};
-
-	// リソースタイプ
-	enum class ResourceType
-	{
-		Model,		// モデル
-		Sound,		// サウンド
-		Texture,	// テクスチャ
-	};
-
 private: // 基本
 
 	// コンストラクタ
@@ -54,11 +31,11 @@ public: // 関数
 	// モデルデータの取得
 	std::shared_ptr<DirectX::Model> GetModel(const std::wstring _path);
 
-	// サウンドの作成
-	void CreateSound(const int _soundNumber);
-
 	// サウンドの取得 -- 拡張子は渡さなくてよい
+	// acb,acfファイルが同名
 	std::shared_ptr<Adx2Le> GetSound(const std::wstring _path);
+	// acb,acfファイルが別名
+	std::shared_ptr<Adx2Le> GetSound(const std::wstring _acf, const std::wstring _acb);
 
 	// テクスチャの取得
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> GetTexture(const std::wstring _path);

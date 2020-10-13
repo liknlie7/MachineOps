@@ -30,6 +30,8 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 	// 弾の形状作成
 	//m_pBulletGeometric = DirectX::GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);
 
+	LoadEnemyData();
+
 	switch (m_enemyType)
 	{
 	case NORMAL_ENEMY: // ノーマルタイプ
@@ -260,7 +262,7 @@ void Enemy::CreateBullet()
 }
 
 // ファイルの読み込み
-void Enemy::LoadFile()
+void Enemy::LoadEnemyData()
 {
 	std::ifstream ifs("Resources\\csv\\EnemyData.csv");
 
@@ -282,10 +284,21 @@ void Enemy::LoadFile()
 		}
 	}
 
-	//std::vector<EnemyData>
+	// 敵の数を取得
+	auto enemyNum = stoi(csvData[0][1]);
 
+	for (int i = 2; i < enemyNum; i++)
+	{
+		EnemyData data;
 
+		data.enemyType = stoi(csvData[i][0]);
+		data.moveSpeed = stoi(csvData[i][1]);
+		data.life = stoi(csvData[i][2]);
+		data.shotType = stoi(csvData[i][3]);
+		data.collider = stoi(csvData[i][4]);
 
+		m_enemyData.push_back(data);
+	}
 }
 
 // 弾が衝突した時
