@@ -105,3 +105,43 @@ Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTexture(con
 	// テクスチャデータを返す
 	return m_textures[_path];
 }
+
+// エネミーデータ(csv)の読み込み
+void ResourceManager::LoadEnemyData()
+{
+	std::ifstream ifs("Resources\\csv\\EnemyData.csv");
+
+	std::string lineBuf;
+
+	std::vector<std::vector<std::string>> csvData;
+
+	while (std::getline(ifs, lineBuf))
+	{
+		csvData.push_back(std::vector<std::string>());
+
+		std::stringstream stream(lineBuf);
+
+		std::string indexBuf;
+
+		while (std::getline(stream, indexBuf, ','))
+		{
+			(*(csvData.end() - 1)).push_back(indexBuf);
+		}
+	}
+
+	// エネミーの数を取得
+	int enemyNum = stoi(csvData[0][1]);
+
+	for (int i = 2; i < enemyNum + 2; i++)
+	{
+		EnemyData data;
+
+		data.enemyType = stoi(csvData[i][0]);
+		data.moveSpeed = stof(csvData[i][1]);
+		data.life = stoi(csvData[i][2]);
+		data.shotType = stoi(csvData[i][3]);
+		data.collider = stof(csvData[i][4]);
+
+		m_enemyData.push_back(data);
+	}
+}

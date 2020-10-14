@@ -127,7 +127,7 @@ public: // 関数
 
 	// 衝突
 	void OnCollision();
-	// 敵との衝突
+	// エネミーとの衝突
 	void OnCollisionEnemy(DirectX::SimpleMath::Vector3 _enemyPos);
 
 private: // サブ関数

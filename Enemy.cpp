@@ -10,19 +10,21 @@ const float Enemy::SIZE = 1.5f;
 const float Enemy::BOSS_SIZE = 8.0f;
 
 // コンストラクタ
-Enemy::Enemy(const int _type)
+Enemy::Enemy(const EnemyData _enemyData)
 	: m_blinkTime(30)
 	, m_isValid(false)
 	, m_playerPos(0.0f, 0.0f, 0.0f)
-	, m_life(100)
-	, m_maxLife(100)
 	, m_wayNum(3)
 	, m_changeAngle(30)
 	, m_bulletEndAngle(0)
 	, m_shotInterval(10.0f)
 	, m_shotRotate(0.0f)
 {
-	m_enemyType = _type;
+	m_enemyType = _enemyData.enemyType;
+	m_maxLife = m_life =  _enemyData.life;
+	m_speed = _enemyData.moveSpeed;
+	m_collider.radius = _enemyData.collider;
+	m_shotType = _enemyData.shotType;
 }
 
 void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
@@ -30,55 +32,32 @@ void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
 	// 弾の形状作成
 	//m_pBulletGeometric = DirectX::GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);
 
-	LoadEnemyData();
-
 	switch (m_enemyType)
 	{
 	case NORMAL_ENEMY: // ノーマルタイプ
 
 		m_position = _pos;
-		// 速さの初期化
-		m_speed = 0.08f;
 
-		m_life = 300;
-
-		m_collider.radius = 2.0f;
 		m_collider.center = m_position;
-		//m_decisionAreaPos = m_pos;
 
-		m_shotType = NORMAL_SHOT;
 		break;
 
 		// 盾持ち
 	case SHIELD_ENEMY:
 
 		m_position = _pos;
-		// 速さの初期化
-		m_speed = 0.05f;
-
-		m_life = 5;
-
-		m_collider.radius = 2.0f;
 		m_collider.center = m_position;
-		//m_decisionAreaPos = m_pos;
 		m_shotType = 4;
 
 		break;
 
 	case BOSS_ENEMY:
 
-		// 敵モデルのshared_ptrを受け取る
+		// エネミーモデルのshared_ptrを受け取る
 		m_pEnemy = std::weak_ptr<DirectX::Model>(ResourceManager::GetInstance()->GetModel(L"Resources/Models/Enemy1.cmo"));
 
 		m_position = _pos;
-		// 速さの初期化
-		m_speed = 0.03f;
-
-		m_life = m_maxLife;
-		m_shotType = NORMAL_SHOT;
-		m_collider.radius = /*2.0f*/5.0f;
 		m_collider.center = m_position;
-		//m_decisionAreaPos = m_pos;
 
 		break;
 	}
@@ -228,7 +207,7 @@ void Enemy::ChasePlayer(DirectX::SimpleMath::Vector3 _playerPos)
 	DirectX::SimpleMath::Vector3 dir = _playerPos - m_position;
 	dir.Normalize();
 
-	// 敵の移動
+	// エネミーの移動
 	m_position += dir * m_speed;
 }
 
@@ -259,46 +238,6 @@ void Enemy::CreateBullet()
 	//{
 	//	(*itr)->Initialize(m_pBulletGeometric.get());
 	//}
-}
-
-// ファイルの読み込み
-void Enemy::LoadEnemyData()
-{
-	std::ifstream ifs("Resources\\csv\\EnemyData.csv");
-
-	std::string lineBuf;
-
-	std::vector<std::vector<std::string>> csvData;
-
-	while (std::getline(ifs, lineBuf))
-	{
-		csvData.push_back(std::vector<std::string>());
-
-		std::stringstream stream(lineBuf);
-
-		std::string indexBuf;
-
-		while (std::getline(stream, indexBuf, ','))
-		{
-			(*(csvData.end() - 1)).push_back(indexBuf);
-		}
-	}
-
-	// 敵の数を取得
-	auto enemyNum = stoi(csvData[0][1]);
-
-	for (int i = 2; i < enemyNum; i++)
-	{
-		EnemyData data;
-
-		data.enemyType = stoi(csvData[i][0]);
-		data.moveSpeed = stoi(csvData[i][1]);
-		data.life = stoi(csvData[i][2]);
-		data.shotType = stoi(csvData[i][3]);
-		data.collider = stoi(csvData[i][4]);
-
-		m_enemyData.push_back(data);
-	}
 }
 
 // 弾が衝突した時

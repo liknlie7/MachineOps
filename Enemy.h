@@ -6,8 +6,6 @@
 #include <Effects.h>
 #include <CommonStates.h>
 #include <SpriteBatch.h>
-#include <fstream>
-#include <sstream>
 
 #include "DeviceResources.h"
 #include "Projection.h"
@@ -18,25 +16,26 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 //#include "BulletManager.h"
+#include "EnemyData.h"
 
-// 敵
+// エネミー
 class Enemy : public GameObject
 {
 public: // 基本
 
 	// コンストラクタ
-	Enemy(const int _type);
+	Enemy(const EnemyData _enemyData);
 	// デストラクタ
 	~Enemy() {};
 
 public:
 
-	// 敵の種類
+	// エネミーの種類
 	enum EnemyType
 	{
-		NORMAL_ENEMY = 1,
-		SHIELD_ENEMY,
-		BOSS_ENEMY,
+		NORMAL_ENEMY = 1,	// 通常
+		SHIELD_ENEMY,		// 盾
+		BOSS_ENEMY,			// ボス
 	};
 
 	// 射撃の種類
@@ -46,15 +45,6 @@ public:
 		ALL_DIRECTION_SHOT,		// 全方位
 		WINDER_SHOT,			// ワインダー
 		WHORL_SHOT,				// うずまき
-	};
-
-	struct EnemyData
-	{
-		int 		enemyType = 0;	// 敵の種類
-		float		moveSpeed = 0.0f;	// 移動速度
-		int			life	  = 0;		// 体力
-		int			shotType = 0;	// 射撃タイプ
-		float		collider = 0.0f;	// コライダー
 	};
 
 public: // アクセサ
@@ -144,9 +134,6 @@ public: // 関数
 	// 弾の作成
 	void CreateBullet();
 	
-	// CSV読み込み
-	void LoadEnemyData();
-
 	// 衝突した時
 	void OnCollision();
 	//// 弾が衝突した時
@@ -168,9 +155,6 @@ private: // 変数
 	std::weak_ptr<DirectX::Model>					m_pEnemy;
 	Collision::Sphere								m_collider;
 
-	// エネミーデータ
-	std::vector<EnemyData>							m_enemyData;
-
 	// 弾
 	//std::unique_ptr<DirectX::GeometricPrimitive>	m_pBulletGeometric;
 	//std::vector<std::unique_ptr<Bullet>>			m_pBullets;
@@ -191,7 +175,7 @@ private: // 変数
 	float											m_shotRotate;
 	// 速さ
 	float											m_speed;
-	// 敵機の角度
+	// エネミー機の角度
 	float											m_enemyAngle;
 	// Way数
 	int												m_wayNum;
@@ -200,12 +184,10 @@ private: // 変数
 	// 弾の角度の間隔
 	float											m_changeAngle;
 	// 体力
-	float											m_maxLife;
 	float											m_life;
+	float											m_maxLife;
 	// ヒットフラグ
 	bool											m_isValid;
 	// 点滅時間
 	int												m_blinkTime;
-
-
 };

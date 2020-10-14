@@ -162,6 +162,9 @@
     <ClInclude Include="GameContext.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyData.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />

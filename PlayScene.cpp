@@ -50,23 +50,26 @@ void PlayScene::Initialize()
 	m_pPlayer = std::make_unique<Player>();
 	m_pPlayer->Initialize();
 
-	// 敵作成
+	// エネミーデータの読み込み
+	ResourceManager::GetInstance()->LoadEnemyData();
+
+	// エネミー作成
 	if (bossFlag)
 	{
-		m_pEnemy = std::make_unique<Enemy>(m_pEnemy->BOSS_ENEMY);
+		m_pEnemy = std::make_unique<Enemy>(ResourceManager::GetInstance()->GetEnemyData(Enemy::BOSS_ENEMY - 1));
 		m_pEnemy->Initialize(DirectX::SimpleMath::Vector3(0.0f, 1.0f, -15.0f));
 	}
-	if (!bossFlag)
-	{
-		m_pEnemies[0] = std::make_unique<Enemy>(m_pEnemies[0]->NORMAL_ENEMY);
-		m_pEnemies[0]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
-		m_pEnemies[1] = std::make_unique<Enemy>(m_pEnemies[1]->NORMAL_ENEMY);
-		m_pEnemies[1]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
-		m_pEnemies[2] = std::make_unique<Enemy>(m_pEnemies[2]->SHIELD_ENEMY);
-		m_pEnemies[2]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
-		m_pEnemies[3] = std::make_unique<Enemy>(m_pEnemies[3]->SHIELD_ENEMY);
-		m_pEnemies[3]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
-	}
+	//if (!bossFlag)
+	//{
+	//	m_pEnemies[0] = std::make_unique<Enemy>(m_pEnemies[0]->NORMAL_ENEMY);
+	//	m_pEnemies[0]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
+	//	m_pEnemies[1] = std::make_unique<Enemy>(m_pEnemies[1]->NORMAL_ENEMY);
+	//	m_pEnemies[1]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
+	//	m_pEnemies[2] = std::make_unique<Enemy>(m_pEnemies[2]->SHIELD_ENEMY);
+	//	m_pEnemies[2]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
+	//	m_pEnemies[3] = std::make_unique<Enemy>(m_pEnemies[3]->SHIELD_ENEMY);
+	//	m_pEnemies[3]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
+	//}
 
 	// 弾管理用オブジェクト作成
 	//m_pBulletManager = std::make_unique<BulletManager>();
@@ -80,11 +83,11 @@ void PlayScene::Initialize()
 	m_textures[GREEN_HP] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\GreenHP.png");
 	m_textures[RED_HP] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\RedHP.png");
 
-	// 敵のライフデフォルトスケール値
+	// エネミーのライフデフォルトスケール値
 	m_defaultGaugeScaleX = 1.0f;
-	// 現在の敵のライフ
+	// 現在のエネミーのライフ
 	m_currentGaugeScaleX = 1.0f;
-	// 次の敵のライフ
+	// 次のエネミーのライフ
 	m_prevGaugeScaleX = m_currentGaugeScaleX;
 	// じわじわ減るライフゲージ
 	m_lightGreenGaugeRate = 0;
@@ -167,7 +170,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 		if (m_pPlayer->GetActiveFlag() == true)
 			m_pPlayer->Update();
 
-		// 敵更新
+		// エネミー更新
 		if (bossFlag)
 		{
 			if (m_pPlayer->GetActiveFlag() == true)
@@ -239,7 +242,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 			//	{
 			//		m_pEnemy->OnCollision();
 			//		//m_pPlayer->m_pWeapon->BulletOnCollision(i);
-			//		// 敵の体力の比率計算
+			//		// エネミーの体力の比率計算
 			//		float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
 			//		// 現在のゲージサイズ
 			//		m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
@@ -247,7 +250,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 			//	}
 			//}
 
-			// プレイヤーと敵の弾の当たり判定
+			// プレイヤーとエネミーの弾の当たり判定
 			for (unsigned int i = 0; i < enemyBullet.size(); i++)
 			{
 				if (m_pPlayer->GetActiveFlag() == true)
@@ -263,7 +266,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 				}
 			}
 
-			// 壁と敵の弾の当たり判定
+			// 壁とエネミーの弾の当たり判定
 			for (unsigned int i = 0; i < enemyBullet.size(); i++)
 			{
 				for (int j = 0; j < 8; j++)
@@ -275,7 +278,7 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 				}
 			}
 
-			// プレイヤーと敵の当たり判定
+			// プレイヤーとエネミーの当たり判定
 			if (m_pPlayer->GetActiveFlag() == true
 				&& m_pEnemy != nullptr)
 			{
@@ -341,7 +344,7 @@ void PlayScene::Render()
 	if (m_pPlayer->GetActiveFlag() == true)
 		m_pPlayer->Render(m_pFollowCamera->GetViewMatrix());
 
-	// 敵表示
+	// エネミー表示
 	if (bossFlag)
 		m_pEnemy->Render(m_pFollowCamera->GetViewMatrix());
 

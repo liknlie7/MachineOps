@@ -6,12 +6,15 @@
 #include <string>
 #include <map>
 #include <WICTextureLoader.h>
+#include <sstream>
+#include <fstream>
 
 #include "GameContext.h"
 #include "DeviceResources.h"
 #include "Adx2Le.h"
 #include "Singleton.h"
 #include "Projection.h"
+#include "EnemyData.h"
 
 // リソース管理クラス
 class ResourceManager : public Singleton<ResourceManager>
@@ -40,6 +43,15 @@ public: // 関数
 	// テクスチャの取得
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> GetTexture(const std::wstring _path);
 
+	//　エネミーデータ(csv)の読み込み
+	void LoadEnemyData();
+
+	// エネミーデータの取得
+	EnemyData GetEnemyData(int _enemyType)
+	{
+		return m_enemyData[_enemyType];
+	}
+
 private: // 変数
 
 	// エフェクトファクトリ
@@ -54,7 +66,6 @@ private: // 変数
 	// テクスチャデータ
 	std::map <std::wstring, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>		m_textures;
 
+	// エネミーデータ
+	std::vector<EnemyData>									m_enemyData;
 };
-
-
-

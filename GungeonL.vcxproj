@@ -187,6 +187,7 @@
     <ClInclude Include="DeviceResources.h" />
     <ClInclude Include="EffectMask.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyData.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="Flock.h" />
     <ClInclude Include="Floor.h" />

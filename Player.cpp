@@ -203,7 +203,7 @@ void Player::OnCollision()
 	//m_life--;
 }
 
-// 敵との衝突
+// エネミーとの衝突
 void Player::OnCollisionEnemy(DirectX::SimpleMath::Vector3 _enemyPos)
 {
 	DirectX::SimpleMath::Vector3 v = m_position - _enemyPos;

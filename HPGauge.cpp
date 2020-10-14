@@ -16,7 +16,7 @@ HPGauge::HPGauge()
 
 void HPGauge::Update()
 {
-	//// 敵の体力の比率計算
+	//// エネミーの体力の比率計算
 	//float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
 	//// 現在のゲージサイズ
 	//m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
