@@ -9,6 +9,7 @@
 #include "Projection.h"
 #include "GameContext.h"
 #include "GameObject.h"
+#include "BulletManager.h"
 #include "Bullet.h"
 
 class Weapon : public GameObject
@@ -59,6 +60,11 @@ public: // アクセサ
 	{
 		bulletNumber = _bulletNumber;
 	}
+	
+	void SetTest(BulletManager* _manager)
+	{
+		m_pBulletManager = _manager;
+	}
 
 public: // 関数
 
@@ -79,9 +85,9 @@ public: // 関数
 private: // 変数
 
 	// 武器
-	std::unique_ptr<DirectX::GeometricPrimitive> m_pWeapon;
-	// 弾
-	std::unique_ptr<DirectX::GeometricPrimitive> m_pBulletGeometric;
+	//std::unique_ptr<DirectX::GeometricPrimitive> m_pWeapon;
+	//// 弾
+	//std::unique_ptr<DirectX::GeometricPrimitive> m_pBulletGeometric;
 	//std::vector<std::unique_ptr<Bullet>>		 m_pBullets;
 
 	// プレイヤーの位置
@@ -93,4 +99,6 @@ private: // 変数
 	bool										 bulletHitFlag;
 	int											 bulletNumber;
 
+
+	BulletManager*	m_pBulletManager;
 };

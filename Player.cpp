@@ -20,7 +20,8 @@ Player::Player()
 	, m_accel(0.0f, 0.0f, 0.0f)
 {
 	// 武器の作成
-	//m_pWeapon = std::make_unique<Weapon>();
+	m_pWeapon = std::make_unique<Weapon>();
+	m_pWeapon->SetTest(m_pBulletManager);
 
 	// プレイヤーモデルのshared_ptrを受け取る
 	m_pPlayer = std::weak_ptr<DirectX::Model>(ResourceManager::GetInstance()->GetModel(L"Resources/Models/tank.cmo"));
@@ -131,7 +132,9 @@ void Player::Update()
 		// 左クリック
 		if (mouseState.leftButton)
 		{
-			m_pBulletManager->Shot(m_position,DirectX::SimpleMath::Vector3(0.0f,0.0f,0.8f),rotate,m_pBulletManager->GetBulletGeometry(BulletManager::BOX));
+			 //= DirectX::SimpleMath::Vector3::Transform(m_velocity, rotate);
+
+			m_pBulletManager->Shot(m_position,0.8f,rotate,m_pBulletManager->GetBulletGeometry(BulletManager::BOX));
 			
 			// 弾の生成
 			//m_pWeapon->CreateBullet();

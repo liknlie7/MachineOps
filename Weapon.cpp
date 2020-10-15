@@ -14,9 +14,9 @@ Weapon::Weapon()
 void Weapon::Initialize()
 {
 	// ïêäÌÇÃçÏê¨
-	m_pWeapon = DirectX::GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), DirectX::SimpleMath::Vector3(0.1f, 0.1f, 0.5f));
-	// íeÇÃçÏê¨
-	m_pBulletGeometric = DirectX::GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), DirectX::SimpleMath::Vector3(0.1f,0.1f,1.5f));
+	//m_pWeapon = DirectX::GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), DirectX::SimpleMath::Vector3(0.1f, 0.1f, 0.5f));
+	//// íeÇÃçÏê¨
+	//m_pBulletGeometric = DirectX::GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), DirectX::SimpleMath::Vector3(0.1f,0.1f,1.5f));
 }
 
 // çXêV
@@ -24,6 +24,7 @@ void Weapon::Update()
 {
 	m_matrix = DirectX::SimpleMath::Matrix::CreateTranslation(m_position) * DirectX::SimpleMath::Matrix::CreateRotationY(m_angle) *
 		DirectX::SimpleMath::Matrix::CreateTranslation(m_playerPos);
+
 
 	//for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
 	//{
@@ -58,19 +59,26 @@ void Weapon::Render(const DirectX::SimpleMath::Matrix& _view)
 // å„énññ
 void Weapon::Finalize()
 {
-	m_pWeapon.reset();
+	//m_pWeapon.reset();
 }
 
-//void Weapon::CreateBullet()
-//{
-//	// íeÇÃçÏê¨
-//	m_pBullets.push_back(std::make_unique<Bullet>(m_playerPos + DirectX::SimpleMath::Vector3(0.0f, 0.9f, 0.0f), DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.8f), m_angle));
-//
-//	for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-//	{
-//		(*itr)->Initialize(m_pBulletGeometric.get());
-//	}
-//}
+void Weapon::CreateBullet()
+{
+	auto a = DirectX::SimpleMath::Matrix::CreateRotationY(m_angle);
+
+	auto b = m_pBulletManager->GetBulletGeometry(BulletManager::BOX);
+
+
+	//m_pBulletManager->Shot(m_position, DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.8f), a, m_pBulletManager->GetBulletGeometry(BulletManager::BOX));
+
+	// íeÇÃçÏê¨
+	//m_pBullets.push_back(std::make_unique<Bullet>(m_playerPos + DirectX::SimpleMath::Vector3(0.0f, 0.9f, 0.0f), DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.8f), m_angle));
+
+	//for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
+	//{
+	//	(*itr)->Initialize(m_pBulletGeometric.get());
+	//}
+}
 
 //void Weapon::BulletOnCollision(int _number)
 //{

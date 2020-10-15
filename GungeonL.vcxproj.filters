@@ -77,7 +77,6 @@
     <ClInclude Include="HPGauge.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="MouseCursor.h" />
     <ClInclude Include="File.h">
       <Filter>Effect</Filter>
     </ClInclude>
@@ -117,7 +116,6 @@
     <ClInclude Include="ResultClearScene.h">
       <Filter>GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="BulletManager.h" />
     <ClInclude Include="GameContext.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -130,11 +128,27 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Object\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="PlayScene.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="Enemy.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseCursor.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletManager.h">
+      <Filter>Object\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -160,7 +174,6 @@
     <ClCompile Include="HPGauge.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="MouseCursor.cpp" />
     <ClCompile Include="File.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
@@ -191,18 +204,33 @@
     <ClCompile Include="ResultGameOverScene.cpp">
       <Filter>GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Object\Manager</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Object\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="PlayScene.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseCursor.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletManager.cpp">
+      <Filter>Object\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">

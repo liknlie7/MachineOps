@@ -39,7 +39,7 @@ public: // ä÷êî
 	//Bullet* Create(const DirectX::SimpleMath::Vector3& _pos, const DirectX::SimpleMath::Vector3& _vec, const float& _angle);
 
 	// î≠éÀ
-	void Shot(const DirectX::SimpleMath::Vector3& _pos, const DirectX::SimpleMath::Vector3& _vel, const DirectX::SimpleMath::Matrix& _rotate, DirectX::GeometricPrimitive* _bulletGeometry);
+	void Shot(const DirectX::SimpleMath::Vector3& _pos, const float& _speed, const DirectX::SimpleMath::Matrix& _rotate, DirectX::GeometricPrimitive* _bulletGeometry);
 
 	// å„èàóù
 	void Finalize();

@@ -23,6 +23,9 @@ void Bullet::Update()
 {
 	if (m_isUsed)
 	{
+		// 移動
+		m_position += DirectX::SimpleMath::Vector3::Transform(DirectX::SimpleMath::Vector3::UnitZ * 0.8f, m_rotate);
+
 		// 飛行時間を減らす
 		m_life--;
 
@@ -34,14 +37,8 @@ void Bullet::Update()
 
 		//m_rotate = DirectX::SimpleMath::Matrix::CreateRotationY(m_angle);
 
-		//m_velocity = DirectX::SimpleMath::Vector3::Transform(m_velocity, m_rotate);
-
 		// 行列更新
-		m_matrix = DirectX::SimpleMath::Matrix::CreateTranslation(DirectX::SimpleMath::Vector3(m_position))/* * m_rotate*/;
-
-		// 移動
-		m_position += m_velocity;
-
+		m_matrix = m_rotate * DirectX::SimpleMath::Matrix::CreateTranslation(DirectX::SimpleMath::Vector3(m_position));
 	}
 }
 

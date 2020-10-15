@@ -14,7 +14,7 @@
 #include "Collision.h"
 #include "GameContext.h"
 #include "GameObject.h"
-//#include "Weapon.h"
+#include "Weapon.h"
 #include "BulletManager.h"
 #include "Adx2Le.h"
 #include "PlayerSound.h"
@@ -201,6 +201,6 @@ private:
 public:
 
 	// èe
-	//std::unique_ptr<Weapon>						 m_pWeapon;
+	std::unique_ptr<Weapon>						 m_pWeapon;
 
 };
