@@ -40,36 +40,18 @@ std::shared_ptr<DirectX::Model> ResourceManager::GetModel(const std::wstring _pa
 // acf,acbファイルが同名
 std::shared_ptr<Adx2Le> ResourceManager::GetSound(const std::wstring _path)
 {
-	// 作成されている場合サウンドデータを返す
-	if (m_sounds.count(_path) != 0)
-	{
-		return m_sounds[_path];
-	}
-
-	// 拡張子
-	std::wstring acf = L".acf";
-	std::wstring acb = L".acb";
-
-	// パスに拡張子をつなぐ
-	std::wstring acfData = _path + acf;
-	std::wstring acbData = _path + acb;
-
-	m_sounds[_path] = std::make_shared<Adx2Le>();
-	m_sounds[_path]->Initialize(acfData.c_str());
-	m_sounds[_path]->LoadAcbFile(acbData.c_str());
-
 	// サウンドデータを返す
-	return m_sounds[_path];
+	return GetSound(_path, _path);
 }
 
 // サウンドデータの取得--拡張子は渡さなくてよい
 // acf,acbファイルが別名
-std::shared_ptr<Adx2Le> ResourceManager::GetSound(const std::wstring _acf, const std::wstring _acb)
+std::shared_ptr<Adx2Le> ResourceManager::GetSound(const std::wstring _acfPath, const std::wstring _acbPath)
 {
 	// 作成されている場合サウンドデータを返す
-	if (m_sounds.count(_acb) != 0)
+	if (m_sounds.count(_acbPath) != 0)
 	{
-		return m_sounds[_acb];
+		return m_sounds[_acbPath];
 	}
 
 	// 拡張子
@@ -77,15 +59,15 @@ std::shared_ptr<Adx2Le> ResourceManager::GetSound(const std::wstring _acf, const
 	std::wstring acb = L".acb";
 
 	// パスに拡張子をつなぐ
-	std::wstring acfData = _acf + acf;
-	std::wstring acbData = _acb + acb;
+	std::wstring acfData = _acfPath + acf;
+	std::wstring acbData = _acbPath + acb;
 
-	m_sounds[_acb] = std::make_shared<Adx2Le>();
-	m_sounds[_acb]->Initialize(acfData.c_str());
-	m_sounds[_acb]->LoadAcbFile(acbData.c_str());
+	m_sounds[_acbPath] = std::make_shared<Adx2Le>();
+	m_sounds[_acbPath]->Initialize(acfData.c_str());
+	m_sounds[_acbPath]->LoadAcbFile(acbData.c_str());
 
 	// サウンドデータを返す
-	return m_sounds[_acb];
+	return m_sounds[_acbPath];
 }
 
 // テクスチャデータの取得

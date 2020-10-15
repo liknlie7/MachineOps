@@ -38,7 +38,7 @@ public: // 関数
 	// acb,acfファイルが同名
 	std::shared_ptr<Adx2Le> GetSound(const std::wstring _path);
 	// acb,acfファイルが別名
-	std::shared_ptr<Adx2Le> GetSound(const std::wstring _acf, const std::wstring _acb);
+	std::shared_ptr<Adx2Le> GetSound(const std::wstring _acfPath, const std::wstring _acbPath);
 
 	// テクスチャの取得
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> GetTexture(const std::wstring _path);

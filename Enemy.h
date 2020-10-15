@@ -15,7 +15,7 @@
 //#include "Bullet.h"
 #include "GameObject.h"
 #include "ResourceManager.h"
-//#include "BulletManager.h"
+#include "BulletManager.h"
 #include "EnemyData.h"
 
 // エネミー
@@ -108,16 +108,17 @@ public: // アクセサ
 	}
 
 	// 弾管理クラスのアドレスを設定
-	//void SetBulletManager(BulletManager* _bullet)
-	//{
-	//	m_pBulletManager = _bullet;
-	//}
+	void SetBulletManager(BulletManager* _bullet)
+	{
+		m_pBulletManager = _bullet;
+	}
+
 
 
 public: // 関数
 
 	// 初期化
-	void Initialize(DirectX::SimpleMath::Vector3 _pos);
+	void Initialize(DirectX::SimpleMath::Vector3 _pos, DirectX::GeometricPrimitive* _bulletGeometry);
 	// 更新
 	void Update() override;
 	// 描画
@@ -159,8 +160,8 @@ private: // 変数
 	//std::unique_ptr<DirectX::GeometricPrimitive>	m_pBulletGeometric;
 	//std::vector<std::unique_ptr<Bullet>>			m_pBullets;
 
-	//// 弾管理用オブジェクト
-	//BulletManager*									m_pBulletManager;
+	// 弾管理用オブジェクト
+	BulletManager*									m_pBulletManager;
 
 	// プレイヤーの位置
 	DirectX::SimpleMath::Vector3					m_playerPos;

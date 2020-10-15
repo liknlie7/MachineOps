@@ -17,8 +17,6 @@
 #include "StepTimer.h"
 #include "Adx2Le.h"
 
-#include "DebugCamera.h"
-#include "GridFloor.h"
 #include "FollowCamera.h"
 #include "Floor.h"
 #include "Wall.h"
@@ -31,7 +29,6 @@
 #include "PlaySceneSound.h"
 #include "WarningEffect.h"
 #include "BulletManager.h"
-#include "Bullet.h"
 
 // プレイシーンクラス
 class PlayScene : public IScene
@@ -159,6 +156,8 @@ private: // 変数
 	// エフェクト
 	std::unique_ptr<DirectX::BasicEffect>				m_pBasicEffect;
 
+	
+
 	// ViewPort
 	DirectX::SimpleMath::Matrix							m_viewPort;
 
@@ -178,12 +177,12 @@ private: // 変数
 	std::unique_ptr<Player>								m_pPlayer;
 
 	// エネミー
-	std::unique_ptr<Enemy>								m_pEnemy;
-	std::unique_ptr<Enemy>								m_pEnemies[4];
-	bool bossFlag;
+	//std::unique_ptr<Enemy>								m_pEnemy;
+	//std::unique_ptr<Enemy>								m_pEnemies[4];
+	//bool bossFlag;
 
 	// 弾管理用
-	//std::unique_ptr<BulletManager>						m_pBulletManager;
+	std::unique_ptr<BulletManager>						m_pBulletManager;
 
 	// 色
 	DirectX::SimpleMath::Color							m_color;

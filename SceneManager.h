@@ -46,15 +46,12 @@ class SceneManager : public Singleton<SceneManager>
 private: // 基本
 
 	// コンストラクタ
-	SceneManager();
+	SceneManager(eScene _scene = eScene::TITLE);
 
 	// デストラクタ
 	~SceneManager();
 
 public: // 関数
-
-	// 現在のシーンの初期化
-	void Initialize();
 
 	// 現在のシーンの更新
 	void Update(DX::StepTimer const& _timer);
@@ -62,17 +59,17 @@ public: // 関数
 	// 現在のシーンの描画
 	void Render();
 
-	// 現在のシーンの後処理
-	void Finalize();
-
-	// 最初のシーンの設定
-	void SetStartScene(eScene _scene);
-
 	// 次のシーンのリクエスト
 	void RequestScene(eScene _scene);
 
+private:
+
 	// シーンの作成
-	IScene* ChangeScene(eScene _scene);
+	IScene* CreateScene(eScene _scene);
+
+	// シーンの切り替え
+	void ChangeScene();
+
 
 private: // 変数
 

@@ -30,6 +30,8 @@ public: // 関数
 
 	// 座標取得
 	const DirectX::SimpleMath::Vector3& GetPosition() const;
+	// 速度取得
+	const DirectX::SimpleMath::Vector3& GetVelocity() const;
 	// 回転取得
 	const DirectX::SimpleMath::Vector3& GetRotation() const;
 	// 大きさ取得
@@ -37,6 +39,8 @@ public: // 関数
 
 	// 座標設定
 	void SetPosition(const DirectX::SimpleMath::Vector3& _position);
+	// 速度設定
+	void SetVelocity(const DirectX::SimpleMath::Vector3& _velocity);
 	// 回転設定
 	void SetRotation(const DirectX::SimpleMath::Vector3& _rotation);
 	// 大きさ設定
@@ -84,6 +88,12 @@ inline const DirectX::SimpleMath::Vector3& GameObject::GetPosition() const
 	return m_position;
 }
 
+// 速度取得
+inline const DirectX::SimpleMath::Vector3& GameObject::GetVelocity() const
+{
+	return m_velocity;
+}
+
 // 回転取得
 inline const DirectX::SimpleMath::Vector3 & GameObject::GetRotation() const
 {
@@ -100,6 +110,12 @@ inline const DirectX::SimpleMath::Vector3 & GameObject::GetScale() const
 inline void GameObject::SetPosition(const DirectX::SimpleMath::Vector3& _position)
 {
 	m_position = _position;
+}
+
+// 速度設定
+inline void GameObject::SetVelocity(const DirectX::SimpleMath::Vector3& _velocity)
+{
+	m_velocity = _velocity;
 }
 
 // 回転設定

@@ -5,11 +5,7 @@
 #include "pch.h"
 #include "Game.h"
 
-#include <random>
-
 #include "GameContext.h"
-#include "EffectMask.h"
-
 #include "TitleScene.h"
 #include "PlayScene.h"
 #include "ResultClearScene.h"
@@ -17,7 +13,6 @@
 
 extern void ExitGame();
 
-// TODO:Updateの引数elapsedTimeに置き換え
 Game::Game() noexcept(false)
 {
 	m_pDeviceResources = std::make_unique<DX::DeviceResources>();
@@ -56,9 +51,9 @@ void Game::Initialize(HWND window, int width, int height)
 	GameContext::Register<DirectX::SpriteBatch>(m_pSpriteBatch);
 
 	// エフェクト（マスク）の作成
-	m_effectMask = std::make_unique<EffectMask>();
-	m_effectMask->Initialize(1.0f);
-	GameContext::Register<EffectMask>(m_effectMask);
+	m_pEffectMask = std::make_unique<EffectMask>();
+	m_pEffectMask->Initialize(1.0f);
+	GameContext::Register<EffectMask>(m_pEffectMask);
 
 	// マウスカーソル非表示
 	ShowCursor(false);
@@ -75,14 +70,6 @@ void Game::Initialize(HWND window, int width, int height)
 
 	// シーン管理の作成
 	m_pSceneManager = SceneManager::GetInstance();
-	m_pSceneManager->SetStartScene(eScene::TITLE);
-
-	//m_pCollisionManager = std::make_unique<CollisionManager>();
-
-	//m_pCollisionManager->AllowCollision("Player", "Enemy");
-	//m_pCollisionManager->AllowCollision("Player", "EnemyBullet");	//m_pCollisionManager->AllowCollision("PlayerBullet", "Enemy");	//m_pCollisionManager->AllowCollision("Enemy", "Enemy");	//m_pCollisionManager->AllowCollision("Mouse", "Floor");	//m_pCollisionManager->AllowCollision("Player", "Wall");
-	//GameContext::Register<CollisionManager>(m_pCollisionManager);
-
 }
 
 
@@ -110,7 +97,7 @@ void Game::Update(DX::StepTimer const& timer)
 	m_pSceneManager->Update(timer);
 
 	// マスクの更新
-	m_effectMask->Update(elapsedTime);
+	m_pEffectMask->Update(elapsedTime);
 
 }
 #pragma endregion
@@ -130,13 +117,13 @@ void Game::Render()
 	m_pDeviceResources->PIXBeginEvent(L"Render");
 	auto context = m_pDeviceResources->GetD3DDeviceContext();
 
-	// TODO: Add your rendering code here.
 	context;
-	//m_pGameSceneManager->Render();
+
+	// シーンの描画
 	m_pSceneManager->Render();
 
 	// マスク
-	m_effectMask->Render();
+	m_pEffectMask->Render();
 
 	m_pDeviceResources->PIXEndEvent();
 	// Show the new frame.
@@ -244,15 +231,14 @@ void Game::CreateWindowSizeDependentResources()
 		0.01f,
 		100.0f
 	);
+
+	// コンテキストへ登録
 	GameContext::Register<Projection>(m_pProjection);
 }
 
 void Game::OnDeviceLost()
 {
 	// TODO: Add Direct3D resource cleanup here.
-
-	// 後処理
-	m_pSceneManager->Finalize();
 }
 
 void Game::OnDeviceRestored()

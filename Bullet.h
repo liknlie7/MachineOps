@@ -14,7 +14,7 @@ class Bullet :public GameObject
 public: // 基本
 
 	// コンストラクタ
-	Bullet(const DirectX::SimpleMath::Vector3& _pos, const DirectX::SimpleMath::Vector3& _vel, const float& _angle);
+	Bullet();
 	// デストラクタ
 	~Bullet() {}
 
@@ -46,20 +46,26 @@ public: // アクセサ
 	// 使用中かどうかの取得
 	bool GetIsUsed()
 	{
-		return m_used;
+		return m_isUsed;
 	}
 
 	// 使用中かどうかの設定
 	void SetIsUsed(bool _used)
 	{
-		m_used = _used;
+		m_isUsed = _used;
 	}
 
-	//// 弾の形状を設定
-	//void SetBulletType(DirectX::GeometricPrimitive* _bulletType)
-	//{
-	//	m_bullet = _bulletType;
-	//}
+	// 弾の形状を設定
+	void SetBulletGeometry(DirectX::GeometricPrimitive* _bulletGeometry)
+	{
+		m_pBulletGeometry = _bulletGeometry;
+	}
+
+	// 回転の設定
+	void SetRotation(DirectX::SimpleMath::Matrix _rotate)
+	{
+		m_rotate = _rotate;
+	}
 
 public: // 関数
 
@@ -67,6 +73,7 @@ public: // 関数
 	void Initialize(DirectX::GeometricPrimitive* _type);
 	// 更新
 	void Update() override;
+	void Update(const DirectX::SimpleMath::Vector3& _pos, const DirectX::SimpleMath::Vector3& _vel, const DirectX::SimpleMath::Matrix& _rotate);
 	// 描画
 	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 	// 後処理
@@ -75,7 +82,7 @@ public: // 関数
 private: // 変数
 
 	// 弾の形状
-	//DirectX::GeometricPrimitive*	m_bullet;
+	DirectX::GeometricPrimitive*	m_pBulletGeometry;
 
 	// 回転
 	DirectX::SimpleMath::Matrix		m_rotate;
@@ -90,5 +97,5 @@ private: // 変数
 	float m_life;
 
 	// 使用中か
-	bool m_used;
+	bool m_isUsed;
 };

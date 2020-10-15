@@ -11,7 +11,7 @@ PlayScene::PlayScene()
 	, m_waveState(BOSS_WAVE)
 	, m_waveCount(0)
 {
-	bossFlag = true;
+	//bossFlag = true;
 }
 
 // デストラクタ
@@ -46,19 +46,25 @@ void PlayScene::Initialize()
 	m_pWall = std::make_unique<Wall>();
 	m_pWall->Initialize();
 
+	// 弾管理用オブジェクト作成
+	m_pBulletManager = std::make_unique<BulletManager>();
+	m_pBulletManager->Initialize();
+
 	// プレイヤー作成
 	m_pPlayer = std::make_unique<Player>();
 	m_pPlayer->Initialize();
+	m_pPlayer->SetBulletManager(m_pBulletManager.get());
 
 	// エネミーデータの読み込み
 	ResourceManager::GetInstance()->LoadEnemyData();
 
 	// エネミー作成
-	if (bossFlag)
-	{
-		m_pEnemy = std::make_unique<Enemy>(ResourceManager::GetInstance()->GetEnemyData(Enemy::BOSS_ENEMY - 1));
-		m_pEnemy->Initialize(DirectX::SimpleMath::Vector3(0.0f, 1.0f, -15.0f));
-	}
+	//if (bossFlag)
+	//{
+	//	m_pEnemy = std::make_unique<Enemy>(ResourceManager::GetInstance()->GetEnemyData(Enemy::BOSS_ENEMY - 1));
+	//	m_pEnemy->Initialize(DirectX::SimpleMath::Vector3(0.0f, 1.0f, -15.0f), m_pBulletManager->GetBulletType(BulletManager::SPHERE));
+	//	m_pEnemy->SetBulletManager(m_pBulletManager.get());
+	//}
 	//if (!bossFlag)
 	//{
 	//	m_pEnemies[0] = std::make_unique<Enemy>(m_pEnemies[0]->NORMAL_ENEMY);
@@ -71,11 +77,6 @@ void PlayScene::Initialize()
 	//	m_pEnemies[3]->Initialize(DirectX::SimpleMath::Vector3(10.0f, 1.0f, 5.0f));
 	//}
 
-	// 弾管理用オブジェクト作成
-	//m_pBulletManager = std::make_unique<BulletManager>();
-	//m_pBulletManager->Initialize();
-	//m_pPlayer->SetBulletManager(m_pBulletManager.get());
-	//m_pEnemy->SetBulletManager(m_pBulletManager.get());
 
 	m_color = DirectX::Colors::Red;
 
@@ -171,21 +172,21 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 			m_pPlayer->Update();
 
 		// エネミー更新
-		if (bossFlag)
-		{
-			if (m_pPlayer->GetActiveFlag() == true)
-				m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
-			m_pEnemy->Update();
-		}
-		if (!bossFlag)
-		{
-			for (int i = 0; i < 4; i++)
-			{
-				if (m_pPlayer->GetActiveFlag() == true)
-					m_pEnemies[i]->SetPlayerPos(m_pPlayer->GetPos());
-				m_pEnemies[i]->Update();
-			}
-		}
+		//if (bossFlag)
+		//{
+		//	if (m_pPlayer->GetActiveFlag() == true)
+		//		m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
+		//	m_pEnemy->Update();
+		//}
+		//if (!bossFlag)
+		//{
+		//	for (int i = 0; i < 4; i++)
+		//	{
+		//		if (m_pPlayer->GetActiveFlag() == true)
+		//			m_pEnemies[i]->SetPlayerPos(m_pPlayer->GetPos());
+		//		m_pEnemies[i]->Update();
+		//	}
+		//}
 
 		// 追尾カメラ更新
 		if (m_pPlayer->GetActiveFlag() == true)
@@ -196,6 +197,8 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 
 		m_color = DirectX::Colors::Red;
 
+		// 弾更新
+		m_pBulletManager->Update();
 
 		// 交差点
 		DirectX::SimpleMath::Vector3 hitPos;
@@ -211,17 +214,17 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 		}
 
 		// 弾の中心と半径を設定
-		if (bossFlag)
-		{
-			std::vector<DirectX::SimpleMath::Vector3> playerBullets;
+		//if (bossFlag)
+		//{
+		//	std::vector<DirectX::SimpleMath::Vector3> playerBullets;
 
-			if (m_pPlayer->GetActiveFlag() == true)
-				//playerBullets = m_pPlayer->GetBulletPos();
+			//if (m_pPlayer->GetActiveFlag() == true)
+			//	//playerBullets = m_pPlayer->GetBulletPos();
 
-			//std::vector<DirectX::SimpleMath::Vector3> enemyBullets = m_pEnemy->GetBulletPos();
+			////std::vector<DirectX::SimpleMath::Vector3> enemyBullets = m_pEnemy->GetBulletPos();
 
-			std::vector<Collision::Box> playerBullet;
-			std::vector<Collision::Sphere> enemyBullet;
+			//std::vector<Collision::Box> playerBullet;
+			////std::vector<Collision::Sphere> enemyBullet;
 
 			//playerBullet.resize(playerBullets.size());
 
@@ -251,45 +254,45 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 			//}
 
 			// プレイヤーとエネミーの弾の当たり判定
-			for (unsigned int i = 0; i < enemyBullet.size(); i++)
-			{
-				if (m_pPlayer->GetActiveFlag() == true)
-				{
-					if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
-					{
-						//// シーン管理の取得
-						//GamvoidManager* gamvoidManager = GameContext::Get<GamvoidManager>();
+			//for (unsigned int i = 0; i < enemyBullet.size(); i++)
+			//{
+			//	if (m_pPlayer->GetActiveFlag() == true)
+			//	{
+			//		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBullet[i]))
+			//		{
+			//			//// シーン管理の取得
+			//			//GamvoidManager* gamvoidManager = GameContext::Get<GamvoidManager>();
 
-						//// プレイシーンへ遷移
-						//gamvoidManager->RequestScene("ResultGameOver");
-					}
-				}
-			}
+			//			//// プレイシーンへ遷移
+			//			//gamvoidManager->RequestScene("ResultGameOver");
+			//		}
+			//	}
+			//}
 
 			// 壁とエネミーの弾の当たり判定
-			for (unsigned int i = 0; i < enemyBullet.size(); i++)
-			{
-				for (int j = 0; j < 8; j++)
-				{
-					if (Collision::HitCheckSphereToBox(enemyBullet[i], m_pWall->GetCollider(j)))
-					{
-						//m_pEnemy->BulletOnCollision(i);
-					}
-				}
-			}
+			//for (unsigned int i = 0; i < enemyBullet.size(); i++)
+			//{
+			//	for (int j = 0; j < 8; j++)
+			//	{
+			//		if (Collision::HitCheckSphereToBox(enemyBullet[i], m_pWall->GetCollider(j)))
+			//		{
+			//			//m_pEnemy->BulletOnCollision(i);
+			//		}
+			//	}
+			//}
 
 			// プレイヤーとエネミーの当たり判定
-			if (m_pPlayer->GetActiveFlag() == true
-				&& m_pEnemy != nullptr)
-			{
-				if (!m_pPlayer->GetHitFlag())
-				{
-					if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
-					{
-						m_pPlayer->OnCollisionEnemy(m_pEnemy->GetPosition());
-					}
-				}
-			}
+			//if (m_pPlayer->GetActiveFlag() == true
+			//	&& m_pEnemy != nullptr)
+			//{
+			//	if (!m_pPlayer->GetHitFlag())
+			//	{
+			//		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
+			//		{
+			//			m_pPlayer->OnCollisionEnemy(m_pEnemy->GetPosition());
+			//		}
+			//	}
+			//}
 
 			// 体力が０なら消去
 			if (m_pPlayer->GetLife() == 0)
@@ -327,14 +330,14 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 			m_prevGaugeScaleX = m_currentGaugeScaleX;
 		}
 
-		break;
+		//break;
 		//case STATE_CONTINUE:
 		//	break;
 		//case STATE_GAMEOVERA:
 		//	break;
 		//default:
 		//	break;
-	}
+	//}
 }
 
 // 描画
@@ -344,17 +347,20 @@ void PlayScene::Render()
 	if (m_pPlayer->GetActiveFlag() == true)
 		m_pPlayer->Render(m_pFollowCamera->GetViewMatrix());
 
-	// エネミー表示
-	if (bossFlag)
-		m_pEnemy->Render(m_pFollowCamera->GetViewMatrix());
+	//// エネミー表示
+	//if (bossFlag)
+	//	m_pEnemy->Render(m_pFollowCamera->GetViewMatrix());
 
-	if (!bossFlag)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pEnemies[i]->Render(m_pFollowCamera->GetViewMatrix());
-		}
-	}
+	//if (!bossFlag)
+	//{
+	//	for (int i = 0; i < 4; i++)
+	//	{
+	//		m_pEnemies[i]->Render(m_pFollowCamera->GetViewMatrix());
+	//	}
+	//}
+
+	// 弾描画
+	m_pBulletManager->Render(m_pFollowCamera->GetViewMatrix());
 
 	// フロアの表示
 	m_pFloor->Render(m_pFollowCamera->GetViewMatrix());
@@ -363,8 +369,8 @@ void PlayScene::Render()
 	m_pWall->Render(m_pFollowCamera->GetViewMatrix());
 
 	GameContext::Get<DirectX::SpriteBatch>()->Begin(DirectX::SpriteSortMode_Deferred, GameContext::Get<DirectX::CommonStates>()->NonPremultiplied());
-	if (bossFlag)
-	{
+	//if (bossFlag)
+	//{
 		// 赤ゲージ表示
 		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_textures[RED_HP].Get(), DirectX::SimpleMath::Vector2(350, 596), nullptr, DirectX::Colors::Black,
 			0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(1.0f, 0.2f));
@@ -375,7 +381,7 @@ void PlayScene::Render()
 		GameContext::Get<DirectX::SpriteBatch>()->Draw(m_textures[GREEN_HP].Get(), DirectX::SimpleMath::Vector2(350, 600), nullptr, DirectX::Colors::White,
 			0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(m_currentGaugeScaleX, 0.2f));
 
-	}
+	//}
 
 	m_pCursor->Render();
 

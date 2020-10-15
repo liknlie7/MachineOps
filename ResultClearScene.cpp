@@ -1,8 +1,10 @@
 #include "pch.h"
-#include "ResultClearScene.h"
 
+#include <SpriteBatch.h>
+
+#include "ResultClearScene.h"
 #include "GameContext.h"
-//#include "GameSceneManager.h"
+#include "ResourceManager.h"
 
 // コンストラクタ
 ResultClearScene::ResultClearScene()
@@ -11,16 +13,14 @@ ResultClearScene::ResultClearScene()
 	m_keyboardTracker = GameContext::Get<DirectX::Keyboard::KeyboardStateTracker>();
 }
 
-// デストラクタ
-ResultClearScene::~ResultClearScene()
-{
-}
-
 // 初期化
 void ResultClearScene::Initialize()
 {
 	// テクスチャデータを受け取る
+	// 背景
 	m_textures[BACK_GROUND] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\ResultBackGround.png");
+	
+	// テキスト
 	m_textures[TEXT] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\GameClear.png");
 }
 
@@ -34,8 +34,7 @@ void ResultClearScene::Update(DX::StepTimer const & _timer)
 
 	if (m_keyboardTracker->pressed.Space)
 	{
-		//GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
-		//gameSceneManager->RequestScene("Title");
+
 	}
 }
 

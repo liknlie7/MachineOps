@@ -6,8 +6,6 @@
 
 #include <CommonStates.h>
 #include <SpriteBatch.h>
-#include <SimpleMath.h>
-#include <unordered_map>
 
 #include "DeviceResources.h"
 #include "SceneManager.h"
@@ -15,11 +13,7 @@
 #include "StepTimer.h"
 #include "Mouse.h"
 #include "Keyboard.h"
-#include "Adx2Le.h"
-
-//class GameSceneManager;
-class CollisionManager;
-class EffectMask;
+#include "EffectMask.h"
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -91,6 +85,6 @@ private:
 	SceneManager*							m_pSceneManager;
 
 	// エフェクトマスク
-	std::unique_ptr<EffectMask>				m_effectMask;
+	std::unique_ptr<EffectMask>				m_pEffectMask;
 
 };

@@ -179,25 +179,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Adx2Le.h" />
-    <ClInclude Include="Boid.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Collision.h" />
-    <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="DeviceResources.h" />
     <ClInclude Include="EffectMask.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyData.h" />
     <ClInclude Include="File.h" />
-    <ClInclude Include="Flock.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameContext.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GameScene.h" />
-    <ClInclude Include="GameSceneManager.h" />
-    <ClInclude Include="GridFloor.h" />
     <ClInclude Include="HPGauge.h" />
     <ClInclude Include="MouseCursor.h" />
     <ClInclude Include="pch.h" />
@@ -224,22 +218,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Adx2Le.cpp" />
-    <ClCompile Include="Boid.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
     <ClCompile Include="EffectMask.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="File.cpp" />
-    <ClCompile Include="Flock.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameSceneManager.cpp" />
-    <ClCompile Include="GridFloor.cpp" />
     <ClCompile Include="HPGauge.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MouseCursor.cpp" />

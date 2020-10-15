@@ -6,10 +6,6 @@
 const DirectX::SimpleMath::Vector3 Player::RANGE_MIN = DirectX::SimpleMath::Vector3(-18.5f, 0.0f, -19.0f);
 const DirectX::SimpleMath::Vector3 Player::RANGE_MAX = DirectX::SimpleMath::Vector3(18.0f, 0.0f, 19.8f);
 
-
-// TODO:ステート管理にする
-// TODO: タグ判定
-
 // コンストラクタ
 Player::Player()
 	: m_state(STATE_NORMAL)
@@ -135,6 +131,8 @@ void Player::Update()
 		// 左クリック
 		if (mouseState.leftButton)
 		{
+			m_pBulletManager->Shot(m_position,DirectX::SimpleMath::Vector3(0.0f,0.0f,0.8f),rotate,m_pBulletManager->GetBulletGeometry(BulletManager::BOX));
+			
 			// 弾の生成
 			//m_pWeapon->CreateBullet();
 

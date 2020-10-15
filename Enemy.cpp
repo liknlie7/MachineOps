@@ -27,7 +27,7 @@ Enemy::Enemy(const EnemyData _enemyData)
 	m_shotType = _enemyData.shotType;
 }
 
-void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos)
+void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos, DirectX::GeometricPrimitive* _bulletGeometry)
 {
 	// íeÇÃå`èÛçÏê¨
 	//m_pBulletGeometric = DirectX::GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);

@@ -1,15 +1,11 @@
 #pragma once
 
-#include <SpriteBatch.h>
 #include <Keyboard.h>
-#include <CommonStates.h>
 #include <WICTextureLoader.h>
 #include <SimpleMath.h>
 
 #include "StepTimer.h"
-#include "DeviceResources.h"
 #include "SceneManager.h"
-#include "ResourceManager.h"
 
 class IScene;
 
@@ -22,7 +18,7 @@ public: // 基本
 	ResultClearScene();
 
 	// デストラクタ
-	virtual ~ResultClearScene();
+	virtual ~ResultClearScene() {};
 
 public: // 関数
 

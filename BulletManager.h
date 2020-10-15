@@ -1,4 +1,8 @@
 #pragma once
+
+#include <SimpleMath.h>
+#include <GeometricPrimitive.h>
+
 #include "Bullet.h"
 
 // ’eŠÇ—ƒNƒ‰ƒX
@@ -15,29 +19,33 @@ public: // Šî–{
 public: // ƒAƒNƒZƒT
 
 	// ’e‚ÌŒ`ó‚Ìæ“¾
-	//std::unique_ptr<DirectX::GeometricPrimitive> GetBulletType(int _type)
-	//{
-	//	//return m_pBulletType[_type];
-	//}
+	DirectX::GeometricPrimitive* GetBulletGeometry(int _geometryType)
+	{
+		return m_pBulletGeometry[_geometryType].get();
+	}
 
 public: // ŠÖ”
 
 	// ‰Šú‰»
 	void Initialize();
 
+	// XV
+	void Update();
+
+	// •`‰æ
+	void Render(const DirectX::SimpleMath::Matrix& _view);
+
 	// ’e‚Ì¶¬
-	Bullet* Create(const DirectX::SimpleMath::Vector3& _pos, const DirectX::SimpleMath::Vector3& _vec, const float& _angle);
+	//Bullet* Create(const DirectX::SimpleMath::Vector3& _pos, const DirectX::SimpleMath::Vector3& _vec, const float& _angle);
+
+	// ”­Ë
+	void Shot(const DirectX::SimpleMath::Vector3& _pos, const DirectX::SimpleMath::Vector3& _vel, const DirectX::SimpleMath::Matrix& _rotate, DirectX::GeometricPrimitive* _bulletGeometry);
 
 	// Œãˆ—
 	void Finalize();
 
-
 public: // ’è”
 
-	// ’e‚Ì”
-	static const int NUM_BULLET;
-
-private:
 	// ’e‚ÌŒ`ó
 	enum BulletType
 	{
@@ -46,6 +54,10 @@ private:
 
 		ALL,		// ‘S‚Ä‚ÌŒ`ó
 	};
+
+private:
+	// ’e‚Ì”
+	static const int NUM_BULLET;
 
 	// ŠÛ‚¢’e”¼Œa
 	static const float SPHERE_BULLET_RADIUS;
@@ -57,9 +69,9 @@ private:
 private: // •Ï”
 
 	// ’e‚ÌŒ`ó
-	std::unique_ptr<DirectX::GeometricPrimitive> m_pBulletType[ALL];
+	std::unique_ptr<DirectX::GeometricPrimitive> m_pBulletGeometry[BulletType::ALL];
 
 	// ’e”z—ñ
-	//std::vector<std::unique_ptr<Bullet>>	m_pBulletArray;
+	std::vector<std::unique_ptr<Bullet>>		 m_pBullets;
 };
 

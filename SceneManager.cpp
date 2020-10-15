@@ -6,10 +6,10 @@
 #include "ResultGameOverScene.h"
 
 // コンストラクタ
-SceneManager::SceneManager()
-	: m_pScene(nullptr)
-	, m_nextScene(eScene::NONE)
+SceneManager::SceneManager(eScene _scene)
+	: m_nextScene(_scene)
 {
+	m_pScene = CreateScene(m_nextScene);
 
 }
 
@@ -17,12 +17,6 @@ SceneManager::SceneManager()
 SceneManager::~SceneManager()
 {
 
-}
-
-// 現在のシーンの初期化
-void SceneManager::Initialize()
-{
-	m_pScene->Initialize();
 }
 
 // 現在のシーンの更新
@@ -33,13 +27,11 @@ void SceneManager::Update(DX::StepTimer const & _timer)
 
 	if (m_nextScene != eScene::NONE)
 	{
-		m_pScene->Finalize();
-		delete m_pScene;
-		m_pScene = nullptr;
-
-		m_pScene = ChangeScene(m_nextScene);
+		// シーンの切り替え
+		ChangeScene();
 	}
 
+	// 現在のシーン更新
 	m_pScene->Update(_timer);
 }
 
@@ -49,18 +41,6 @@ void SceneManager::Render()
 	m_pScene->Render();
 }
 
-// 現在のシーンの後処理
-void SceneManager::Finalize()
-{
-	m_pScene->Finalize();
-}
-
-// 最初のシーンの設定
-void SceneManager::SetStartScene(eScene _scene)
-{
-	m_pScene = ChangeScene(_scene);
-}
-
 // シーンのリクエスト
 void SceneManager::RequestScene(eScene _scene)
 {
@@ -68,11 +48,8 @@ void SceneManager::RequestScene(eScene _scene)
 }
 
 // シーンの作成
-IScene* SceneManager::ChangeScene(eScene _scene)
+IScene* SceneManager::CreateScene(eScene _scene)
 {
-	//if (m_pScene != nullptr)
-	//	delete m_pScene;
-
 	IScene* pScene = nullptr;
 
 	switch (_scene)
@@ -105,11 +82,24 @@ IScene* SceneManager::ChangeScene(eScene _scene)
 		break;
 	}
 
-	// シーンの初期化
-	if (pScene != nullptr)
-		pScene->Initialize();
-
-	m_nextScene = eScene::NONE;
-
 	return pScene;
+}
+
+// シーンの切り替え
+void SceneManager::ChangeScene()
+{
+	// シーンの削除
+	m_pScene->Finalize();
+	delete m_pScene;
+	m_pScene = nullptr;
+
+	// シーンの生成
+	m_pScene = CreateScene(m_nextScene);
+
+	// シーンの初期化
+	if (m_pScene != nullptr)
+		m_pScene->Initialize();
+
+	// 次へのシーン情報初期化
+	m_nextScene = eScene::NONE;
 }

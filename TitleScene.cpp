@@ -1,15 +1,29 @@
 #include "pch.h"
 
 #include "TitleScene.h"
+#include "GameContext.h"
+#include "ResourceManager.h"
+#include "TitleSoundSeet.h"
+#include "EffectMask.h"
+
+// タイトル位置
+const DirectX::SimpleMath::Vector2 TitleScene::TITLE_POSITION = DirectX::SimpleMath::Vector2(190.0f, 220.0f);
+
+// タイトル拡大率
+const DirectX::SimpleMath::Vector2 TitleScene::TITLE_SCALE = DirectX::SimpleMath::Vector2(0.8f, 0.8f);
+
+// テキスト位置
+const DirectX::SimpleMath::Vector2 TitleScene::TEXT_POSITION = DirectX::SimpleMath::Vector2(380.0f, 450.0f);
+
+// テキスト拡大率
+const DirectX::SimpleMath::Vector2 TitleScene::TEXT_SCALE = DirectX::SimpleMath::Vector2(0.3f, 0.3f);
 
 // コンストラクタ
 TitleScene::TitleScene()
 	: m_time(0)
-	, m_volumeFadeFlag(false)
-	, m_volume(1.0f)
 {
 	// トラッカーの設定
-	m_keyboardTracker = GameContext::Get<DirectX::Keyboard::KeyboardStateTracker>();
+	m_pKeyboardTracker = GameContext::Get<DirectX::Keyboard::KeyboardStateTracker>();
 
 	// サウンドのshared_ptrを受け取る
 	m_pSound = std::weak_ptr<Adx2Le>(ResourceManager::GetInstance()->GetSound(L"Resources\\Sounds\\TitleSounds"));
@@ -18,6 +32,7 @@ TitleScene::TitleScene()
 // デストラクタ
 TitleScene::~TitleScene()
 {
+	// サウンドのリンクをクリア
 	m_pSound.reset();
 }
 
@@ -25,13 +40,13 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 	// テクスチャデータを受け取る
-	m_textures[TITLE] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\Title.png");
-	m_textures[BACK_GROUND] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\BackGround.png");
-	m_textures[TEXT] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\Massage.png");
+	m_pTextures[TITLE] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\Title.png");
+	m_pTextures[BACK_GROUND] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\BackGround.png");
+	m_pTextures[TEXT] = ResourceManager::GetInstance()->GetTexture(L"Resources\\Textures\\Massage.png");
 
 	// BGMの再生
 	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
-		sptr->Play(CRI_TITLE_TITLEBGM, m_volume);
+		sptr->Play(CRI_TITLE_TITLEBGM);
 }
 
 // 更新
@@ -47,46 +62,27 @@ void TitleScene::Update(DX::StepTimer const& _timer)
 	// キーボードの取得
 	DirectX::Keyboard::State keyState = DirectX::Keyboard::Get().GetState();
 	// キーボードトラッカー更新
-	m_keyboardTracker->Update(keyState);
+	m_pKeyboardTracker->Update(keyState);
 
 	// スペースキーを押したら
-	if (m_keyboardTracker->pressed.Space)
+	if (m_pKeyboardTracker->pressed.Space)
 	{
 		// スタート音の再生
 		if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
-			sptr->Play(CRI_TITLE_STARTSE, m_volume);
-
+			sptr->Play(CRI_TITLE_STARTSE);
 
 		// フェードアウト
 		effectMask->Close();
-		m_volumeFadeFlag = true;
-	}
-
-	// ボリュームを徐々に下げる
-	if (m_volumeFadeFlag)
-	{
-		m_volume -= elapsedTime;
-
-		//m_adx2Le->SetVolumeByID(CRI_TITLE_TITLEBGM, m_volume);
-		if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
-			sptr->SetVolumeByID(CRI_TITLE_TITLEBGM, m_volume);
-
-		if (m_volume <= 0.0f)
-			m_volumeFadeFlag = false;
 	}
 
 	// 画面が閉じるまでまつ
-	if (effectMask->IsClose() && m_volume < 0.0f)
+	if (effectMask->IsClose())
 	{
-		// シーンマネージャーの取得
-		//GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
-
 		// サウンドを停止させる
 		if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
 			sptr->Stop();
 
 		// プレイシーンへ遷移
-		//gameSceneManager->RequestScene("Play");
 		SceneManager::GetInstance()->RequestScene(eScene::PLAY);
 	}
 }
@@ -97,18 +93,23 @@ void TitleScene::Render()
 	// スプライトバッチの取得
 	DirectX::SpriteBatch* spriteBatch = GameContext::Get<DirectX::SpriteBatch>();
 
-	// テクスチャ描画
 	spriteBatch->Begin();
-	spriteBatch->Draw(m_textures[BACK_GROUND].Get(), DirectX::SimpleMath::Vector2::Zero);
-	spriteBatch->Draw(m_textures[TITLE].Get(), DirectX::SimpleMath::Vector2(190, 220), nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(0.8f, 0.8f));
-	// 点滅
-	if (sin(m_time * 4) > 0) {
-		spriteBatch->Draw(m_textures[TEXT].Get(), DirectX::SimpleMath::Vector2(380, 450), nullptr, DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(0.3f, 0.3f));
-	}
-	spriteBatch->End();
-}
 
-// 後処理
-void TitleScene::Finalize()
-{
+	// 背景描画
+	spriteBatch->Draw(m_pTextures[BACK_GROUND].Get(), DirectX::SimpleMath::Vector2::Zero);
+
+	// タイトル描画
+	spriteBatch->Draw(m_pTextures[TITLE].Get(), TITLE_POSITION, nullptr,
+		DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero,
+		TITLE_SCALE);
+
+	// テキスト描画
+	// 点滅させる
+	if (sin(m_time * 4) > 0) {
+		spriteBatch->Draw(m_pTextures[TEXT].Get(), TEXT_POSITION, nullptr,
+			DirectX::Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero,
+			TEXT_SCALE);
+	}
+
+	spriteBatch->End();
 }

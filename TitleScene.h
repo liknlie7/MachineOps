@@ -1,20 +1,12 @@
 #pragma once
 
-#include "GameScene.h"
-#include "DeviceResources.h"
-
-#include <SimpleMath.h>
 #include <SpriteBatch.h>
 #include <Keyboard.h>
-#include <CommonStates.h>
+#include <SimpleMath.h>
 
 #include "SceneManager.h"
 #include "StepTimer.h"
-#include "GameContext.h"
-#include "EffectMask.h"
 #include "Adx2Le.h"
-#include "TitleSoundSeet.h"
-#include "ResourceManager.h"
 
 class IScene;
 
@@ -42,7 +34,7 @@ public: // 関数
 	void Render() override;
 	
 	// 後処理
-	void Finalize() override;
+	void Finalize() override {};
 
 private: // 定数
 
@@ -56,21 +48,29 @@ private: // 定数
 		ALL,
 	};
 
+	// タイトル位置
+	static const DirectX::SimpleMath::Vector2 TITLE_POSITION;
+
+	// タイトル拡大率
+	static const DirectX::SimpleMath::Vector2 TITLE_SCALE;
+
+	// テキスト位置
+	static const DirectX::SimpleMath::Vector2 TEXT_POSITION;
+
+	// テキスト拡大率
+	static const DirectX::SimpleMath::Vector2 TEXT_SCALE;
+
 private: // 変数
 
 	// サウンド
 	std::weak_ptr<Adx2Le>									m_pSound;
 
 	// テクスチャ
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_textures[Texture::ALL];
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_pTextures[Texture::ALL];
 
 	// キーボードトラッカー
-	DirectX::Keyboard::KeyboardStateTracker*				m_keyboardTracker;
+	DirectX::Keyboard::KeyboardStateTracker*				m_pKeyboardTracker;
 
 	// 経過時間
 	float m_time;
-
-	// サウンドフェード用
-	bool m_volumeFadeFlag;
-	float m_volume;
 };
