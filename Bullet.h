@@ -67,6 +67,12 @@ public: // アクセサ
 		m_rotate = _rotate;
 	}
 
+	// 速度の設定
+	void SetSpeed(float _speed)
+	{
+		m_speed = _speed;
+	}
+
 public: // 関数
 
 	// 初期化
@@ -95,6 +101,9 @@ private: // 変数
 
 	// 飛行距離
 	float m_life;
+
+	// 弾の速度
+	float m_speed;
 
 	// 使用中か
 	bool m_isUsed;

@@ -52,7 +52,7 @@ void Player::Initialize()
 
 	// 弾の配列を確保する
 	//m_pBullets.resize(BulletManager::NUM_BULLET);
-	
+
 
 }
 
@@ -132,17 +132,17 @@ void Player::Update()
 		// 左クリック
 		if (mouseState.leftButton)
 		{
-			 //= DirectX::SimpleMath::Vector3::Transform(m_velocity, rotate);
+			//= DirectX::SimpleMath::Vector3::Transform(m_velocity, rotate);
 
-			m_pBulletManager->Shot(m_position,0.8f,rotate,m_pBulletManager->GetBulletGeometry(BulletManager::BOX));
-			
+			m_pBulletManager->Shot(m_position, 0.8f, m_angle, m_pBulletManager->GetBulletGeometry(BulletManager::BOX));
+
 			// 弾の生成
 			//m_pWeapon->CreateBullet();
 
 			// 射撃音の再生
 			//if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
 			//	sptr->Play(CRI_PLAYER_SHOT);
-			
+
 			//for (int i = 0; m_pBullets.size(); i++)
 			//{
 			//	// 弾が使用中でないとき

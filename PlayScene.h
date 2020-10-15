@@ -177,7 +177,7 @@ private: // 変数
 	std::unique_ptr<Player>								m_pPlayer;
 
 	// エネミー
-	//std::unique_ptr<Enemy>								m_pEnemy;
+	std::unique_ptr<Enemy>								m_pEnemy;
 	//std::unique_ptr<Enemy>								m_pEnemies[4];
 	//bool bossFlag;
 

@@ -85,7 +85,7 @@ void BulletManager::Render(const DirectX::SimpleMath::Matrix& _view)
 //}
 
 // ”­ŽË
-void BulletManager::Shot(const DirectX::SimpleMath::Vector3& _pos, const float& _speed, const DirectX::SimpleMath::Matrix& _rotate, DirectX::GeometricPrimitive* _bulletGeometry)
+void BulletManager::Shot(const DirectX::SimpleMath::Vector3& _pos, const float& _speed, float _angle, DirectX::GeometricPrimitive* _bulletGeometry)
 {
 	for (int i = 0; i < NUM_BULLET; i++)
 	{
@@ -95,11 +95,11 @@ void BulletManager::Shot(const DirectX::SimpleMath::Vector3& _pos, const float& 
 			m_pBullets[i]->SetPosition(_pos);
 
 			// ’e‚Ì‘¬“x‚ÌÝ’è
-			//m_pBullets[i]->SetVelocity(_vel);
+			m_pBullets[i]->SetSpeed(_speed);
 
 			// Šp“x‚ÌÝ’è
-			//m_pBullets[i]->SetAngle(_angle);
-			m_pBullets[i]->SetRotation(_rotate);
+			m_pBullets[i]->SetAngle(_angle);
+			//m_pBullets[i]->SetRotation(_rotate);
 
 			// Œ`ó‚ÌÝ’è
 			m_pBullets[i]->SetBulletGeometry(_bulletGeometry);

@@ -61,9 +61,9 @@ void PlayScene::Initialize()
 	// エネミー作成
 	//if (bossFlag)
 	//{
-	//	m_pEnemy = std::make_unique<Enemy>(ResourceManager::GetInstance()->GetEnemyData(Enemy::BOSS_ENEMY - 1));
-	//	m_pEnemy->Initialize(DirectX::SimpleMath::Vector3(0.0f, 1.0f, -15.0f), m_pBulletManager->GetBulletType(BulletManager::SPHERE));
-	//	m_pEnemy->SetBulletManager(m_pBulletManager.get());
+		m_pEnemy = std::make_unique<Enemy>(ResourceManager::GetInstance()->GetEnemyData(Enemy::BOSS_ENEMY - 1));
+		m_pEnemy->Initialize(DirectX::SimpleMath::Vector3(0.0f, 1.0f, -15.0f), m_pBulletManager->GetBulletGeometry(BulletManager::SPHERE));
+		m_pEnemy->SetBulletManager(m_pBulletManager.get());
 	//}
 	//if (!bossFlag)
 	//{
@@ -174,9 +174,9 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 		// エネミー更新
 		//if (bossFlag)
 		//{
-		//	if (m_pPlayer->GetActiveFlag() == true)
-		//		m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
-		//	m_pEnemy->Update();
+			if (m_pPlayer->GetActiveFlag() == true)
+				m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
+			m_pEnemy->Update();
 		//}
 		//if (!bossFlag)
 		//{
@@ -349,7 +349,7 @@ void PlayScene::Render()
 
 	//// エネミー表示
 	//if (bossFlag)
-	//	m_pEnemy->Render(m_pFollowCamera->GetViewMatrix());
+		m_pEnemy->Render(m_pFollowCamera->GetViewMatrix());
 
 	//if (!bossFlag)
 	//{
