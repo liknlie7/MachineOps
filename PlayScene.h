@@ -1,32 +1,19 @@
 #pragma once
 
-#include <memory>
-#include <CommonStates.h>
-#include <SpriteBatch.h>
 #include <SimpleMath.h>
 #include <Effects.h>
-#include <Keyboard.h>
 #include <SpriteBatch.h>
 
-#include "DeviceResources.h"
-#include "GameContext.h"
-#include "Projection.h"
-#include "Keyboard.h"
 #include "SceneManager.h"
 #include "WICTextureLoader.h" 
 #include "StepTimer.h"
 #include "Adx2Le.h"
-
 #include "FollowCamera.h"
 #include "Floor.h"
 #include "Wall.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "Collision.h"
 #include "MouseCursor.h"
-#include "EffectMask.h"
-#include "PlayerSound.h"
-#include "PlaySceneSound.h"
 #include "WarningEffect.h"
 #include "BulletManager.h"
 
@@ -40,9 +27,6 @@ public:
 	{
 		STATE_START,		// ゲーム開始
 		STATE_GAME,			// ゲーム中
-		STATE_CONTINUE,		// 死んだので再チャレンジ
-		STATE_NEXT,			// 次のウェーブへ
-		STATE_GAMEOVERA,	// ゲームオーバー
 	};
 
 	// ウェーブ
@@ -56,34 +40,9 @@ public: // 基本
 
 	// コンストラクタ
 	PlayScene();
+
 	// デストラクタ
 	virtual ~PlayScene();
-
-public: // アクセッサ
-
-	// カメラの取得
-	FollowCamera* GetCamera()
-	{
-		return m_pFollowCamera.get();
-	}
-
-	// エフェクト用ベーシックエフェクトを取得する関数
-	DirectX::BasicEffect* GetBatchEffect()
-	{
-		return m_batchEffect.get();
-	}
-
-	// エフェクト用プリミティブバッチを取得する関数
-	DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>* GetPrimitiveBatch()
-	{
-		return m_primitiveBatch.get();
-	}
-
-	// エフェクト用入力レイアウトを取得する関数
-	ID3D11InputLayout* GetInputLayout()
-	{
-		return m_inputLayout.Get();
-	}
 
 public: // 関数
 
@@ -97,34 +56,31 @@ public: // 関数
 	void Render() override;
 	
 	// 後始末
-	void Finalize() override;
-
-	// ゲームの初期化
-	GAME_STATE InitializeGame();
-
-	// ゲームをスタート
-	GAME_STATE StartGame();
-
-	// ゲーム中
-	GAME_STATE PlayGame();
-
-	// コンティニュー
-	GAME_STATE ContinueGame();
-
-	// 次のウェーブへ
-	GAME_STATE NextWave();
+	void Finalize() override {};
 
 private: // サブ関数
 
 	// 線形補間
 	float Lerp(float _start, float _end, float _time);
 
-	// 球面線形補間
-	float Slerp(float _start, float _end, float _time);
-
 private: // 定数
 
+	// エネミー(ボス)初期位置
+	static const DirectX::SimpleMath::Vector3 ENEMY_BOSS_INIT_POS;
+
+	// ライフゲージ減少にかかる時間
 	static const float DAMAGE_TIME;
+
+	// HPゲージスケール値
+	static const float HP_SCALE_X;
+	static const float HP_SCALE_Y;
+
+	// HPゲージ位置
+	static const DirectX::SimpleMath::Vector2 HP_RED_POS;
+	static const DirectX::SimpleMath::Vector2 HP_GREEN_POS;
+
+	// 薄いゲージ用
+	static const DirectX::SimpleMath::Vector4 HP_GAUGE_COLOR;
 
 	// テクスチャ
 	enum Texture
@@ -138,15 +94,16 @@ private: // 定数
 private: // 変数
 
 	// サウンド
-	std::weak_ptr<Adx2Le>						m_pSound;
+	std::weak_ptr<Adx2Le>								m_pSound;
 
-	//----- エフェクト用 -----//
 	// エフェクト
-	std::unique_ptr<DirectX::BasicEffect> m_batchEffect;
+	std::unique_ptr<DirectX::BasicEffect>				m_batchEffect;
+
 	// プリミティブバッチ
 	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>> m_primitiveBatch;
+
 	// 入力レイアウト
-	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
+	Microsoft::WRL::ComPtr<ID3D11InputLayout>			m_inputLayout;
 	// ゲームの状態
 	GAME_STATE											m_gameState;
 
@@ -155,8 +112,6 @@ private: // 変数
 
 	// エフェクト
 	std::unique_ptr<DirectX::BasicEffect>				m_pBasicEffect;
-
-	
 
 	// ViewPort
 	DirectX::SimpleMath::Matrix							m_viewPort;
@@ -178,34 +133,29 @@ private: // 変数
 
 	// エネミー
 	std::unique_ptr<Enemy>								m_pEnemy;
-	//std::unique_ptr<Enemy>								m_pEnemies[4];
-	//bool bossFlag;
 
 	// 弾管理用
 	std::unique_ptr<BulletManager>						m_pBulletManager;
-
-	// 色
-	DirectX::SimpleMath::Color							m_color;
 
 	// 時間
 	float												m_totalTime;
 
 	// テクスチャ
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_textures[Texture::ALL];
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	m_textures[Texture::ALL];
 
 	// 体力ゲージデフォルトサイズ
-	float m_defaultGaugeScaleX;
+	float												m_defaultGaugeScaleX;
+
 	// 現在の体力ゲージスケール
-	float m_currentGaugeScaleX;
+	float												m_currentGaugeScaleX;
+	
 	// 前の体力ゲージスケール
-	float m_prevGaugeScaleX;
+	float												m_prevGaugeScaleX;
+	
 	// じわじわ減少するゲージ
-	float m_lightGreenGaugeRate;
-	bool m_gaugeFlag;
+	float												m_lightGreenGaugeRate;
+	bool												m_gaugeFlag;
 
 	// 警告エフェクト
 	std::unique_ptr<WarningEffect>						m_warningEffect;
-
-	// ウェーブカウント
-	int m_waveCount;
 };

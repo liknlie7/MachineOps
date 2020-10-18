@@ -28,12 +28,12 @@ public: // アクセサ
 	// 弾の情報の取得
 	Bullet* GetBulletInfo(std::string _tag , int _number)
 	{
-		if(m_pBullets[_number]->GetTag() == _tag )
-		return m_pBullets[_number].get();
+		if (m_pBullets[_number]->GetTag() == _tag)
+		{
+			return m_pBullets[_number].get();
+		}
 	}
 
-	// 弾の座標の取得
-//コライダーつくる
 public: // 関数
 
 	// 初期化

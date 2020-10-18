@@ -4,7 +4,6 @@
 
 #include "GameContext.h"
 #include "DeviceResources.h"
-#include "Utilities.h"
 
 // ’Ç”öƒJƒƒ‰
 class FollowCamera

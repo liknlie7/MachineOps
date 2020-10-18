@@ -5,6 +5,8 @@
 #include <random>
 #include <time.h>
 
+#include "Utilities.h"
+
 // ‹“_
 const DirectX::SimpleMath::Vector3 FollowCamera::EYE_VEC = DirectX::SimpleMath::Vector3(0.0f, 30.0f, 0.0f);
 // ƒJƒƒ‰‚ÌŒü‚«

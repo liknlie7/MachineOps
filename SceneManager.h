@@ -46,7 +46,7 @@ class SceneManager : public Singleton<SceneManager>
 private: // 基本
 
 	// コンストラクタ
-	SceneManager(eScene _scene = eScene::TITLE);
+	SceneManager(eScene _scene = eScene::PLAY);
 
 	// デストラクタ
 	~SceneManager();

@@ -14,11 +14,10 @@
 #include "Collision.h"
 #include "GameContext.h"
 #include "GameObject.h"
-#include "Weapon.h"
+//#include "Weapon.h"
 #include "BulletManager.h"
 #include "Adx2Le.h"
 #include "PlayerSound.h"
-#include "Utilities.h"
 
 class Bullet;
 //class Weapon;
@@ -138,7 +137,11 @@ private: // ƒTƒuŠÖ”
 	// Õ“Ë
 	void OnCollision(GameObject* _object);
 
+
 	void Player::AddForce(float angle, float force);
+
+	// ”ÍˆÍ“à‚Éû‚ß‚é
+	float Player::Clamp(float _v, float _min, float  _max);
 
 private: // ’è”
 
@@ -201,6 +204,6 @@ private:
 public:
 
 	// e
-	std::unique_ptr<Weapon>						 m_pWeapon;
+	//std::unique_ptr<Weapon>						 m_pWeapon;
 
 };

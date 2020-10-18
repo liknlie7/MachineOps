@@ -47,9 +47,6 @@
     <ClInclude Include="DeviceResources.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Projection.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -149,6 +146,7 @@
     <ClInclude Include="PlayScene.h">
       <Filter>GameScene</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />

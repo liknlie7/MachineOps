@@ -2,7 +2,9 @@
 
 #include "Player.h"
 #include "Bullet.h"
+#include "Utilities.h"
 
+// 移動制限範囲
 const DirectX::SimpleMath::Vector3 Player::RANGE_MIN = DirectX::SimpleMath::Vector3(-18.5f, 0.0f, -19.0f);
 const DirectX::SimpleMath::Vector3 Player::RANGE_MAX = DirectX::SimpleMath::Vector3(18.0f, 0.0f, 19.8f);
 
@@ -20,8 +22,8 @@ Player::Player()
 	, m_accel(0.0f, 0.0f, 0.0f)
 {
 	// 武器の作成
-	m_pWeapon = std::make_unique<Weapon>();
-	m_pWeapon->SetTest(m_pBulletManager);
+	//m_pWeapon = std::make_unique<Weapon>();
+	//m_pWeapon->SetTest(m_pBulletManager);
 
 	// プレイヤーモデルのshared_ptrを受け取る
 	m_pPlayer = std::weak_ptr<DirectX::Model>(ResourceManager::GetInstance()->GetModel(L"Resources/Models/tank.cmo"));
@@ -200,16 +202,6 @@ void Player::OnCollision(GameObject* _object)
 void Player::OnCollision()
 {
 	m_hitFlag = true;
-
-	//m_life--;
-}
-
-// エネミーとの衝突
-void Player::OnCollisionEnemy(DirectX::SimpleMath::Vector3 _enemyPos)
-{
-	DirectX::SimpleMath::Vector3 v = m_position - _enemyPos;
-	v.Length();
-
 }
 
 // 点滅
@@ -238,4 +230,9 @@ void Player::AddForce(float angle, float force)
 
 	// 速度に加速度を足す
 	m_velocity += m_accel;
+}
+
+float Player::Clamp(float _v, float _min, float  _max)
+{
+	return std::min(std::max(_v, _min), _max);
 }
