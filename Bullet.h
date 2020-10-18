@@ -73,10 +73,22 @@ public: // アクセサ
 		m_speed = _speed;
 	}
 
+	// タグの設定
+	void SetTag(const std::string& _tag)
+	{
+		m_tag = _tag;
+	}
+
+	// タグの取得
+	std::string GetTag() const
+	{
+		return m_tag;
+	}
+
 public: // 関数
 
 	// 初期化
-	void Initialize(DirectX::GeometricPrimitive* _type);
+	void Initialize();
 	// 更新
 	void Update() override;
 	void Update(const DirectX::SimpleMath::Vector3& _pos, const DirectX::SimpleMath::Vector3& _vel, const DirectX::SimpleMath::Matrix& _rotate);
@@ -104,6 +116,9 @@ private: // 変数
 
 	// 弾の速度
 	float m_speed;
+
+	// タグ
+	std::string m_tag;
 
 	// 使用中か
 	bool m_isUsed;

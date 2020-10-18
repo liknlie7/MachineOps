@@ -4,6 +4,7 @@
 #include <GeometricPrimitive.h>
 
 #include "Bullet.h"
+#include "Collision.h"
 
 // 弾管理クラス
 class BulletManager
@@ -24,6 +25,15 @@ public: // アクセサ
 		return m_pBulletGeometry[_geometryType].get();
 	}
 
+	// 弾の情報の取得
+	Bullet* GetBulletInfo(std::string _tag , int _number)
+	{
+		if(m_pBullets[_number]->GetTag() == _tag )
+		return m_pBullets[_number].get();
+	}
+
+	// 弾の座標の取得
+//コライダーつくる
 public: // 関数
 
 	// 初期化
@@ -35,11 +45,8 @@ public: // 関数
 	// 描画
 	void Render(const DirectX::SimpleMath::Matrix& _view);
 
-	// 弾の生成
-	//Bullet* Create(const DirectX::SimpleMath::Vector3& _pos, const DirectX::SimpleMath::Vector3& _vec, const float& _angle);
-
 	// 発射
-	void Shot(const DirectX::SimpleMath::Vector3& _pos, const float& _speed, float _angle, DirectX::GeometricPrimitive* _bulletGeometry);
+	void CreateBullet(const DirectX::SimpleMath::Vector3& _pos, const float& _speed, float _angle, DirectX::GeometricPrimitive* _bulletGeometry , const std::string& _tag);
 
 	// 後処理
 	void Finalize();
@@ -55,7 +62,8 @@ public: // 定数
 		ALL,		// 全ての形状
 	};
 
-private:
+public:
+
 	// 弾の数
 	static const int NUM_BULLET;
 
@@ -73,5 +81,11 @@ private: // 変数
 
 	// 弾配列
 	std::vector<std::unique_ptr<Bullet>>		 m_pBullets;
+
+	// sphere用判定
+	Collision::Sphere	m_sphereCollider;
+
+	// box用判定
+	Collision::Box		m_boxCollider;
 };
 

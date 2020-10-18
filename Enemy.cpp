@@ -112,7 +112,7 @@ void Enemy::Update()
 	{
 		if (m_shotInterval > 15.0f)
 		{
-			m_pBulletManager->Shot(m_position, 0.15f, m_enemyAngle,m_pBulletManager->GetBulletGeometry(BulletManager::SPHERE));
+			m_pBulletManager->CreateBullet(m_position, 0.15f, m_enemyAngle,m_pBulletManager->GetBulletGeometry(BulletManager::SPHERE),"SPHERE");
 			//m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f), m_enemyAngle));
 			//CreateBullet();
 			m_shotInterval = 0;
@@ -126,7 +126,7 @@ void Enemy::Update()
 		{
 			for (int rad = 0; rad < 130; rad += 6)
 			{
-				m_pBulletManager->Shot(m_position, 0.15f, (float)rad + m_enemyAngle, m_pBulletManager->GetBulletGeometry(BulletManager::SPHERE));
+				m_pBulletManager->CreateBullet(m_position, 0.15f, (float)rad + m_enemyAngle, m_pBulletManager->GetBulletGeometry(BulletManager::SPHERE),"SPHERE");
 				//m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f), (float)rad + m_enemyAngle));
 				//CreateBullet();
 				m_shotInterval = 0;
@@ -141,7 +141,7 @@ void Enemy::Update()
 			int i = 0;
 			while (i < 5)
 			{
-				m_pBulletManager->Shot(m_position, 0.15f, m_shotRotate, m_pBulletManager->GetBulletGeometry(BulletManager::SPHERE));
+				m_pBulletManager->CreateBullet(m_position, 0.15f, m_shotRotate, m_pBulletManager->GetBulletGeometry(BulletManager::SPHERE),"SPHERE");
 				//m_pBullets.push_back(std::make_unique<Bullet>(m_position + DirectX::SimpleMath::Vector3(0.0f, 0.1f, 0.0f), DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.15f), m_shotRotate));
 				//CreateBullet();
 				m_shotRotate += 0.2f;

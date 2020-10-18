@@ -34,7 +34,7 @@ void ResultClearScene::Update(DX::StepTimer const & _timer)
 
 	if (m_keyboardTracker->pressed.Space)
 	{
-
+		SceneManager::GetInstance()->RequestScene(eScene::TITLE);
 	}
 }
 

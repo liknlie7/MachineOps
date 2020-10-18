@@ -13,9 +13,9 @@ Bullet::Bullet()
 }
 
 // ‰Šú‰»
-void Bullet::Initialize(DirectX::GeometricPrimitive* _type)
+void Bullet::Initialize()
 {
-	//m_bullet = _type;
+
 }
 
 // XV

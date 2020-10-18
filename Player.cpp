@@ -134,7 +134,7 @@ void Player::Update()
 		{
 			//= DirectX::SimpleMath::Vector3::Transform(m_velocity, rotate);
 
-			m_pBulletManager->Shot(m_position, 0.8f, m_angle, m_pBulletManager->GetBulletGeometry(BulletManager::BOX));
+			m_pBulletManager->CreateBullet(m_position, 0.8f, m_angle, m_pBulletManager->GetBulletGeometry(BulletManager::BOX),"BOX");
 
 			// ’e‚Ì¶¬
 			//m_pWeapon->CreateBullet();

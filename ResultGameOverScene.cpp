@@ -31,8 +31,7 @@ void ResultGameOverScene::Update(DX::StepTimer const & _timer)
 
 	if (m_keyboardTracker->pressed.Space)
 	{
-		//GameSceneManager* gameSceneManager = GameContext::Get<GameSceneManager>();
-		//gameSceneManager->RequestScene("Title");
+		SceneManager::GetInstance()->RequestScene(eScene::TITLE);
 	}
 }
 

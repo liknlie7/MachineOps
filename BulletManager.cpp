@@ -61,31 +61,8 @@ void BulletManager::Render(const DirectX::SimpleMath::Matrix& _view)
 	}
 }
 
-// 弾の生成
-//Bullet* BulletManager::Create(const DirectX::SimpleMath::Vector3 & _pos, const DirectX::SimpleMath::Vector3 & _vec, const float & _angle)
-//{
-//	for (int i = 0; i < NUM_BULLET; i++)
-//	{
-//		if (m_pBulletArray[i]->GetIsUsed() == false)
-//		{
-//			// 弾を使用中に変更
-//			m_pBulletArray[i]->SetIsUsed(true);
-//
-//			// 角度の設定
-//			m_pBulletArray[i]->SetAngle(_angle);
-//
-//			// 弾の発射位置を設定
-//			m_pBulletArray[i]->SetPosition(_pos);
-//
-//			// Bulletオブジェクトを返す
-//			return m_pBulletArray[i].get();
-//		}
-//	}
-//	return nullptr;
-//}
-
 // 発射
-void BulletManager::Shot(const DirectX::SimpleMath::Vector3& _pos, const float& _speed, float _angle, DirectX::GeometricPrimitive* _bulletGeometry)
+void BulletManager::CreateBullet(const DirectX::SimpleMath::Vector3& _pos, const float& _speed, float _angle, DirectX::GeometricPrimitive* _bulletGeometry,const std::string& _tag)
 {
 	for (int i = 0; i < NUM_BULLET; i++)
 	{
@@ -99,10 +76,12 @@ void BulletManager::Shot(const DirectX::SimpleMath::Vector3& _pos, const float& 
 
 			// 角度の設定
 			m_pBullets[i]->SetAngle(_angle);
-			//m_pBullets[i]->SetRotation(_rotate);
 
 			// 形状の設定
 			m_pBullets[i]->SetBulletGeometry(_bulletGeometry);
+
+			// タグの設定
+			m_pBullets[i]->SetTag(_tag);
 
 			// 使用中に変更
 			m_pBullets[i]->SetIsUsed(true);
