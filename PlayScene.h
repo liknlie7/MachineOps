@@ -13,9 +13,9 @@
 #include "Wall.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "MouseCursor.h"
 #include "WarningEffect.h"
 #include "BulletManager.h"
+#include "Reticle.h"
 
 // プレイシーンクラス
 class PlayScene : public IScene
@@ -59,6 +59,12 @@ public: // 関数
 	void Finalize() override {};
 
 private: // サブ関数
+
+	// 判定更新
+	void CollisionUpdate();
+
+	// エネミーのHP更新
+	void HpGaugeUpdate(DX::StepTimer const& _timer);
 
 	// 線形補間
 	float Lerp(float _start, float _end, float _time);
@@ -120,7 +126,7 @@ private: // 変数
 	std::unique_ptr<FollowCamera>						m_pFollowCamera;
 
 	// カーソル
-	std::unique_ptr<MouseCursor>						m_pCursor;
+	std::unique_ptr<Reticle>							m_pReticle;
 
 	// フロア
 	std::unique_ptr<Floor>								m_pFloor;

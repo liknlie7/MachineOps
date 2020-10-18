@@ -4,6 +4,7 @@
 
 #include "PlayScene.h"
 #include "DeviceResources.h"
+#include "ResourceManager.h"
 #include "GameContext.h"
 #include "EffectMask.h"
 #include "PlayerSound.h"
@@ -49,7 +50,9 @@ void PlayScene::Initialize()
 
 	// BGMの再生
 	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
+	{
 		sptr->Play(CRI_PLAYSCENE_PLAYSCENEBGM);
+	}
 
 	// 追尾カメラの作成
 	m_pFollowCamera = std::make_unique<FollowCamera>();
@@ -57,7 +60,7 @@ void PlayScene::Initialize()
 	GameContext::Register<FollowCamera>(m_pFollowCamera);
 
 	// カーソルの作成
-	m_pCursor = std::make_unique<MouseCursor>();
+	m_pReticle = std::make_unique<Reticle>();
 
 	// フロア作成
 	m_pFloor = std::make_unique<Floor>();
@@ -81,7 +84,7 @@ void PlayScene::Initialize()
 
 	// エネミー作成
 	m_pEnemy = std::make_unique<Enemy>(ResourceManager::GetInstance()->GetEnemyData(Enemy::BOSS_ENEMY - 1));
-	m_pEnemy->Initialize(ENEMY_BOSS_INIT_POS, m_pBulletManager->GetBulletGeometry(BulletManager::SPHERE));
+	m_pEnemy->Initialize(ENEMY_BOSS_INIT_POS);
 	m_pEnemy->SetBulletManager(m_pBulletManager.get());
 
 	// テクスチャデータを受け取る
@@ -133,7 +136,9 @@ void PlayScene::Initialize()
 
 	// Warning再生
 	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
+	{
 		sptr->Play(CRI_PLAYSCENE_WARNING);
+	}
 }
 
 // 更新
@@ -182,147 +187,27 @@ void PlayScene::Update(DX::StepTimer const& _timer)
 		m_pPlayer->Update();
 
 		// プレイヤーの座標をエネミーに渡す
-		m_pEnemy->SetPlayerPos(m_pPlayer->GetPos());
+		m_pEnemy->SetPlayerPos(m_pPlayer->GetPosition());
 
 		// エネミー更新
 		m_pEnemy->Update();
 
 		// 追尾カメラ更新
-		m_pFollowCamera->Update(m_pPlayer->GetPos() + FollowCamera::EYE_VEC, m_pPlayer->GetPos());
+		m_pFollowCamera->Update(m_pPlayer->GetPosition() + FollowCamera::EYE_VEC, m_pPlayer->GetPosition());
 
 		// カーソル更新
-		m_pCursor->Update();
+		m_pReticle->Update();
 
 		// 弾更新
 		m_pBulletManager->Update();
 
-		// 交差点
-		DirectX::SimpleMath::Vector3 hitPos;
+		// 当たり判定更新
+		CollisionUpdate();
 
-		// マウスRayと床の当たり判定(交差点検出)
-		if (m_pPlayer->GetActiveFlag() == true)
-		{
-			if (Collision::IntersectSegmentTriangle(m_pCursor->GetRayNear(), m_pCursor->GetRayFar(), m_pFloor->GetTriangle(0), &hitPos) ||
-				Collision::IntersectSegmentTriangle(m_pCursor->GetRayNear(), m_pCursor->GetRayFar(), m_pFloor->GetTriangle(1), &hitPos))
-			{
-				m_pPlayer->SetMousePos(hitPos);
-			}
-		}
+		// 敵のHP更新
+		HpGaugeUpdate(_timer);
 
-		// プレイヤーとエネミーの弾用配列
-		std::vector<Bullet*> playerBullets;
-		std::vector<Bullet*> enemyBullets;
-
-		for (int i = 0; i < m_pBulletManager->NUM_BULLET; i++)
-		{
-			// プレイヤーとエネミーの弾を取得する
-			playerBullets.push_back(m_pBulletManager->GetBulletInfo("BOX", i));
-			enemyBullets.push_back(m_pBulletManager->GetBulletInfo("SPHERE", i));
-		}
-
-		// 判定用
-		std::vector<Collision::Box> playerBulletColliders;
-		std::vector<Collision::Sphere> enemyBulletColliders;
-
-		// 弾の数だけ判定用の配列を作成
-		playerBulletColliders.resize(playerBullets.size());
-		enemyBulletColliders.resize(enemyBullets.size());
-
-		// プレイヤーの弾の判定設定
-		for (unsigned int i = 0; i < playerBullets.size(); i++)
-		{
-			playerBulletColliders[i].center = playerBullets[i]->GetPosition();
-			playerBulletColliders[i].radius = m_pBulletManager->BOX_BULLET_SIZE;
-		}
-
-		// エネミーの弾の判定設定
-		for (unsigned int i = 0; i < enemyBullets.size(); i++)
-		{
-			enemyBulletColliders[i].center = enemyBullets[i]->GetPosition();
-			enemyBulletColliders[i].radius = m_pBulletManager->SPHERE_BULLET_RADIUS;
-		}
-
-		for (unsigned int i = 0; i < playerBullets.size(); i++)
-		{
-			// プレイヤーの弾が使用中なら
-			if (playerBullets[i]->GetIsUsed())
-			{
-				// 球とボックスの当たり判定
-				if (Collision::HitCheckSphereToBox(m_pEnemy->GetCollider(), playerBulletColliders[i]))
-				{
-					m_pEnemy->OnCollision();
-
-					// プレイヤーの弾を未使用に設定する
-					playerBullets[i]->SetIsUsed(false);
-
-					// エネミーの体力ゲージを減らす
-					float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
-					m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
-				}
-			}
-		}
-
-		// プレイヤーとエネミーの弾の当たり判定
-		for (unsigned int i = 0; i < enemyBullets.size(); i++)
-		{
-			if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBulletColliders[i]))
-			{
-				// ゲームオーバーへ移行
-				SceneManager::GetInstance()->RequestScene(eScene::RESULT_GAMEOVER);
-			}
-		}
-
-		// 壁とエネミーの弾の当たり判定
-		for (unsigned int i = 0; i < enemyBullets.size(); i++)
-		{
-			for (int j = 0; j < 8; j++)
-			{
-				if (Collision::HitCheckSphereToBox(enemyBulletColliders[i], m_pWall->GetCollider(j)))
-				{
-					// エネミーの弾を未使用に設定
-					enemyBullets[i]->SetIsUsed(false);
-				}
-			}
-		}
-
-		// プレイヤーとエネミーの当たり判定
-		if (m_pPlayer->GetActiveFlag() == true && m_pEnemy != nullptr)
-		{
-			if (!m_pPlayer->GetHitFlag())
-			{
-				if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
-				{
-					m_pPlayer->OnCollision();
-				}
-			}
-		}
-
-		// 体力が０なら消去
-		if (m_pPlayer->GetLife() == 0)
-		{
-			m_pPlayer->SetActiveFlag(false);
-		}
-	}
-
-	// 経過時間
-	m_totalTime += (float)_timer.GetElapsedSeconds();
-
-	if (m_totalTime < DAMAGE_TIME)
-	{
-		// ゲージを減少させる
-		float time = m_totalTime / DAMAGE_TIME;
-		m_lightGreenGaugeRate = Lerp(m_prevGaugeScaleX, m_currentGaugeScaleX, time);
-		m_gaugeFlag = false;
-	}
-	else
-	{
-		m_totalTime = 0;
-		m_gaugeFlag = true;
-	}
-	if (m_gaugeFlag)
-	{
-		// 現在のスケール値を保存しておく
-		m_prevGaugeScaleX = m_currentGaugeScaleX;
+		break;
 	}
 }
 
@@ -356,13 +241,136 @@ void PlayScene::Render()
 		0.0f, DirectX::SimpleMath::Vector2::Zero, DirectX::SimpleMath::Vector2(m_currentGaugeScaleX, HP_SCALE_Y));
 
 	// カーソルの描画
-	m_pCursor->Render();
+	m_pReticle->Render();
 
 	// Warningエフェクト描画
 	m_warningEffect->Render();
 
 	GameContext::Get<DirectX::SpriteBatch>()->End();
 }
+
+// 当たり判定更新
+void PlayScene::CollisionUpdate()
+{
+	// 交差点
+	DirectX::SimpleMath::Vector3 hitPos;
+
+	// マウスRayと床の当たり判定(交差点検出)
+	if (Collision::IntersectSegmentTriangle(m_pReticle->GetRayNear(), m_pReticle->GetRayFar(), m_pFloor->GetTriangle(0), &hitPos) ||
+		Collision::IntersectSegmentTriangle(m_pReticle->GetRayNear(), m_pReticle->GetRayFar(), m_pFloor->GetTriangle(1), &hitPos))
+	{
+		m_pPlayer->SetMousePos(hitPos);
+	}
+
+	// プレイヤーとエネミーの弾用配列
+	std::vector<Bullet*> playerBullets;
+	std::vector<Bullet*> enemyBullets;
+
+	for (int i = 0; i < m_pBulletManager->NUM_BULLET; i++)
+	{
+		// プレイヤーとエネミーの弾を取得する
+		playerBullets.push_back(m_pBulletManager->GetBulletInfo("BOX", i));
+		enemyBullets.push_back(m_pBulletManager->GetBulletInfo("SPHERE", i));
+	}
+
+	// 判定用
+	std::vector<Collision::Box> playerBulletColliders;
+	std::vector<Collision::Sphere> enemyBulletColliders;
+
+	// 弾の数だけ判定用の配列を作成
+	playerBulletColliders.resize(playerBullets.size());
+	enemyBulletColliders.resize(enemyBullets.size());
+
+	// プレイヤーの弾の判定設定
+	for (unsigned int i = 0; i < playerBullets.size(); i++)
+	{
+		playerBulletColliders[i].center = playerBullets[i]->GetPosition();
+		playerBulletColliders[i].radius = m_pBulletManager->BOX_BULLET_SIZE;
+	}
+
+	// エネミーの弾の判定設定
+	for (unsigned int i = 0; i < enemyBullets.size(); i++)
+	{
+		enemyBulletColliders[i].center = enemyBullets[i]->GetPosition();
+		enemyBulletColliders[i].radius = m_pBulletManager->SPHERE_BULLET_RADIUS;
+	}
+
+	for (unsigned int i = 0; i < playerBullets.size(); i++)
+	{
+		// プレイヤーの弾が使用中なら
+		if (playerBullets[i]->GetIsUsed())
+		{
+			// 球とボックスの当たり判定
+			if (Collision::HitCheckSphereToBox(m_pEnemy->GetCollider(), playerBulletColliders[i]))
+			{
+				m_pEnemy->OnCollision();
+
+				// プレイヤーの弾を未使用に設定する
+				playerBullets[i]->SetIsUsed(false);
+
+				// エネミーの体力ゲージを減らす
+				float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
+				m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
+			}
+		}
+	}
+
+	// プレイヤーとエネミーの弾の当たり判定
+	for (unsigned int i = 0; i < enemyBullets.size(); i++)
+	{
+		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBulletColliders[i]))
+		{
+			// ゲームオーバーへ移行
+			SceneManager::GetInstance()->RequestScene(eScene::RESULT_GAMEOVER);
+		}
+	}
+
+	// 壁とエネミーの弾の当たり判定
+	for (unsigned int i = 0; i < enemyBullets.size(); i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			if (Collision::HitCheckSphereToBox(enemyBulletColliders[i], m_pWall->GetCollider(j)))
+			{
+				// エネミーの弾を未使用に設定
+				enemyBullets[i]->SetIsUsed(false);
+			}
+		}
+	}
+
+	// プレイヤーとエネミーの当たり判定
+	if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), m_pEnemy->GetCollider()))
+	{
+		m_pPlayer->OnCollision();
+	}
+}
+
+// エネミーのHP更新
+void PlayScene::HpGaugeUpdate(DX::StepTimer const& _timer)
+{
+	// 経過時間
+	m_totalTime += (float)_timer.GetElapsedSeconds();
+
+	if (m_totalTime < DAMAGE_TIME)
+	{
+		// ゲージを減少させる
+		float time = m_totalTime / DAMAGE_TIME;
+		m_lightGreenGaugeRate = Lerp(m_prevGaugeScaleX, m_currentGaugeScaleX, time);
+		m_gaugeFlag = false;
+	}
+	else
+	{
+		m_totalTime = 0;
+		m_gaugeFlag = true;
+	}
+	if (m_gaugeFlag)
+	{
+		// 現在のスケール値を保存しておく
+		m_prevGaugeScaleX = m_currentGaugeScaleX;
+	}
+
+}
+
 
 // 線形補間
 float PlayScene::Lerp(float _start, float _end, float _time)

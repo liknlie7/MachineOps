@@ -128,16 +128,10 @@
     <ClInclude Include="Enemy.h">
       <Filter>Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="MouseCursor.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Weapon.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="BulletManager.h">
@@ -147,6 +141,9 @@
       <Filter>GameScene</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h" />
+    <ClInclude Include="Reticle.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -211,16 +208,10 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="MouseCursor.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Weapon.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="BulletManager.cpp">
@@ -228,6 +219,9 @@
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Reticle.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

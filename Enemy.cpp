@@ -2,6 +2,10 @@
 
 #include "Enemy.h"
 #include "Player.h"
+#include "DeviceResources.h"
+#include "Projection.h"
+#include "GameContext.h"
+#include "ResourceManager.h"
 
 // 通常の大きさ
 const float Enemy::SIZE = 1.5f;
@@ -10,7 +14,7 @@ const float Enemy::SIZE = 1.5f;
 const float Enemy::BOSS_SIZE = 8.0f;
 
 // コンストラクタ
-Enemy::Enemy(const EnemyData _enemyData)
+Enemy::Enemy(const EnemyData& _enemyData)
 	: m_blinkTime(30)
 	, m_isValid(false)
 	, m_playerPos(0.0f, 0.0f, 0.0f)
@@ -21,17 +25,14 @@ Enemy::Enemy(const EnemyData _enemyData)
 	, m_shotRotate(0.0f)
 {
 	m_enemyType = _enemyData.enemyType;
-	m_maxLife = m_life =  _enemyData.life;
-	m_speed = _enemyData.moveSpeed;
+	m_maxLife = m_life =  (float)_enemyData.life;
+	m_moveSpeed = _enemyData.moveSpeed;
 	m_collider.radius = _enemyData.collider;
 	m_shotType = _enemyData.shotType;
 }
 
-void Enemy::Initialize(DirectX::SimpleMath::Vector3 _pos, DirectX::GeometricPrimitive* _bulletGeometry)
+void Enemy::Initialize(const DirectX::SimpleMath::Vector3& _pos)
 {
-	// 弾の形状作成
-	//m_pBulletGeometric = DirectX::GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), 0.3f);
-
 	switch (m_enemyType)
 	{
 	case NORMAL_ENEMY: // ノーマルタイプ
@@ -80,12 +81,8 @@ void Enemy::Update()
 
 		m_bulletEndAngle -= 180 + m_wayNum / 2 * m_changeAngle;
 
-		for (int i = 0; i < m_wayNum; i++)
-		{
-			CreateBullet();
-		}
-
 		break;
+
 	case SHIELD_ENEMY:
 
 		break;
@@ -195,29 +192,17 @@ void Enemy::Render(const DirectX::SimpleMath::Matrix& _view)
 			}
 		}
 	}
-
-	// 弾描画
-	//for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-	//{
-	//	(*itr)->Render(_view);
-	//}
-}
-
-// 後始末
-void Enemy::Finalize()
-{
-
 }
 
 // プレイヤーを追いかける
-void Enemy::ChasePlayer(DirectX::SimpleMath::Vector3 _playerPos)
+void Enemy::ChasePlayer(const DirectX::SimpleMath::Vector3& _playerPos)
 {
 	// プレイヤーへの向きを計算
 	DirectX::SimpleMath::Vector3 dir = _playerPos - m_position;
 	dir.Normalize();
 
 	// エネミーの移動
-	m_position += dir * m_speed;
+	m_position += dir * m_moveSpeed;
 }
 
 // 点滅
@@ -239,41 +224,3 @@ void Enemy::OnCollision()
 
 	m_isValid = true;
 }
-
-// 弾の作成
-void Enemy::CreateBullet()
-{
-	//for (std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin(); itr != m_pBullets.end(); itr++)
-	//{
-	//	(*itr)->Initialize(m_pBulletGeometric.get());
-	//}
-}
-
-// 弾が衝突した時
-//void Enemy::BulletOnCollision(int _number)
-//{
-//	m_pBullets[_number]->SetIsValid(false);
-//
-//	std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
-//	while (itr != m_pBullets.end())
-//	{
-//		if (!(*itr)->GetIsValid())
-//			itr = m_pBullets.erase(itr);
-//		else
-//			++itr;
-//	}
-//}
-
-// 範囲外に出たら
-//void Enemy::OutRangeBullet()
-//{
-//	std::vector<std::unique_ptr<Bullet>>::iterator itr = m_pBullets.begin();
-//
-//	while (itr != m_pBullets.end())
-//	{
-//		if ((*itr)->GetLife() < 0.0f)
-//			itr = m_pBullets.erase(itr);
-//		else
-//			++itr;
-//	}
-//}

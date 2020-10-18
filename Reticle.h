@@ -1,35 +1,20 @@
 #pragma once
 
 #include <SimpleMath.h>
-#include <mouse.h>
 #include <SpriteBatch.h>
 
-#include "DeviceResources.h"
-#include "FollowCamera.h"
-#include "GameContext.h"
-#include "Projection.h"
 #include "WICTextureLoader.h" 
 
-class MouseCursor
+// 照準クラス
+class Reticle
 {
 public: // 基本
 
 	// コンストラクタ
-	MouseCursor();
+	Reticle();
+
 	// デストラクタ
-	~MouseCursor() {}
-
-public: // アクセサ
-
-	DirectX::SimpleMath::Vector3 GetRayNear() const
-	{
-		return m_rayNear;
-	}
-
-	DirectX::SimpleMath::Vector3 GetRayFar() const
-	{
-		return m_rayFar;
-	}
+	~Reticle() {}
 
 public: // 関数
 
@@ -38,6 +23,25 @@ public: // 関数
 
 	// 描画
 	void Render();
+
+public: // アクセサ
+
+	// Rayの始点取得
+	DirectX::SimpleMath::Vector3 GetRayNear() const
+	{
+		return m_rayNear;
+	}
+
+	// Rayの終点取得
+	DirectX::SimpleMath::Vector3 GetRayFar() const
+	{
+		return m_rayFar;
+	}
+
+private: // 定数
+
+	// 照準大きさ
+	static const DirectX::SimpleMath::Vector2 RETICLE_SCALE;
 
 private: // 変数
 
@@ -54,4 +58,3 @@ private: // 変数
 	// マウスState
 	DirectX::SimpleMath::Vector3							m_state;
 };
-
