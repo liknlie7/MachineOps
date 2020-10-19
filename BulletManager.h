@@ -15,24 +15,7 @@ public: // 基本
 	BulletManager();
 
 	// デストラクタ
-	~BulletManager();
-
-public: // アクセサ
-
-	// 弾の形状の取得
-	DirectX::GeometricPrimitive* GetBulletGeometry(int _geometryType)
-	{
-		return m_pBulletGeometry[_geometryType].get();
-	}
-
-	// 弾の情報の取得
-	Bullet* GetBulletInfo(std::string _tag , int _number)
-	{
-		if (m_pBullets[_number]->GetTag() == _tag)
-		{
-			return m_pBullets[_number].get();
-		}
-	}
+	~BulletManager() {};
 
 public: // 関数
 
@@ -46,10 +29,27 @@ public: // 関数
 	void Render(const DirectX::SimpleMath::Matrix& _view);
 
 	// 発射
-	void CreateBullet(const DirectX::SimpleMath::Vector3& _pos, const float& _speed, float _angle, DirectX::GeometricPrimitive* _bulletGeometry , const std::string& _tag);
+	void CreateBullet(const DirectX::SimpleMath::Vector3& _pos, const float& _speed, float _angle, DirectX::GeometricPrimitive* _bulletGeometry, const std::string& _tag);
 
 	// 後処理
 	void Finalize();
+
+public: // アクセサ
+
+	// 弾の形状の取得
+	DirectX::GeometricPrimitive* GetBulletGeometry(int _geometryType)
+	{
+		return m_pBulletGeometry[_geometryType].get();
+	}
+
+	// 弾の情報の取得
+	Bullet* GetBulletInfo(const std::string& _tag , int _number)
+	{
+		if (m_pBullets[_number]->GetTag() == _tag)
+		{
+			return m_pBullets[_number].get();
+		}
+	}
 
 public: // 定数
 

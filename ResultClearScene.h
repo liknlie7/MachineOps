@@ -2,7 +2,6 @@
 
 #include <Keyboard.h>
 #include <WICTextureLoader.h>
-#include <SimpleMath.h>
 
 #include "StepTimer.h"
 #include "SceneManager.h"
@@ -32,7 +31,7 @@ public: // ŠÖ”
 	void Render() override;
 	
 	// Œãˆ—
-	void Finalize() override;
+	void Finalize() override {};
 	
 private: // ’è”
 

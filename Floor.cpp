@@ -1,31 +1,23 @@
 #include "pch.h"
 
+#include <CommonStates.h>
+
 #include "Floor.h"
+#include "DeviceResources.h"
+#include "Projection.h"
+#include "GameContext.h"
+#include "ResourceManager.h"
 
 // 横幅
 const float Floor::AREA_WIDTH = 50.0f;
 // 縦幅
 const float Floor::AREA_HEIGHT = 50.0f;
 
-// コンストラクタ
-Floor::Floor()
-{
-
-}
-
 // 初期化
 void Floor::Initialize()
 {
-	// エフェクトファクトリの作成
-	DirectX::EffectFactory* factory = new DirectX::EffectFactory(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
-
-	// テクスチャの読み込みパス指定
-	factory->SetDirectory(L"Resources/Models");
-
-	// ファイルを指定してモデルデータ読み込み
-	m_pModel = DirectX::Model::CreateFromCMO(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources/Models/floor.cmo", *factory);
-
-	delete factory;
+	// モデルをshared_ptrで受け取る
+	m_pModel = std::weak_ptr<DirectX::Model>(ResourceManager::GetInstance()->GetModel(L"Resources/Models/Floor.cmo"));
 
 	// 頂点ベクトル
 	 m_vector[0] = DirectX::SimpleMath::Vector3(-AREA_WIDTH, 0.0f, -AREA_HEIGHT);  // 左上
@@ -34,18 +26,19 @@ void Floor::Initialize()
 	 m_vector[3] = DirectX::SimpleMath::Vector3(AREA_WIDTH, 0.0f, -AREA_HEIGHT);   // 右上
 }
 
-// 更新
-void Floor::Update()
-{
-
-}
-
 // 描画
 void Floor::Render(const DirectX::SimpleMath::Matrix& _view)
 {
+	ID3D11DeviceContext1* context = GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext();
+	DirectX::CommonStates* state = GameContext::Get<DirectX::CommonStates>();
+	DirectX::SimpleMath::Matrix proj = GameContext::Get<Projection>()->GetMatrix();
+
 	// 行列作成
 	DirectX::SimpleMath::Matrix world = DirectX::SimpleMath::Matrix::Identity;
 
 	// モデル描画
-	m_pModel->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<DirectX::CommonStates>(), world, _view, GameContext::Get<Projection>()->GetMatrix());
+	if (std::shared_ptr<DirectX::Model> sptr = m_pModel.lock())
+	{
+		sptr->Draw(context, *state, world, _view, proj);
+	}
 }

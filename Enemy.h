@@ -54,6 +54,9 @@ private: // 関数
 	// 弾を撃つ
 	void Shot();
 
+	//　エネミーデータ(csv)の読み込み
+	void LoadEnemyData();
+
 public: // アクセサ
 
 	// コライダーの取得
@@ -170,4 +173,7 @@ private: // 変数
 
 	// 点滅時間
 	int												m_blinkTime;
+
+	// エネミーデータ
+	std::vector<EnemyData>							m_enemyData;
 };

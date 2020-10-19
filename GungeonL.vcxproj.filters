@@ -71,9 +71,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="HPGauge.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="File.h">
       <Filter>Effect</Filter>
     </ClInclude>
@@ -164,9 +161,6 @@
       <Filter>GameScene</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="HPGauge.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="File.cpp">

@@ -1,4 +1,5 @@
 #include "pch.h"
+
 #include "SceneManager.h"
 #include "TitleScene.h"
 #include "PlayScene.h"
@@ -9,14 +10,8 @@
 SceneManager::SceneManager(eScene _scene)
 	: m_nextScene(_scene)
 {
+	// 最初のシーンを作成
 	m_pScene = CreateScene(m_nextScene);
-
-}
-
-// デストラクタ
-SceneManager::~SceneManager()
-{
-
 }
 
 // 現在のシーンの更新

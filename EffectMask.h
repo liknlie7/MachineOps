@@ -31,6 +31,7 @@ public: // 基本
 
 	// コンストラクタ
 	EffectMask();
+
 	// デストラクタ
 	~EffectMask() {};
 
@@ -38,8 +39,10 @@ public: // 関数
 
 	// 初期化
 	void Initialize(float _interval);
+	
 	// 更新
 	void Update(float _elapsedTime);
+	
 	// 描画
 	void Render();
 
@@ -93,5 +96,4 @@ private: // 変数
 
 	// シェーダーリソースビュー
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_shaderResourceView;
-
 };

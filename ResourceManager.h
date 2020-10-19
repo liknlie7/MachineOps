@@ -2,18 +2,12 @@
 
 #include <Model.h>
 #include <Effects.h>
-#include <CommonStates.h>
 #include <string>
 #include <map>
 #include <WICTextureLoader.h>
-#include <sstream>
-#include <fstream>
 
-#include "GameContext.h"
-#include "DeviceResources.h"
 #include "Adx2Le.h"
 #include "Singleton.h"
-#include "Projection.h"
 #include "EnemyData.h"
 
 // リソース管理クラス

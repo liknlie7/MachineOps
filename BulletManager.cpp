@@ -1,5 +1,8 @@
 #include "pch.h"
+
 #include "BulletManager.h"
+#include "GameContext.h"
+#include "DeviceResources.h"
 
 // 弾の数
 const int BulletManager::NUM_BULLET = 300;
@@ -16,12 +19,6 @@ BulletManager::BulletManager()
 	// 弾の形状を作成する
 	m_pBulletGeometry[SPHERE] = DirectX::GeometricPrimitive::CreateSphere(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), SPHERE_BULLET_RADIUS);
 	m_pBulletGeometry[BOX] = DirectX::GeometricPrimitive::CreateBox(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), BOX_BULLET_SIZE);
-}
-
-// デストラクタ
-BulletManager::~BulletManager()
-{
-
 }
 
 // 初期化
@@ -44,6 +41,7 @@ void BulletManager::Update()
 	{
 		if (m_pBullets[i]->GetIsUsed())
 		{
+			// 弾の更新
 			m_pBullets[i]->Update();
 		}
 	}
@@ -56,6 +54,7 @@ void BulletManager::Render(const DirectX::SimpleMath::Matrix& _view)
 	{
 		if (m_pBullets[i]->GetIsUsed())
 		{
+			// 弾の描画
 			m_pBullets[i]->Render(_view);
 		}
 	}

@@ -1,5 +1,7 @@
 #include "pch.h"
+
 #include "WarningLine.h"
+#include "GameContext.h"
 
 // エフェクト表示時間
 const float WarningLine::DISPLAY_TIME = 1.0f;
@@ -31,13 +33,6 @@ void WarningLine::Initialize(DirectX::SimpleMath::Vector2 _pos, bool _dir)
 // 更新
 void WarningLine::Update(float _elapsedTime)
 {
-	//// 時間になったらタスクは消える
-	//m_timer -= elapsedTime;
-	//if (m_timer <= 0.0f)
-	//{
-
-	//}
-
 	if (m_dir)
 	{
 		m_pos.x += SPEED;

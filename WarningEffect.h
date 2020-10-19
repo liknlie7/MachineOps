@@ -5,8 +5,6 @@
 #include <VertexTypes.h>
 #include <WICTextureLoader.h>
 
-#include "DeviceResources.h"
-#include "GameContext.h"
 #include "WarningLine.h"
 #include "WarningMessage.h"
 
@@ -31,6 +29,24 @@ public: // 関数
 	// 処理が終わったら
 	bool IsEnd();
 
+private: // 定数
+
+	// マスクカラー
+	static const DirectX::SimpleMath::Vector4 MASK_COLOR;
+
+	// メッセージ位置
+	static const DirectX::SimpleMath::Vector2 MESSAGE_POS;
+
+	enum Texture
+	{
+		ICON = 0,		// アイコン
+		MESSAGE,		// メッセージ
+		LINE,			// ライン
+		MASK,			// マスク用
+
+		ALL,
+	};
+
 private: // 変数
 
 	// ライン
@@ -38,14 +54,8 @@ private: // 変数
 	// メッセージ
 	std::unique_ptr<WarningMessage>		m_pMessage;
 	
-	// ラインテクスチャ
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_lineTexture;
-	// メッセージテクスチャ
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_messageTexture;
-	// アイコンテクスチャ
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_iconTexture;
-	// マスク用
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_maskTexture;
+	// テクスチャ
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_pTextures[Texture::ALL];
 
 	// マスク用カラー
 	DirectX::SimpleMath::Vector4							m_maskColor;

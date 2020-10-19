@@ -1,5 +1,12 @@
 #include "pch.h"
+
+#include <sstream>
+#include <fstream>
+
 #include "ResourceManager.h"
+#include "GameContext.h"
+#include "Projection.h"
+#include "DeviceResources.h"
 
 // コンストラクタ
 ResourceManager::ResourceManager()

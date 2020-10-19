@@ -3,9 +3,6 @@
 #include <SimpleMath.h>
 #include <GeometricPrimitive.h>
 
-#include "DeviceResources.h"
-#include "Projection.h"
-#include "GameContext.h"
 #include "GameObject.h"
 
 // 弾
@@ -15,8 +12,23 @@ public: // 基本
 
 	// コンストラクタ
 	Bullet();
+	
 	// デストラクタ
 	~Bullet() {}
+
+public: // 関数
+
+	// 初期化
+	void Initialize() {};
+	
+	// 更新
+	void Update() override;
+	
+	// 描画
+	void Render(const DirectX::SimpleMath::Matrix& _view) override;
+	
+	// 後処理
+	void Finalize() {};
 
 public: // アクセサ
 
@@ -25,32 +37,15 @@ public: // アクセサ
 	{
 		m_angle = _angle;
 	}
-
-	// フラグ取得
-	bool GetIsValid() const
-	{
-		return m_isValid;
-	}
-	// フラグ設定
-	void SetIsValid(const bool& _flag)
-	{
-		m_isValid = _flag;
-	}
-
-	// 飛行時間の取得
-	float GetLife() const
-	{
-		return m_life;
-	}
-
+	
 	// 使用中かどうかの取得
-	bool GetIsUsed()
+	bool GetIsUsed() const
 	{
 		return m_isUsed;
 	}
 
 	// 使用中かどうかの設定
-	void SetIsUsed(bool _used)
+	void SetIsUsed(const bool _used)
 	{
 		m_isUsed = _used;
 	}
@@ -61,14 +56,8 @@ public: // アクセサ
 		m_pBulletGeometry = _bulletGeometry;
 	}
 
-	// 回転の設定
-	void SetRotation(DirectX::SimpleMath::Matrix _rotate)
-	{
-		m_rotate = _rotate;
-	}
-
 	// 速度の設定
-	void SetSpeed(float _speed)
+	void SetSpeed(const float _speed)
 	{
 		m_speed = _speed;
 	}
@@ -85,17 +74,10 @@ public: // アクセサ
 		return m_tag;
 	}
 
-public: // 関数
+private: // 定数
 
-	// 初期化
-	void Initialize();
-	// 更新
-	void Update() override;
-	void Update(const DirectX::SimpleMath::Vector3& _pos, const DirectX::SimpleMath::Vector3& _vel, const DirectX::SimpleMath::Matrix& _rotate);
-	// 描画
-	void Render(const DirectX::SimpleMath::Matrix& _view) override;
-	// 後処理
-	void Finalize();
+	// 弾の生存時間
+	static const float BULLET_LIFE;
 
 private: // 変数
 
@@ -107,9 +89,6 @@ private: // 変数
 
 	// 角度
 	float m_angle;
-
-	// フラグ
-	bool m_isValid;
 
 	// 飛行距離
 	float m_life;

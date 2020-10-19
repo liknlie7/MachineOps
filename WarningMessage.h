@@ -4,8 +4,6 @@
 #include <WICTextureLoader.h>
 #include <SpriteBatch.h>
 
-#include "GameContext.h"
-
 // 警告メッセージ
 class WarningMessage
 {
@@ -13,8 +11,20 @@ public: // 基本
 
 	// コンストラクタ
 	WarningMessage();
+	
 	// デストラクタ
 	~WarningMessage() {};
+
+public: // 関数
+
+	// 初期化
+	void Initialize();
+
+	// 更新
+	void Update(float _elapsedTime);
+
+	// 描画
+	void Render(ID3D11ShaderResourceView* _texture, DirectX::SimpleMath::Vector2 _pos);
 
 private: // 定数
 
@@ -30,17 +40,6 @@ private: // 定数
 	// フェードスピード
 	static const float FADE_SPEED;
 
-public: // 関数
-
-	// 初期化
-	void Initialize();
-
-	// 更新
-	void Update(float _elapsedTime);
-
-	// 描画
-	void Render(ID3D11ShaderResourceView* _texture, DirectX::SimpleMath::Vector2 _pos);
-
 private: // 変数
 
 	// 表示時間カウンタ
@@ -51,6 +50,5 @@ private: // 変数
 
 	// フェードタイプ（falseならアウト）
 	bool m_fadeType;
-
 };
 

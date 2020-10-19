@@ -1,15 +1,10 @@
 #pragma once
 
-#include <SpriteBatch.h>
 #include <Keyboard.h>
-#include <CommonStates.h>
 #include <WICTextureLoader.h>
-#include <SimpleMath.h>
 
-#include "DeviceResources.h"
 #include "StepTimer.h"
 #include "SceneManager.h"
-#include "ResourceManager.h"
 
 class IScene;
 
@@ -22,7 +17,7 @@ public: // 基本
 	ResultGameOverScene();
 
 	// デストラクタ
-	virtual ~ResultGameOverScene();
+	virtual ~ResultGameOverScene() {};
 
 public: // 関数
 
@@ -36,7 +31,7 @@ public: // 関数
 	void Render() override;
 	
 	// 後処理
-	void Finalize() override;
+	void Finalize() override {};
 
 private: // 定数
 
@@ -56,6 +51,5 @@ private: // 変数
 
 	// テクスチャ
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>		m_textures[Texture::ALL];
-
 };
 

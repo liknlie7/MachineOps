@@ -1,50 +1,76 @@
 #include "pch.h"
-#include "Wall.h"
 
-// コンストラクタ
-Wall::Wall()
-{
-}
+#include <SimpleMath.h>
+#include <sstream>
+#include <fstream>
+
+#include "Wall.h"
+#include "ResourceManager.h"
+#include "GameContext.h"
+#include "Projection.h"
+#include "DeviceResources.h"
 
 // 初期化
 void Wall::Initialize()
 {
-	// エフェクトファクトリの作成
-	DirectX::EffectFactory* factory = new DirectX::EffectFactory(GameContext::Get<DX::DeviceResources>()->GetD3DDevice());
+	// モデルをshared_ptrで受け取る
+	m_pModel = std::weak_ptr<DirectX::Model>(ResourceManager::GetInstance()->GetModel(L"Resources/Models/Wall.cmo"));
 
-	// テクスチャの読み込みパス指定
-	factory->SetDirectory(L"Resources/Models");
-
-	// ファイルを指定してモデルデータ読み込み
-	m_pModel = DirectX::Model::CreateFromCMO(GameContext::Get<DX::DeviceResources>()->GetD3DDevice(), L"Resources/Models/Wall.cmo", *factory);
-
-	delete factory;
-
-	m_collider[TOP_RIGHT].center = DirectX::SimpleMath::Vector3(-26.0f, 2.5f, -21.0f);
-	m_collider[TOP_RIGHT].radius = DirectX::SimpleMath::Vector3(20.0f, 5.0f, 1.5f);
-	m_collider[TOP_LEFT].center = DirectX::SimpleMath::Vector3(26.0f, 2.5f, -21.0f);
-	m_collider[TOP_LEFT].radius = DirectX::SimpleMath::Vector3(20.0f, 5.0f, 1.5f);
-	m_collider[BOTTOM_RIGHT].center = DirectX::SimpleMath::Vector3(-26.0f, 2.5f, 24.0f);
-	m_collider[BOTTOM_RIGHT].radius = DirectX::SimpleMath::Vector3(20.0f, 5.0f, 1.5f);
-	m_collider[BOTTOM_LEFT].center = DirectX::SimpleMath::Vector3(26.0f, 2.5f, 24.0f);
-	m_collider[BOTTOM_LEFT].radius = DirectX::SimpleMath::Vector3(20.0f, 5.0f, 1.5f);
-	m_collider[LEFT_TOP].center = DirectX::SimpleMath::Vector3(-22.0f, 2.5f, -26.0f);
-	m_collider[LEFT_TOP].radius = DirectX::SimpleMath::Vector3(1.5f, 5.0f, 20.0f);
-	m_collider[LEFT_BOTTOM].center = DirectX::SimpleMath::Vector3(-22.0f, 2.5f, 27.0f);
-	m_collider[LEFT_BOTTOM].radius = DirectX::SimpleMath::Vector3(1.5f, 5.0f, 20.0f);
-	m_collider[RIGHT_TOP].center = DirectX::SimpleMath::Vector3(22.0f, 2.5f, -26.0f);
-	m_collider[RIGHT_TOP].radius = DirectX::SimpleMath::Vector3(1.5f, 5.0f, 20.0f);
-	m_collider[RIGHT_BOTTOM].center = DirectX::SimpleMath::Vector3(22.0f, 2.5f, 27.0f);
-	m_collider[RIGHT_BOTTOM].radius = DirectX::SimpleMath::Vector3(1.5f, 5.0f, 20.0f);
+	// CSV読み込み
+	CreateWall ();
 }
 
 // 描画
 void Wall::Render(const DirectX::SimpleMath::Matrix & _view)
 {
+	ID3D11DeviceContext1* context = GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext();
+	DirectX::CommonStates* state = GameContext::Get<DirectX::CommonStates>();
+	DirectX::SimpleMath::Matrix proj = GameContext::Get<Projection>()->GetMatrix();
+
 	// 行列作成
 	DirectX::SimpleMath::Matrix world = DirectX::SimpleMath::Matrix::Identity;
 	world *= DirectX::SimpleMath::Matrix::CreateScale(0.3f, 0.3f, 0.3f);
 
 	// モデル描画
-	m_pModel->Draw(GameContext::Get<DX::DeviceResources>()->GetD3DDeviceContext(), *GameContext::Get<DirectX::CommonStates>(), world, _view, GameContext::Get<Projection>()->GetMatrix());
+	if (std::shared_ptr<DirectX::Model> sptr = m_pModel.lock())
+	{
+		sptr->Draw(context, *state, world, _view, proj);
+	}
+}
+
+// 壁の作成
+void Wall::CreateWall()
+{
+	// ファイル読み込み
+	std::ifstream ifs("Resources\\csv\\WallData.csv");
+
+	std::string lineBuf;
+
+	std::vector<std::vector<std::string>> csvData;
+
+	// 列読み込み
+	while (std::getline(ifs, lineBuf))
+	{
+		csvData.push_back(std::vector<std::string>());
+
+		std::stringstream stream(lineBuf);
+
+		std::string indexBuf;
+
+		// 行読み込み
+		while (std::getline(stream, indexBuf, ','))
+		{
+			(*(csvData.end() - 1)).push_back(indexBuf);
+		}
+	}
+
+	// 壁の数を設定
+	int wallNum = 8;
+
+	// データを変換してそれぞれ格納
+	for (int i = 1; i < wallNum; i++)
+	{
+		m_collider[stoi(csvData[i][0])].center = DirectX::SimpleMath::Vector3(stof(csvData[i][1]), stof(csvData[i][2]), stof(csvData[i][3]));
+		m_collider[stoi(csvData[i][0])].radius = DirectX::SimpleMath::Vector3(stof(csvData[i][4]), stof(csvData[i][5]), stof(csvData[i][6]));
+	}
 }

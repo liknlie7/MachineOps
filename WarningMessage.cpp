@@ -1,5 +1,7 @@
 #include "pch.h"
+
 #include "WarningMessage.h"
+#include "GameContext.h"
 
 // エフェクト表示時間
 const float WarningMessage::DISPLAY_TIME = 1.0f;

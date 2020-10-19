@@ -1,13 +1,8 @@
 #pragma once
 
 #include <Model.h>
-#include <Effects.h>
-#include <CommonStates.h>
+#include <SimpleMath.h>
 
-#include "DeviceResources.h"
-#include "SimpleMath.h"
-#include "Projection.h"
-#include "GameContext.h"
 #include "Collision.h"
 #include "GameObject.h"
 
@@ -17,9 +12,21 @@ class Floor : public GameObject
 public: // 基本
 
 	// コンストラクタ
-	Floor();
+	Floor() {};
+
 	// デストラクタ
 	~Floor() {}
+
+public: // 関数
+
+	// 初期化
+	void Initialize();
+
+	// 更新
+	void Update() override {};
+
+	// 描画
+	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 
 public: // アクセサ
 
@@ -32,29 +39,20 @@ public: // アクセサ
 			return Collision::Triangle(m_vector[0], m_vector[3], m_vector[2]);
 	}
 
-public: // 関数
-
-	// 初期化
-	void Initialize();
-	// 更新
-	void Update() override;
-	// 描画
-	void Render(const DirectX::SimpleMath::Matrix& _view) override;
 
 public: // 定数
 
 	// 横幅
 	static const float AREA_WIDTH;
+	
 	// 縦幅
 	static const float AREA_HEIGHT;
 
 private: // 変数
 
 	// モデル
-	std::unique_ptr<DirectX::Model>	m_pModel;
+	std::weak_ptr<DirectX::Model>	m_pModel;
 
-	// 三角形
-	//Collision::Triangle				m_tri[2];
 	// 頂点
 	DirectX::SimpleMath::Vector3	m_vector[4];
 };

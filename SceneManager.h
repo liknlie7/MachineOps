@@ -49,7 +49,7 @@ private: // 基本
 	SceneManager(eScene _scene = eScene::PLAY);
 
 	// デストラクタ
-	~SceneManager();
+	~SceneManager() {};
 
 public: // 関数
 
@@ -69,7 +69,6 @@ private:
 
 	// シーンの切り替え
 	void ChangeScene();
-
 
 private: // 変数
 

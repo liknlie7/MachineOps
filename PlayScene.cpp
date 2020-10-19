@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include <Keyboard.h>
+#include <CommonStates.h>
 
 #include "PlayScene.h"
 #include "DeviceResources.h"
