@@ -5,11 +5,11 @@
 #include "pch.h"
 #include "Game.h"
 
-#include "GameContext.h"
-#include "TitleScene.h"
-#include "PlayScene.h"
-#include "ResultClearScene.h"
-#include "ResultGameOverScene.h"
+#include "Game/Common/GameContext.h"
+#include "Game/GameScene/TitleScene.h"
+#include "Game/GameScene/PlayScene.h"
+#include "Game/GameScene/ResultGameOverScene.h"
+#include "Game/GameScene/ResultClearScene.h"
 
 extern void ExitGame();
 

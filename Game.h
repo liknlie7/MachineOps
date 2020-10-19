@@ -6,14 +6,14 @@
 
 #include <CommonStates.h>
 #include <SpriteBatch.h>
+#include <mouse.h>
+#include <Keyboard.h>
 
-#include "DeviceResources.h"
-#include "SceneManager.h"
-#include "Projection.h"
-#include "StepTimer.h"
-#include "Mouse.h"
-#include "Keyboard.h"
-#include "EffectMask.h"
+#include "Game/Common/DeviceResources.h"
+#include "Game/Common/Projection.h"
+#include "Game/Common/StepTimer.h"
+#include "Game/Manager/SceneManager.h"
+#include "Game/Effects/EffectMask.h"
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.

@@ -178,55 +178,104 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Adx2Le.h" />
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="BulletManager.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="DeviceResources.h" />
-    <ClInclude Include="EffectMask.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyData.h" />
-    <ClInclude Include="File.h" />
-    <ClInclude Include="Floor.h" />
-    <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameContext.h" />
-    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Game\Common\DeviceResources.h" />
+    <ClInclude Include="Game\Common\GameContext.h" />
+    <ClInclude Include="Game\Common\Projection.h" />
+    <ClInclude Include="Game\Common\ServiceLocator.h" />
+    <ClInclude Include="Game\Common\Singleton.h" />
+    <ClInclude Include="Game\Common\StepTimer.h" />
+    <ClInclude Include="Game\Common\Utilities.h" />
+    <ClInclude Include="Game\Effects\Effectmask.h" />
+    <ClInclude Include="Game\Effects\File.h" />
+    <ClInclude Include="Game\Effects\WarningEffect\WarningEffect.h" />
+    <ClInclude Include="Game\Effects\WarningEffect\WarningLine.h" />
+    <ClInclude Include="Game\Effects\WarningEffect\WarningMessage.h" />
+    <ClInclude Include="Game\GameScene\playscene.h" />
+    <ClInclude Include="Game\GameScene\ResultClearScene.h" />
+    <ClInclude Include="Game\GameScene\ResultGameOverScene.h" />
+    <ClInclude Include="Game\GameScene\titlescene.h" />
+    <ClInclude Include="Game\Manager\Bulletmanager.h" />
+    <ClInclude Include="Game\Manager\Collision.h" />
+    <ClInclude Include="Game\Manager\ResourceManager.h" />
+    <ClInclude Include="Game\Manager\Scenemanager.h" />
+    <ClInclude Include="Game\Objects\Bullet.h" />
+    <ClInclude Include="Game\Objects\Enemy\Enemy.h" />
+    <ClInclude Include="Game\Objects\Enemy\EnemyData.h" />
+    <ClInclude Include="Game\Objects\FollowCamera.h" />
+    <ClInclude Include="Game\Objects\GameObject.h" />
+    <ClInclude Include="Game\Objects\Player\Player.h" />
+    <ClInclude Include="Game\Objects\Player\Reticle.h" />
+    <ClInclude Include="Game\Objects\Stage\Floor.h" />
+    <ClInclude Include="Game\Objects\Stage\Wall.h" />
+    <ClInclude Include="Game\Sound\Adx2Le.h" />
+    <ClInclude Include="Game\Sound\PlayerSound.h" />
+    <ClInclude Include="Game\Sound\PlaySceneSound.h" />
+    <ClInclude Include="Game\Sound\TitleSoundSeet.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerSound.h" />
-    <ClInclude Include="PlayScene.h" />
-    <ClInclude Include="PlaySceneSound.h" />
-    <ClInclude Include="Projection.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="ResultClearScene.h" />
-    <ClInclude Include="ResultGameOverScene.h" />
-    <ClInclude Include="Reticle.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="ServiceLocator.h" />
-    <ClInclude Include="Singleton.h" />
-    <ClInclude Include="StepTimer.h" />
-    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TitleSoundSeet.h" />
-    <ClInclude Include="Utilities.h" />
-    <ClInclude Include="Wall.h" />
-    <ClInclude Include="WarningEffect.h" />
-    <ClInclude Include="WarningLine.h" />
-    <ClInclude Include="WarningMessage.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Adx2Le.cpp" />
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="BulletManager.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="DeviceResources.cpp" />
-    <ClCompile Include="EffectMask.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="File.cpp" />
-    <ClCompile Include="Floor.cpp" />
-    <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Game\Common\DeviceResources.cpp" />
+    <ClCompile Include="Game\Effects\EffectMask.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Effects\File.cpp" />
+    <ClCompile Include="Game\Effects\WarningEffect\WarningEffect.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Effects\WarningEffect\WarningLine.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Effects\WarningEffect\WarningMessage.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\GameScene\PlayScene.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\GameScene\ResultClearScene.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\GameScene\ResultGameOverScene.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\GameScene\TitleScene.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Manager\BulletManager.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Manager\Collision.cpp" />
+    <ClCompile Include="Game\Manager\ResourceManager.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Manager\SceneManager.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Bullet.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Enemy\Enemy.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\FollowCamera.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\GameObject.cpp" />
+    <ClCompile Include="Game\Objects\Player\Player.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Player\Reticle.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Floor.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Wall.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Game\Sound\Adx2Le.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -234,18 +283,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayScene.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="ResultClearScene.cpp" />
-    <ClCompile Include="ResultGameOverScene.cpp" />
-    <ClCompile Include="Reticle.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
-    <ClCompile Include="Wall.cpp" />
-    <ClCompile Include="WarningEffect.cpp" />
-    <ClCompile Include="WarningLine.cpp" />
-    <ClCompile Include="WarningMessage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

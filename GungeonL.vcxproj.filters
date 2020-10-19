@@ -44,183 +44,186 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
-    <ClInclude Include="StepTimer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceResources.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Projection.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="FollowCamera.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="ServiceLocator.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="File.h">
-      <Filter>Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Adx2Le.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="EffectMask.h">
-      <Filter>Effect</Filter>
     </ClInclude>
     <ClInclude Include="TitleSoundSeet.h">
       <Filter>Sound\TitleScene</Filter>
     </ClInclude>
-    <ClInclude Include="PlaySceneSound.h">
+    <ClInclude Include="Game\Sound\Adx2Le.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Sound\PlaySceneSound.h">
       <Filter>Sound\PlayScene</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerSound.h">
+    <ClInclude Include="Game\Sound\PlayerSound.h">
       <Filter>Sound\PlayScene</Filter>
     </ClInclude>
-    <ClInclude Include="WarningMessage.h">
-      <Filter>Effect\Warning</Filter>
+    <ClInclude Include="Game\Sound\TitleSoundSeet.h">
+      <Filter>Sound\TitleScene</Filter>
     </ClInclude>
-    <ClInclude Include="WarningEffect.h">
-      <Filter>Effect\Warning</Filter>
-    </ClInclude>
-    <ClInclude Include="WarningLine.h">
-      <Filter>Effect\Warning</Filter>
-    </ClInclude>
-    <ClInclude Include="Floor.h">
-      <Filter>Object\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
-      <Filter>Object\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="ResultGameOverScene.h">
-      <Filter>GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="ResultClearScene.h">
-      <Filter>GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="GameContext.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyData.h">
-      <Filter>Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
+    <ClInclude Include="Game\Objects\Bullet.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="BulletManager.h">
+    <ClInclude Include="Game\Objects\FollowCamera.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\GameObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Floor.h">
+      <Filter>Object\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Wall.h">
+      <Filter>Object\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Player\Player.h">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Player\Reticle.h">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Enemy\Enemy.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Enemy\EnemyData.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Manager\Bulletmanager.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScene.h">
+    <ClInclude Include="Game\Manager\Collision.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Manager\ResourceManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Manager\Scenemanager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameScene\playscene.h">
       <Filter>GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Object\Player</Filter>
+    <ClInclude Include="Game\GameScene\ResultClearScene.h">
+      <Filter>GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="Reticle.h">
-      <Filter>Object\Player</Filter>
+    <ClInclude Include="Game\GameScene\ResultGameOverScene.h">
+      <Filter>GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities.h">
+    <ClInclude Include="Game\GameScene\titlescene.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Effects\File.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Effects\Effectmask.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Effects\WarningEffect\WarningEffect.h">
+      <Filter>Effect\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Effects\WarningEffect\WarningLine.h">
+      <Filter>Effect\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Effects\WarningEffect\WarningMessage.h">
+      <Filter>Effect\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Common\DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Common\GameContext.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Common\Projection.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Common\ServiceLocator.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Common\Singleton.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Common\StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Common\Utilities.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="DeviceResources.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="FollowCamera.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="File.cpp">
-      <Filter>Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Adx2Le.cpp">
+    <ClCompile Include="Game\Sound\Adx2Le.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
-    <ClCompile Include="EffectMask.cpp">
-      <Filter>Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="WarningEffect.cpp">
-      <Filter>Effect\Warning</Filter>
-    </ClCompile>
-    <ClCompile Include="WarningLine.cpp">
-      <Filter>Effect\Warning</Filter>
-    </ClCompile>
-    <ClCompile Include="WarningMessage.cpp">
-      <Filter>Effect\Warning</Filter>
-    </ClCompile>
-    <ClCompile Include="Floor.cpp">
-      <Filter>Object\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall.cpp">
-      <Filter>Object\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="ResultClearScene.cpp">
-      <Filter>GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="ResultGameOverScene.cpp">
-      <Filter>GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
+    <ClCompile Include="Game\Objects\Bullet.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="BulletManager.cpp">
+    <ClCompile Include="Game\Objects\FollowCamera.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\GameObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Floor.cpp">
+      <Filter>Object\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Wall.cpp">
+      <Filter>Object\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Player\Player.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Player\Reticle.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Enemy\Enemy.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Manager\Collision.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
+    <ClCompile Include="Game\Manager\ResourceManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Manager\SceneManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Manager\BulletManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameScene\PlayScene.cpp">
       <Filter>GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Object\Player</Filter>
+    <ClCompile Include="Game\GameScene\ResultClearScene.cpp">
+      <Filter>GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="Reticle.cpp">
-      <Filter>Object\Player</Filter>
+    <ClCompile Include="Game\GameScene\ResultGameOverScene.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameScene\TitleScene.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Effects\EffectMask.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Effects\File.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Effects\WarningEffect\WarningEffect.cpp">
+      <Filter>Effect\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Effects\WarningEffect\WarningLine.cpp">
+      <Filter>Effect\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Effects\WarningEffect\WarningMessage.cpp">
+      <Filter>Effect\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Common\DeviceResources.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
