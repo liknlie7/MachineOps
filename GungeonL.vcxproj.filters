@@ -35,8 +35,11 @@
     <Filter Include="Object\Stage">
       <UniqueIdentifier>{269e3fc4-aa26-4494-be68-1c8e6b227adc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Manager">
+    <Filter Include="Manager">
       <UniqueIdentifier>{76ba27d4-f84e-4b54-b4f0-2cd052d5f74f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player">
+      <UniqueIdentifier>{e5deb124-9076-4f49-9c7a-1c4397badef7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -60,7 +63,7 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
-      <Filter>Object\Manager</Filter>
+      <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="ServiceLocator.h">
       <Filter>Common</Filter>
@@ -117,10 +120,10 @@
       <Filter>Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
-      <Filter>Object\Manager</Filter>
+      <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Object\Manager</Filter>
+      <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Object\Enemy</Filter>
@@ -128,18 +131,20 @@
     <ClInclude Include="Bullet.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="BulletManager.h">
-      <Filter>Object\Manager</Filter>
+      <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="Player.h">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
     <ClInclude Include="Reticle.h">
-      <Filter>Object</Filter>
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,7 +160,7 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
-      <Filter>Object\Manager</Filter>
+      <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="TitleScene.cpp">
       <Filter>GameScene</Filter>
@@ -194,10 +199,10 @@
       <Filter>GameScene</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
-      <Filter>Object\Manager</Filter>
+      <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Object\Manager</Filter>
+      <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Object\Enemy</Filter>
@@ -205,17 +210,17 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="BulletManager.cpp">
-      <Filter>Object\Manager</Filter>
+      <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>GameScene</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
     <ClCompile Include="Reticle.cpp">
-      <Filter>Object</Filter>
+      <Filter>Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
