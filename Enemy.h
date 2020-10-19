@@ -34,16 +34,25 @@ public: // 関数
 	// 後始末
 	void Finalize() {};
 
-	// プレイヤーを追いかける
-	void ChasePlayer(const DirectX::SimpleMath::Vector3& _playerPos);
-	
 	// 衝突した時
 	void OnCollision();
 
 private: // 関数
 
+	// プレイヤーを追いかける
+	void ChasePlayer(const DirectX::SimpleMath::Vector3& _playerPos);
+
 	// 点滅
 	void Blink();
+
+	// 射撃パターンの切り替え
+	void ChangeShotPattern();
+
+	// プレイヤーの方向に向ける
+	void TurnToDirectionPlayer();
+
+	// 弾を撃つ
+	void Shot();
 
 public: // アクセサ
 
@@ -93,7 +102,6 @@ private: // 定数
 	{
 		NORMAL_SHOT = 1,		// 通常
 		ALL_DIRECTION_SHOT,		// 全方位
-		WINDER_SHOT,			// ワインダー
 		WHORL_SHOT,				// うずまき
 	};
 
@@ -102,6 +110,17 @@ private: // 定数
 
 	// ボスサイズ
 	static const float BOSS_SIZE;
+
+	// 弾を撃つ間隔
+	static const float NORMAL_SHOT_INTERVEL;
+	static const float ALL_DIRECTION_SHOT_INTERVEL;
+	static const float WHORL_SHOT_INTERVEL;
+
+	// 点滅間隔
+	static const float BLINK_TIME;
+
+	// 弾の速度
+	static const float BULLET_SPEED;
 
 private: // 変数
 
@@ -134,21 +153,21 @@ private: // 変数
 	float											m_enemyAngle;
 	
 	// Way数
-	int												m_wayNum;
+	int												m_shotWayNum;
 	
 	// 弾の端の角度
 	float											m_bulletEndAngle;
 	
 	// 弾の角度の間隔
-	float											m_changeAngle;
+	float											m_bulletChangeAngle;
 	
 	// 体力
 	float											m_life;
 	float											m_maxLife;
-	
+		
 	// ヒットフラグ
-	bool											m_isValid;
-	
+	bool											m_hitFlag;
+
 	// 点滅時間
 	int												m_blinkTime;
 };
