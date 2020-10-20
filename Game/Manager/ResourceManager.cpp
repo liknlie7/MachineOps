@@ -60,7 +60,7 @@ std::shared_ptr<Adx2Le> ResourceManager::GetSound(const std::wstring _acfPath, c
 	{
 		return m_sounds[_acbPath];
 	}
-
+	
 	// 拡張子
 	std::wstring acf = L".acf";
 	std::wstring acb = L".acb";
@@ -82,7 +82,7 @@ Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTexture(con
 {
 	ID3D11Device1* device = GameContext::Get<DX::DeviceResources>()->GetD3DDevice();
 
-	// 作成されている場合モデルデータを返す
+	// 作成されている場合テクスチャデータを返す
 	if (m_textures.count(_path) != 0)
 	{
 		return m_textures[_path];
@@ -90,7 +90,7 @@ Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTexture(con
 
 	// 作成されていない場合作成
 	DirectX::CreateWICTextureFromFile(device, _path.c_str(), nullptr, m_textures[_path].GetAddressOf());
-	
+
 	// テクスチャデータを返す
 	return m_textures[_path];
 }

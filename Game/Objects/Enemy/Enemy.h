@@ -53,9 +53,6 @@ private: // 関数
 	// 弾を撃つ
 	void Shot();
 
-	//　エネミーデータ(csv)の読み込み
-	void LoadEnemyData();
-
 public: // アクセサ
 
 	// コライダーの取得
