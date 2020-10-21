@@ -66,12 +66,12 @@ std::shared_ptr<Adx2Le> ResourceManager::GetSound(const std::wstring _acfPath, c
 	std::wstring acb = L".acb";
 
 	// パスに拡張子をつなぐ
-	std::wstring acfData = _acfPath + acf;
-	std::wstring acbData = _acbPath + acb;
+	std::wstring acfPath = _acfPath + acf;
+	std::wstring acbPath = _acbPath + acb;
 
 	m_sounds[_acbPath] = std::make_shared<Adx2Le>();
-	m_sounds[_acbPath]->Initialize(acfData.c_str());
-	m_sounds[_acbPath]->LoadAcbFile(acbData.c_str());
+	m_sounds[_acbPath]->Initialize(acfPath.c_str());
+	m_sounds[_acbPath]->LoadAcbFile(acbPath.c_str());
 
 	// サウンドデータを返す
 	return m_sounds[_acbPath];
@@ -98,12 +98,15 @@ Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTexture(con
 // エネミーデータ(csv)の読み込み
 void ResourceManager::LoadEnemyData()
 {
+	// CSV読み込み
 	std::ifstream ifs("Resources\\csv\\EnemyData.csv");
 
 	std::string lineBuf;
 
+	// 配列の作成
 	std::vector<std::vector<std::string>> csvData;
 
+	// 列読み込み
 	while (std::getline(ifs, lineBuf))
 	{
 		csvData.push_back(std::vector<std::string>());
@@ -112,6 +115,7 @@ void ResourceManager::LoadEnemyData()
 
 		std::string indexBuf;
 
+		// 行読み込み
 		while (std::getline(stream, indexBuf, ','))
 		{
 			(*(csvData.end() - 1)).push_back(indexBuf);

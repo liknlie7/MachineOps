@@ -17,9 +17,11 @@ SceneManager::SceneManager(eScene _scene)
 // 現在のシーンの更新
 void SceneManager::Update(DX::StepTimer const & _timer)
 {
+	// 現在のシーンが無いとき更新しない
 	if (m_pScene == nullptr)
 		return;
 
+	// 次のシーンが設定されているか
 	if (m_nextScene != eScene::NONE)
 	{
 		// シーンの切り替え

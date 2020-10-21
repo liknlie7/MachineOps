@@ -3,13 +3,14 @@
 #include "../Common/StepTimer.h"
 #include "../Common/Singleton.h"
 
+// シーン名
 enum class eScene
 {
 	NONE,
-	TITLE,
-	PLAY,
-	RESULT_CLEAR,
-	RESULT_GAMEOVER,
+	TITLE,			// タイトル
+	PLAY,			// プレイ
+	RESULT_CLEAR,	// ゲームクリア
+	RESULT_GAMEOVER,// ゲームオーバー
 };
 
 // シーンインターフェース
@@ -46,7 +47,7 @@ class SceneManager : public Singleton<SceneManager>
 private: // 基本
 
 	// コンストラクタ
-	SceneManager(eScene _scene = eScene::PLAY);
+	SceneManager(eScene _scene = eScene::TITLE);
 
 	// デストラクタ
 	~SceneManager() {};

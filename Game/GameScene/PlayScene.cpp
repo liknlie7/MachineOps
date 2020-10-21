@@ -296,49 +296,49 @@ void PlayScene::CollisionUpdate()
 		enemyBulletColliders[i].radius = m_pBulletManager->SPHERE_BULLET_RADIUS;
 	}
 
-	//// プレイヤーの弾とエネミーの当たり判定
-	//for (unsigned int i = 0; i < playerBullets.size(); i++)
-	//{
-	//	// プレイヤーの弾が使用中なら
-	//	if (playerBullets[i]->GetIsUsed())
-	//	{
-	//		// 球とボックスの当たり判定
-	//		if (Collision::HitCheckSphereToBox(m_pEnemy->GetCollider(), playerBulletColliders[i]))
-	//		{
-	//			m_pEnemy->OnCollision();
+	// プレイヤーの弾とエネミーの当たり判定
+	for (unsigned int i = 0; i < playerBullets.size(); i++)
+	{
+		// プレイヤーの弾が使用中なら
+		if (playerBullets[i]->GetIsUsed())
+		{
+			// 球とボックスの当たり判定
+			if (Collision::HitCheckSphereToBox(m_pEnemy->GetCollider(), playerBulletColliders[i]))
+			{
+				m_pEnemy->OnCollision();
 
-	//			// プレイヤーの弾を未使用に設定する
-	//			playerBullets[i]->SetIsUsed(false);
+				// プレイヤーの弾を未使用に設定する
+				playerBullets[i]->SetIsUsed(false);
 
-	//			// エネミーの体力ゲージを減らす
-	//			float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
-	//			m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
+				// エネミーの体力ゲージを減らす
+				float greenGaugeRate = m_pEnemy->GetLife() / m_pEnemy->GetMaxLife();
+				m_currentGaugeScaleX = m_defaultGaugeScaleX * greenGaugeRate;
 
-	//			if (m_pEnemy->GetLife() == 0)
-	//			{
-	//				// サウンドを停止させる
-	//				if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
-	//					sptr->Stop();
+				if (m_pEnemy->GetLife() == 0)
+				{
+					// サウンドを停止させる
+					if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
+						sptr->Stop();
 
-	//				SceneManager::GetInstance()->RequestScene(eScene::RESULT_CLEAR);
-	//			}
-	//		}
-	//	}
-	//}
+					SceneManager::GetInstance()->RequestScene(eScene::RESULT_CLEAR);
+				}
+			}
+		}
+	}
 
 	// プレイヤーとエネミーの弾の当たり判定
-	//for (unsigned int i = 0; i < enemyBullets.size(); i++)
-	//{
-	//	if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBulletColliders[i]))
-	//	{
-	//// サウンドを停止させる
-	//if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
-	//	sptr->Stop();
+	for (unsigned int i = 0; i < enemyBullets.size(); i++)
+	{
+		if (Collision::HitCheckSphereToSphere(m_pPlayer->GetCollider(), enemyBulletColliders[i]))
+		{
+	// サウンドを停止させる
+	if (std::shared_ptr<Adx2Le> sptr = m_pSound.lock())
+		sptr->Stop();
 
-	//		// ゲームオーバーへ移行
-	//		SceneManager::GetInstance()->RequestScene(eScene::RESULT_GAMEOVER);
-	//	}
-	//}
+			// ゲームオーバーへ移行
+			SceneManager::GetInstance()->RequestScene(eScene::RESULT_GAMEOVER);
+		}
+	}
 
 	// 壁とエネミーの弾の当たり判定
 	for (unsigned int i = 0; i < enemyBullets.size(); i++)
