@@ -18,7 +18,6 @@ void EffectMask::Initialize(float _interval)
 {
 	DX::DeviceResources*   deviceResources = GameContext::Get<DX::DeviceResources>();
 	ID3D11Device*          device = deviceResources->GetD3DDevice();
-	ID3D11DeviceContext*   deviceContext = deviceResources->GetD3DDeviceContext();
 
 	m_interval = _interval;
 
@@ -90,9 +89,7 @@ void EffectMask::Update(float _elapsedTime)
 // •`‰æ
 void EffectMask::Render()
 {
-	DirectX::CommonStates* state = GameContext::Get<DirectX::CommonStates>();
 	DX::DeviceResources*   deviceResources = GameContext::Get<DX::DeviceResources>();
-	ID3D11Device*          device = deviceResources->GetD3DDevice();
 	ID3D11DeviceContext*   deviceContext = deviceResources->GetD3DDeviceContext();
 
 	RECT rect;

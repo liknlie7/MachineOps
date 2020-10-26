@@ -43,12 +43,9 @@ public: // アクセサ
 	}
 
 	// 弾の情報の取得
-	Bullet* GetBulletInfo(const std::string& _tag , int _number)
+	Bullet* GetBulletInfo(int _number)
 	{
-		if (m_pBullets[_number]->GetTag() == _tag)
-		{
-			return m_pBullets[_number].get();
-		}
+		return m_pBullets[_number].get();
 	}
 
 public: // 定数

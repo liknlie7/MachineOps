@@ -16,7 +16,6 @@ Bullet::Bullet()
 {
 
 }
-
 // XV
 void Bullet::Update()
 {

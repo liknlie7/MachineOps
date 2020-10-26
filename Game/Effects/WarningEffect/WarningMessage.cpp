@@ -33,6 +33,8 @@ void WarningMessage::Initialize()
 // çXêV
 void WarningMessage::Update(float _elapsedTime)
 {
+	_elapsedTime;
+
 	if (m_fadeType == false)
 	{
 		m_alpha -= FADE_SPEED;

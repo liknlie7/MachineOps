@@ -33,6 +33,8 @@ void WarningLine::Initialize(DirectX::SimpleMath::Vector2 _pos, bool _dir)
 // çXêV
 void WarningLine::Update(float _elapsedTime)
 {
+	_elapsedTime;
+
 	if (m_dir)
 	{
 		m_pos.x += SPEED;

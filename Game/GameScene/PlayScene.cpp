@@ -270,8 +270,16 @@ void PlayScene::CollisionUpdate()
 	for (int i = 0; i < m_pBulletManager->NUM_BULLET; i++)
 	{
 		// プレイヤーとエネミーの弾を取得する
-		playerBullets.push_back(m_pBulletManager->GetBulletInfo("BOX", i));
-		enemyBullets.push_back(m_pBulletManager->GetBulletInfo("SPHERE", i));
+		Bullet* bullet = m_pBulletManager->GetBulletInfo(i);
+		if (bullet) {
+			const std::string& tag = bullet->GetTag();
+			if (tag == "BOX") {
+				playerBullets.push_back(bullet);
+			}
+			else if (tag == "SPHERE") {
+				enemyBullets.push_back(bullet);
+			}
+		}
 	}
 
 	// 判定用

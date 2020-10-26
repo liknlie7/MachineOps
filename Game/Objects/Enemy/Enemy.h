@@ -116,7 +116,7 @@ private: // ’è”
 	static const float WHORL_SHOT_INTERVEL;
 
 	// “_–ÅŠÔŠu
-	static const float BLINK_TIME;
+	static const int BLINK_TIME;
 
 	// ’e‚Ì‘¬“x
 	static const float BULLET_SPEED;

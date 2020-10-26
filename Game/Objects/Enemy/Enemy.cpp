@@ -19,14 +19,14 @@ const float Enemy::ALL_DIRECTION_SHOT_INTERVEL = 50.0f;
 const float Enemy::WHORL_SHOT_INTERVEL = 10.0f;
 
 // 点滅間隔
-const float Enemy::BLINK_TIME = 30.0f;
+const int Enemy::BLINK_TIME = 30;
 
 // 弾の速度
 const float Enemy::BULLET_SPEED = 0.15f;
 
 // コンストラクタ
 Enemy::Enemy(const EnemyData& _enemyData)
-	: m_blinkTime(0.0f)
+	: m_blinkTime(0)
 	, m_hitFlag(false)
 	, m_playerPos(DirectX::SimpleMath::Vector3::Zero)
 	, m_shotInterval(0.0f)

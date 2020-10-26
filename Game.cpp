@@ -1,7 +1,3 @@
-//
-// Game.cpp
-//
-
 #include "pch.h"
 #include "Game.h"
 
@@ -18,6 +14,7 @@ Game::Game() noexcept(false)
 	m_pDeviceResources = std::make_unique<DX::DeviceResources>();
 	m_pDeviceResources->RegisterDeviceNotify(this);
 	GameContext::Register<DX::DeviceResources>(m_pDeviceResources);
+
 }
 
 Game::~Game()

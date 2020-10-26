@@ -69,7 +69,7 @@ public: // アクセサ
 	}
 
 	// タグの取得
-	std::string GetTag() const
+	const std::string& GetTag() const
 	{
 		return m_tag;
 	}
